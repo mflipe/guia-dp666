@@ -8,8 +8,11 @@ import re
 import unicodedata
 
 import data
+import i18n
 import menuspec as MS
 import didatica as DD
+
+LANG, T = "pt", i18n.UI["pt"]
 
 
 def slug(s):
@@ -168,7 +171,7 @@ CHECKLIST = {
 
 
 def _key(fw, it):
-    return it.get("en", "") if fw == "oficial" else it["nome"]
+    return (it.get("en") or it["nome"]) if fw == "oficial" else it["nome"]
 
 
 def build_checklist(menus, inline):
@@ -199,7 +202,7 @@ def cap(h):
 
 
 def parse_official_menu(md, inline):
-    sec = md.split("## Menu completo", 1)[1].split("\n## ", 1)[0]
+    sec = md.split(T["menu_full"], 1)[1].split("\n## ", 1)[0]
     intro, *blocks = re.split(r"\n### ", sec)
     groups = []
     for block in blocks:
@@ -207,13 +210,13 @@ def parse_official_menu(md, inline):
         items = []
         for line in body.splitlines():
             s = line.strip()
-            if s.startswith("|") and not s.startswith("| ---") and not s.startswith("| Opção"):
+            if s.startswith("|") and not s.startswith("| ---") and not s.startswith(T["opt_header"]):
                 name, vals, desc = [c.strip() for c in s.strip("|").split("|")]
                 mm = re.match(r"^(.*?) \(([^)]*)\)$", name)
                 pt, en = (mm.group(1), mm.group(2)) if mm else (name, "")
-                fora = desc.startswith("Fora da wiki.")
+                fora = desc.startswith(T["not_wiki"])
                 if fora:
-                    desc = desc[len("Fora da wiki."):].strip()
+                    desc = desc[len(T["not_wiki"]):].strip()
                 items.append({"nome": pt, "en": en, "html": cap(inline(desc)) if desc else "", "fora": fora})
             elif s.startswith("- "):
                 mm = re.match(r"- \*\*(.+?):\*\*\s*(.*)", s)
@@ -227,7 +230,7 @@ def parse_mod17_menu(md, inline):
     groups = []
     for block in re.split(r"\n## ", md)[1:]:
         title, body = block.split("\n", 1)
-        if title.strip() == "Fontes":
+        if title.strip() == T["sources_h"]:
             continue
         items = []
         for line in body.splitlines():
@@ -251,7 +254,7 @@ def _guide_index(groups):
 
 def fmtn(v):
     """107.9 → 107,9; −15 com o sinal de menos tipográfico."""
-    s = ("%g" % abs(v)).replace(".", ",")
+    s = ("%g" % abs(v)).replace(".", T["decimal"])
     return ("−" if v < 0 else "") + s
 
 
@@ -260,21 +263,21 @@ def _num(s):
     return float(mm.group(0).replace("−", "-").replace(",", ".")) if mm else None
 
 
-OFF = {"desligado", "off"}
-TIPO = {"lista": "Lista em ciclo", "liga": "Liga ou desliga", "faixa": "Faixa", "acao": "Ação", "texto": "Entrada", "leitura": "Só leitura"}
+OFF = set(T["off_words"])
+TIPO = T["tipo"]
 
 
 def _spec(fw, raw, padrao, br):
     s = {k: v for k, v in raw.items() if not (v is None or v is False or v == "")}
     t = s["tipo"]
-    s["tl"] = "Lista" if t == "lista" and "opcoes" not in s else TIPO[t]
+    s["tl"] = T["tipo_short"]["lista"] if t == "lista" and "opcoes" not in s else TIPO[t]
     if t == "faixa":
         un = s.get("unidade", "")
         s["minf"], s["maxf"] = fmtn(s["min"]), fmtn(s["max"])
         if s.get("passo"):
             p = fmtn(s["passo"])
-            s["passof"] = f"De {p} em {p}" + ("%" if un == "%" else f" {un}" if un else "")
-        s["offlbl"] = "Desligado" if fw == "oficial" else "Off"
+            s["passof"] = T["step_fmt"].format(p=p) + ("%" if un == "%" else f" {un}" if un else "")
+        s["offlbl"] = T["off_label"][fw]
 
         def pos(v):
             if not v:
@@ -291,14 +294,14 @@ def _spec(fw, raw, padrao, br):
             s["pb_off"] = True
         elif pos(br) is not None:
             s["pb"] = pos(br)
-        rng = f"{s['minf']} a {s['maxf']}" + (f" {un}" if un else "")
+        rng = T["range_fmt"].format(a=s["minf"], b=s["maxf"]) + (f" {un}" if un else "")
         s["rsum"] = rng
-        s["valores"] = (s["offlbl"] + " ou " if s.get("off") else "") + rng
+        s["valores"] = (s["offlbl"] + T["or"] if s.get("off") else "") + rng
     elif "opcoes" in s:
-        s["rsum"] = "Liga ou desliga" if t == "liga" else f"{len(s['opcoes'])} opções"
+        s["rsum"] = TIPO["liga"] if t == "liga" else T["n_opts"].format(n=len(s["opcoes"]))
         s["valores"] = ", ".join(s["opcoes"])
     else:
-        s["rsum"] = {"lista": "Lista", "acao": "Ação", "texto": "Entrada", "leitura": "Só leitura"}[t]
+        s["rsum"] = T["tipo_short"][t]
         s["valores"] = s.get("resumo", "")
     return s
 
@@ -309,19 +312,22 @@ def build_menus(oficial_md, menus_md, inline):
     res = {}
     for fw, spec in (("oficial", MS.OFICIAL), ("mod17", MS.MOD17)):
         used, groups = set(), []
-        for titulo, notas, itens in spec:
-            g = {"titulo": titulo, "id": f"ajustes--{fw}-{slug(titulo)}", "notas": [inline(n) for n in notas], "itens": []}
+        for entry in spec:
+            titulo, notas, itens = entry[:3]
+            tid = entry[3] if len(entry) > 3 else titulo
+            g = {"titulo": titulo, "id": f"ajustes--{fw}-{slug(tid)}", "notas": [inline(n) for n in notas], "itens": []}
             for raw in itens:
-                base = f"ajustes--{fw}-{slug(raw['nome'])}"
+                idnome = raw.get("idnome") or raw["nome"]
+                base = f"ajustes--{fw}-{slug(idnome)}"
                 iid, k = base, 2
                 while iid in used:
                     iid, k = f"{base}-{k}", k + 1
                 used.add(iid)
                 guide = guides[fw].get(norm(raw["guia"]))
                 html = cap(inline(raw["desc"])) if raw["desc"] else (guide["html"] if guide else "")
-                d = DD.lookup(fw, raw["nome"], titulo)
+                d = DD.lookup(fw, idnome, tid)
                 if d is None:
-                    raise SystemExit(f"sem explicação didática: {fw} / {titulo} / {raw['nome']}")
+                    raise SystemExit(f"sem explicação didática: {fw} / {tid} / {idnome}")
                 did = {}
                 html = cap(inline(d["faz"]))
                 if d["util"]:
@@ -351,7 +357,7 @@ def build_problems(md, inline, diagram_html):
     for block in blocks:
         title, body = block.split("\n", 1)
         title = title.strip()
-        if title == "Fontes":
+        if title == T["sources_h"]:
             continue
         cid = slug(title)
         cat = {"id": f"ajuda--{cid}", "titulo": title, "ref": "problemas--" + _heading_id(title),
@@ -366,12 +372,12 @@ def build_problems(md, inline, diagram_html):
                 cat["intro"].append(diagram_html(re.search(r"DIAGRAM:(\w+)", s).group(1)))
             elif m_item:
                 t = m_item.group(1)
-                tag = "oficial" if "linha oficial" in t.lower() else ""
+                tag = "oficial" if T["official_marker"] in t.lower() else ""
                 cat["itens"].append({"id": f"ajuda--{cid}-{slug(t)}", "titulo": t, "html": inline(m_item.group(2)), "tag": tag,
                                      "busca": norm(t + " " + m_item.group(2))})
             elif m_step:
                 cat["passos"].append(inline(m_step.group(1)))
-            elif s.startswith("Passos, em ordem"):
+            elif s.startswith(T["steps_line"]):
                 continue
             elif cat["passos"]:
                 cat["depois"].append(inline(s))
@@ -480,7 +486,7 @@ def build_board(inline):
 # ---------------------------------------------------------------- índice de busca
 def search_entries(menus, problems):
     out = []
-    for fw, label in (("oficial", "Ajustes · linha oficial"), ("mod17", "Ajustes · Mod17")):
+    for fw, label in (("oficial", T["search_official"]), ("mod17", T["search_mod17"])):
         for g in menus[fw]["grupos"]:
             for it in g["itens"]:
                 name = it["nome"] + (f" ({it['en']})" if it.get("en") else "")
@@ -488,7 +494,7 @@ def search_entries(menus, problems):
                 out.append({"r": "ajustes", "p": label, "h": name, "id": it["id"], "t": f"{it.get('valores', '')} {text}".strip()})
     for c in problems:
         for it in c["itens"]:
-            out.append({"r": "ajuda", "p": "Assistente de problemas", "h": it["titulo"], "id": it["id"],
+            out.append({"r": "ajuda", "p": T["search_help"], "h": it["titulo"], "id": it["id"],
                         "t": re.sub(r"<[^>]+>", "", it["html"])})
     return out
 
@@ -520,3 +526,28 @@ def build_panel(inline):
         t = v["texto"]
         out[k] = {"titulo": v["titulo"], "texto": {fw: inline(x) for fw, x in t.items()} if isinstance(t, dict) else inline(t)}
     return out
+
+
+# ---------------------------------------------------------------- idioma
+_PT = {"BUTTONS": BUTTONS, "CHECKLIST": CHECKLIST, "BUSES": BUSES, "BLOCKS": BLOCKS, "PAINEL": PAINEL, "CHAVE": CHAVE}
+
+
+def set_lang(lang, data_mod=None):
+    """Troca os textos e os dados das ferramentas. Os ids continuam os do português, iguais nos dois idiomas."""
+    global LANG, T, OFF, TIPO, MS, DD, COMP
+    global BUTTONS, CHECKLIST, BUSES, BLOCKS, PAINEL, CHAVE
+    LANG, T = lang, i18n.UI[lang]
+    OFF, TIPO = set(T["off_words"]), T["tipo"]
+    content = _PT
+    import menuspec
+    import didatica
+    MS, DD = menuspec, didatica
+    if lang == "en":
+        import didatica_en
+        import menuspec_en
+        cat = i18n.catalog("appdata_en")
+        content = {k: i18n.deep_tr(v, cat) for k, v in _PT.items()}
+        MS, DD = menuspec_en.spec(), didatica_en
+    BUTTONS, CHECKLIST, BUSES, BLOCKS = content["BUTTONS"], content["CHECKLIST"], content["BUSES"], content["BLOCKS"]
+    PAINEL, CHAVE = content["PAINEL"], content["CHAVE"]
+    COMP = {c["pn"]: c for c in (data_mod or data).COMPONENTS}

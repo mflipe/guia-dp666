@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  var DECIMAL = /^pt/.test(document.documentElement.lang) ? "," : ".";   // separador decimal do idioma da página
   var APP = JSON.parse(document.getElementById("app-data").textContent);
 
   // ---------------------------------------------------------------- utilidades
@@ -30,6 +31,7 @@
   // ---------------------------------------------------------------- perfil do aparelho
   var PKEY = "dp666.perfil.v1";
   var FW_NAME = { mod17: "Mod17", oficial: "Linha oficial" };
+  var FW_SHORT = { mod17: "Mod17", oficial: "Oficial" };   // no celular, o botão do perfil usa o nome curto
   var FW_OPTS = [["mod17", "Megatron Mod17"], ["oficial", "Linha oficial"]];
   var profile = store.get(PKEY, { fw: "", rtc: "?" });
   var listeners = [];
@@ -44,7 +46,9 @@
   var chip = $("#profile-btn"), dlg = $("#profile-dlg");
   function paintChip() {
     chip.dataset.set = profile.fw ? "yes" : "no";
-    chip.querySelector("span").textContent = profile.fw ? FW_NAME[profile.fw] : "Seu rádio";
+    var label = chip.querySelector("span");
+    if (profile.fw) label.innerHTML = '<span class="chip-l">' + FW_NAME[profile.fw] + '</span><span class="chip-s">' + FW_SHORT[profile.fw] + "</span>";
+    else label.textContent = "Seu rádio";
     chip.setAttribute("aria-label", "Seu rádio: " + (profile.fw ? FW_NAME[profile.fw] : "firmware não informado") + ". Toque para mudar.");
   }
   function openProfile() {
@@ -173,7 +177,7 @@
     }
     function showAction(c, kind, ms) {
       var did = { curto: "Toque curto", longo: "Toque longo", segurar: "Segurou", girar: "Girou" }[kind];
-      if (ms != null) did += " · " + (ms / 1000).toFixed(1).replace(".", ",") + " s";
+      if (ms != null) did += " · " + (ms / 1000).toFixed(1).replace(".", DECIMAL) + " s";
       out.innerHTML = "<h3>" + esc(c.rotulo) + '</h3><p class="sim-did">' + did + '</p><ul class="sim-acts">' +
         c.acoes.map(function (a) {
           return '<li class="' + (a[0] === kind ? "hit" : "") + '"><span class="k">' + esc(a[1]) + "</span>" + a[2] + "</li>";

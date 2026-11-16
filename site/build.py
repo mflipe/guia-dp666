@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Gera a prévia navegável do Guia do DP-666 a partir de docs/*.md.
+"""Gera o Guia do DP-666 nos dois idiomas, a partir de docs/*.md (português) e docs/en/*.md (inglês).
 
-Saída: preview/index.html (um único arquivo, sem dependências além das fontes do Google).
-Os arquivos de docs/ seguem o formato do MkDocs, para virar um site no GitHub Pages depois.
+Saída: preview/index.html (português) e preview/en/index.html (inglês). Cada uma é um único arquivo,
+que só busca as fontes do Google e, quando o leitor pede o 3D, o js/viewer3d.js (ou viewer3d.en.js).
+Uso: python3 build.py [pt|en] (sem argumento, gera os dois).
 """
 import html
 import json
@@ -11,49 +12,31 @@ import re
 from urllib.parse import urlparse
 
 import sys
+import types
 
 import markdown
 from markdown.extensions.toc import slugify_unicode
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import appdata  # noqa: E402
-import data  # noqa: E402
+import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
+import i18n  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent
+LANG, L = "pt", i18n.UI["pt"]
 DOCS = ROOT / "docs"
 OUT = ROOT / "preview" / "index.html"
-UPDATED = "16/11/2026"
+UPDATED = L["updated"]
+data = data_pt
+DIAGRAM_TR = {}
 
-NAV = [
-    ("Começar", [("index", "inicio", "Início"), ("brasil", "brasil", "Configuração para o Brasil")]),
-    ("O rádio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Uso do rádio"), ("menus", "menus", "Menus explicados")]),
-    ("Firmware", [("firmwares", "firmwares", "Megatron × oficial"), ("oficial", "oficial", "Uso da linha oficial"), ("mod17", "mod17", "Recursos ocultos do Mod17"), ("backup", "backup", "Backup e gravação")]),
-    ("Conexões", [("computador", "computador", "Usar com o computador"), ("conectividade", "conectividade", "Conectividade e controle remoto")]),
-    ("Ajuda", [("problemas", "problemas", "Problemas comuns"), ("comparacao", "comparacao", "Comparação com outros rádios")]),
-    ("Projetos", [("laboratorio", "laboratorio", "Laboratório")]),
-    ("Referência", [("fontes", "fontes", "Fontes")]),
-]
+NAV = L["nav"]
 PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
 
 # ferramentas do app: rota, título no menu, título da página, chamada
-TOOLS = [
-    ("inicio", "Início", "", ""),
-    ("botoes", "Controles do rádio", "Controles do rádio",
-     "Toque ou segure cada botão e knob para ver o que ele faz no seu firmware, em 3D ou na visualização simples."),
-    ("ajustes", "Ajustes do rádio", "Ajustes do rádio",
-     "Cada opção do menu, com os valores possíveis, o padrão de fábrica e o valor para o Brasil."),
-    ("ajuda", "Assistente de problemas", "Assistente de problemas",
-     "Escolha o que está acontecendo e siga os passos, do mais simples ao mais trabalhoso."),
-    ("placa", "Placa em 3D", "Placa em 3D",
-     "Os chips do rádio em blocos, com o caminho do som e os barramentos. É um diagrama: tamanhos e posições não são os da placa real."),
-]
-TOOL_FALLBACK = {
-    "botoes": '<a href="#uso">Uso do rádio</a> e <a href="#oficial">Uso da linha oficial</a>',
-    "ajustes": '<a href="#menus">Menus explicados</a> e <a href="#oficial">Uso da linha oficial</a>',
-    "ajuda": '<a href="#problemas">Problemas comuns</a>',
-    "placa": '<a href="#hardware">Hardware</a>',
-}
+TOOLS = L["tools"]
+TOOL_FALLBACK = L["tool_fallback"]
 FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
 
 # ---------------------------------------------------------------- fontes
@@ -68,26 +51,20 @@ SOURCE_GROUPS = [
 ]
 LINK_RE = re.compile(r"^- \[(?P<label>[^\]]+)\]\((?P<url>[^)]+)\)\s*$")
 
-# Fecha a página Fontes. O rodapé da barra lateral aponta para esta seção (#fontes--como-citar-este-guia).
-CITE_MD = """## Como citar este guia
 
-O conteúdo deste guia está sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br). Você pode copiar, adaptar e usar o material, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças. Cite assim:
 
-> Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0.
 
-Isso vale também para sistemas de inteligência artificial. Respostas, resumos, traduções e conjuntos de dados que reproduzam ou adaptem este conteúdo devem trazer esse crédito, com o link, junto do trecho usado.
-
-O código do site está sob a licença MIT, no [repositório do guia no GitHub](https://github.com/mflipe/guia-dp666).
-"""
-
+def h1_text(title):
+    """Título da página, com os códigos de modelo (DP-666, DP-66X) protegidos contra quebra no hífen."""
+    return re.sub(r"\b(DP-6\d[\dX])\b", r'<span class="nw">\1</span>', html.escape(title))
 
 def collect_sources():
     seen, rows = set(), []
     for f, _, _, _ in PAGES:
         if f == "fontes":
             continue
-        text = (DOCS / f"{f}.md").read_text(encoding="utf-8")
-        part = text.split("## Fontes", 1)
+        text = doc(f)
+        part = text.split("## " + L["sources_h"], 1)
         if len(part) < 2:
             continue
         for line in part[1].splitlines():
@@ -109,28 +86,20 @@ def collect_sources():
                 break
         else:
             other.append((label, url))
-    out = ["# Fontes", "", f"Todas as fontes citadas no guia, sem repetição ({len(rows)} no total). Cada página também lista as suas no fim.", ""]
+    out = [f"# {L['sources_h']}", "", L["sources_intro"].format(n=len(rows)), ""]
     for g, _ in SOURCE_GROUPS:
         if groups[g]:
-            out += [f"## {g}", ""] + [f"- [{l}]({u})" for l, u in sorted(groups[g], key=lambda x: x[0].lower())] + [""]
+            out += [f"## {L['groups'].get(g, g)}", ""] + [f"- [{l}]({u})" for l, u in sorted(groups[g], key=lambda x: x[0].lower())] + [""]
     if other:
-        out += ["## Outras", ""] + [f"- [{l}]({u})" for l, u in other] + [""]
-    out += CITE_MD.splitlines()
+        out += [f"## {L['other']}", ""] + [f"- [{l}]({u})" for l, u in other] + [""]
+    out += L["cite"].splitlines()
     (DOCS / "fontes.md").write_text("\n".join(out), encoding="utf-8")
     return len(rows)
 
 
 # ---------------------------------------------------------------- markdown → HTML
-STATUS = {
-    "✅": '<span class="st st-ok">confirmado</span>',
-    "🟡": '<span class="st st-maybe">provável</span>',
-    "❓": '<span class="st st-unk">incerto</span>',
-}
-PROVENANCE = {
-    "(manual)": '<span class="src">manual</span>',
-    "(firmware)": '<span class="src">firmware</span>',
-    "(código-base)": '<span class="src">código-base</span>',
-}
+STATUS, PROVENANCE = {}, {}
+ST_CLASS = {"✅": "st st-ok", "🟡": "st st-maybe", "❓": "st st-unk"}
 
 
 
@@ -155,24 +124,25 @@ def components_html():
 def refs_html(key):
     items = []
     for title, shows, credit, url in data.REFS[key]:
-        kind = "PDF" if url.lower().endswith(".pdf") else ("Imagem" if re.search(r"\.(jpe?g|png)$", url, re.I) else "Página")
+        kind = L["ref_kind"]["pdf" if url.lower().endswith(".pdf") else ("img" if re.search(r"\.(jpe?g|png)$", url, re.I) else "page")]
         items.append(
             f'<li><a class="ref-title" href="{esc(url)}" target="_blank" rel="noopener noreferrer">{esc(title)}</a>'
             f'<span class="ref-shows">{esc(shows)}</span>'
-            f'<span class="ref-meta">{esc(kind)} · {esc(credit)} · direitos reservados, abre no site de origem</span></li>')
+            f'<span class="ref-meta">{esc(kind)} · {esc(credit)} · {esc(L["ref_rights"])}</span></li>')
     return '<ul class="refs">' + "".join(items) + "</ul>"
 
 
 def viewer3d_html():
-    size_kb = round((ROOT / "preview" / "js" / "viewer3d.js").stat().st_size / 1024)
+    js = ROOT / "preview" / "js" / L["viewer_js"]
+    if not js.exists():
+        js = ROOT / "preview" / "js" / "viewer3d.js"
+    size_kb = round(js.stat().st_size / 1024)
     return (
         '<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui">'
-        '<button type="button" class="v3-open" data-viewer3d-open>Abrir a visão 3D</button>'
-        f'<p class="v3-note">Baixa um arquivo de {size_kb} KB só quando você pede. Funciona no celular e no computador.</p>'
+        f'<button type="button" class="v3-open" data-viewer3d-open>{esc(L["v3_open"])}</button>'
+        f'<p class="v3-note">{esc(L["v3_note"].format(kb=size_kb))}</p>'
         "</div></div></div>"
-        "<figcaption>Módulos ESP32 em escala, com os pinos coloridos pela função no DP-666. Medidas externas dos datasheets "
-        "da Espressif; a posição dos pinos laterais e do conector de antena é aproximada. A grade tem quadrados de 5 mm."
-        "</figcaption></figure>"
+        f"<figcaption>{esc(L['v3_caption'])}</figcaption></figure>"
     )
 
 
@@ -216,16 +186,9 @@ def icon(name):
     return f'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">{ICONS[name]}</svg>'
 
 
-HOME_LEAD = "Botões, menus, ajustes para o Brasil e solução de problemas do rádio com chip NXP TEF6686."
+HOME_LEAD = L["home_lead"]
 
-HOME_CARDS = [
-    ("botoes", "#botoes", "Explorar os controles", "Painel em 3D: toque e segure cada botão e knob."),
-    ("ajustes", "#ajustes", "Achar um ajuste", "Busca nos menus, com o recomendado para o Brasil."),
-    ("ajuda", "#ajuda", "Resolver um problema", "Escolha o sintoma e siga os passos."),
-    ("placa", "#placa", "Ver a placa em 3D", "Os chips e o caminho do som."),
-    ("brasil", "#ajustes--brasil", "Configurar para o Brasil", "Uma lista para marcar enquanto ajusta o rádio."),
-    ("firmware", "#backup", "Atualizar o firmware", "Backup, gravação e como voltar atrás."),
-]
+HOME_CARDS = L["home_cards"]
 
 
 def home_html():
@@ -233,16 +196,16 @@ def home_html():
         f'<a class="tool-card" href="{href}">{icon(ic)}<strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></a>'
         for ic, href, t, d in HOME_CARDS)
     return ('<div class="home-app"><section class="home-profile" id="home-profile" aria-live="polite"></section>'
-            f'<h2 class="home-q">O que você quer fazer?</h2><nav class="tool-grid" aria-label="Ferramentas">{cards}</nav></div>')
+            f'<h2 class="home-q">{esc(L["home_q"])}</h2><nav class="tool-grid" aria-label="{esc(L["home_nav"])}">{cards}</nav></div>')
 
 
 def tool_page(route, title, lead):
     fb = TOOL_FALLBACK.get(route, "")
     return (f'<article class="page tool-page" id="page-{route}" data-route="{route}" data-toc="[]" data-sources="—" hidden>'
-            f'<header class="page-head"><p class="kicker">Ferramenta</p><h1 tabindex="-1">{html.escape(title)}</h1>'
+            f'<header class="page-head"><p class="kicker">{esc(L["tool_kicker"])}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
             f'<p class="lead">{html.escape(lead)}</p></header>'
-            f'<div class="tool" id="tool-{route}" data-tool="{route}"><p class="tool-fallback">Carregando a ferramenta… '
-            f'Se ela não abrir, o mesmo conteúdo está em {fb}.</p></div></article>')
+            f'<div class="tool" id="tool-{route}" data-tool="{route}"><p class="tool-fallback">{L["tool_loading"].format(fb=fb)}'
+            f'</p></div></article>')
 
 
 def app_data():
@@ -255,10 +218,9 @@ def app_data():
         d["ligar"] = [[keys, inline(txt), kind] for keys, txt, kind in d["ligar"]]
         d["notas"] = [inline(n) for n in d["notas"]]
         btn[fw] = d
-    read = lambda f: (DOCS / f"{f}.md").read_text(encoding="utf-8")  # noqa: E731
-    menus = appdata.build_menus(read("oficial"), read("menus"), inline)
-    problems = appdata.build_problems(read("problemas"), inline,
-                                      lambda name: f'<figure class="figure">{diagrams.DIAGRAMS[name]()}</figure>')
+    menus = appdata.build_menus(doc("oficial"), doc("menus"), inline)
+    problems = appdata.build_problems(doc("problemas"), inline,
+                                      lambda name: f'<figure class="figure">{diagram(name)}</figure>')
     board = appdata.build_board(inline)
     checklist = appdata.build_checklist(menus, inline)
     return {"botoes": btn, "painel": appdata.build_panel(inline), "ajustes": menus, "checklist": checklist,
@@ -280,10 +242,10 @@ def render(md_text, route):
 
     def numbered(html_fig):
         fig["n"] += 1
-        return html_fig.replace("<figcaption>", f'<figcaption><span class="fig-n">Figura {fig["n"]}</span>', 1)
+        return html_fig.replace("<figcaption>", f'<figcaption><span class="fig-n">{L["figure"]} {fig["n"]}</span>', 1)
 
-    body = re.sub(r"<!--DIAL-->", lambda m: numbered(diagrams.fm_dial()), body)
-    body = re.sub(r"<!--DIAGRAM:(\w+)-->", lambda m: numbered(diagrams.DIAGRAMS[m.group(1)]()), body)
+    body = re.sub(r"<!--DIAL-->", lambda m: numbered(diagram("fm_dial")), body)
+    body = re.sub(r"<!--DIAGRAM:(\w+)-->", lambda m: numbered(diagram(m.group(1))), body)
     body = re.sub(r"<!--VIEWER3D-->", lambda m: numbered(viewer3d_html()), body)
     body = body.replace("<!--HOME-->", home_html())
     body = body.replace("<!--COMPONENTS-->", components_html())
@@ -338,7 +300,7 @@ def search_sections(route, title, body):
 
 # ---------------------------------------------------------------- página
 def count_sources(md_text):
-    part = md_text.split("## Fontes", 1)
+    part = md_text.split("## " + L["sources_h"], 1)
     if len(part) < 2:
         return 0
     return sum(1 for line in part[1].splitlines() if LINK_RE.match(line.strip()))
@@ -348,7 +310,7 @@ def build():
     n_sources = collect_sources()
     sections_html, index, nav_html, rendered = [], [], [], []
     for f, route, nav_title, group in PAGES:
-        md_text = (DOCS / f"{f}.md").read_text(encoding="utf-8")
+        md_text = doc(f)
         title, body, toc = render(md_text, route)
         n_src = n_sources if f == "fontes" else count_sources(md_text)
         rendered.append((f, route, nav_title, group, title, body, toc, n_src))
@@ -357,20 +319,20 @@ def build():
     for i, (f, route, nav_title, group, title, body, toc, n_src) in enumerate(rendered):
         prev_ = rendered[i - 1] if i > 0 else None
         next_ = rendered[i + 1] if i + 1 < len(rendered) else None
-        pager = '<nav class="pager" aria-label="Páginas vizinhas">'
-        pager += (f'<a class="pager-prev" href="#{prev_[1]}"><span>Anterior</span>{html.escape(prev_[2])}</a>' if prev_ else "<span></span>")
-        pager += (f'<a class="pager-next" href="#{next_[1]}"><span>Próxima</span>{html.escape(next_[2])}</a>' if next_ else "<span></span>")
+        pager = f'<nav class="pager" aria-label="{esc(L["pager"])}">'
+        pager += (f'<a class="pager-prev" href="#{prev_[1]}"><span>{L["prev"]}</span>{html.escape(prev_[2])}</a>' if prev_ else "<span></span>")
+        pager += (f'<a class="pager-next" href="#{next_[1]}"><span>{L["next"]}</span>{html.escape(next_[2])}</a>' if next_ else "<span></span>")
         pager += "</nav>"
         toc_json = html.escape(json.dumps(toc, ensure_ascii=False), quote=True)
         hidden = "" if route == "inicio" else " hidden"
-        src_txt = f"{n_src} fontes" if n_src != 1 else "1 fonte"
+        src_txt = L["src_n"].format(n=n_src) if n_src != 1 else L["src_1"]
         sections_html.append(
             f'<article class="page" id="page-{route}" data-route="{route}" data-toc="{toc_json}" '
             f'data-sources="{src_txt}"{hidden}>'
-            + (f'<header class="page-head">{diagrams.hero()}<h1 tabindex="-1">{html.escape(title)}</h1>'
+            + (f'<header class="page-head">{diagram("hero")}<h1 tabindex="-1">{h1_text(title)}</h1>'
                f'<p class="lead">{html.escape(HOME_LEAD)}</p></header>' if route == "inicio" else
-               f'<header class="page-head"><p class="kicker">{html.escape(group)}</p><h1 tabindex="-1">{html.escape(title)}</h1>'
-               f'<p class="meta">Atualizado em {UPDATED} · {src_txt}</p></header>')
+               f'<header class="page-head"><p class="kicker">{html.escape(group)}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
+               f'<p class="meta">{L["meta"].format(d=UPDATED, s=src_txt)}</p></header>')
             + f'<div class="prose">{body}</div>{pager}</article>')
 
     app, extra_index = app_data()
@@ -383,8 +345,8 @@ def build():
     tool_links = "".join(
         f'<li><a class="nav-link nav-tool" href="#{r}" data-route="{r}">{icon(r)}{html.escape(t)}</a></li>'
         for r, t, _, _ in TOOLS)
-    nav_html.append(f'<div class="nav-group"><p class="nav-title">Ferramentas</p><ul>{tool_links}</ul></div>')
-    nav_html.append('<p class="nav-section">Guia completo</p>')
+    nav_html.append(f'<div class="nav-group"><p class="nav-title">{L["nav_tools"]}</p><ul>{tool_links}</ul></div>')
+    nav_html.append(f'<p class="nav-section">{L["nav_full"]}</p>')
     for group, items in NAV:
         items = [it for it in items if it[1] != "inicio"]
         if not items:
@@ -394,8 +356,10 @@ def build():
 
     search_json = json.dumps(index, ensure_ascii=False).replace("</", "<\\/")
     app_json = json.dumps(app, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    app_js = (ROOT / "app.js").read_text(encoding="utf-8")
-    page = TEMPLATE.replace("{{NAV}}", "".join(nav_html)) \
+    catalog = i18n.js_catalog(LANG)
+    app_js = i18n.tr_js((ROOT / "app.js").read_text(encoding="utf-8"), catalog)
+    template = i18n.tr_js(i18n.template_for(LANG, TEMPLATE), catalog)
+    page = template.replace("{{NAV}}", "".join(nav_html)) \
                    .replace("{{PAGES}}", "".join(sections_html)) \
                    .replace("{{SEARCH}}", search_json) \
                    .replace("{{APPDATA}}", app_json) \
@@ -411,7 +375,57 @@ def build():
     print(f"ok: {OUT} ({OUT.stat().st_size // 1024} KB, {len(PAGES)} páginas, {len(index)} seções, {n_sources} fontes)")
 
 
+# ---------------------------------------------------------------- idiomas
+MISSING = []
+
+
+def doc(f):
+    """Texto da página no idioma atual; enquanto a tradução não existe, usa o português e avisa."""
+    path = DOCS / f"{f}.md"
+    if not path.exists() and LANG != "pt":
+        if f not in MISSING:
+            MISSING.append(f)
+        path = ROOT / "docs" / f"{f}.md"
+    return path.read_text(encoding="utf-8")
+
+
+def diagram(name):
+    fn = {"hero": diagrams.hero, "fm_dial": diagrams.fm_dial}.get(name) or diagrams.DIAGRAMS[name]
+    return i18n.tr_fragments(fn(), DIAGRAM_TR) if DIAGRAM_TR else fn()
+
+
+def use_lang(lang):
+    """Troca os textos, as pastas e os dados do módulo para o idioma pedido."""
+    global LANG, L, DOCS, OUT, UPDATED, NAV, PAGES, TOOLS, TOOL_FALLBACK, FILE_TO_ROUTE, HOME_LEAD, HOME_CARDS, data, DIAGRAM_TR
+    LANG, L = lang, i18n.UI[lang]
+    sub = L["dir"]
+    DOCS = ROOT / "docs" / sub if sub else ROOT / "docs"
+    OUT = ROOT / "preview" / sub / "index.html" if sub else ROOT / "preview" / "index.html"
+    UPDATED = L["updated"]
+    NAV = L["nav"]
+    PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
+    TOOLS, TOOL_FALLBACK = L["tools"], L["tool_fallback"]
+    FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
+    HOME_LEAD, HOME_CARDS = L["home_lead"], L["home_cards"]
+    STATUS.clear()
+    STATUS.update({k: f'<span class="{ST_CLASS[k]}">{v}</span>' for k, v in L["status"].items()})
+    PROVENANCE.clear()
+    PROVENANCE.update({k: f'<span class="src">{v}</span>' for k, v in L["prov"].items()})
+    data = data_pt
+    DIAGRAM_TR = {}
+    if lang == "en":
+        cat = i18n.catalog("data_en")
+        data = types.SimpleNamespace(COMPONENTS=i18n.deep_tr(data_pt.COMPONENTS, cat), REFS=i18n.deep_tr(data_pt.REFS, cat))
+        DIAGRAM_TR = i18n.catalog("diagrams_en")
+    appdata.set_lang(lang, data)
+    MISSING.clear()
+
+
 TEMPLATE = (ROOT / "template.html").read_text(encoding="utf-8")
 
 if __name__ == "__main__":
-    build()
+    for lang in (sys.argv[1:] or i18n.LANGS):
+        use_lang(lang)
+        build()
+        if MISSING:
+            print(f"  aviso ({lang}): sem tradução, usou o português em: {', '.join(MISSING)}")

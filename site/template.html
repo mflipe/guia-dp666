@@ -7,6 +7,8 @@
 <meta name="description" content="Guia independente do rádio DEEPELEC DP-666, com chip NXP TEF6686: botões, menus, ajustes para o Brasil e solução de problemas.">
 <meta name="author" content="mflipe">
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","name":"Guia do DP-666","about":"Rádio DEEPELEC DP-666 (NXP TEF6686 + ESP32)","url":"https://mflipe.github.io/guia-dp666/","inLanguage":"pt-BR","isAccessibleForFree":true,"author":{"@type":"Person","name":"mflipe","url":"https://github.com/mflipe"},"license":"https://creativecommons.org/licenses/by/4.0/","creditText":"Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -881,6 +883,20 @@ tbody tr:last-child td { border-bottom: 0; }
 }
 /* Licença: segundo parágrafo do rodapé da barra lateral e o texto de citação na página Fontes. */
 .side-foot + .side-foot { margin-top: 8px; }
+/* Seletor de idioma: o idioma atual preenchido, o outro como link. */
+.lang { display: inline-flex; flex: none; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.lang > * { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 37px; padding: 0 9px; font: 600 0.8rem var(--font-display); letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
+.lang .lang-on { background: var(--ink); color: var(--surface); }
+.lang a:hover { color: var(--ink); background: var(--accent-soft); }
+.lang a:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+@media (max-width: 560px) {
+  .lang { order: 2; }
+  .lang > * { min-width: 36px; padding: 0 7px; }
+  .topbar { column-gap: 8px; }
+}
+/* Botão do perfil: nome completo do firmware; no celular, o curto. */
+.profile-chip .chip-s { display: none; }
+@media (max-width: 560px) { .profile-chip .chip-l { display: none; } .profile-chip .chip-s { display: inline; } }
 .prose blockquote { margin: 16px 0; padding: 12px 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
 .prose blockquote p { margin: 0; }
 </style>
@@ -896,6 +912,7 @@ tbody tr:last-child td { border-bottom: 0; }
     <div class="results" id="results" role="listbox" hidden></div>
   </div>
   <button class="profile-chip" id="profile-btn" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button>
+  <nav class="lang" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" id="lang-switch" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></nav>
 </header>
 <div class="shell">
   <nav class="sidebar" id="sidebar" aria-label="Páginas do guia"><span class="side-needle" aria-hidden="true"></span><span class="side-ring" aria-hidden="true"></span>{{NAV}}<p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p><p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="#fontes--como-citar-este-guia">cite o guia</a> com o link.</p></nav>
@@ -1040,7 +1057,7 @@ tbody tr:last-child td { border-bottom: 0; }
       if (routes[base] && !document.getElementById(route)) {
         try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: route })); } catch (e) {}
       }
-      if (routes[base] && document.getElementById(route)) { pendingScroll = route; route = base; }
+      if (routes[base]) { if (document.getElementById(route)) pendingScroll = route; route = base; }
     }
     if (!routes[route]) route = "inicio";
     var page = routes[route];
@@ -1061,6 +1078,16 @@ tbody tr:last-child td { border-bottom: 0; }
       if (h) { try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
     }
     current = route;
+    syncLang(route);
+  }
+  // O link do outro idioma leva à mesma página. Só os itens de ajuste têm o mesmo id nos dois idiomas.
+  var langLink = document.getElementById("lang-switch");
+  function syncLang(route) {
+    if (!langLink) return;
+    var h = location.hash.slice(1);
+    try { h = decodeURIComponent(h); } catch (e) {}
+    var keep = h.indexOf("ajustes--") === 0 ? h : route;
+    langLink.href = langLink.getAttribute("data-base") + (keep && keep !== "inicio" ? "#" + keep : "");
   }
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
   menuBtn.addEventListener("click", function () { setNav(!document.body.classList.contains("nav-open")); });

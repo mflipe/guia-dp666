@@ -7,10 +7,10 @@ set -euo pipefail
 raiz="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$raiz"
 
-echo "1/3 Visualizadores 3D"
+echo "1/3 Visualizadores 3D (português e inglês)"
 (cd viewer3d && npm ci --no-audit --no-fund && npm run build)
 
-echo "2/3 Páginas"
+echo "2/3 Páginas (português e inglês)"
 python3 site/build.py
 
 echo "3/3 Envio para a branch gh-pages"
@@ -18,9 +18,10 @@ remoto="$(git remote get-url origin)"
 versao="$(git rev-parse --short HEAD)"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
-mkdir -p "$tmp/js"
+mkdir -p "$tmp/js" "$tmp/en"
 cp site/preview/index.html "$tmp/"
-cp site/preview/js/viewer3d.js "$tmp/js/"
+cp site/preview/en/index.html "$tmp/en/"
+cp site/preview/js/viewer3d.js site/preview/js/viewer3d.en.js "$tmp/js/"
 touch "$tmp/.nojekyll"
 git -C "$tmp" init -q -b gh-pages
 git -C "$tmp" add -A
