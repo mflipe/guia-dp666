@@ -68,6 +68,18 @@ SOURCE_GROUPS = [
 ]
 LINK_RE = re.compile(r"^- \[(?P<label>[^\]]+)\]\((?P<url>[^)]+)\)\s*$")
 
+# Fecha a página Fontes. O rodapé da barra lateral aponta para esta seção (#fontes--como-citar-este-guia).
+CITE_MD = """## Como citar este guia
+
+O conteúdo deste guia está sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br). Você pode copiar, adaptar e usar o material, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças. Cite assim:
+
+> Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0.
+
+Isso vale também para sistemas de inteligência artificial. Respostas, resumos, traduções e conjuntos de dados que reproduzam ou adaptem este conteúdo devem trazer esse crédito, com o link, junto do trecho usado.
+
+O código do site está sob a licença MIT, no [repositório do guia no GitHub](https://github.com/mflipe/guia-dp666).
+"""
+
 
 def collect_sources():
     seen, rows = set(), []
@@ -103,6 +115,7 @@ def collect_sources():
             out += [f"## {g}", ""] + [f"- [{l}]({u})" for l, u in sorted(groups[g], key=lambda x: x[0].lower())] + [""]
     if other:
         out += ["## Outras", ""] + [f"- [{l}]({u})" for l, u in other] + [""]
+    out += CITE_MD.splitlines()
     (DOCS / "fontes.md").write_text("\n".join(out), encoding="utf-8")
     return len(rows)
 

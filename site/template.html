@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guia do DP-666</title>
+<meta name="description" content="Guia independente do rádio DEEPELEC DP-666, com chip NXP TEF6686: botões, menus, ajustes para o Brasil e solução de problemas.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","name":"Guia do DP-666","about":"Rádio DEEPELEC DP-666 (NXP TEF6686 + ESP32)","url":"https://mflipe.github.io/guia-dp666/","inLanguage":"pt-BR","isAccessibleForFree":true,"author":{"@type":"Person","name":"mflipe","url":"https://github.com/mflipe"},"license":"https://creativecommons.org/licenses/by/4.0/","creditText":"Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Tektur:wght@500;600;700&display=swap">
@@ -875,6 +879,10 @@ tbody tr:last-child td { border-bottom: 0; }
 @media (prefers-reduced-motion: reduce) {
   .tabbar.dial-ready .dial-needle, .tabbar.dial-ready .dial-ring, .sidebar.dial-ready .side-needle, .sidebar.dial-ready .side-ring { transition: none; }
 }
+/* Licença: segundo parágrafo do rodapé da barra lateral e o texto de citação na página Fontes. */
+.side-foot + .side-foot { margin-top: 8px; }
+.prose blockquote { margin: 16px 0; padding: 12px 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
+.prose blockquote p { margin: 0; }
 </style>
 </head>
 <body>
@@ -890,7 +898,7 @@ tbody tr:last-child td { border-bottom: 0; }
   <button class="profile-chip" id="profile-btn" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button>
 </header>
 <div class="shell">
-  <nav class="sidebar" id="sidebar" aria-label="Páginas do guia"><span class="side-needle" aria-hidden="true"></span><span class="side-ring" aria-hidden="true"></span>{{NAV}}<p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p></nav>
+  <nav class="sidebar" id="sidebar" aria-label="Páginas do guia"><span class="side-needle" aria-hidden="true"></span><span class="side-ring" aria-hidden="true"></span>{{NAV}}<p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p><p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="#fontes--como-citar-este-guia">cite o guia</a> com o link.</p></nav>
   <div class="scrim" id="scrim"></div>
   <div class="main">
     <main id="main">{{PAGES}}</main>

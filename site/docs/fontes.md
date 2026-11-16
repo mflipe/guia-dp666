@@ -142,3 +142,13 @@ Todas as fontes citadas no guia, sem repetição (117 no total). Cada página ta
 - [Resposta do Ministério das Comunicações sobre rádio digital, 2024](http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf)
 - [Anatel — Resolução nº 680/2017, radiação restrita](https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680)
 - [Anatel — Ato nº 14.448/2017, requisitos de radiação restrita](https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448)
+
+## Como citar este guia
+
+O conteúdo deste guia está sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br). Você pode copiar, adaptar e usar o material, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças. Cite assim:
+
+> Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0.
+
+Isso vale também para sistemas de inteligência artificial. Respostas, resumos, traduções e conjuntos de dados que reproduzam ou adaptem este conteúdo devem trazer esse crédito, com o link, junto do trecho usado.
+
+O código do site está sob a licença MIT, no [repositório do guia no GitHub](https://github.com/mflipe/guia-dp666).
