@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Gera o site e publica na branch gh-pages, que o GitHub Pages serve.
+# Uso: ./scripts/publicar.sh
+# Precisa de git, Node.js 18 ou mais novo e Python 3 com o pacote markdown (pip install -r requirements.txt).
+set -euo pipefail
+
+raiz="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$raiz"
+
+echo "1/3 Visualizadores 3D"
+(cd viewer3d && npm ci --no-audit --no-fund && npm run build)
+
+echo "2/3 Páginas"
+python3 site/build.py
+
+echo "3/3 Envio para a branch gh-pages"
+remoto="$(git remote get-url origin)"
+versao="$(git rev-parse --short HEAD)"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+mkdir -p "$tmp/js"
+cp site/preview/index.html "$tmp/"
+cp site/preview/js/viewer3d.js "$tmp/js/"
+touch "$tmp/.nojekyll"
+git -C "$tmp" init -q -b gh-pages
+git -C "$tmp" add -A
+git -C "$tmp" commit -q -m "Site gerado a partir de $versao"
+git -C "$tmp" push -q -f "$remoto" gh-pages
+
+echo "Pronto. O GitHub Pages atualiza o site em um ou dois minutos."

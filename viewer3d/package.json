@@ -1,0 +1,15 @@
+{
+  "name": "guia-dp666-viewer3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Visualizadores 3D do Guia do DP-666: painel do rádio, placa e módulo ESP32, com three.js.",
+  "scripts": {
+    "build": "esbuild src/viewer3d.js --bundle --minify --format=esm --target=es2020 --outfile=../site/preview/js/viewer3d.js"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
