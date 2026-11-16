@@ -7,6 +7,8 @@
 <meta name="description" content="Guia independente do rádio DEEPELEC DP-666, com chip NXP TEF6686: botões, menus, ajustes para o Brasil e solução de problemas.">
 <meta name="author" content="mflipe">
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","name":"Guia do DP-666","about":"Rádio DEEPELEC DP-666 (NXP TEF6686 + ESP32)","url":"https://mflipe.github.io/guia-dp666/","inLanguage":"pt-BR","isAccessibleForFree":true,"author":{"@type":"Person","name":"mflipe","url":"https://github.com/mflipe"},"license":"https://creativecommons.org/licenses/by/4.0/","creditText":"Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -881,6 +883,20 @@ tbody tr:last-child td { border-bottom: 0; }
 }
 /* Licença: segundo parágrafo do rodapé da barra lateral e o texto de citação na página Fontes. */
 .side-foot + .side-foot { margin-top: 8px; }
+/* Seletor de idioma: o idioma atual preenchido, o outro como link. */
+.lang { display: inline-flex; flex: none; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.lang > * { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 37px; padding: 0 9px; font: 600 0.8rem var(--font-display); letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
+.lang .lang-on { background: var(--ink); color: var(--surface); }
+.lang a:hover { color: var(--ink); background: var(--accent-soft); }
+.lang a:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+@media (max-width: 560px) {
+  .lang { order: 2; }
+  .lang > * { min-width: 36px; padding: 0 7px; }
+  .topbar { column-gap: 8px; }
+}
+/* Botão do perfil: nome completo do firmware; no celular, o curto. */
+.profile-chip .chip-s { display: none; }
+@media (max-width: 560px) { .profile-chip .chip-l { display: none; } .profile-chip .chip-s { display: inline; } }
 .prose blockquote { margin: 16px 0; padding: 12px 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
 .prose blockquote p { margin: 0; }
 </style>
@@ -896,12 +912,13 @@ tbody tr:last-child td { border-bottom: 0; }
     <div class="results" id="results" role="listbox" hidden></div>
   </div>
   <button class="profile-chip" id="profile-btn" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button>
+  <nav class="lang" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" id="lang-switch" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></nav>
 </header>
 <div class="shell">
   <nav class="sidebar" id="sidebar" aria-label="Páginas do guia"><span class="side-needle" aria-hidden="true"></span><span class="side-ring" aria-hidden="true"></span><div class="nav-group"><p class="nav-title">Ferramentas</p><ul><li><a class="nav-link nav-tool" href="#inicio" data-route="inicio"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 11 12 5.5l7.5 5.5"/><path d="M6.5 10v9h11v-9"/><circle cx="4.5" cy="11" r="1.7" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.7" fill="currentColor" stroke="none"/></svg>Início</a></li><li><a class="nav-link nav-tool" href="#botoes" data-route="botoes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="6"/><path d="M12 13.5l3.2-3.2"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="5" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>Controles do rádio</a></li><li><a class="nav-link nav-tool" href="#ajustes" data-route="ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="15" cy="7" r="2.2" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="13" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg>Ajustes do rádio</a></li><li><a class="nav-link nav-tool" href="#ajuda" data-route="ajuda"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9.2a3 3 0 1 1 4.4 2.6c-.9.5-1.4 1.2-1.4 2.2v.6"/><circle cx="12" cy="18.6" r="1.6" fill="currentColor" stroke="none"/></svg>Assistente de problemas</a></li><li><a class="nav-link nav-tool" href="#placa" data-route="placa"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="8" height="10" rx="1"/><path d="M8 10H5.5M8 14H5.5M16 10h2.5M16 14h2.5"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg>Placa em 3D</a></li></ul></div><p class="nav-section">Guia completo</p><div class="nav-group"><p class="nav-title">Começar</p><ul><li><a class="nav-link" href="#brasil" data-route="brasil">Configuração para o Brasil</a></li></ul></div><div class="nav-group"><p class="nav-title">O rádio</p><ul><li><a class="nav-link" href="#hardware" data-route="hardware">Hardware</a></li><li><a class="nav-link" href="#uso" data-route="uso">Uso do rádio</a></li><li><a class="nav-link" href="#menus" data-route="menus">Menus explicados</a></li></ul></div><div class="nav-group"><p class="nav-title">Firmware</p><ul><li><a class="nav-link" href="#firmwares" data-route="firmwares">Megatron × oficial</a></li><li><a class="nav-link" href="#oficial" data-route="oficial">Uso da linha oficial</a></li><li><a class="nav-link" href="#mod17" data-route="mod17">Recursos ocultos do Mod17</a></li><li><a class="nav-link" href="#backup" data-route="backup">Backup e gravação</a></li></ul></div><div class="nav-group"><p class="nav-title">Conexões</p><ul><li><a class="nav-link" href="#computador" data-route="computador">Usar com o computador</a></li><li><a class="nav-link" href="#conectividade" data-route="conectividade">Conectividade e controle remoto</a></li></ul></div><div class="nav-group"><p class="nav-title">Ajuda</p><ul><li><a class="nav-link" href="#problemas" data-route="problemas">Problemas comuns</a></li><li><a class="nav-link" href="#comparacao" data-route="comparacao">Comparação com outros rádios</a></li></ul></div><div class="nav-group"><p class="nav-title">Projetos</p><ul><li><a class="nav-link" href="#laboratorio" data-route="laboratorio">Laboratório</a></li></ul></div><div class="nav-group"><p class="nav-title">Referência</p><ul><li><a class="nav-link" href="#fontes" data-route="fontes">Fontes</a></li></ul></div><p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p><p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="#fontes--como-citar-este-guia">cite o guia</a> com o link.</p></nav>
   <div class="scrim" id="scrim"></div>
   <div class="main">
-    <main id="main"><article class="page" id="page-inicio" data-route="inicio" data-toc="[[&quot;inicio--qual-firmware-está-no-meu-rádio&quot;, &quot;Qual firmware está no meu rádio?&quot;], [&quot;inicio--guia-completo&quot;, &quot;Guia completo&quot;], [&quot;inicio--versões-cobertas&quot;, &quot;Versões cobertas&quot;], [&quot;inicio--como-ler-este-guia&quot;, &quot;Como ler este guia&quot;], [&quot;inicio--fontes&quot;, &quot;Fontes&quot;]]" data-sources="3 fontes"><header class="page-head"><div class="home-hero"><svg class="hx" viewBox="0 0 352 140" role="img" aria-labelledby="hx-t hx-d"><title id="hx-t">Caminho do sinal no DP-666</title><desc id="hx-d">A antena leva o sinal ao sintonizador TEF6686, que gera o áudio. O processador ESP32 controla o TEF6686 pela ligação I²C e desenha a tela.</desc><path class="hx-line" d="M84 26H127"/><path class="hx-head" d="M126 21l7 5-7 5z"/><path class="hx-line" d="M218 26H261"/><path class="hx-head" d="M260 21l7 5-7 5z"/><path class="hx-line" d="M176 44V96"/><path class="hx-line" d="M218 114H261"/><path class="hx-head" d="M260 109l7 5-7 5z"/><rect class="hx-box" x="1" y="8" width="84" height="36" rx="4"/><text class="hx-t" x="43" y="31" text-anchor="middle">Antena</text><rect class="hx-key" x="134" y="8" width="84" height="36" rx="4"/><text class="hx-tk" x="176" y="31" text-anchor="middle">TEF6686</text><rect class="hx-box" x="267" y="8" width="84" height="36" rx="4"/><text class="hx-t" x="309" y="31" text-anchor="middle">Áudio</text><rect class="hx-box" x="134" y="96" width="84" height="36" rx="4"/><text class="hx-td" x="176" y="119" text-anchor="middle">ESP32</text><rect class="hx-box" x="267" y="96" width="84" height="36" rx="4"/><text class="hx-t" x="309" y="119" text-anchor="middle">Tela</text><text class="hx-l" x="186" y="74">I²C</text></svg></div><h1 tabindex="-1">Guia do DEEPELEC DP-666</h1><p class="lead">Botões, menus, ajustes para o Brasil e solução de problemas do rádio com chip NXP TEF6686.</p></header><div class="prose"><div class="home-app"><section class="home-profile" id="home-profile" aria-live="polite"></section><h2 class="home-q">O que você quer fazer?</h2><nav class="tool-grid" aria-label="Ferramentas"><a class="tool-card" href="#botoes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="6"/><path d="M12 13.5l3.2-3.2"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="5" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Explorar os controles</strong><span>Painel em 3D: toque e segure cada botão e knob.</span></a><a class="tool-card" href="#ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="15" cy="7" r="2.2" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="13" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg><strong>Achar um ajuste</strong><span>Busca nos menus, com o recomendado para o Brasil.</span></a><a class="tool-card" href="#ajuda"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9.2a3 3 0 1 1 4.4 2.6c-.9.5-1.4 1.2-1.4 2.2v.6"/><circle cx="12" cy="18.6" r="1.6" fill="currentColor" stroke="none"/></svg><strong>Resolver um problema</strong><span>Escolha o sintoma e siga os passos.</span></a><a class="tool-card" href="#placa"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="8" height="10" rx="1"/><path d="M8 10H5.5M8 14H5.5M16 10h2.5M16 14h2.5"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg><strong>Ver a placa em 3D</strong><span>Os chips e o caminho do som.</span></a><a class="tool-card" href="#ajustes--brasil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7.5l1.8 1.8 3-3M4.5 15.5l1.8 1.8 3-3"/><path d="M12.5 8h5M12.5 16h5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="16" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Configurar para o Brasil</strong><span>Uma lista para marcar enquanto ajusta o rádio.</span></a><a class="tool-card" href="#backup"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v9M8.5 10.5 12 14l3.5-3.5"/><path d="M6 18.5h12"/><circle cx="4.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Atualizar o firmware</strong><span>Backup, gravação e como voltar atrás.</span></a></nav></div>
+    <main id="main"><article class="page" id="page-inicio" data-route="inicio" data-toc="[[&quot;inicio--qual-firmware-está-no-meu-rádio&quot;, &quot;Qual firmware está no meu rádio?&quot;], [&quot;inicio--guia-completo&quot;, &quot;Guia completo&quot;], [&quot;inicio--versões-cobertas&quot;, &quot;Versões cobertas&quot;], [&quot;inicio--como-ler-este-guia&quot;, &quot;Como ler este guia&quot;], [&quot;inicio--fontes&quot;, &quot;Fontes&quot;]]" data-sources="3 fontes"><header class="page-head"><div class="home-hero"><svg class="hx" viewBox="0 0 352 140" role="img" aria-labelledby="hx-t hx-d"><title id="hx-t">Caminho do sinal no DP-666</title><desc id="hx-d">A antena leva o sinal ao sintonizador TEF6686, que gera o áudio. O processador ESP32 controla o TEF6686 pela ligação I²C e desenha a tela.</desc><path class="hx-line" d="M84 26H127"/><path class="hx-head" d="M126 21l7 5-7 5z"/><path class="hx-line" d="M218 26H261"/><path class="hx-head" d="M260 21l7 5-7 5z"/><path class="hx-line" d="M176 44V96"/><path class="hx-line" d="M218 114H261"/><path class="hx-head" d="M260 109l7 5-7 5z"/><rect class="hx-box" x="1" y="8" width="84" height="36" rx="4"/><text class="hx-t" x="43" y="31" text-anchor="middle">Antena</text><rect class="hx-key" x="134" y="8" width="84" height="36" rx="4"/><text class="hx-tk" x="176" y="31" text-anchor="middle">TEF6686</text><rect class="hx-box" x="267" y="8" width="84" height="36" rx="4"/><text class="hx-t" x="309" y="31" text-anchor="middle">Áudio</text><rect class="hx-box" x="134" y="96" width="84" height="36" rx="4"/><text class="hx-td" x="176" y="119" text-anchor="middle">ESP32</text><rect class="hx-box" x="267" y="96" width="84" height="36" rx="4"/><text class="hx-t" x="309" y="119" text-anchor="middle">Tela</text><text class="hx-l" x="186" y="74">I²C</text></svg></div><h1 tabindex="-1">Guia do DEEPELEC <span class="nw">DP-666</span></h1><p class="lead">Botões, menus, ajustes para o Brasil e solução de problemas do rádio com chip NXP TEF6686.</p></header><div class="prose"><div class="home-app"><section class="home-profile" id="home-profile" aria-live="polite"></section><h2 class="home-q">O que você quer fazer?</h2><nav class="tool-grid" aria-label="Ferramentas"><a class="tool-card" href="#botoes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="6"/><path d="M12 13.5l3.2-3.2"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="5" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Explorar os controles</strong><span>Painel em 3D: toque e segure cada botão e knob.</span></a><a class="tool-card" href="#ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="15" cy="7" r="2.2" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="13" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg><strong>Achar um ajuste</strong><span>Busca nos menus, com o recomendado para o Brasil.</span></a><a class="tool-card" href="#ajuda"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9.2a3 3 0 1 1 4.4 2.6c-.9.5-1.4 1.2-1.4 2.2v.6"/><circle cx="12" cy="18.6" r="1.6" fill="currentColor" stroke="none"/></svg><strong>Resolver um problema</strong><span>Escolha o sintoma e siga os passos.</span></a><a class="tool-card" href="#placa"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="8" height="10" rx="1"/><path d="M8 10H5.5M8 14H5.5M16 10h2.5M16 14h2.5"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg><strong>Ver a placa em 3D</strong><span>Os chips e o caminho do som.</span></a><a class="tool-card" href="#ajustes--brasil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7.5l1.8 1.8 3-3M4.5 15.5l1.8 1.8 3-3"/><path d="M12.5 8h5M12.5 16h5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="16" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Configurar para o Brasil</strong><span>Uma lista para marcar enquanto ajusta o rádio.</span></a><a class="tool-card" href="#backup"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v9M8.5 10.5 12 14l3.5-3.5"/><path d="M6 18.5h12"/><circle cx="4.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Atualizar o firmware</strong><span>Backup, gravação e como voltar atrás.</span></a></nav></div>
 
 <p>Guia independente, em português, para o rádio DP-666 com chip NXP TEF6686. Ele junta o que está espalhado entre os manuais do fabricante, o código dos firmwares, fóruns e testes práticos, e cobre as duas linhas de firmware: o <strong>Megatron</strong> (o de toque, com código fechado) e a <strong>linha oficial do PE5PVB</strong> (código aberto).</p>
 <dl class="facts">
@@ -3082,6 +3099,7 @@ tbody tr:last-child td { border-bottom: 0; }
 <script>
 (function () {
   "use strict";
+  var DECIMAL = /^pt/.test(document.documentElement.lang) ? "," : ".";   // separador decimal do idioma da página
   var APP = JSON.parse(document.getElementById("app-data").textContent);
 
   // ---------------------------------------------------------------- utilidades
@@ -3112,6 +3130,7 @@ tbody tr:last-child td { border-bottom: 0; }
   // ---------------------------------------------------------------- perfil do aparelho
   var PKEY = "dp666.perfil.v1";
   var FW_NAME = { mod17: "Mod17", oficial: "Linha oficial" };
+  var FW_SHORT = { mod17: "Mod17", oficial: "Oficial" };   // no celular, o botão do perfil usa o nome curto
   var FW_OPTS = [["mod17", "Megatron Mod17"], ["oficial", "Linha oficial"]];
   var profile = store.get(PKEY, { fw: "", rtc: "?" });
   var listeners = [];
@@ -3126,7 +3145,9 @@ tbody tr:last-child td { border-bottom: 0; }
   var chip = $("#profile-btn"), dlg = $("#profile-dlg");
   function paintChip() {
     chip.dataset.set = profile.fw ? "yes" : "no";
-    chip.querySelector("span").textContent = profile.fw ? FW_NAME[profile.fw] : "Seu rádio";
+    var label = chip.querySelector("span");
+    if (profile.fw) label.innerHTML = '<span class="chip-l">' + FW_NAME[profile.fw] + '</span><span class="chip-s">' + FW_SHORT[profile.fw] + "</span>";
+    else label.textContent = "Seu rádio";
     chip.setAttribute("aria-label", "Seu rádio: " + (profile.fw ? FW_NAME[profile.fw] : "firmware não informado") + ". Toque para mudar.");
   }
   function openProfile() {
@@ -3255,7 +3276,7 @@ tbody tr:last-child td { border-bottom: 0; }
     }
     function showAction(c, kind, ms) {
       var did = { curto: "Toque curto", longo: "Toque longo", segurar: "Segurou", girar: "Girou" }[kind];
-      if (ms != null) did += " · " + (ms / 1000).toFixed(1).replace(".", ",") + " s";
+      if (ms != null) did += " · " + (ms / 1000).toFixed(1).replace(".", DECIMAL) + " s";
       out.innerHTML = "<h3>" + esc(c.rotulo) + '</h3><p class="sim-did">' + did + '</p><ul class="sim-acts">' +
         c.acoes.map(function (a) {
           return '<li class="' + (a[0] === kind ? "hit" : "") + '"><span class="k">' + esc(a[1]) + "</span>" + a[2] + "</li>";
@@ -3909,7 +3930,7 @@ tbody tr:last-child td { border-bottom: 0; }
       if (routes[base] && !document.getElementById(route)) {
         try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: route })); } catch (e) {}
       }
-      if (routes[base] && document.getElementById(route)) { pendingScroll = route; route = base; }
+      if (routes[base]) { if (document.getElementById(route)) pendingScroll = route; route = base; }
     }
     if (!routes[route]) route = "inicio";
     var page = routes[route];
@@ -3930,6 +3951,16 @@ tbody tr:last-child td { border-bottom: 0; }
       if (h) { try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
     }
     current = route;
+    syncLang(route);
+  }
+  // O link do outro idioma leva à mesma página. Só os itens de ajuste têm o mesmo id nos dois idiomas.
+  var langLink = document.getElementById("lang-switch");
+  function syncLang(route) {
+    if (!langLink) return;
+    var h = location.hash.slice(1);
+    try { h = decodeURIComponent(h); } catch (e) {}
+    var keep = h.indexOf("ajustes--") === 0 ? h : route;
+    langLink.href = langLink.getAttribute("data-base") + (keep && keep !== "inicio" ? "#" + keep : "");
   }
   window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
   menuBtn.addEventListener("click", function () { setNav(!document.body.classList.contains("nav-open")); });
