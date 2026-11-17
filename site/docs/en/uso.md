@@ -4,6 +4,8 @@ Controls, tuning, memory channels and searches on Megatron Mod17. When a behavio
 
 ## Where everything is
 
+<!--FOTOS3D-->
+
 <div class="fotos">
 <figure class="foto foto-larga"><img src="img/dp666-frente.webp" width="1200" height="928" loading="lazy" alt="Front of the radio: speaker on the left and screen on the right; below the screen, BW, MODE and BAND, the numeric keypad with DX and Enter, and the red POWER button. The antenna comes out of the top, near the left side."><figcaption>Front</figcaption></figure>
 <figure class="foto foto-larga"><img src="img/dp666-verso.webp" width="1200" height="916" loading="lazy" alt="Back of the radio with the label: FM 65 to 108 MHz, LW 144 to 513 kHz, MW 520 to 1720 kHz (522 to 1791 kHz), SW 1700 to 27000 kHz, 3.7 V 5000 mAh battery and 5 V USB power, up to 1.5 A."><figcaption>Back</figcaption></figure>

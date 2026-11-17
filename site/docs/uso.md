@@ -4,6 +4,8 @@ Controles, sintonia, memórias e buscas no Megatron Mod17. Quando o comportament
 
 ## Onde fica cada coisa
 
+<!--FOTOS3D-->
+
 <div class="fotos">
 <figure class="foto foto-larga"><img src="img/dp666-frente.webp" width="1200" height="928" loading="lazy" alt="Frente do rádio: alto-falante à esquerda e tela à direita; embaixo da tela, BW, MODE e BAND, o teclado numérico com DX e Enter e o botão POWER, vermelho. A antena sai do topo, perto da lateral esquerda."><figcaption>Frente</figcaption></figure>
 <figure class="foto foto-larga"><img src="img/dp666-verso.webp" width="1200" height="916" loading="lazy" alt="Verso do rádio com a etiqueta: FM de 65 a 108 MHz, LW de 144 a 513 kHz, MW de 520 a 1720 kHz (522 a 1791 kHz), SW de 1700 a 27000 kHz, bateria de 3,7 V e 5000 mAh e alimentação de 5 V pela USB, até 1,5 A."><figcaption>Verso</figcaption></figure>

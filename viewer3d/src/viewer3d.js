@@ -2,3 +2,4 @@
 export { mount as mountEsp32 } from './esp32-3d.js';
 export { mountPlaca } from './placa-3d.js';
 export { mountPainel } from './painel-3d.js';
+export { mountFotos } from './fotos-3d.js';

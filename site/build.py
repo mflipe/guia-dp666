@@ -147,6 +147,20 @@ def viewer3d_html():
     )
 
 
+def fotos3d_html():
+    js = ROOT / "preview" / "js" / L["viewer_js"]
+    if not js.exists():
+        js = ROOT / "preview" / "js" / "viewer3d.js"
+    kb = js.stat().st_size + sum(p.stat().st_size for p in (ROOT / "img").glob("dp666-3d-*.webp"))
+    return (
+        '<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui">'
+        f'<button type="button" class="v3-open" data-viewer3d-open="fotos">{esc(L["f3_open"])}</button>'
+        f'<p class="v3-note">{esc(L["f3_note"].format(kb=round(kb / 1024)))}</p>'
+        "</div></div></div>"
+        f"<figcaption>{esc(L['f3_caption'])}</figcaption></figure>"
+    )
+
+
 def fix_links(h):
     def f(mm):
         href = mm.group(1)
@@ -248,6 +262,7 @@ def render(md_text, route):
     body = re.sub(r"<!--DIAL-->", lambda m: numbered(diagram("fm_dial")), body)
     body = re.sub(r"<!--DIAGRAM:(\w+)-->", lambda m: numbered(diagram(m.group(1))), body)
     body = re.sub(r"<!--VIEWER3D-->", lambda m: numbered(viewer3d_html()), body)
+    body = re.sub(r"<!--FOTOS3D-->", lambda m: numbered(fotos3d_html()), body)
     body = body.replace("<!--HOME-->", home_html())
     body = body.replace("<!--COMPONENTS-->", components_html())
     body = re.sub(r"<!--REFS:(\w+)-->", lambda m: refs_html(m.group(1)), body)

@@ -14,7 +14,7 @@ O guia funciona como um app, no celular e no computador, nos temas claro e escur
 | `site/docs/en/` | O texto das páginas em inglês, com os mesmos nomes de arquivo |
 | `site/i18n.py` e `site/i18n/` | A tradução do resto: textos da interface, catálogos português → inglês dos dados, dos diagramas e do JavaScript, e os nomes dos menus da linha oficial em inglês (`menuspec_en.py`, `didatica_en.py`) |
 | `site/` | O gerador. O `build.py` junta o texto, o `template.html`, o `app.js`, os dados dos menus (`menuspec.py`, `didatica.py`, `appdata.py`, `data.py`) e os diagramas (`diagrams.py`) num único `index.html` |
-| `viewer3d/` | Os visualizadores 3D do painel, da placa e do ESP32, feitos com three.js |
+| `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |
 | `scripts/publicar.sh` | Gera o site e publica no GitHub Pages |
 
 ## Gerar o site

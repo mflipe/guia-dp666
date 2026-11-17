@@ -81,6 +81,10 @@ UI = {
         "prov": {"(manual)": "manual", "(firmware)": "firmware", "(código-base)": "código-base"},
         "figure": "Figura",
         "v3_open": "Abrir a visão 3D",
+        "f3_open": "Ver o rádio em 3D",
+        "f3_note": "Baixa cerca de {kb} KB só quando você pede. Funciona no celular e no computador.",
+        "f3_caption": ("O rádio em 3D, montado com as fotos abaixo: uma caixa nas medidas do corpo, com a foto de cada lado. "
+                       "Os knobs e a antena aparecem só como foto, e o topo ainda não tem foto."),
         "v3_note": "Baixa um arquivo de {kb} KB só quando você pede. Funciona no celular e no computador.",
         "v3_caption": ("Módulos ESP32 em escala, com os pinos coloridos pela função no DP-666. Medidas externas dos datasheets "
                        "da Espressif; a posição dos pinos laterais e do conector de antena é aproximada. A grade tem quadrados de 5 mm."),
@@ -153,6 +157,10 @@ UI = {
         "prov": {"(manual)": "manual", "(firmware)": "firmware", "(base code)": "base code"},
         "figure": "Figure",
         "v3_open": "Open the 3D view",
+        "f3_open": "See the radio in 3D",
+        "f3_note": "Downloads about {kb} KB only when you ask. Works on phones and computers.",
+        "f3_caption": ("The radio in 3D, built from the photos below: a box with the body’s dimensions and the photo of each side on it. "
+                       "The knobs and the antenna show only in the photos, and the top has no photo yet."),
         "v3_note": "Downloads a {kb} KB file only when you ask. Works on phones and computers.",
         "v3_caption": ("ESP32 modules to scale, with the pins colored by their function on the DP-666. Outer dimensions from "
                        "Espressif’s datasheets; the position of the side pins and of the antenna connector is approximate. "

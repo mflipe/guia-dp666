@@ -710,14 +710,15 @@
     document.addEventListener("app:show", function (e) { if (e.detail === "placa" && !started) load(); });
   }
 
-  // visão 3D do ESP32, no Laboratório: só baixa quando a pessoa pede
+  // visões 3D do ESP32 (Laboratório) e das fotos (Uso do rádio): só baixam quando a pessoa pede
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("[data-viewer3d-open]");
     if (!b) return;
     var root = b.closest(".viewer3d");
     b.disabled = true;
     b.textContent = "Carregando a visão 3D…";
-    import("./js/viewer3d.js").then(function (m) { m.mountEsp32(root); }).catch(function () {
+    var qual = b.getAttribute("data-viewer3d-open");
+    import("./js/viewer3d.js").then(function (m) { (qual === "fotos" ? m.mountFotos : m.mountEsp32)(root); }).catch(function () {
       b.disabled = false;
       b.textContent = "Não carregou. Tentar de novo";
     });
