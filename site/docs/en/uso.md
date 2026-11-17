@@ -2,6 +2,27 @@
 
 Controls, tuning, memory channels and searches on Megatron Mod17. When a behavior comes from the code of PE5PVB v2.00, Megatron’s base, it is marked (base code). For the official firmware, see [Using the official firmware](oficial.md).
 
+## Where everything is
+
+<div class="fotos">
+<figure class="foto foto-larga"><img src="img/dp666-frente.webp" width="1200" height="928" loading="lazy" alt="Front of the radio: speaker on the left and screen on the right; below the screen, BW, MODE and BAND, the numeric keypad with DX and Enter, and the red POWER button. The antenna comes out of the top, near the left side."><figcaption>Front</figcaption></figure>
+<figure class="foto foto-larga"><img src="img/dp666-verso.webp" width="1200" height="916" loading="lazy" alt="Back of the radio with the label: FM 65 to 108 MHz, LW 144 to 513 kHz, MW 520 to 1720 kHz (522 to 1791 kHz), SW 1700 to 27000 kHz, 3.7 V 5000 mAh battery and 5 V USB power, up to 1.5 A."><figcaption>Back</figcaption></figure>
+<figure class="foto foto-lado"><img src="img/dp666-esquerda.webp" width="327" height="1000" loading="lazy" alt="Left side, top to bottom: BOOT button, marked ESP32 BOOT, headphone jack, LED and USB-C port, marked DC-IN 5V."><figcaption>Left side</figcaption></figure>
+<figure class="foto foto-lado"><img src="img/dp666-direita.webp" width="329" height="813" loading="lazy" alt="Right side, top to bottom: TUNING knob, SQL wheel with + at the top and − at the bottom, and VOLUME knob."><figcaption>Right side</figcaption></figure>
+<figure class="foto foto-fundo"><img src="img/dp666-fundo.webp" width="1200" height="254" loading="lazy" alt="Bottom of the radio: the main switch, marked Main switch, with ON on the left and OFF on the right, and a grid of twelve holes near the left side."><figcaption>Bottom, seen with the front facing up</figcaption></figure>
+</div>
+
+<p class="fotos-credito">Photos: mflipe, under the CC BY 4.0 license. The top shows in the front and back photos.</p>
+
+| Side | What is there |
+| --- | --- |
+| Front | touchscreen, numeric keypad (0 to 9, DX and Enter), BW, MODE, BAND, POWER and speaker |
+| Right side | top to bottom: TUNING, the SQL wheel (+ at the top, − at the bottom) and VOLUME |
+| Left side | top to bottom: BOOT (marked ESP32 BOOT), 3.5 mm headphone jack, charging LED and USB-C (marked DC-IN 5V) |
+| Top | SMA antenna connector, near the left side |
+| Back | label with the bands, the battery and the power input |
+| Bottom | main switch, marked Main switch: ON toward the left side, OFF toward the right; and a grid of holes below the speaker |
+
 ## Buttons
 
 - **Main switch:** OFF disconnects the battery. Use it to store the radio and to really cut the power when it freezes.

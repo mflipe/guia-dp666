@@ -2,6 +2,27 @@
 
 Controles, sintonia, memórias e buscas no Megatron Mod17. Quando o comportamento vem do código do PE5PVB v2.00, base do Megatron, isso aparece como (código-base). Para o firmware oficial, veja [Uso da linha oficial](oficial.md).
 
+## Onde fica cada coisa
+
+<div class="fotos">
+<figure class="foto foto-larga"><img src="img/dp666-frente.webp" width="1200" height="928" loading="lazy" alt="Frente do rádio: alto-falante à esquerda e tela à direita; embaixo da tela, BW, MODE e BAND, o teclado numérico com DX e Enter e o botão POWER, vermelho. A antena sai do topo, perto da lateral esquerda."><figcaption>Frente</figcaption></figure>
+<figure class="foto foto-larga"><img src="img/dp666-verso.webp" width="1200" height="916" loading="lazy" alt="Verso do rádio com a etiqueta: FM de 65 a 108 MHz, LW de 144 a 513 kHz, MW de 520 a 1720 kHz (522 a 1791 kHz), SW de 1700 a 27000 kHz, bateria de 3,7 V e 5000 mAh e alimentação de 5 V pela USB, até 1,5 A."><figcaption>Verso</figcaption></figure>
+<figure class="foto foto-lado"><img src="img/dp666-esquerda.webp" width="327" height="1000" loading="lazy" alt="Lateral esquerda, de cima para baixo: botão BOOT, marcado ESP32 BOOT, entrada de fone, LED e porta USB-C, marcada DC-IN 5V."><figcaption>Lateral esquerda</figcaption></figure>
+<figure class="foto foto-lado"><img src="img/dp666-direita.webp" width="329" height="813" loading="lazy" alt="Lateral direita, de cima para baixo: knob TUNING, roda SQL com + em cima e − embaixo, e knob VOLUME."><figcaption>Lateral direita</figcaption></figure>
+<figure class="foto foto-fundo"><img src="img/dp666-fundo.webp" width="1200" height="254" loading="lazy" alt="Fundo do rádio: a chave geral, marcada Main switch, com ON à esquerda e OFF à direita, e uma grade de doze furos perto da lateral esquerda."><figcaption>Fundo, visto com a frente para cima</figcaption></figure>
+</div>
+
+<p class="fotos-credito">Fotos: mflipe, sob a licença CC BY 4.0. O topo aparece nas fotos da frente e do verso.</p>
+
+| Lado | O que tem |
+| --- | --- |
+| Frente | tela de toque, teclado numérico (0 a 9, DX e Enter), BW, MODE, BAND, POWER e alto-falante |
+| Lateral direita | de cima para baixo: TUNING, a roda SQL (+ em cima, − embaixo) e VOLUME |
+| Lateral esquerda | de cima para baixo: BOOT (marcado ESP32 BOOT), fone de 3,5 mm, LED de carga e USB-C (marcada DC-IN 5V) |
+| Topo | conector SMA da antena, perto da lateral esquerda |
+| Verso | etiqueta com as faixas, a bateria e a alimentação |
+| Fundo | chave geral, marcada Main switch: ON para o lado esquerdo, OFF para o direito; e uma grade de furos embaixo do alto-falante |
+
 ## Botões
 
 - **Chave geral:** em OFF desconecta a bateria. Use para guardar o rádio e para cortar a energia de verdade quando ele travar.

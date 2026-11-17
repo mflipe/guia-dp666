@@ -152,10 +152,10 @@ const BUILD = {
     g.add(rbox(16, 1, 5.6, m('dark'), 0, 0.4));
     const cap = new Group();
     cap.add(rbox(5, 3, 4.6, m('metal'), 0.8, 1));
-    cap.position.x = 4.6;
+    cap.position.x = -4.6;
     g.add(cap);
-    const off = text('OFF', 7, 3, { size: 0.7 }); off.position.set(-5, 0.02, 4.6); g.add(off);
-    const on = text('ON', 7, 3, { size: 0.7 }); on.position.set(5, 0.02, 4.6); g.add(on);
+    const on = text('ON', 7, 3, { size: 0.7 }); on.position.set(-5, 0.02, 4.6); g.add(on);
+    const off = text('OFF', 7, 3, { size: 0.7 }); off.position.set(5, 0.02, 4.6); g.add(off);
     const t = text('CHAVE GERAL', 24, 3.8); t.position.set(0, 0.02, 8.6); g.add(t);
     return { lever: cap };
   },
@@ -172,6 +172,23 @@ const BUILD = {
       const t = text(label, 15, 3.8); t.position.set(0, 0.02, 9.2); g.add(t);
       return { cap, rot };
     };
+  },
+  roda(g, m) {
+    const rim = rbox(6, 0.8, 13.6, m('metal'), 0, 0.8); rim.position.x = 1.5; g.add(rim);
+    const slot = rbox(3.8, 0.84, 11, m('hole'), 0, 0.5); slot.position.x = 1.5; g.add(slot);
+    const serrilha = canvasTex(512, 64, (x, w, h) => {
+      x.fillStyle = '#41464d'; x.fillRect(0, 0, w, h);
+      x.fillStyle = '#15181c';
+      for (let i = 0; i < w; i += 16) x.fillRect(i, 0, 7, h);
+    });
+    const mk = m('key'); mk.map = serrilha; mk.color.set('#ffffff');
+    const wheel = new Mesh(new CylinderGeometry(4.8, 4.8, 3.2, 48), mk);
+    wheel.rotation.z = Math.PI / 2;   // eixo deitado: a roda gira para o + ou para o −
+    wheel.position.set(1.5, -2.6, 0);  // só o alto da roda passa pela fenda
+    g.add(wheel);
+    const mais = text('+', 3.4, 3.4, { size: 0.9 }); mais.position.set(-4.2, 0.02, -4.4); g.add(mais);
+    const menos = text('−', 3.4, 3.4, { size: 0.9 }); menos.position.set(-4.2, 0.02, 4.4); g.add(menos);
+    const t = text('SQL', 15, 3.8); t.position.set(0, 0.02, 9.2); g.add(t);
   },
   fone(g, m) {
     g.add(cyl(3.6, 1.2, m('metal'), 0, 40));
@@ -208,7 +225,7 @@ BUILD.band = BUILD.key('BAND');
 BUILD.bw = BUILD.key('BW');
 BUILD.mode = BUILD.key('MODE');
 BUILD.volume = BUILD.pot('VOLUME');
-BUILD.sql = BUILD.pot('SQL');
+BUILD.sql = BUILD.roda;
 
 function disposeTree(o) {
   o.traverse((n) => {
@@ -280,7 +297,7 @@ export function mountPainel(stage, cb = {}) {
       deck.add(g);
       ctls[id] = { id, g, mats, ...parts, angle: 0 };
     });
-    if (ctls.chave) ctls.chave.lever.position.x = chaveOn ? 4.6 : -4.6;
+    if (ctls.chave) ctls.chave.lever.position.x = chaveOn ? -4.6 : 4.6;
     scene.add(deck);
     paint();
   }
@@ -372,7 +389,7 @@ export function mountPainel(stage, cb = {}) {
     selected = p.id;
     if (p.id === 'chave') {
       chaveOn = !chaveOn;
-      c.lever.position.x = chaveOn ? 4.6 : -4.6;
+      c.lever.position.x = chaveOn ? -4.6 : 4.6;
     }
     paint();
     if (cb.press) cb.press(p.id, performance.now() - p.t0);

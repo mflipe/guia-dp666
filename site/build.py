@@ -9,6 +9,7 @@ import html
 import json
 import pathlib
 import re
+import shutil
 from urllib.parse import urlparse
 
 import sys
@@ -370,6 +371,8 @@ def build():
                    .replace("{{UPDATED}}", UPDATED) \
                    .replace("{{NPAGES}}", str(len(PAGES))) \
                    .replace("{{NSOURCES}}", str(n_sources))
+    if L["dir"]:
+        page = page.replace('src="img/', 'src="../img/')  # as fotos ficam na raiz do site, uma pasta acima
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding="utf-8")
     print(f"ok: {OUT} ({OUT.stat().st_size // 1024} KB, {len(PAGES)} páginas, {len(index)} seções, {n_sources} fontes)")
@@ -424,6 +427,7 @@ def use_lang(lang):
 TEMPLATE = (ROOT / "template.html").read_text(encoding="utf-8")
 
 if __name__ == "__main__":
+    shutil.copytree(ROOT / "img", ROOT / "preview" / "img", dirs_exist_ok=True)
     for lang in (sys.argv[1:] or i18n.LANGS):
         use_lang(lang)
         build()
