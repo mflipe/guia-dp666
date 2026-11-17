@@ -38,7 +38,22 @@ PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
 # ferramentas do app: rota, título no menu, título da página, chamada
 TOOLS = L["tools"]
 TOOL_FALLBACK = L["tool_fallback"]
+TOOL_BY = {t[0]: t for t in TOOLS}
 FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
+
+# Páginas que juntam uma ferramenta e o texto dela (ou dois textos). Cada parte que antes era página
+# guarda a rota antiga como âncora (id) dentro da página nova, e o roteador chega nela pelo id.
+JUNTAS = {
+    "hardware": {"ferramenta": "placa"},
+    "uso": {"ferramenta": "botoes"},
+    "problemas": {"ferramenta": "ajuda"},
+    "ajustes": {"ferramenta": "ajustes", "no_topo": True, "partes": [("oficial#menu", "menu-oficial")]},
+    "computador": {"partes": [("conectividade", "conectividade")]},
+}
+# arquivos que viraram parte de outra página: o link para eles leva à âncora da parte
+PARTES = {"menus": "menus", "conectividade": "conectividade"}
+ICONE_DA_PAGINA = {"hardware": "placa", "uso": "botoes", "ajustes": "ajustes", "problemas": "ajuda", "inicio": "inicio"}
+FILE_TO_ROUTE.update(PARTES)
 
 # ---------------------------------------------------------------- fontes
 SOURCE_GROUPS = [
@@ -61,7 +76,7 @@ def h1_text(title):
 
 def collect_sources():
     seen, rows = set(), []
-    for f, _, _, _ in PAGES:
+    for f in [f for f, _, _, _ in PAGES] + [f for f in PARTES if f not in [p[0] for p in PAGES]]:
         if f == "fontes":
             continue
         text = doc(f)
@@ -214,13 +229,15 @@ def home_html():
             f'<h2 class="home-q">{esc(L["home_q"])}</h2><nav class="tool-grid" aria-label="{esc(L["home_nav"])}">{cards}</nav></div>')
 
 
-def tool_page(route, title, lead):
-    fb = TOOL_FALLBACK.get(route, "")
-    return (f'<article class="page tool-page" id="page-{route}" data-route="{route}" data-toc="[]" data-sources="—" hidden>'
-            f'<header class="page-head"><p class="kicker">{esc(L["tool_kicker"])}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
-            f'<p class="lead">{html.escape(lead)}</p></header>'
-            f'<div class="tool" id="tool-{route}" data-tool="{route}"><p class="tool-fallback">{L["tool_loading"].format(fb=fb)}'
-            f'</p></div></article>')
+CAPA = (900, 560)   # tamanho de img/dp666-3d-capa.webp
+
+
+def home_radio():
+    """O rádio montado com as fotos, no alto do Início: uma imagem que vira o 3D quando a pessoa toca."""
+    return ('<div class="home-radio viewer3d"><div class="v3-stage f3-stage f3-home">'
+            f'<img class="f3-capa" src="img/dp666-3d-capa.webp" width="{CAPA[0]}" height="{CAPA[1]}" alt="{esc(L["f3_capa_alt"])}">'
+            f'<button type="button" class="v3-open f3-girar" data-viewer3d-open="fotos-home">{esc(L["f3_girar"])}</button>'
+            '</div></div>')
 
 
 def app_data():
@@ -241,6 +258,90 @@ def app_data():
     return {"botoes": btn, "painel": appdata.build_panel(inline), "ajustes": menus, "checklist": checklist,
             "ajuda": {"cats": problems}, "placa": board}, \
         appdata.search_entries(menus, problems)
+
+
+def partes(md_text):
+    """Divide um texto em título (# ...), introdução (antes do primeiro ##), seções e linhas da lista de fontes."""
+    titulo, linhas = "", md_text.split("\n")
+    if linhas and linhas[0].startswith("# "):
+        titulo, md_text = linhas[0][2:].strip(), "\n".join(linhas[1:])
+    intro, sep, resto = md_text.partition("\n## ")
+    secoes = ("## " + resto) if sep else ""
+    pedaco = re.split(r"(?m)^## " + re.escape(L["sources_h"]) + r"\s*$", secoes, maxsplit=1)
+    fontes = [x for x in pedaco[1].splitlines() if LINK_RE.match(x.strip())] if len(pedaco) > 1 else []
+    return titulo, intro.strip("\n"), pedaco[0].rstrip("\n"), fontes
+
+
+def secao(md_text, titulo):
+    """Corpo de uma seção ## (sem o título dela) e onde ela começa e termina no texto."""
+    m = re.search(r"(?m)^## " + re.escape(titulo) + r"\s*$", md_text)
+    if not m:
+        return None, None
+    fim = re.search(r"(?m)^## ", md_text[m.end():])
+    ate = m.end() + fim.start() if fim else len(md_text)
+    return md_text[m.end():ate].strip("\n"), (m.start(), ate)
+
+
+def compor(f, route):
+    """Texto da página: o arquivo dela e, nas páginas juntadas, a ferramenta no alto, as partes e as fontes reunidas."""
+    md_text = doc(f)
+    menu_titulo = L["menu_full"][3:]
+    if route == "oficial":   # o menu completo da linha oficial mora em Ajustes do rádio
+        _, onde = secao(md_text, menu_titulo)
+        if onde:
+            md_text = md_text[:onde[0]] + L["menu_full"] + "\n\n" + L["menu_oficial"][1] + "\n\n" + md_text[onde[1]:]
+        return md_text
+    j = JUNTAS.get(route)
+    if not j:
+        return md_text
+    titulo, intro, secoes, fontes = partes(md_text)
+    ferramenta = j.get("ferramenta")
+    if j.get("no_topo"):
+        out = [f"# {TOOL_BY[ferramenta][2]}", "", f"<!--FERRAMENTA:{ferramenta}:topo-->", "",
+               f"<!--PARTE:{FILE_TO_ROUTE[f]}:{titulo}-->", "", intro, "", secoes, ""]
+    else:
+        out = [f"# {L['titulos'].get(route, titulo)}", "", intro, ""]
+        if ferramenta:
+            out += [f"<!--FERRAMENTA:{ferramenta}-->", ""]
+        out += [secoes, ""]
+    for parte, ancora in j.get("partes", []):
+        if parte == "oficial#menu":
+            corpo, _ = secao(doc("oficial"), menu_titulo)
+            t2, i2, s2, f2 = L["menu_oficial"][0], corpo or "", "", partes(doc("oficial"))[3]
+        else:
+            t2, i2, s2, f2 = partes(doc(parte))
+        out += [f"<!--PARTE:{ancora}:{t2}-->", "", i2, "", s2, ""]
+        fontes += f2
+    vistas, unicas = set(), []
+    for x in fontes:
+        if x.strip() not in vistas:
+            vistas.add(x.strip())
+            unicas.append(x.strip())
+    if unicas:
+        out += [f"<!--PARTE:{route}:-->", "", "## " + L["sources_h"], ""] + unicas + [""]
+    return "\n".join(out)
+
+
+def juntar(body, route):
+    """Põe a ferramenta no lugar do marcador (fora do bloco de texto) e dá a cada parte o título e o prefixo de id dela."""
+    def ferramenta(m):
+        tid, topo = m.group(1), m.group(2)
+        _, _, titulo, chamada = TOOL_BY[tid]
+        caixa = (f'<div class="tool tool-embed" id="tool-{tid}" data-tool="{tid}">'
+                 f'<p class="tool-fallback">{L["tool_loading"].format(fb=TOOL_FALLBACK.get(tid, ""))}</p></div>')
+        if topo:
+            return f'</div>{caixa}<div class="prose">'
+        return f'<h2 id="{tid}">{esc(titulo)}</h2><p class="tool-lead">{esc(chamada)}</p></div>{caixa}<div class="prose">'
+
+    body = re.sub(r"<!--FERRAMENTA:(\w+)(:topo)?-->", ferramenta, body)
+    pedacos = re.split(r"<!--PARTE:([\w-]+):(.*?)-->", body)
+    out = [pedacos[0]]
+    for i in range(1, len(pedacos), 3):
+        ancora, titulo, resto = pedacos[i], pedacos[i + 1], pedacos[i + 2]
+        if ancora != route:
+            resto = resto.replace(f'id="{route}--', f'id="{ancora}--')
+        out.append((f'<h2 id="{ancora}">{esc(titulo)}</h2>' if titulo else "") + resto)
+    return "".join(out)
 
 
 def render(md_text, route):
@@ -286,6 +387,7 @@ def render(md_text, route):
     body = re.sub(r'<a href="([^"]+)"', fix_link, body)
     # ids únicos no documento inteiro: "Fontes", "Prós" etc. se repetem entre páginas
     body = re.sub(r'<(h[2-6]) id="', rf'<\1 id="{route}--', body)
+    body = juntar(body, route)
     toc = [(i, re.sub(r"<[^>]+>", "", t)) for i, t in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body, re.S)]
     return title, body, toc
 
@@ -326,11 +428,11 @@ def build():
     n_sources = collect_sources()
     sections_html, index, nav_html, rendered = [], [], [], []
     for f, route, nav_title, group in PAGES:
-        md_text = doc(f)
+        md_text = compor(f, route)
         title, body, toc = render(md_text, route)
         n_src = n_sources if f == "fontes" else count_sources(md_text)
         rendered.append((f, route, nav_title, group, title, body, toc, n_src))
-        index += search_sections(route, title, body)
+        index += search_sections(route, title, re.sub(r'<div class="tool tool-embed".*?</div>', " ", body, flags=re.S))
 
     for i, (f, route, nav_title, group, title, body, toc, n_src) in enumerate(rendered):
         prev_ = rendered[i - 1] if i > 0 else None
@@ -345,29 +447,22 @@ def build():
         sections_html.append(
             f'<article class="page" id="page-{route}" data-route="{route}" data-toc="{toc_json}" '
             f'data-sources="{src_txt}"{hidden}>'
-            + (f'<header class="page-head">{diagram("hero")}<h1 tabindex="-1">{h1_text(title)}</h1>'
+            + (f'<header class="page-head">{home_radio()}<h1 tabindex="-1">{h1_text(title)}</h1>'
                f'<p class="lead">{html.escape(HOME_LEAD)}</p></header>' if route == "inicio" else
                f'<header class="page-head"><p class="kicker">{html.escape(group)}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
                f'<p class="meta">{L["meta"].format(d=UPDATED, s=src_txt)}</p></header>')
             + f'<div class="prose">{body}</div>{pager}</article>')
 
     app, extra_index = app_data()
-    for route, nav_title, title, lead in TOOLS:
-        if route != "inicio":
-            sections_html.append(tool_page(route, title, lead))
-            index.append({"r": route, "p": title, "h": title, "id": "", "t": lead})
     index += extra_index
 
-    tool_links = "".join(
-        f'<li><a class="nav-link nav-tool" href="#{r}" data-route="{r}">{icon(r)}{html.escape(t)}</a></li>'
-        for r, t, _, _ in TOOLS)
-    nav_html.append(f'<div class="nav-group"><p class="nav-title">{L["nav_tools"]}</p><ul>{tool_links}</ul></div>')
-    nav_html.append(f'<p class="nav-section">{L["nav_full"]}</p>')
+    # menu: cada página aparece uma vez; as que têm ferramenta levam o ícone dela
+    def nav_link(r, t):
+        ic = ICONE_DA_PAGINA.get(r)
+        return (f'<li><a class="nav-link{" nav-tool" if ic else ""}" href="#{r}" data-route="{r}">'
+                f'{icon(ic) if ic else ""}{html.escape(t)}</a></li>')
     for group, items in NAV:
-        items = [it for it in items if it[1] != "inicio"]
-        if not items:
-            continue
-        links = "".join(f'<li><a class="nav-link" href="#{r}" data-route="{r}">{html.escape(t)}</a></li>' for _, r, t in items)
+        links = "".join(nav_link(r, t) for _, r, t in items)
         nav_html.append(f'<div class="nav-group"><p class="nav-title">{html.escape(group)}</p><ul>{links}</ul></div>')
 
     search_json = json.dumps(index, ensure_ascii=False).replace("</", "<\\/")
@@ -414,7 +509,7 @@ def diagram(name):
 
 def use_lang(lang):
     """Troca os textos, as pastas e os dados do módulo para o idioma pedido."""
-    global LANG, L, DOCS, OUT, UPDATED, NAV, PAGES, TOOLS, TOOL_FALLBACK, FILE_TO_ROUTE, HOME_LEAD, HOME_CARDS, data, DIAGRAM_TR
+    global LANG, L, DOCS, OUT, UPDATED, NAV, PAGES, TOOLS, TOOL_FALLBACK, TOOL_BY, FILE_TO_ROUTE, HOME_LEAD, HOME_CARDS, data, DIAGRAM_TR
     LANG, L = lang, i18n.UI[lang]
     sub = L["dir"]
     DOCS = ROOT / "docs" / sub if sub else ROOT / "docs"
@@ -423,7 +518,9 @@ def use_lang(lang):
     NAV = L["nav"]
     PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
     TOOLS, TOOL_FALLBACK = L["tools"], L["tool_fallback"]
+    TOOL_BY = {t[0]: t for t in TOOLS}
     FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
+    FILE_TO_ROUTE.update(PARTES)
     HOME_LEAD, HOME_CARDS = L["home_lead"], L["home_cards"]
     STATUS.clear()
     STATUS.update({k: f'<span class="{ST_CLASS[k]}">{v}</span>' for k, v in L["status"].items()})

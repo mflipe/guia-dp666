@@ -109,8 +109,37 @@
       '<div class="sim-panel" role="group" aria-label="Controles"></div>' +
       '<div class="sim-boot" hidden><button type="button" class="btn-solid" data-power>Ligar o rádio</button></div>' +
       '<div class="sim-extra" role="group" aria-label="Outros controles"></div></div>' +
-      '<div><div class="sim-out" aria-live="polite"></div><ul class="sim-notes"></ul><p class="sim-ref"></p></div></div>';
+      '<div><div class="sim-onde" hidden><p class="sim-onde-t">Onde fica no rádio</p><div class="viewer3d"><div class="sim-onde-box"></div></div></div>' +
+      '<div class="sim-out" aria-live="polite"></div><ul class="sim-notes"></ul><p class="sim-ref"></p></div></div>';
     var segs = $$(".seg", root), panel = $(".sim-panel", root), out = $(".sim-out", root), wrap = $(".sim-wrap", root);
+    var pagina = root.closest(".page"), rotaPagina = pagina ? pagina.dataset.route : "botoes";
+
+    // onde fica o controle tocado: o rádio montado com as fotos gira até ele e marca o lugar
+    var onde3d = null, ondeCarregando = false, ondeId = null;
+    function onde(id) {
+      ondeId = id;
+      var box = $(".sim-onde", root);
+      box.hidden = false;
+      if (onde3d) { onde3d.show(id); return; }
+      if (st.view === "3d") carregarOnde();
+      else if (!ondeCarregando && !$(".sim-onde-btn", box)) {
+        $(".sim-onde-box", box).innerHTML = '<button type="button" class="btn-ghost sim-onde-btn">Ver onde fica no rádio</button>';
+      }
+    }
+    function carregarOnde() {
+      if (ondeCarregando) return;
+      ondeCarregando = true;
+      var alvo = $(".sim-onde-box", root);
+      alvo.innerHTML = '<div class="pl-load">Carregando o rádio em 3D…</div>';
+      import("./js/viewer3d.js").then(function (m) {
+        onde3d = m.mountFotos(alvo, { compacto: true });
+        if (onde3d && ondeId) onde3d.show(ondeId);
+      }).catch(function () {
+        ondeCarregando = false;
+        alvo.innerHTML = '<p class="sim-hint">Não foi possível abrir o rádio em 3D. As fotos estão em <a href="#uso--onde-fica-cada-coisa">Onde fica cada coisa</a>.</p>';
+      });
+    }
+    root.addEventListener("click", function (e) { if (e.target.closest(".sim-onde-btn")) carregarOnde(); });
     var fwSeg = seg(segs[0], FW_OPTS, st.fw, function (v) { st.fw = v; st.combo = {}; render(); });
     seg(segs[1], [["uso", "Com o rádio ligado"], ["ligar", "Ao ligar segurando"]], st.mode, function (v) { st.mode = v; st.combo = {}; render(); });
     seg(segs[2], [["3d", "3D"], ["2d", "Simples"]], st.view, function (v) { st.view = v; store.set(VKEY, v); render(); });
@@ -131,6 +160,7 @@
     function hwList() { return HW_ORDER.filter(function (id) { return !ctrl(id) && hwText(id) && hwText(id).texto; }); }
     function render() {
       var is3d = st.view === "3d", uso = st.mode === "uso";
+      $(".sim-onde", root).hidden = true; // volta a aparecer no próximo toque, junto com a explicação
       wrap.classList.toggle("is3d", is3d);
       $(".sim-3d", root).hidden = !is3d;
       panel.hidden = is3d;
@@ -170,10 +200,16 @@
         return '<li class="' + (l[2] === "perigo" ? "perigo" : "") + '"><span class="k">' + l[0].map(label).join(" + ") + "</span>" + l[1] + "</li>";
       }).join("") + "</ul>";
     }
+    // no celular: rola só o necessário para o "onde fica" e o começo da explicação ficarem à vista, acima da barra de abas
     function reveal() {
       if (window.innerWidth > 760) return;
-      var r = out.getBoundingClientRect();
-      if (r.top > window.innerHeight - 150) out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      var box = $(".sim-onde", root), ini = box.hidden ? out : box;
+      var tb = $(".tabbar"), baixo = window.innerHeight - (tb && tb.getClientRects().length ? tb.offsetHeight : 0) - 12;
+      var fim = out.getBoundingClientRect().top + Math.min(out.offsetHeight, 180);
+      if (fim <= baixo) return;
+      var alto = (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topbar-h"), 10) || 56) + 12;
+      var dy = Math.min(fim - baixo, ini.getBoundingClientRect().top - alto);
+      if (dy > 0) window.scrollBy({ top: dy, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }
     function showAction(c, kind, ms) {
       var did = { curto: "Toque curto", longo: "Toque longo", segurar: "Segurou", girar: "Girou" }[kind];
@@ -183,12 +219,14 @@
           return '<li class="' + (a[0] === kind ? "hit" : "") + '"><span class="k">' + esc(a[1]) + "</span>" + a[2] + "</li>";
         }).join("") + "</ul>" +
         (c.knob && st.view === "3d" ? '<div class="p3-rot"><button type="button" class="btn-ghost" data-rot3="-1">↺ Girar</button><button type="button" class="btn-ghost" data-rot3="1">Girar ↻</button></div>' : "");
+      onde(c.id);
       reveal();
     }
     function showHw(id) {
       var h = hwText(id);
       if (!h) return;
       out.innerHTML = "<h3>" + esc(h.titulo) + '</h3><ul class="sim-acts"><li>' + h.texto + "</li></ul>";
+      onde(id);
       reveal();
     }
     function power() {
@@ -214,6 +252,7 @@
     function toggleCombo(id) {
       st.combo[id] = !st.combo[id];
       if (p3) p3.setHeld(st.combo);
+      if (st.combo[id]) onde(id);
     }
 
     // painel 3D: o arquivo só baixa quando a ferramenta aparece
@@ -242,7 +281,7 @@
       });
     }
     document.addEventListener("app:show", function (e) {
-      if (e.detail !== "botoes") return;
+      if (e.detail !== rotaPagina) return;
       shown = true;
       if (st.view === "3d") ensure3d();
     });
@@ -707,18 +746,25 @@
         $(".pl-stage", root).innerHTML = '<div class="pl-load"><p>Não foi possível abrir a visão 3D aqui.<br>A lista de componentes está em <a href="#hardware">Hardware</a>.</p></div>';
       });
     }
-    document.addEventListener("app:show", function (e) { if (e.detail === "placa" && !started) load(); });
+    var pagina = root.closest(".page"), rotaPagina = pagina ? pagina.dataset.route : "placa";
+    document.addEventListener("app:show", function (e) { if (e.detail === rotaPagina && !started) load(); });
   }
 
-  // visões 3D do ESP32 (Laboratório) e das fotos (Uso do rádio): só baixam quando a pessoa pede
+  // visões 3D do ESP32 (Laboratório) e das fotos (Uso do rádio, Início): só baixam quando a pessoa pede
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("[data-viewer3d-open]");
+    // no Início, tocar na imagem do rádio também abre o 3D
+    if (!b && e.target.closest && e.target.closest(".f3-home .f3-capa")) b = $(".f3-girar", e.target.closest(".f3-home"));
     if (!b) return;
     var root = b.closest(".viewer3d");
     b.disabled = true;
     b.textContent = "Carregando a visão 3D…";
-    var qual = b.getAttribute("data-viewer3d-open");
-    import("./js/viewer3d.js").then(function (m) { (qual === "fotos" ? m.mountFotos : m.mountEsp32)(root); }).catch(function () {
+    var qual = b.getAttribute("data-viewer3d-open") || "";
+    import("./js/viewer3d.js").then(function (m) {
+      if (qual === "fotos-home") { var f = m.mountFotos($(".f3-stage", root), { compacto: true, dica: true }); if (f) f.apresentar(); }
+      else if (qual === "fotos") m.mountFotos(root);
+      else m.mountEsp32(root);
+    }).catch(function () {
       b.disabled = false;
       b.textContent = "Não carregou. Tentar de novo";
     });

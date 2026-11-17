@@ -321,10 +321,25 @@ figcaption { margin-top: 10px; font-size: 0.84rem; color: var(--muted); line-hei
 .nav-section { margin: 26px 0 0; padding-top: 16px; border-top: 1px solid var(--rule); font: 600 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .nav-section + .nav-group { margin-top: 12px; }
 .tabbar { display: none; }
-body.is-tool .rail { display: none; }
-body.is-tool .main { grid-template-columns: minmax(0, 1080px); }
 .page-head .lead { margin: 10px 0 0; max-width: 70ch; color: var(--muted); line-height: 1.55; }
 .tool-fallback { color: var(--muted); }
+/* ferramentas dentro das páginas de texto: o texto fecha, a ferramenta entra, o texto continua */
+.tool-embed { margin: 6px 0 36px; }
+.prose .tool-lead { margin-top: -4px; color: var(--muted); }
+/* rádio montado com as fotos, no alto do Início */
+.home-radio { max-width: 640px; margin: 0 0 20px; }
+.home-radio .f3-home { height: clamp(210px, 32vw, 330px); }
+.f3-capa { display: block; width: 100%; height: 100%; object-fit: contain; }
+.f3-girar { position: absolute; top: 10px; right: 10px; padding: 7px 12px; font-size: 0.82rem; }
+.f3-home .f3-capa { cursor: pointer; }
+@media (max-width: 420px) { .f3-girar { top: 8px; right: 8px; padding: 6px 10px; font-size: 0.78rem; } }
+/* o fundo do palco é claro nos dois temas, então a dica usa tinta escura fixa */
+.f3-dica { position: absolute; top: 10px; right: 12px; font-size: 0.8rem; font-weight: 500; color: #3a414c; pointer-events: none; transition: opacity 0.4s; }
+.f3-dica.sai { opacity: 0; }
+/* onde fica o controle tocado, no simulador */
+.sim-onde { margin: 0 0 16px; scroll-margin-top: calc(var(--topbar-h, 56px) + 12px); }
+.sim-onde-t { margin: 0 0 6px; font-size: 0.8rem; color: var(--muted); }
+.sim-onde .f3-stage, .sim-onde-box .pl-load { height: 220px; }
 .btn-solid, .btn-ghost { display: inline-flex; align-items: center; gap: 6px; font: 600 0.86rem var(--font-sans); padding: 9px 15px; border-radius: 9px; cursor: pointer; text-decoration: none; }
 .btn-solid { border: 1px solid var(--accent); background: var(--accent); color: var(--bg); }
 .btn-ghost { border: 1px solid var(--rule); background: var(--bg); color: var(--ink); }
@@ -421,6 +436,7 @@ body.is-tool .main { grid-template-columns: minmax(0, 1080px); }
 .hlp-list { display: grid; gap: 8px; margin-top: 14px; }
 .hlp-sym { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; padding: 13px 15px; border-radius: 11px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); font: 500 0.93rem var(--font-sans); cursor: pointer; scroll-margin-top: 96px; }
 .hlp-sym::after { content: "›"; font-size: 1.2rem; color: var(--muted); }
+.hlp-view [id] { scroll-margin-top: calc(var(--topbar-h, 56px) + 16px); }
 .hlp-card { padding: 18px; border-radius: 16px; border: 1px solid var(--rule); background: var(--bg); scroll-margin-top: 96px; }
 .hlp-card h3 { margin: 0 0 10px; font-size: 1.1rem; line-height: 1.35; }
 .hlp-card p, .hlp-card li { line-height: 1.6; }
@@ -476,9 +492,6 @@ body.is-tool .main { grid-template-columns: minmax(0, 1080px); }
   .sim-wrap, .sim-wrap.is3d { grid-template-columns: minmax(0, 1fr); }
   .pl-stage { height: 440px; }
   .p3-stage { height: 470px; }
-  .tool-page .page-head { margin-bottom: 16px; }
-  .tool-page .page-head h1 { font-size: 1.6rem; }
-  .tool-page .page-head .lead { font-size: 0.92rem; }
   .sim-panel { gap: 14px; padding: 16px 12px; }
   .sim-knob { width: 92px; height: 92px; }
   .sim-knob .mark { transform-origin: 50% 37px; }
@@ -494,7 +507,7 @@ body.is-tool .main { grid-template-columns: minmax(0, 1080px); }
 
 /* ---------- plano: uma superfície só, estrutura por linhas e espaço ---------- */
 .kicker { font-size: 0.82rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
-.tool-page .kicker, #page-inicio .kicker, #page-inicio .meta { display: none; }
+#page-inicio .kicker, #page-inicio .meta { display: none; }
 .meta { font-family: var(--font-sans); }
 .page-head { margin-bottom: 22px; }
 .admonition-title::before { font-size: 0.8rem; letter-spacing: 0; text-transform: none; }
@@ -953,9 +966,9 @@ tbody tr:last-child td { border-bottom: 0; }
   <span class="dial-needle" aria-hidden="true"></span>
   <span class="dial-ring" aria-hidden="true"></span>
   <a class="tab-link" href="#inicio" data-route="inicio"><i class="dial-dot" aria-hidden="true"></i>{{ICON_INICIO}}<span>Início</span></a>
-  <a class="tab-link" href="#botoes" data-route="botoes"><i class="dial-dot" aria-hidden="true"></i>{{ICON_BOTOES}}<span>Controles</span></a>
+  <a class="tab-link" href="#botoes" data-route="uso"><i class="dial-dot" aria-hidden="true"></i>{{ICON_BOTOES}}<span>Controles</span></a>
   <a class="tab-link" href="#ajustes" data-route="ajustes"><i class="dial-dot" aria-hidden="true"></i>{{ICON_AJUSTES}}<span>Ajustes</span></a>
-  <a class="tab-link" href="#ajuda" data-route="ajuda"><i class="dial-dot" aria-hidden="true"></i>{{ICON_AJUDA}}<span>Ajuda</span></a>
+  <a class="tab-link" href="#ajuda" data-route="problemas"><i class="dial-dot" aria-hidden="true"></i>{{ICON_AJUDA}}<span>Ajuda</span></a>
   <button class="tab-link" type="button" id="tab-more" aria-controls="sidebar" aria-expanded="false"><i class="dial-dot" aria-hidden="true"></i>{{ICON_MAIS}}<span>Mais</span></button>
 </nav>
 <dialog class="profile-dlg" id="profile-dlg" aria-labelledby="profile-title">
@@ -1067,12 +1080,16 @@ tbody tr:last-child td { border-bottom: 0; }
   }
   function show(route) {
     try { route = decodeURIComponent(route); } catch (e) {}
-    if (!routes[route] && route.indexOf("--") > 0) {
+    if (!routes[route]) {
       var base = route.split("--")[0];
-      if (routes[base] && !document.getElementById(route)) {
-        try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: route })); } catch (e) {}
+      // página de verdade, ou uma parte que mora dentro de outra (a rota antiga virou âncora nela)
+      var alvo = routes[base] ? base : null;
+      if (!alvo) { var dono = document.getElementById(base); dono = dono && dono.closest(".page"); if (dono) alvo = dono.dataset.route; }
+      if (alvo) {
+        if (document.getElementById(route)) pendingScroll = route;
+        else if (route.indexOf("--") > 0) { try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: route })); } catch (e) {} }
+        route = alvo;
       }
-      if (routes[base]) { if (document.getElementById(route)) pendingScroll = route; route = base; }
     }
     if (!routes[route]) route = "inicio";
     var page = routes[route];
@@ -1084,7 +1101,6 @@ tbody tr:last-child td { border-bottom: 0; }
     setNav(false);
     placeDial();
     revealNav();
-    document.body.classList.toggle("is-tool", page.classList.contains("tool-page"));
     try { document.dispatchEvent(new CustomEvent("app:show", { detail: route })); } catch (e) {}
     if (pendingScroll) { var id = pendingScroll; pendingScroll = null; window.scrollTo(0, 0); setTimeout(function () { scrollToId(id); }, 20); }
     else if (current !== null) {

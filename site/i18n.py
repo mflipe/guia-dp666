@@ -39,10 +39,10 @@ UI = {
         "updated": "16/11/2026",
         "nav": [
             ("Começar", [("index", "inicio", "Início"), ("brasil", "brasil", "Configuração para o Brasil")]),
-            ("O rádio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Uso do rádio"), ("menus", "menus", "Menus explicados")]),
+            ("O rádio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Uso do rádio"), ("menus", "ajustes", "Ajustes do rádio")]),
             ("Firmware", [("firmwares", "firmwares", "Megatron × oficial"), ("oficial", "oficial", "Uso da linha oficial"),
                           ("mod17", "mod17", "Recursos ocultos do Mod17"), ("backup", "backup", "Backup e gravação")]),
-            ("Conexões", [("computador", "computador", "Usar com o computador"), ("conectividade", "conectividade", "Conectividade e controle remoto")]),
+            ("Conexões", [("computador", "computador", "Computador e conectividade")]),
             ("Ajuda", [("problemas", "problemas", "Problemas comuns"), ("comparacao", "comparacao", "Comparação com outros rádios")]),
             ("Projetos", [("laboratorio", "laboratorio", "Laboratório")]),
             ("Referência", [("fontes", "fontes", "Fontes")]),
@@ -59,11 +59,20 @@ UI = {
              "Os chips do rádio em blocos, com o caminho do som e os barramentos. É um diagrama: tamanhos e posições não são os da placa real."),
         ],
         "tool_fallback": {
-            "botoes": '<a href="#uso">Uso do rádio</a> e <a href="#oficial">Uso da linha oficial</a>',
-            "ajustes": '<a href="#menus">Menus explicados</a> e <a href="#oficial">Uso da linha oficial</a>',
-            "ajuda": '<a href="#problemas">Problemas comuns</a>',
-            "placa": '<a href="#hardware">Hardware</a>',
+            "botoes": 'logo abaixo, em <a href="#uso--botões">Botões</a>, e em <a href="#oficial--botões">Uso da linha oficial</a>',
+            "ajustes": 'logo abaixo, em <a href="#menus">Menus explicados</a> e no <a href="#menu-oficial">Menu completo da linha oficial</a>',
+            "ajuda": "logo abaixo",
+            "placa": "logo abaixo",
         },
+        # páginas que juntaram duas: título novo
+        "titulos": {"computador": "Computador e conectividade"},
+        # o menu completo da linha oficial mora em Ajustes do rádio
+        "menu_oficial": ("Menu completo da linha oficial",
+                         "O menu completo da linha oficial, com cada opção, os valores, o padrão de fábrica e o que ela faz, "
+                         "fica em [Ajustes do rádio](#ajustes): na ferramenta, escolha Linha oficial, ou leia a lista em "
+                         "[Menu completo da linha oficial](#menu-oficial)."),
+        "f3_girar": "Girar em 3D",
+        "f3_capa_alt": "O rádio DP-666 visto de frente e um pouco de lado, montado com as fotos de cada lado.",
         "home_lead": "Botões, menus, ajustes para o Brasil e solução de problemas do rádio com chip NXP TEF6686.",
         "home_cards": [
             ("botoes", "#botoes", "Explorar os controles", "Painel em 3D: toque e segure cada botão e knob."),
@@ -75,8 +84,7 @@ UI = {
         ],
         "home_q": "O que você quer fazer?",
         "home_nav": "Ferramentas",
-        "tool_kicker": "Ferramenta",
-        "tool_loading": "Carregando a ferramenta… Se ela não abrir, o mesmo conteúdo está em {fb}.",
+        "tool_loading": "Carregando a ferramenta… Se ela não abrir, o mesmo conteúdo está {fb}.",
         "status": {"✅": "confirmado", "🟡": "provável", "❓": "incerto"},
         "prov": {"(manual)": "manual", "(firmware)": "firmware", "(código-base)": "código-base"},
         "figure": "Figura",
@@ -115,10 +123,10 @@ UI = {
         "updated": "Nov 16, 2026",
         "nav": [
             ("Get started", [("index", "inicio", "Home"), ("brasil", "brasil", "Setup for Brazil")]),
-            ("The radio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Using the radio"), ("menus", "menus", "Menus explained")]),
+            ("The radio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Using the radio"), ("menus", "ajustes", "Radio settings")]),
             ("Firmware", [("firmwares", "firmwares", "Megatron vs. official"), ("oficial", "oficial", "Using the official firmware"),
                           ("mod17", "mod17", "Hidden features of Mod17"), ("backup", "backup", "Backup and flashing")]),
-            ("Connections", [("computador", "computador", "Using it with a computer"), ("conectividade", "conectividade", "Connectivity and remote control")]),
+            ("Connections", [("computador", "computador", "Computer and connectivity")]),
             ("Help", [("problemas", "problemas", "Common problems"), ("comparacao", "comparacao", "Comparison with other radios")]),
             ("Projects", [("laboratorio", "laboratorio", "Lab")]),
             ("Reference", [("fontes", "fontes", "Sources")]),
@@ -135,11 +143,18 @@ UI = {
              "The radio’s chips as blocks, with the audio path and the buses. It is a diagram: sizes and positions are not those of the real board."),
         ],
         "tool_fallback": {
-            "botoes": '<a href="#uso">Using the radio</a> and <a href="#oficial">Using the official firmware</a>',
-            "ajustes": '<a href="#menus">Menus explained</a> and <a href="#oficial">Using the official firmware</a>',
-            "ajuda": '<a href="#problemas">Common problems</a>',
-            "placa": '<a href="#hardware">Hardware</a>',
+            "botoes": 'below, in <a href="#uso--buttons">Buttons</a>, and in <a href="#oficial--buttons">Using the official firmware</a>',
+            "ajustes": 'below, in <a href="#menus">Menus explained</a> and in the <a href="#menu-oficial">Official firmware full menu</a>',
+            "ajuda": "below",
+            "placa": "below",
         },
+        "titulos": {"computador": "Computer and connectivity"},
+        "menu_oficial": ("Official firmware full menu",
+                         "The official firmware’s full menu, with each option, its values, the factory default and what it does, "
+                         "is in [Radio settings](#ajustes): in the tool, pick Official firmware, or read the list in "
+                         "[Official firmware full menu](#menu-oficial)."),
+        "f3_girar": "Rotate in 3D",
+        "f3_capa_alt": "The DP-666 radio seen from the front and slightly to the side, built from the photos of each side.",
         "home_lead": "Buttons, menus, settings for Brazil and troubleshooting for the radio with the NXP TEF6686 chip.",
         "home_cards": [
             ("botoes", "#botoes", "Explore the controls", "3D panel: tap and hold each button and knob."),
@@ -151,8 +166,7 @@ UI = {
         ],
         "home_q": "What do you want to do?",
         "home_nav": "Tools",
-        "tool_kicker": "Tool",
-        "tool_loading": "Loading the tool… If it doesn’t open, the same content is in {fb}.",
+        "tool_loading": "Loading the tool… If it doesn’t open, the same content is {fb}.",
         "status": {"✅": "confirmed", "🟡": "likely", "❓": "uncertain"},
         "prov": {"(manual)": "manual", "(firmware)": "firmware", "(base code)": "base code"},
         "figure": "Figure",

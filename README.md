@@ -4,7 +4,7 @@ Guia independente do rádio DEEPELEC DP-666, um receptor com o sintonizador NXP 
 
 **Site:** https://mflipe.github.io/guia-dp666/ · **English:** https://mflipe.github.io/guia-dp666/en/
 
-O guia funciona como um app, no celular e no computador, nos temas claro e escuro. Tem os controles do rádio em 3D, um explorador de ajustes com busca, um assistente de problemas e a placa em 3D. Está em português e em inglês, com um seletor PT/EN no topo que mantém a mesma página.
+O guia funciona como um app, no celular e no computador, nos temas claro e escuro. Tem os controles do rádio em 3D, o rádio montado com as fotos de cada lado (que gira até o controle tocado e marca onde ele fica), um explorador de ajustes com busca, um assistente de problemas e a placa em 3D. Está em português e em inglês, com um seletor PT/EN no topo que mantém a mesma página.
 
 ## Estrutura
 
