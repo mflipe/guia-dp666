@@ -1,6 +1,6 @@
 # Hardware
 
-O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam, por onde passam a energia e o som, e traz o datasheet de cada uma. A base são os esquemas elétricos da DEEPELEC: o V2.5.3, da placa das unidades originais, e o V2.5.4, [publicado no site dela](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
+O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam, por onde passam a energia e o som, e traz o datasheet de cada uma. A base são os esquemas elétricos da DEEPELEC: o V2.5.3, da placa das unidades originais ([cópia no device.report](https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9)), e o V2.5.4, [publicado no site dela](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
 
 ## Arquitetura
 
@@ -96,7 +96,7 @@ Conferidos no esquema V2.5.3 e no código oficial.
 | Relógio (RTC) | I²C 0x32 |
 
 - **Bateria e Wi-Fi:** o GPIO 13 usa o conversor ADC2 do ESP32, que não funciona com o Wi-Fi ligado. Por isso a leitura da bateria some quando o Wi-Fi está ativo, nos dois firmwares.
-- **Cristal:** o código lê a tensão no GPIO 15 para saber o cristal do sintonizador. Na placa, um resistor para o terra indica 9,216 MHz.
+- **Cristal:** o código lê a tensão no GPIO 15 para saber o cristal do sintonizador. Na V2.5.3, um resistor para o terra deixa o pino em 0 V, que indica 9,216 MHz. Na V2.5.4, um segundo resistor leva o pino a cerca de 1,1 V, que indica 12 MHz.
 - **Gravação:** o CH340N não tem como reiniciar o ESP32 sozinho, porque o pino RTS# dele fica solto. Por isso o [modo de gravação](#backup) pede o BOOT na mão.
 - **POWER:** não aparece na tabela porque não chega ao ESP32. Ele age direto na alimentação.
 - **S-meter analógico:** o código oficial manda o nível de sinal em PWM pelo GPIO 27, para um medidor de ponteiro. No DP-666, essa saída (METER-DRV no esquema) não vai a nenhum conector. O GPIO 12 fica sem ligação.
@@ -111,14 +111,15 @@ O esquema também usa transistores genéricos, de vários fabricantes: o SI2305 
 
 ## Revisões da placa
 
-As notas de v2.5.1 a v2.5.3 vêm do próprio esquema V2.5.3.
+As notas de cada versão vêm dos próprios esquemas: o V2.5.3 traz as de v2.5.1 a v2.5.3, e o V2.5.4 repete essas e acrescenta as dele.
 
-- **Original:** a DEEPELEC diz que as unidades originais usam a placa V2.5.3, impressa Mini6686-V2.5.3. O esquema publicado no site dela é o V2.5.4.
+- **Original:** a DEEPELEC diz que as unidades originais usam a placa V2.5.3, impressa Mini6686-V2.5.3.
 - **v2.5.1:** os capacitores de entrada do alto-falante (C51 e C9) passaram de 0,1 para 0,33 µF. Com isso, a frequência abaixo da qual os graves são cortados cai para cerca de um terço.
 - **v2.5.2:** entrou o C15, de 1 µF, no pino EN do ESP32. É o capacitor que a Espressif recomenda para atrasar o reset na partida.
 - **v2.5.3:** entrou o relógio (RTC, U11).
+- **v2.5.4:** é a versão do esquema que a DEEPELEC publica; a página do rádio não diz a partir de quando as unidades saem com ela. O relógio passou a ser o RS4C8010BW, compatível com o RX8010SJ. O R33, entre a chave geral e o transistor que liga a placa, passou de 1 kΩ para 100 kΩ, o que faz esse transistor ligar e desligar mais devagar. E o sintonizador passou a usar um cristal de 12 MHz, no lugar do de 9,216 MHz; o novo R49, de 20 kΩ, avisa o firmware pelo GPIO 15. O código oficial e o do projeto do DP-666 leem esse pino, então se ajustam sozinhos às duas placas.
 - **Clones:** a placa V2.5 aparece em clones como os da SPARKELEC, sem RTC. O que muda neles está em [Clones](#ajuda--clones), nos Problemas comuns.
-- **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. Como o esquema V2.5.3 já o inclui, as placas V2.5.3 anteriores devem ter o lugar dele vazio, o que combina com a sugestão da DEEPELEC de instalar o chip por conta própria; ela não oferece essa atualização. O esquema V2.5.3 e o anúncio chamam o chip de RX8010SJ; o V2.5.4 marca RS4C8010BW, com a nota de que ele é compatível com o RX8010SJ.
+- **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. Como o esquema V2.5.3 já o inclui, as placas V2.5.3 anteriores devem ter o lugar dele vazio, o que combina com a sugestão da DEEPELEC de instalar o chip por conta própria; ela não oferece essa atualização. O esquema V2.5.3 e o anúncio chamam o chip de RX8010SJ.
 
 ## Teste de RTC
 
@@ -136,7 +137,7 @@ As fotos de terceiros têm direitos reservados, então o guia não as copia: cad
 
 ## Fontes
 
-- DEEPELEC — esquema elétrico V2.5.3, com folhas de 30/10/2023 a 18/02/2024 (PDF)
+- [DEEPELEC — esquema elétrico V2.5.3 (cópia no device.report)](https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9)
 - [DEEPELEC — esquema elétrico V2.5.4](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf)
 - [Guido Schotmans — DP-666 desmontado e o erro do encoder (wijnants.info, 04/08/2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [DEEPELEC DP-666](https://www.deepelec.com/en/dp-666/)

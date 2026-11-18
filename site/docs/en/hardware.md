@@ -1,6 +1,6 @@
 # Hardware
 
-The DP-666 pairs an NXP TEF6686 tuner, which does all the radio work, with an ESP32 module, which handles the screen, the buttons and the connections. This page shows how the parts connect, how power and sound flow, and gives the datasheet of each part. It is based on DEEPELEC’s schematics: V2.5.3, the board of the original units, and V2.5.4, [published on its site](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
+The DP-666 pairs an NXP TEF6686 tuner, which does all the radio work, with an ESP32 module, which handles the screen, the buttons and the connections. This page shows how the parts connect, how power and sound flow, and gives the datasheet of each part. It is based on DEEPELEC’s schematics: V2.5.3, the board of the original units ([copy on device.report](https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9)), and V2.5.4, [published on its site](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
 
 ## Architecture
 
@@ -96,7 +96,7 @@ Checked against schematic V2.5.3 and the official code.
 | Clock (RTC) | I²C 0x32 |
 
 - **Battery and Wi-Fi:** GPIO 13 uses the ESP32’s ADC2 converter, which doesn’t work while Wi-Fi is on. That is why the battery reading disappears when Wi-Fi is active, on both firmwares.
-- **Crystal:** the code reads the voltage on GPIO 15 to learn the tuner’s crystal. On the board, a resistor to ground means 9.216 MHz.
+- **Crystal:** the code reads the voltage on GPIO 15 to learn the tuner’s crystal. On V2.5.3, a resistor to ground holds the pin at 0 V, which means 9.216 MHz. On V2.5.4, a second resistor brings the pin to about 1.1 V, which means 12 MHz.
 - **Flashing:** the CH340N can’t reset the ESP32 by itself, because its RTS# pin is left unconnected. That is why [flash mode](#backup) needs BOOT pressed by hand.
 - **POWER:** it isn’t in the table because it doesn’t reach the ESP32. It acts directly on the power supply.
 - **Analog S-meter:** the official code sends the signal level as PWM on GPIO 27, for a needle meter. On the DP-666, this output (METER-DRV in the schematic) goes to no connector. GPIO 12 is unconnected.
@@ -111,14 +111,15 @@ The schematic also uses generic transistors, from several manufacturers: the SI2
 
 ## Board revisions
 
-The notes from v2.5.1 to v2.5.3 come from schematic V2.5.3 itself.
+The notes for each version come from the schematics themselves: V2.5.3 carries those from v2.5.1 to v2.5.3, and V2.5.4 repeats them and adds its own.
 
-- **Original:** DEEPELEC says the original units use board V2.5.3, printed Mini6686-V2.5.3. The schematic published on its site is V2.5.4.
+- **Original:** DEEPELEC says the original units use board V2.5.3, printed Mini6686-V2.5.3.
 - **v2.5.1:** the speaker’s input capacitors (C51 and C9) went from 0.1 to 0.33 µF. As a result, the frequency below which bass is cut drops to about a third.
 - **v2.5.2:** C15, 1 µF, was added to the ESP32’s EN pin. It is the capacitor Espressif recommends to delay the reset at power-up.
 - **v2.5.3:** the clock (RTC, U11) was added.
+- **v2.5.4:** this is the schematic version DEEPELEC publishes; the radio’s page doesn’t say from when units ship with it. The clock became the RS4C8010BW, compatible with the RX8010SJ. R33, between the main switch and the transistor that powers the board, went from 1 kΩ to 100 kΩ, which makes that transistor switch on and off more slowly. And the tuner moved to a 12 MHz crystal, instead of the 9.216 MHz one; the new R49, 20 kΩ, tells the firmware through GPIO 15. Both the official code and the DP-666 project’s code read this pin, so they adapt to either board on their own.
 - **Clones:** board V2.5 shows up in clones such as SPARKELEC’s, without an RTC. What is different about them is in [Clones](#ajuda--clones), under Common problems.
-- **Internal clock:** only units shipped from April 1, 2025 have an RTC. Since schematic V2.5.3 already includes it, earlier V2.5.3 boards likely have an empty spot for it, which fits DEEPELEC’s suggestion that owners fit the chip themselves; it doesn’t offer this upgrade. Schematic V2.5.3 and the announcement call the chip RX8010SJ; V2.5.4 marks RS4C8010BW, with a note that it is compatible with the RX8010SJ.
+- **Internal clock:** only units shipped from April 1, 2025 have an RTC. Since schematic V2.5.3 already includes it, earlier V2.5.3 boards likely have an empty spot for it, which fits DEEPELEC’s suggestion that owners fit the chip themselves; it doesn’t offer this upgrade. Schematic V2.5.3 and the announcement call the chip RX8010SJ.
 
 ## RTC test
 
@@ -136,7 +137,7 @@ Third-party photos are copyrighted, so the guide doesn’t copy them: each item 
 
 ## Sources
 
-- DEEPELEC — schematic V2.5.3, sheets dated October 30, 2023 to February 18, 2024 (PDF)
+- [DEEPELEC — schematic V2.5.3 (copy on device.report)](https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9)
 - [DEEPELEC — schematic V2.5.4](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf)
 - [Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [DEEPELEC DP-666](https://www.deepelec.com/en/dp-666/)

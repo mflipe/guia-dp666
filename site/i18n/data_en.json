@@ -85,7 +85,6 @@
  "Amplificador do alto-falante: soma os canais L e R e toca em mono": "Speaker amplifier: mixes the L and R channels and plays in mono",
  "Expansor de 16 portas que lê as 12 teclas do teclado numérico, uma por porta; compatível com o PCA9555": "16-port expander that reads the 12 keypad keys, one per port; compatible with the PCA9555",
  "I²C 0x32 · ligado direto à bateria · só em unidades enviadas a partir de 01/04/2025": "I²C 0x32 · connected straight to the battery · only on units shipped from April 1, 2025",
- "I²C 0x64 · marcação F8602, patch 102 · cristal de 9,216 MHz": "I²C 0x64 · marked F8602, patch 102 · 9.216 MHz crystal",
  "U5 para o processador, U32 para a tela, U6 para o sintonizador": "U5 for the processor, U32 for the screen, U6 for the tuner",
  "UART0 do ESP32 · alimentado pela USB · sem reinício automático do ESP32": "ESP32 UART0 · powered from USB · no automatic ESP32 reset",
  "alimentado direto pela bateria · desligado quando entra o fone": "powered straight from the battery · shut down when headphones go in",
@@ -101,5 +100,8 @@
  "Lado da tela": "Screen side",
  "A placa virada e a pecinha de plástico contra o erro do encoder": "The board flipped over and the small plastic piece against the encoder error",
  "Onde vai o isolante": "Where the insulator goes",
- "Ponto entre as soldas do encoder e os contatos da tela": "The spot between the encoder’s solder joints and the screen contacts"
+ "Ponto entre as soldas do encoder e os contatos da tela": "The spot between the encoder’s solder joints and the screen contacts",
+ "I²C 0x64 · marcação F8602, patch 102 · cristal de 9,216 MHz na V2.5.3 e de 12 MHz na V2.5.4": "I²C 0x64 · marked F8602, patch 102 · 9.216 MHz crystal on V2.5.3 and 12 MHz on V2.5.4",
+ "Esquema elétrico V2.5.3": "Schematic V2.5.3",
+ "Placa das unidades originais, com as notas de v2.5.1 a v2.5.3 (PDF, cópia)": "Board of the original units, with the notes from v2.5.1 to v2.5.3 (PDF, copy)"
 }

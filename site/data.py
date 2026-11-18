@@ -5,7 +5,7 @@ COMPONENTS = [
     {
         "pn": "TEF6686HN/V102", "ref": "U7", "maker": "NXP",
         "role": "Sintonizador DSP: recepção AM e FM, RDS e áudio",
-        "bus": "I²C 0x64 · marcação F8602, patch 102 · cristal de 9,216 MHz",
+        "bus": "I²C 0x64 · marcação F8602, patch 102 · cristal de 9,216 MHz na V2.5.3 e de 12 MHz na V2.5.4",
         "status": [("Ativo", "ok"), ("Datasheet completo só sob pedido", "muted")],
         "links": [
             ("Folheto TEF668x (PDF, NXP)", "https://cache.nxp.com/docs/en/brochure/75017468.pdf"),
@@ -135,6 +135,7 @@ DEEP = "https://www.deepelec.com/files/dp-666/img/"
 REFS = {
     "hardware": [
         ("Esquema elétrico V2.5.4", "Esquema completo: rádio, processador, áudio e energia (PDF)", "DEEPELEC", "https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf"),
+        ("Esquema elétrico V2.5.3", "Placa das unidades originais, com as notas de v2.5.1 a v2.5.3 (PDF, cópia)", "device.report", "https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9"),
         ("Unidade desmontada", "Placa, painéis, bateria e alto-falante, por Guido Schotmans", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_4.webp"),
         ("Lado da tela", "A placa virada e a pecinha de plástico contra o erro do encoder", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_5.webp"),
         ("Onde vai o isolante", "Ponto entre as soldas do encoder e os contatos da tela", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_6.webp"),
