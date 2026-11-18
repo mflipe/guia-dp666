@@ -121,6 +121,24 @@ As notas de cada versão vêm dos próprios esquemas: o V2.5.3 traz as de v2.5.1
 - **Clones:** a placa V2.5 aparece em clones como os da SPARKELEC, sem RTC. O que muda neles está em [Clones](#ajuda--clones), nos Problemas comuns.
 - **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. Como o esquema V2.5.3 já o inclui, as placas V2.5.3 anteriores devem ter o lugar dele vazio, o que combina com a sugestão da DEEPELEC de instalar o chip por conta própria; ela não oferece essa atualização. O esquema V2.5.3 e o anúncio chamam o chip de RX8010SJ.
 
+## Como saber a revisão da sua placa
+
+O firmware não mostra a versão da placa: o System information traz a versão do firmware, a data de compilação, o sintonizador e o patch. Com certeza, só abrindo o rádio. Sem abrir, dá para estreitar:
+
+- **Relógio interno:** faça o [teste de RTC](#hardware--teste-de-rtc). Sem RTC, a placa é uma V2.5.3 enviada antes de 01/04/2025. Com RTC, pode ser uma V2.5.3 mais nova ou uma V2.5.4, porque o relógio continua na v2.5.4.
+- **Clone:** se for um clone, a placa é a V2.5 ([como reconhecer](#ajuda--clones)).
+- **Data e número de série:** a página do DP-666 não liga datas nem números de série às versões da placa. A DEEPELEC pode informar a versão pelo número de série da etiqueta lateral.
+- **Abrindo:** a versão vem impressa na placa principal, ao lado da blindagem metálica do sintonizador; nas fotos do Guido, Mini6686-V2.5.3. Os parafusos pedem chave Allen de 0,7 mm. Na garantia, não abra.
+
+### Pelo cristal, sem abrir
+
+A diferença que o firmware enxerga é o cristal do sintonizador: 9,216 MHz na V2.5.3 e 12 MHz na V2.5.4. O código oficial só escreve qual cristal achou numa compilação de depuração. O teste dá trabalho e troca o firmware do rádio, então só vale se você já pensa em mexer nele:
+
+1. Faça o [backup completo](#backup--fazer-o-backup-completo).
+2. Siga [Compilar o código](#backup--compilar-o-código) e, antes de gravar, escolha Tools → Core Debug Level → Debug no Arduino IDE.
+3. Com o cabo ligado e o monitor serial aberto em 115200 bauds, ligue o rádio no POWER. Procure a linha com `TEF668X XTAL`: `9.216M` indica V2.5.3 e `12M` indica V2.5.4. Se o texto sair embaralhado, tente 19200 bauds.
+4. [Restaure o backup](#backup--restaurar-o-backup) para voltar ao firmware de antes.
+
 ## Teste de RTC
 
 Para saber se o seu aparelho tem relógio interno: acerte a hora, desligue a chave geral por 1 minuto e religue com o Wi-Fi desligado. Se a hora continuar certa, há RTC.

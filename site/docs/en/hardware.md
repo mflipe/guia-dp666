@@ -121,6 +121,24 @@ The notes for each version come from the schematics themselves: V2.5.3 carries t
 - **Clones:** board V2.5 shows up in clones such as SPARKELEC’s, without an RTC. What is different about them is in [Clones](#ajuda--clones), under Common problems.
 - **Internal clock:** only units shipped from April 1, 2025 have an RTC. Since schematic V2.5.3 already includes it, earlier V2.5.3 boards likely have an empty spot for it, which fits DEEPELEC’s suggestion that owners fit the chip themselves; it doesn’t offer this upgrade. Schematic V2.5.3 and the announcement call the chip RX8010SJ.
 
+## How to tell your board revision
+
+The firmware doesn’t show the board version: System information lists the firmware version, build date, tuner and patch. Only opening the radio tells you for sure. Without opening it, you can narrow it down:
+
+- **Internal clock:** run the [RTC test](#hardware--rtc-test). Without an RTC, the board is a V2.5.3 shipped before April 1, 2025. With an RTC, it can be a newer V2.5.3 or a V2.5.4, since the clock stays on v2.5.4.
+- **Clone:** if it is a clone, the board is V2.5 ([how to spot one](#ajuda--clones)).
+- **Date and serial number:** the DP-666 page doesn’t tie dates or serial numbers to board versions. DEEPELEC may tell you the version from the serial number on the side label.
+- **Opening it:** the version is printed on the main board, next to the tuner’s metal shield; in Guido’s photos, Mini6686-V2.5.3. The screws take a 0.7 mm hex key. Don’t open it under warranty.
+
+### By the crystal, without opening
+
+The difference the firmware can see is the tuner crystal: 9.216 MHz on V2.5.3 and 12 MHz on V2.5.4. The official code only prints which crystal it found in a debug build. The test takes work and replaces the radio’s firmware, so it is only worth it if you already plan to tinker with it:
+
+1. Make the [full backup](#backup--making-the-full-backup).
+2. Follow [Compiling the code](#backup--compiling-the-code) and, before flashing, pick Tools → Core Debug Level → Debug in the Arduino IDE.
+3. With the cable connected and the serial monitor open at 115200 baud, turn the radio on with POWER. Look for the line with `TEF668X XTAL`: `9.216M` means V2.5.3 and `12M` means V2.5.4. If the text comes out garbled, try 19200 baud.
+4. [Restore the backup](#backup--restoring-the-backup) to go back to the previous firmware.
+
 ## RTC test
 
 To find out whether your unit has an internal clock: set the time, turn the main switch off for 1 minute and turn it back on with Wi-Fi off. If the time is still right, there is an RTC.
