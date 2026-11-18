@@ -2,7 +2,7 @@
 
 <!--HOME-->
 
-Guia independente, em português, para o rádio DP-666 com chip NXP TEF6686. Ele junta o que está espalhado entre os manuais do fabricante, o código dos firmwares, fóruns e testes práticos, e cobre as duas linhas de firmware: o **Megatron** (o de toque, com código fechado) e a **linha oficial do PE5PVB** (código aberto).
+Guia independente, em português. Ele junta o que está espalhado entre os manuais do fabricante, o código dos firmwares, fóruns e testes práticos, e cobre as duas linhas de firmware: o **Megatron** (o de toque, com código fechado) e a **linha oficial do PE5PVB** (código aberto).
 
 <dl class="facts">
 <div><dt>Sintonizador</dt><dd>NXP TEF6686</dd></div>
@@ -21,19 +21,6 @@ Guia independente, em português, para o rádio DP-666 com chip NXP TEF6686. Ele
 - **Na abertura:** o Megatron mostra o logo da DEEPELEC e a linha "Software Ver2.00.15-Mod17 by Megatron" (o número do mod muda conforme a versão). A linha oficial mostra a própria versão, como v2.20.
 - **No menu:** Other settings → System information mostra versão, data de compilação, sintonizador e patch.
 - **Pelos recursos:** se o rádio aceita toque na tela e só tem chinês e inglês, é o Megatron. Se o menu tem português, é a linha oficial.
-
-## Guia completo
-
-<div class="tiles">
-<a href="brasil.md"><strong>Configuração para o Brasil</strong><span>Deênfase, FM estendido, passo de AM, fuso horário e o modo avançado.</span></a>
-<a href="uso.md"><strong>Uso do rádio</strong><span>Botões, teclado, toque, memórias, busca automática e DX scan no Megatron.</span></a>
-<a href="oficial.md"><strong>Uso da linha oficial</strong><span>Botões, menu completo em português, scanner de DX e logbook do firmware do PE5PVB.</span></a>
-<a href="hardware.md"><strong>Hardware</strong><span>Arquitetura da placa e o datasheet de cada componente.</span></a>
-<a href="firmwares.md"><strong>Megatron × oficial</strong><span>Diferenças, prós e contras e como testar sem risco.</span></a>
-<a href="computador.md"><strong>Usar com o computador</strong><span>Controle pelo XDR-GTK, RDS no RDS Spy, o rádio no navegador e o logbook, passo a passo.</span></a>
-<a href="mod17.md"><strong>Recursos ocultos do Mod17</strong><span>Opções, páginas e comandos que o manual não mostra.</span></a>
-<a href="problemas.md"><strong>Problemas comuns</strong><span>"Tuner: !None!", relógio adiantado, alto-falante mudo e mais.</span></a>
-</div>
 
 ## Versões cobertas
 

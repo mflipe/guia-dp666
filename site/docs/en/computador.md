@@ -1,4 +1,4 @@
-# Using it with a computer
+# Computer and connectivity
 
 Connected to a computer, the DP-666 gets a big screen. You can tune with the mouse, see which frequencies have a signal, read RDS in detail, keep logs, listen to the radio from a browser anywhere and update the firmware. Commands and data travel over the USB-C cable or over Wi-Fi. Sound travels over neither: to listen on the computer, you need an audio cable.
 
@@ -76,9 +76,11 @@ The other reception settings XDR-GTK controls, such as AGC, deemphasis and softm
 - **Driver on Windows:** inside the radio, a CH340 chip bridges USB and the processor. Windows Update usually installs the driver on its own. If it doesn’t, use [DEEPELEC’s CH340 driver](https://www.deepelec.com/files/dp-666/CH341SER.zip). The radio shows up in Device Manager, under Ports (COM & LPT), as "USB-SERIAL CH340" followed by the port number, such as COM5. Write that number down.
 - **Driver on Mac and Linux:** Linux already includes the driver, and the port shows up as /dev/ttyUSB0. The Mac also recognizes the chip on its own, with the port /dev/cu.usbserial followed by a number. If the connection fails on the Mac, install the [WCH driver](https://github.com/WCHSoftGroup/ch34xser_macos) and allow it in System Settings → Privacy & Security. With it, the port becomes /dev/cu.wchusbserial followed by a number.
 - **Sound:** connect a 3.5 mm to 3.5 mm cable from the radio’s headphone output to the computer’s line input, or to a USB sound card. Prefer a stereo input: many cheap USB cards only have a mono microphone input, and the sound arrives in mono.
-- **Wi-Fi:** the radio and the computer need to be on the same 2.4 GHz network. The radio’s IP address shows up on Mod17 in Other settings → System information and, on the official firmware, next to Wi-Fi, in the Connectivity & clock group.
+- **Wi-Fi:** only 2.4 GHz networks work, and the radio and the computer need to be on the same network. To put the radio on the network, use the on-screen keypad or a browser: connect to the radio’s `ESP_…` network and open http://192.168.4.1. Mod17 stores up to 3 networks. The radio’s IP address shows up on Mod17 in Other settings → System information and, on the official firmware, next to Wi-Fi, in the Connectivity & clock group.
+- **Battery with Wi-Fi:** with Wi-Fi on, the radio doesn’t measure the battery, and the indicator and the low battery protection stop working. Over the cable, with Wi-Fi off, it doesn’t happen. If Wi-Fi is only for setting the time, set Wi-Fi auto disconnect to After time sync.
 - **One program at a time:** the radio serves one program at a time. To use XDR-GTK and RDS Spy together, connect RDS Spy through XDR-GTK, as explained below.
 - **Menu closed:** with the menu open, the radio ignores commands from the computer.
+- **If it doesn’t work:** the most common causes, such as the computer not seeing the radio or the program connecting without receiving anything, are in the [Common problems](#ajuda--connecting-to-a-computer) assistant.
 
 ## Preparing the radio
 
@@ -92,11 +94,25 @@ The other reception settings XDR-GTK controls, such as AGC, deemphasis and softm
 
 Turning the screen off during the session is worth it: you already see everything on the computer, and a dark screen saves battery and stops creating noise in the radio. On the official firmware, it comes back when the connection ends.
 
+## What you can control remotely
+
+On Mod17, remote control uses the XDR-GTK protocol, over Wi-Fi (TCP port 7373, with a password) or over USB (no password, with USB mode set to XDRGTK).
+
+| You can control | You can’t |
+| --- | --- |
+| frequency on FM, MW, LW and SW; seek up and down; switching between FM and AM | menus and settings (Wi-Fi, time zone, themes, memory channels) |
+| bandwidth, AGC, deemphasis, stereo/mono, iMS/EQ and softmute | turning the radio on remotely (only with a timer or schedule set on it) |
+| volume, mute and squelch, including the automatic one | receiving the audio over the network |
+| spectrum scan and starting or stopping the DX scan | using it with the menu open (commands are ignored) |
+| turning the screen off during the session (Screen off on XDRGTK) | more than one program at the same time |
+
+The radio also sends the signal, stereo, multipath, C/N and all the RDS in real time.
+
 ## XDR-GTK
 
 **What it is for:** it is the radio’s control panel on the computer, made for DXers. You tune with the mouse and the keyboard, change the reception settings (filter, AGC, deemphasis, stereo and softmute) and follow the signal strength, multipath and RDS on a graph. The spectrum scan draws the whole band and shows the occupied frequencies at a glance. It also measures the pattern of a directional antenna. It runs on Windows and Linux and is free.
 
-**Works with:** both firmwares. What you can and can’t control is in [Connectivity and remote control](conectividade.md).
+**Works with:** both firmwares. What you can and can’t control is in [What you can control remotely](#computador--what-you-can-control-remotely).
 
 **Over the USB cable:**
 
@@ -163,28 +179,26 @@ We didn’t find an official StationList page. The data above comes from the fir
 
 ## Logbook, memory channels and time
 
-**Official firmware over Wi-Fi:** with the radio on the network, open the radio’s IP address in a browser, such as http://192.168.0.31, or http://tef.local. The page shows the logbook, with the stations you logged by holding the encoder, and has a download button that saves everything to a CSV file you can open in any spreadsheet.
+**Official firmware over Wi-Fi:** with the radio on the network, open the radio’s IP address in a browser, such as http://192.168.0.31, or http://tef.local. The page shows the logbook, with the stations you logged by holding the encoder (see [Using the official firmware](#oficial--logbook)), and has a download button that saves everything to a CSV file you can open in any spreadsheet.
 
 **Over the cable, in a terminal:** the terminal is a program that sends and receives text through the radio’s port. On Windows, use PuTTY: choose Serial, the radio’s COM port and the speed of the USB mode (115200 in XDRGTK, 19200 in RDS Spy). On Mac and Linux, the command `screen /dev/ttyUSB0 115200` does the same; replace it with your port’s name. Then type the command:
 
-- **Official firmware:** `L` returns the logbook as CSV. `s` lists the 99 memory channels, and `S` saves a memory channel, in the format of [PE5PVB’s memory protocol](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf).
+- **Official firmware:** `L` (or `l`) returns the logbook as CSV. `s` lists the 99 memory channels, and `S` saves a memory channel (position, frequency, filter, mono/stereo, PI and PS) and answers with an error code, in the format of [PE5PVB’s memory protocol](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf). These commands only work over the cable.
 - **Megatron, with the USB mode set to XDRGTK:** `$time: 14:30:00` sets the clock without Wi-Fi; `$name: MY RADIO` gives the radio a name, which appears on the startup screen and at the bottom when there is no RadioText; `$reboot` restarts it. The simplest way is to use the .bat files that come in the firmware package, on Windows.
 
 !!! danger "Don’t test undocumented commands"
-    Mod17 has internal commands that can erase settings and memory channels. Only use the commands above and make a [backup](backup.md) before trying anything else.
+    Mod17 has internal commands that can erase settings and memory channels (see [Hidden features of Mod17](mod17.md)). Only use the commands above and make a [backup](backup.md) before trying anything else.
 
 ## From a phone, without a computer
 
 - **Android:** the [TEF Logger App](https://highpoint.fmdx.org/manuals/TEF-Logger-App-Documentation.html) receives the radio’s data over Wi-Fi, with the official firmware v2.20 or newer, to follow and log receptions.
-- **iPhone:** there is no app that talks to the radio directly. The way to go is FM-DX Webserver on a computer, opened in the iPhone’s browser.
+- **iPhone:** there is no app that talks to the radio directly, and the iPhone can’t use the DP-666’s USB-serial adapter (CH340). The way to go is FM-DX Webserver on a computer, opened in the iPhone’s browser.
 
-## Common problems
+## Bluetooth
 
-- **The computer doesn’t see the radio:** swap the cable for one that carries data, try another USB port and check the CH340 driver in Device Manager.
-- **The port opens, but nothing arrives:** the USB port mode doesn’t match the program (XDRGTK for XDR-GTK and FM-DX Webserver; RDS Spy for RDS Spy), another program is already using the port, or the radio’s menu is open.
-- **It won’t connect over Wi-Fi:** check that the network is 2.4 GHz, that the computer is on the same network, the radio’s IP address, port 7373 and the password. The Windows firewall may block the connection.
-- **No sound in FM-DX Webserver:** check that the chosen sound input is the cable’s and that the radio’s volume isn’t at minimum. Mono-only sound usually comes from the sound card.
-- **The battery indicator disappears:** it is a limitation of the ESP32 with Wi-Fi on. Over the cable, with Wi-Fi off, it doesn’t happen.
+- **Audio:** it doesn’t work. The firmware has no audio profiles, so Bluetooth headphones and speakers don’t connect. If you want Bluetooth audio, you need another radio (see [Comparison](comparacao.md)).
+- **Mod17:** uses Bluetooth only for the "slave host" function, in which the radio connects to another device and controls it. The firmware asks you to turn Wi-Fi off first.
+- **Official firmware:** doesn’t use Bluetooth.
 
 ## Sources
 
@@ -208,3 +222,4 @@ We didn’t find an official StationList page. The data above comes from the fir
 - [WCH — CH34x driver for macOS](https://github.com/WCHSoftGroup/ch34xser_macos)
 - [Soldered — CH340 ports on Mac and Linux](https://docs.soldered.com/ch340-drivers/)
 - [Planalto — Law No. 9,610/1998, copyright](https://www.planalto.gov.br/ccivil_03/leis/l9610.htm)
+- [Apple forum — USB-serial on the iPhone](https://origin-devforums.apple.com/forums/thread/834899)

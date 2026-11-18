@@ -234,26 +234,6 @@ def remoto():
     return figure(svg + _remoto_estreito(desc), "Controle e som pelo computador. O Wi-Fi do rádio não transmite áudio: o som vai por cabo até a placa de som, e o fm-dx-webserver leva controle e áudio ao navegador.")
 
 
-def hero():
-    """Esquema do caminho do sinal no topo da página inicial."""
-    def box(x, y, label, cls_box="hx-box", cls_t="hx-t"):
-        return (f'<rect class="{cls_box}" x="{x}" y="{y}" width="84" height="36" rx="4"/>'
-                f'<text class="{cls_t}" x="{x + 42}" y="{y + 23}" text-anchor="middle">{escape(label)}</text>')
-    b = [
-        '<path class="hx-line" d="M84 26H127"/><path class="hx-head" d="M126 21l7 5-7 5z"/>',
-        '<path class="hx-line" d="M218 26H261"/><path class="hx-head" d="M260 21l7 5-7 5z"/>',
-        '<path class="hx-line" d="M176 44V96"/>',
-        '<path class="hx-line" d="M218 114H261"/><path class="hx-head" d="M260 109l7 5-7 5z"/>',
-        box(1, 8, "Antena"), box(134, 8, "TEF6686", "hx-key", "hx-tk"), box(267, 8, "Áudio"),
-        box(134, 96, "ESP32", "hx-box", "hx-td"), box(267, 96, "Tela"),
-        '<text class="hx-l" x="186" y="74">I²C</text>',
-    ]
-    return ('<div class="home-hero"><svg class="hx" viewBox="0 0 352 140" role="img" aria-labelledby="hx-t hx-d">'
-            '<title id="hx-t">Caminho do sinal no DP-666</title>'
-            '<desc id="hx-d">A antena leva o sinal ao sintonizador TEF6686, que gera o áudio. O processador ESP32 '
-            'controla o TEF6686 pela ligação I²C e desenha a tela.</desc>' + "".join(b) + '</svg></div>')
-
-
 def _remoto_estreito(desc):
     """Versão em L do diagrama remoto, para telas de celular."""
     b = [_box(8, 40, 92, 100, "DP-666", "Mod17 ou", key=True, sub2="linha oficial")]

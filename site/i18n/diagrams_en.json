@@ -42,8 +42,6 @@
  "USB · sem senha": "USB · no password",
  "cabo de áudio": "audio cable",
  "rádio, RDS e áudio": "radio, RDS and audio",
- "A antena leva o sinal ao sintonizador TEF6686, que gera o áudio. O processador ESP32 controla o TEF6686 pela ligação I²C e desenha a tela.": "The antenna feeds the signal to the TEF6686 tuner, which produces the audio. The ESP32 processor controls the TEF6686 over the I²C link and draws the screen.",
- "Caminho do sinal no DP-666": "Signal path in the DP-666",
  "Tela IPS 2,8&quot;": "2.8&quot; IPS screen",
  "U7 · sintonizador DSP": "U7 · DSP tuner",
  "Bateria (ADC2): GPIO 13": "Battery (ADC2): GPIO 13",

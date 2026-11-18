@@ -53,7 +53,7 @@ GPIO 13 uses the ESP32’s ADC2 converter, which doesn’t work while Wi-Fi is o
 ## Board revisions
 
 - **Original:** DEEPELEC says the original units use board V2.5.3. The schematic published on its site is V2.5.4.
-- **Clones:** board V2.5 shows up in clones such as SPARKELEC’s, without an RTC. The V2.0 manual distributed by Raddy is the same as the one in SPARKELEC’s repository, so it is no reference for the original device.
+- **Clones:** board V2.5 shows up in clones such as SPARKELEC’s, without an RTC. What is different about them is in [Clones](#ajuda--clones), under Common problems.
 - **Internal clock:** only units shipped from April 1, 2025 have an RTC. DEEPELEC doesn’t offer the upgrade for earlier units and says that anyone who wants to can try fitting the chip themselves. Its announcement calls the chip RX8010SJ; schematic V2.5.4 marks RS4C8010BW, with a note that it is compatible with the RX8010SJ.
 
 ## Antenna

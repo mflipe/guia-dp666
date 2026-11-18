@@ -37,23 +37,18 @@ PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
 
 # ferramentas do app: rota, título no menu, título da página, chamada
 TOOLS = L["tools"]
-TOOL_FALLBACK = L["tool_fallback"]
 TOOL_BY = {t[0]: t for t in TOOLS}
 FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
 
-# Páginas que juntam uma ferramenta e o texto dela (ou dois textos). Cada parte que antes era página
-# guarda a rota antiga como âncora (id) dentro da página nova, e o roteador chega nela pelo id.
+# Páginas com ferramenta: ela entra logo depois da introdução. Quando a ferramenta é a própria página
+# (só_ferramenta), o texto do arquivo apenas a alimenta e não aparece de novo embaixo dela.
 JUNTAS = {
     "hardware": {"ferramenta": "placa"},
     "uso": {"ferramenta": "botoes"},
-    "problemas": {"ferramenta": "ajuda"},
-    "ajustes": {"ferramenta": "ajustes", "no_topo": True, "partes": [("oficial#menu", "menu-oficial")]},
-    "computador": {"partes": [("conectividade", "conectividade")]},
+    "problemas": {"ferramenta": "ajuda", "so_ferramenta": True},
+    "ajustes": {"ferramenta": "ajustes", "so_ferramenta": True},
 }
-# arquivos que viraram parte de outra página: o link para eles leva à âncora da parte
-PARTES = {"menus": "menus", "conectividade": "conectividade"}
 ICONE_DA_PAGINA = {"hardware": "placa", "uso": "botoes", "ajustes": "ajustes", "problemas": "ajuda", "inicio": "inicio"}
-FILE_TO_ROUTE.update(PARTES)
 
 # ---------------------------------------------------------------- fontes
 SOURCE_GROUPS = [
@@ -76,7 +71,7 @@ def h1_text(title):
 
 def collect_sources():
     seen, rows = set(), []
-    for f in [f for f, _, _, _ in PAGES] + [f for f in PARTES if f not in [p[0] for p in PAGES]]:
+    for f, _, _, _ in PAGES:
         if f == "fontes":
             continue
         text = doc(f)
@@ -208,6 +203,8 @@ ICONS = {
     "brasil": '<path d="M4.5 7.5l1.8 1.8 3-3M4.5 15.5l1.8 1.8 3-3"/><path d="M12.5 8h5M12.5 16h5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="16" r="1.5" fill="currentColor" stroke="none"/>',
     "firmware": '<path d="M12 4.5v9M8.5 10.5 12 14l3.5-3.5"/><path d="M6 18.5h12"/><circle cx="4.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/>',
     "inicio": '<path d="M4.5 11 12 5.5l7.5 5.5"/><path d="M6.5 10v9h11v-9"/><circle cx="4.5" cy="11" r="1.7" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.7" fill="currentColor" stroke="none"/>',
+    "computador": '<rect x="4.5" y="5" width="15" height="10.5" rx="1"/><path d="M12 15.5v3.5M7.5 19h9"/><circle cx="6" cy="19" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="19" r="1.5" fill="currentColor" stroke="none"/>',
+    "escolha": '<path d="M12 19.5v-6.5M12 13 6.5 7.5M12 13l5.5-5.5"/><circle cx="5.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="19.5" r="1.7" fill="currentColor" stroke="none"/>',
     "mais": '<path d="M7.8 12h2.4M13.8 12h2.4"/><circle cx="6" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.8" fill="currentColor" stroke="none"/>',
 }
 
@@ -250,7 +247,7 @@ def app_data():
         d["ligar"] = [[keys, inline(txt), kind] for keys, txt, kind in d["ligar"]]
         d["notas"] = [inline(n) for n in d["notas"]]
         btn[fw] = d
-    menus = appdata.build_menus(doc("oficial"), doc("menus"), inline)
+    menus = appdata.build_menus(doc("oficial"), inline)
     problems = appdata.build_problems(doc("problemas"), inline,
                                       lambda name: f'<figure class="figure">{diagram(name)}</figure>')
     board = appdata.build_board(inline)
@@ -283,65 +280,39 @@ def secao(md_text, titulo):
 
 
 def compor(f, route):
-    """Texto da página: o arquivo dela e, nas páginas juntadas, a ferramenta no alto, as partes e as fontes reunidas."""
+    """Texto da página. Nas páginas com ferramenta, ela entra logo depois da introdução; quando a ferramenta é a
+    própria página, ficam só o título, a introdução, a ferramenta e as fontes."""
     md_text = doc(f)
-    menu_titulo = L["menu_full"][3:]
-    if route == "oficial":   # o menu completo da linha oficial mora em Ajustes do rádio
-        _, onde = secao(md_text, menu_titulo)
+    if route == "oficial":   # o menu completo da linha oficial alimenta o explorador de Ajustes do rádio
+        _, onde = secao(md_text, L["menu_full"][3:])
         if onde:
-            md_text = md_text[:onde[0]] + L["menu_full"] + "\n\n" + L["menu_oficial"][1] + "\n\n" + md_text[onde[1]:]
+            md_text = md_text[:onde[0]] + L["menu_full"] + "\n\n" + L["menu_oficial"] + "\n\n" + md_text[onde[1]:]
         return md_text
     j = JUNTAS.get(route)
     if not j:
         return md_text
     titulo, intro, secoes, fontes = partes(md_text)
-    ferramenta = j.get("ferramenta")
-    if j.get("no_topo"):
-        out = [f"# {TOOL_BY[ferramenta][2]}", "", f"<!--FERRAMENTA:{ferramenta}:topo-->", "",
-               f"<!--PARTE:{FILE_TO_ROUTE[f]}:{titulo}-->", "", intro, "", secoes, ""]
-    else:
-        out = [f"# {L['titulos'].get(route, titulo)}", "", intro, ""]
-        if ferramenta:
-            out += [f"<!--FERRAMENTA:{ferramenta}-->", ""]
+    so = j.get("so_ferramenta")
+    out = [f"# {titulo}", "", intro, "", f"<!--FERRAMENTA:{j['ferramenta']}{':topo' if so else ''}-->", ""]
+    if not so:
         out += [secoes, ""]
-    for parte, ancora in j.get("partes", []):
-        if parte == "oficial#menu":
-            corpo, _ = secao(doc("oficial"), menu_titulo)
-            t2, i2, s2, f2 = L["menu_oficial"][0], corpo or "", "", partes(doc("oficial"))[3]
-        else:
-            t2, i2, s2, f2 = partes(doc(parte))
-        out += [f"<!--PARTE:{ancora}:{t2}-->", "", i2, "", s2, ""]
-        fontes += f2
-    vistas, unicas = set(), []
-    for x in fontes:
-        if x.strip() not in vistas:
-            vistas.add(x.strip())
-            unicas.append(x.strip())
-    if unicas:
-        out += [f"<!--PARTE:{route}:-->", "", "## " + L["sources_h"], ""] + unicas + [""]
+    if fontes:
+        out += ["## " + L["sources_h"], ""] + fontes + [""]
     return "\n".join(out)
 
 
-def juntar(body, route):
-    """Põe a ferramenta no lugar do marcador (fora do bloco de texto) e dá a cada parte o título e o prefixo de id dela."""
+def juntar(body):
+    """Põe a ferramenta no lugar do marcador, fora do bloco de texto. Com :topo, ela entra sem título próprio."""
     def ferramenta(m):
         tid, topo = m.group(1), m.group(2)
         _, _, titulo, chamada = TOOL_BY[tid]
         caixa = (f'<div class="tool tool-embed" id="tool-{tid}" data-tool="{tid}">'
-                 f'<p class="tool-fallback">{L["tool_loading"].format(fb=TOOL_FALLBACK.get(tid, ""))}</p></div>')
+                 f'<p class="tool-fallback">{L["tool_loading"]}</p></div>')
         if topo:
             return f'</div>{caixa}<div class="prose">'
         return f'<h2 id="{tid}">{esc(titulo)}</h2><p class="tool-lead">{esc(chamada)}</p></div>{caixa}<div class="prose">'
 
-    body = re.sub(r"<!--FERRAMENTA:(\w+)(:topo)?-->", ferramenta, body)
-    pedacos = re.split(r"<!--PARTE:([\w-]+):(.*?)-->", body)
-    out = [pedacos[0]]
-    for i in range(1, len(pedacos), 3):
-        ancora, titulo, resto = pedacos[i], pedacos[i + 1], pedacos[i + 2]
-        if ancora != route:
-            resto = resto.replace(f'id="{route}--', f'id="{ancora}--')
-        out.append((f'<h2 id="{ancora}">{esc(titulo)}</h2>' if titulo else "") + resto)
-    return "".join(out)
+    return re.sub(r"<!--FERRAMENTA:(\w+)(:topo)?-->", ferramenta, body)
 
 
 def render(md_text, route):
@@ -387,7 +358,7 @@ def render(md_text, route):
     body = re.sub(r'<a href="([^"]+)"', fix_link, body)
     # ids únicos no documento inteiro: "Fontes", "Prós" etc. se repetem entre páginas
     body = re.sub(r'<(h[2-6]) id="', rf'<\1 id="{route}--', body)
-    body = juntar(body, route)
+    body = juntar(body)
     toc = [(i, re.sub(r"<[^>]+>", "", t)) for i, t in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body, re.S)]
     return title, body, toc
 
@@ -503,13 +474,13 @@ def doc(f):
 
 
 def diagram(name):
-    fn = {"hero": diagrams.hero, "fm_dial": diagrams.fm_dial}.get(name) or diagrams.DIAGRAMS[name]
+    fn = {"fm_dial": diagrams.fm_dial}.get(name) or diagrams.DIAGRAMS[name]
     return i18n.tr_fragments(fn(), DIAGRAM_TR) if DIAGRAM_TR else fn()
 
 
 def use_lang(lang):
     """Troca os textos, as pastas e os dados do módulo para o idioma pedido."""
-    global LANG, L, DOCS, OUT, UPDATED, NAV, PAGES, TOOLS, TOOL_FALLBACK, TOOL_BY, FILE_TO_ROUTE, HOME_LEAD, HOME_CARDS, data, DIAGRAM_TR
+    global LANG, L, DOCS, OUT, UPDATED, NAV, PAGES, TOOLS, TOOL_BY, FILE_TO_ROUTE, HOME_LEAD, HOME_CARDS, data, DIAGRAM_TR
     LANG, L = lang, i18n.UI[lang]
     sub = L["dir"]
     DOCS = ROOT / "docs" / sub if sub else ROOT / "docs"
@@ -517,10 +488,9 @@ def use_lang(lang):
     UPDATED = L["updated"]
     NAV = L["nav"]
     PAGES = [(f, r, t, g) for g, items in NAV for (f, r, t) in items]
-    TOOLS, TOOL_FALLBACK = L["tools"], L["tool_fallback"]
+    TOOLS = L["tools"]
     TOOL_BY = {t[0]: t for t in TOOLS}
     FILE_TO_ROUTE = {f: r for f, r, _, _ in PAGES}
-    FILE_TO_ROUTE.update(PARTES)
     HOME_LEAD, HOME_CARDS = L["home_lead"], L["home_cards"]
     STATUS.clear()
     STATUS.update({k: f'<span class="{ST_CLASS[k]}">{v}</span>' for k, v in L["status"].items()})

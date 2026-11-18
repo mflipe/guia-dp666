@@ -53,7 +53,7 @@ O GPIO 13 usa o conversor ADC2 do ESP32, que não funciona com o Wi-Fi ligado. P
 ## Revisões da placa
 
 - **Original:** a DEEPELEC diz que as unidades originais usam a placa V2.5.3. O esquema publicado no site dela é o V2.5.4.
-- **Clones:** a placa V2.5 aparece em clones como os da SPARKELEC, sem RTC. O manual V2.0 distribuído pela Raddy é o mesmo do repositório da SPARKELEC, por isso não serve de referência para o aparelho original.
+- **Clones:** a placa V2.5 aparece em clones como os da SPARKELEC, sem RTC. O que muda neles está em [Clones](#ajuda--clones), nos Problemas comuns.
 - **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. A DEEPELEC não oferece a atualização para as anteriores e diz que quem quiser pode tentar instalar o chip por conta própria. O anúncio dela chama o chip de RX8010SJ; o esquema V2.5.4 marca RS4C8010BW, com a nota de que ele é compatível com o RX8010SJ.
 
 ## Antena

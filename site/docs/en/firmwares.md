@@ -36,7 +36,6 @@ The DP-666 accepts two firmware lines. Switching from one to the other is not an
 - **A different interface:** screens, menus and touch areas change, and touch has to be calibrated again.
 - **Nothing carries over:** settings and memory channels don’t move from one firmware to the other. If Mod17 answers the `s` command over USB, you can export the list of memory channels first.
 - **Ready-made package only up to v2.20.8,** from Feb 21, 2026. Later fixes only arrive by compiling the code (Arduino IDE or PlatformIO) or with a new package.
-- **Battery with Wi-Fi:** the reading disappears with Wi-Fi on in both firmwares, because it is a hardware limitation.
 
 !!! note "Compiling for the DP-666"
     In the official code, the DP-666 defaults (Portable touch model, rotated screen, encoder direction and colors) only come if the build defines the `DEEPELEC_DP_66X` option. Without it, those items have to be set by hand after flashing. The step-by-step is in [Backup and flashing](backup.md), and everyday use in [Using the official firmware](oficial.md).

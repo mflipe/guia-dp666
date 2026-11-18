@@ -1,4 +1,4 @@
-# Usar com o computador
+# Computador e conectividade
 
 Ligado ao computador, o DP-666 ganha uma tela grande. Dá para sintonizar pelo mouse, ver em que frequências há sinal, ler o RDS em detalhe, guardar registros, ouvir o rádio pelo navegador de qualquer lugar e atualizar o firmware. Os comandos e os dados passam pelo cabo USB-C ou pelo Wi-Fi. O som não passa por nenhum dos dois: para ouvir no computador, é preciso um cabo de áudio.
 
@@ -76,9 +76,11 @@ Os outros ajustes de recepção que o XDR-GTK controla, como AGC, deênfase e so
 - **Driver no Windows:** dentro do rádio, um chip CH340 faz a ponte entre o USB e o processador. O Windows Update costuma instalar o driver sozinho. Se não instalar, use o [driver CH340 da DEEPELEC](https://www.deepelec.com/files/dp-666/CH341SER.zip). O rádio aparece no Gerenciador de Dispositivos, em Portas (COM e LPT), como "USB-SERIAL CH340" seguido do número da porta, como COM5. Anote esse número.
 - **Driver no Mac e no Linux:** o Linux já traz o driver, e a porta aparece como /dev/ttyUSB0. O Mac também reconhece o chip sozinho, com a porta /dev/cu.usbserial seguida de um número. Se a conexão falhar no Mac, instale o [driver da WCH](https://github.com/WCHSoftGroup/ch34xser_macos) e autorize-o em Ajustes do Sistema → Privacidade e Segurança. Com ele, a porta passa a ser /dev/cu.wchusbserial seguida de um número.
 - **Som:** ligue um cabo P2–P2 da saída de fone do rádio à entrada de linha do computador, ou a uma placa de som USB. Prefira entrada estéreo: muitas placas USB baratas só têm entrada de microfone mono, e o som chega mono.
-- **Wi-Fi:** o rádio e o computador precisam estar na mesma rede, de 2,4 GHz. O IP do rádio aparece no Mod17 em Other settings → System information e, na linha oficial, ao lado de Wi-Fi ativo, no grupo Conectividade e relógio.
+- **Wi-Fi:** só funcionam redes de 2,4 GHz, e o rádio e o computador precisam estar na mesma rede. Para pôr o rádio na rede, use o teclado na tela ou o navegador: conecte-se à rede `ESP_…` do rádio e abra http://192.168.4.1. O Mod17 guarda até 3 redes. O IP do rádio aparece no Mod17 em Other settings → System information e, na linha oficial, ao lado de Wi-Fi ativo, no grupo Conectividade e relógio.
+- **Bateria com Wi-Fi:** com o Wi-Fi ligado, o rádio não mede a bateria, e o indicador e a proteção de bateria baixa param de funcionar. Pelo cabo, com o Wi-Fi desligado, isso não acontece. Se o Wi-Fi é só para acertar a hora, use Wi-Fi auto disconnect em After time sync.
 - **Um programa por vez:** o rádio atende um programa de cada vez. Para usar o XDR-GTK e o RDS Spy juntos, ligue o RDS Spy pelo XDR-GTK, como explicado abaixo.
 - **Menu fechado:** com o menu aberto, o rádio ignora os comandos do computador.
+- **Se não funcionar:** as causas mais comuns, como o computador não ver o rádio ou o programa conectar sem receber nada, estão no assistente de [Problemas comuns](#ajuda--conexao-com-o-computador).
 
 ## Preparar o rádio
 
@@ -92,11 +94,25 @@ Os outros ajustes de recepção que o XDR-GTK controla, como AGC, deênfase e so
 
 Apagar a tela durante a sessão vale a pena: você já vê tudo no computador, e a tela apagada economiza bateria e deixa de gerar ruído no rádio. Na linha oficial, ela volta quando a conexão termina.
 
+## O que dá para controlar à distância
+
+No Mod17, o controle remoto usa o protocolo do XDR-GTK, pelo Wi-Fi (porta TCP 7373, com senha) ou pelo USB (sem senha, com USB mode em XDRGTK).
+
+| Dá para controlar | Não dá |
+| --- | --- |
+| frequência em FM, MW, LW e SW; busca para cima e para baixo; troca entre FM e AM | menus e ajustes (Wi-Fi, fuso, temas, memórias) |
+| largura de banda, AGC, deênfase, estéreo/mono, iMS/EQ e softmute | ligar o rádio à distância (só por timer ou plano configurado nele) |
+| volume, mudo e squelch, inclusive o automático | receber o áudio pela rede |
+| varredura de espectro e início ou parada do DX scan | usar com o menu aberto (os comandos são ignorados) |
+| apagar a tela durante a sessão (Screen off on XDRGTK) | mais de um programa ao mesmo tempo |
+
+O rádio também envia em tempo real o sinal, o estéreo, o multipercurso, o C/N e todo o RDS.
+
 ## XDR-GTK
 
 **Para que serve:** é o painel de controle do rádio no computador, feito para quem pratica DX. Você sintoniza pelo mouse e pelo teclado, muda os ajustes de recepção (filtro, AGC, deênfase, estéreo e softmute) e acompanha num gráfico a força do sinal, o multipercurso e o RDS. A varredura de espectro desenha a faixa inteira e mostra de relance as frequências ocupadas. Também mede o diagrama de uma antena direcional. Roda no Windows e no Linux e é gratuito.
 
-**Funciona com:** os dois firmwares. O que dá e o que não dá para controlar está em [Conectividade e controle remoto](conectividade.md).
+**Funciona com:** os dois firmwares. O que dá e o que não dá para controlar está em [O que dá para controlar à distância](#computador--o-que-dá-para-controlar-à-distância).
 
 **Pelo cabo USB:**
 
@@ -163,28 +179,26 @@ Não encontramos uma página oficial do StationList. Os dados acima vêm do cód
 
 ## Logbook, memórias e hora
 
-**Linha oficial pelo Wi-Fi:** com o rádio na rede, abra no navegador o IP do rádio, como http://192.168.0.31, ou http://tef.local. A página mostra o logbook, com as emissoras que você registrou segurando o encoder, e tem o botão Baixar livro de registro, que salva tudo num arquivo CSV para abrir em qualquer planilha.
+**Linha oficial pelo Wi-Fi:** com o rádio na rede, abra no navegador o IP do rádio, como http://192.168.0.31, ou http://tef.local. A página mostra o logbook, com as emissoras que você registrou segurando o encoder (veja [Uso da linha oficial](#oficial--logbook)), e tem o botão Baixar livro de registro, que salva tudo num arquivo CSV para abrir em qualquer planilha.
 
 **Pelo cabo, num terminal:** o terminal é um programa que manda e recebe texto pela porta do rádio. No Windows, use o PuTTY: escolha Serial, a porta COM do rádio e a velocidade do modo USB (115200 em XDRGTK, 19200 em RDS Spy). No Mac e no Linux, o comando `screen /dev/ttyUSB0 115200` faz o mesmo; troque pelo nome da sua porta. Depois digite o comando:
 
-- **Linha oficial:** `L` devolve o logbook em CSV. `s` lista as 99 memórias, e `S` grava uma memória, no formato do [protocolo de memórias do PE5PVB](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf).
+- **Linha oficial:** `L` (ou `l`) devolve o logbook em CSV. `s` lista as 99 memórias, e `S` grava uma memória (posição, frequência, filtro, mono/estéreo, PI e PS) e responde com um código de erro, no formato do [protocolo de memórias do PE5PVB](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf). Esses comandos só funcionam pelo cabo.
 - **Megatron, com o modo USB em XDRGTK:** `$time: 14:30:00` acerta o relógio sem Wi-Fi; `$name: MEU RADIO` dá um nome ao rádio, que aparece na abertura e no rodapé quando não há RadioText; `$reboot` reinicia. O jeito mais simples é usar os arquivos .bat que vêm no pacote do firmware, no Windows.
 
 !!! danger "Não teste comandos sem documentação"
-    O Mod17 tem comandos internos que podem apagar ajustes e memórias. Use só os comandos acima e faça o [backup](backup.md) antes de experimentar qualquer outra coisa.
+    O Mod17 tem comandos internos que podem apagar ajustes e memórias (veja [Recursos ocultos do Mod17](mod17.md)). Use só os comandos acima e faça o [backup](backup.md) antes de experimentar qualquer outra coisa.
 
 ## Pelo celular, sem computador
 
 - **Android:** o [TEF Logger App](https://highpoint.fmdx.org/manuals/TEF-Logger-App-Documentation.html) recebe os dados do rádio pelo Wi-Fi, com o firmware oficial v2.20 ou mais novo, para acompanhar e registrar recepções.
-- **iPhone:** não há app que fale direto com o rádio. O caminho é o FM-DX Webserver num computador, aberto no navegador do iPhone.
+- **iPhone:** não há app que fale direto com o rádio, e o iPhone não consegue usar o adaptador USB-serial (CH340) do DP-666. O caminho é o FM-DX Webserver num computador, aberto no navegador do iPhone.
 
-## Problemas comuns
+## Bluetooth
 
-- **O computador não vê o rádio:** troque o cabo por um que passe dados, teste outra porta USB e confira o driver do CH340 no Gerenciador de Dispositivos.
-- **A porta abre, mas não chega nada:** o modo da porta USB não combina com o programa (XDRGTK para XDR-GTK e FM-DX Webserver; RDS Spy para o RDS Spy), outro programa já está usando a porta, ou o menu do rádio está aberto.
-- **Pelo Wi-Fi não conecta:** confira se a rede é de 2,4 GHz, se o computador está na mesma rede, o IP do rádio, a porta 7373 e a senha. O firewall do Windows pode bloquear a conexão.
-- **Sem som no FM-DX Webserver:** confira se a entrada de som escolhida é a do cabo e se o volume do rádio não está no mínimo. Som só mono costuma vir da placa de som.
-- **O indicador de bateria some:** é limitação do ESP32 com o Wi-Fi ligado. Pelo cabo, com o Wi-Fi desligado, isso não acontece.
+- **Áudio:** não funciona. O firmware não tem perfis de áudio, então fones e caixas Bluetooth não se conectam. Quem quer Bluetooth de áudio precisa de outro rádio (veja [Comparação](comparacao.md)).
+- **Mod17:** usa o Bluetooth só na função "slave host", em que o rádio se conecta a outro aparelho e o controla. O firmware pede para desligar o Wi-Fi antes.
+- **Linha oficial:** não usa Bluetooth.
 
 ## Fontes
 
@@ -208,3 +222,4 @@ Não encontramos uma página oficial do StationList. Os dados acima vêm do cód
 - [WCH — driver CH34x para macOS](https://github.com/WCHSoftGroup/ch34xser_macos)
 - [Soldered — portas do CH340 no Mac e no Linux](https://docs.soldered.com/ch340-drivers/)
 - [Planalto — Lei nº 9.610/1998, direitos autorais](https://www.planalto.gov.br/ccivil_03/leis/l9610.htm)
+- [Fórum da Apple — USB-serial no iPhone](https://origin-devforums.apple.com/forums/thread/834899)

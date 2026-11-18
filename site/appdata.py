@@ -35,7 +35,7 @@ BUTTONS = {
     "mod17": {
         "nome": "Megatron Mod17",
         "longo_ms": 500,
-        "ref": "uso--botões",
+        "ref": "",
         "controles": [
             {"id": "band", "rotulo": "BAND", "acoes": [
                 ["curto", "Toque curto", "Alterna entre LW, MW, SW, FML e FM, pulando as faixas desativadas. No menu, desce uma página."],
@@ -71,7 +71,7 @@ BUTTONS = {
         ],
         "notas": [
             "VOLUME e SQL são potenciômetros: volume analógico e nível do squelch.",
-            "O teclado físico digita frequências e memórias. Veja [Uso do rádio](uso.md).",
+            "O teclado físico digita frequências e memórias. Veja [Teclado físico](#uso--teclado-físico-firmware).",
             CHAVE,
         ],
     },
@@ -226,22 +226,6 @@ def parse_official_menu(md, inline):
     return groups
 
 
-def parse_mod17_menu(md, inline):
-    groups = []
-    for block in re.split(r"\n## ", md)[1:]:
-        title, body = block.split("\n", 1)
-        if title.strip() == T["sources_h"]:
-            continue
-        items = []
-        for line in body.splitlines():
-            mm = re.match(r"- \*\*(.+?)\*\*\s*(.*)", line.strip())
-            if mm:
-                items.append({"nome": mm.group(1).rstrip(":").strip(), "en": "",
-                              "html": cap(inline(mm.group(2).lstrip(": ").strip())), "fora": False})
-        groups.append({"titulo": title.strip(), "itens": items})
-    return groups
-
-
 def _guide_index(groups):
     idx = {}
     for g in groups:
@@ -306,9 +290,10 @@ def _spec(fw, raw, padrao, br):
     return s
 
 
-def build_menus(oficial_md, menus_md, inline):
-    guides = {"oficial": _guide_index(parse_official_menu(oficial_md, inline)),
-              "mod17": _guide_index(parse_mod17_menu(menus_md, inline))}
+def build_menus(oficial_md, inline):
+    # a lista do menu oficial (em oficial.md) dá o nome usado pela wiki e a marca "Fora da wiki";
+    # as explicações vêm de didatica.py
+    guides = {"oficial": _guide_index(parse_official_menu(oficial_md, inline)), "mod17": {}}
     res = {}
     for fw, spec in (("oficial", MS.OFICIAL), ("mod17", MS.MOD17)):
         used, groups = set(), []
@@ -494,7 +479,7 @@ def search_entries(menus, problems):
                 out.append({"r": "ajustes", "p": label, "h": name, "id": it["id"], "t": f"{it.get('valores', '')} {text}".strip()})
     for c in problems:
         for it in c["itens"]:
-            out.append({"r": "ajuda", "p": T["search_help"], "h": it["titulo"], "id": it["id"],
+            out.append({"r": "problemas", "p": T["search_help"], "h": it["titulo"], "id": it["id"],
                         "t": re.sub(r"<[^>]+>", "", it["html"])})
     return out
 

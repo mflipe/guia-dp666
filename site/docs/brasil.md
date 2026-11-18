@@ -24,7 +24,6 @@ Ajustes que fazem diferença para quem usa o DP-666 no Brasil, com as normas que
 ## AM e ondas médias
 
 - **MW default stepsize em 10 kHz**, a grade de ondas médias do Brasil e das Américas.
-- **Antena:** o DP-666 não tem antena interna de ferrite. Para AM, use fio externo ou loop no conector SMA e teste à noite, longe de carregadores e eletrônicos.
 - **AIR band Conversion:** a opção existe, mas a faixa aérea só funciona com um conversor externo vendido à parte.
 
 ## RDS

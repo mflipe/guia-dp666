@@ -1,6 +1,6 @@
 # Common problems
 
-Problems acknowledged by DEEPELEC, reported by the community or anticipated in the firmware code. Before any repair or reflash, make a [full backup](backup.md).
+Problems acknowledged by DEEPELEC, reported by the community or anticipated in the firmware code. Pick what is happening and follow the steps, from the simplest to the most involved. Before any repair or reflash, make a [full backup](backup.md).
 
 ## Screen stuck on "Tuner: !None!"
 
@@ -70,9 +70,10 @@ To prevent it, set Wi-Fi auto disconnect to After time sync or leave Wi-Fi off w
 
 ## Connecting to a computer
 
-- **The computer doesn’t see the radio:** it is almost always the cable, which only charges. Swap it for a cable that carries data, try another USB port and check the CH340 driver in Device Manager. The step-by-step is in [Using it with a computer](computador.md).
+- **The computer doesn’t see the radio:** it is almost always the cable, which only charges. Swap it for a cable that carries data, try another USB port and check the CH340 driver in Device Manager. The step-by-step is in [Computer and connectivity](computador.md).
 - **The program connects, but nothing arrives:** the USB port mode doesn’t match the program (XDRGTK for XDR-GTK and FM-DX Webserver; RDS Spy for RDS Spy), another program is already using the port, or the radio’s menu is open.
 - **Over Wi-Fi, XDR-GTK won’t connect:** check that the network is 2.4 GHz, that the computer is on the same network, the radio’s IP address, port 7373 and the XDR-GTK password. The Windows firewall may block the connection.
+- **No sound in FM-DX Webserver:** check that the chosen sound input is the cable’s and that the radio’s volume isn’t at minimum. Mono-only sound usually comes from the sound card.
 
 ## Clones
 

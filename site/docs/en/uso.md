@@ -26,29 +26,6 @@ Controls, tuning, memory channels and searches on Megatron Mod17. When a behavio
 | Back | label with the bands, the battery and the power input |
 | Bottom | main switch, marked Main switch: ON toward the left side, OFF toward the right; and a grid of holes below the speaker |
 
-## Buttons
-
-- **Main switch:** OFF disconnects the battery. Use it to store the radio and to really cut the power when it freezes.
-- **POWER:** a short press turns the radio on and off. The Power off option, in Main settings, turns it off in software; to turn it back on, use BW (firmware).
-- **TUNING (knob):** turning changes the frequency or moves through the menu. A short press changes the step and, in the menu, confirms. A long press, of 500 ms, locks or unlocks, and the action is configurable (firmware).
-- **VOLUME:** analog volume. **SQL:** squelch level.
-- **BW:** in FM, a short press toggles stereo and mono; in AM, it cycles through 3, 4, 6 and 8 kHz. A long press opens the shortcuts page. In the menu, it goes up one page (firmware).
-- **MODE:** a short press cycles through MAN, AUTO and MEM. A long press opens the menu. Inside the menu, the shortcuts or the keypad, a short press exits and saves (firmware).
-- **BAND:** a short press cycles through LW, MW, SW, FML and FM, skipping disabled bands. A long press opens the on-screen keypad. Holding it for 3 s runs the action set in Keep BAND key 3 sec., which can be Power off, Mute screen or Disable (firmware). In the menu, it goes down one page.
-- **BOOT:** hold it while powering on to enter flashing mode.
-
-### Powering on while holding
-
-| Button | Effect |
-| --- | --- |
-| BW | reverses the encoder direction |
-| MODE | rotates the screen |
-| BW + TUNING | restores the factory defaults |
-| TUNING | chooses between the standard and the optical encoder |
-| BOOT | flashing mode |
-
-Since mod12, the factory reset keeps the memory channels and opens the setup wizard: language, model, touch calibration and usage mode (firmware).
-
 ## Physical keypad (firmware)
 
 - **0 to 9:** enter the frequency. The band and the frequency turn green while you type.

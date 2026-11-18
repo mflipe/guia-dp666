@@ -1,6 +1,6 @@
 # Uso da linha oficial
 
-Botões, combinações ao ligar, memórias, scanner de DX, logbook e o menu completo do firmware oficial do PE5PVB. A base é a [wiki do projeto](https://github.com/PE5PVB/TEF6686_ESP32/wiki), conferida no código da v2.20.12, de 13/11/2026. Onde as duas diferem, o guia segue o código e avisa. Para o Megatron, veja [Uso do rádio](uso.md) e [Menus explicados](menus.md).
+Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB. O menu completo está em [Ajustes do rádio](#ajustes--oficial). A base é a [wiki do projeto](https://github.com/PE5PVB/TEF6686_ESP32/wiki), conferida no código da v2.20.12, de 13/11/2026. Onde as duas diferem, o guia segue o código e avisa. Para o Megatron, veja [Uso do rádio](uso.md).
 
 !!! note "Wiki incompleta, firmware sem garantia"
     O próprio autor avisa que a wiki ainda está em construção e pode não cobrir tudo. O firmware é distribuído sem garantia de nenhum tipo, e quem grava assume o risco.
@@ -8,7 +8,7 @@ Botões, combinações ao ligar, memórias, scanner de DX, logbook e o menu comp
 ## O que a linha oficial faz
 
 - **Faixas:** FM de 65 a 108 MHz e AM de 144 kHz a 27 MHz.
-- **Conexões:** RDS Spy, XDR-GTK, fm-dx-webserver e StationList pelo Wi-Fi (veja [Conectividade](conectividade.md)).
+- **Conexões:** RDS Spy, XDR-GTK, fm-dx-webserver e StationList pelo Wi-Fi (veja [Computador e conectividade](computador.md)).
 - **Recursos:** quase todo o RDS, com uma tela de RDS avançado; busca automática e manual; squelch; bateria, S-meter e medidor de modulação na tela; temas; vários idiomas, entre eles o português; troca automática para a frequência alternativa (AF); 99 memórias; e registro de estações (logbook).
 - **Só nos chips TEF6687 e TEF6689:** a busca completa de RDS (FullSearch RDS) e a melhoria de estéreo FMSI. O DP-666 usa o TEF6686, então essas duas funções não existem nele.
 
@@ -74,11 +74,12 @@ Existe desde a v2.10 e fica em Opções FM DX. Ele procura DX em frequências va
 Existe desde a v2.20.
 
 - **Registrar:** no FM, segure o encoder por mais de 1 s. Com os sinais sonoros ligados, o rádio bipa. Se faltar espaço no armazenamento, a tela avisa.
-- **Ler pelo Wi-Fi:** abra no navegador o IP do rádio, como http://192.168.1.75, ou http://tef.local.
-- **Ler pelo USB:** num terminal como o PuTTY, conecte na porta do rádio e mande `L`. Ele responde com o logbook em CSV.
+- **Ler no computador:** pelo navegador, no IP do rádio ou em http://tef.local, ou pelo cabo USB, com o comando `L`, que devolve o logbook em CSV. O passo a passo está em [Computador e conectividade](#computador--logbook-memórias-e-hora).
 - **Apagar:** Opções FM DX → Limpar livro de registro.
 
 ## Menu completo
+
+<!-- No site, esta seção vira um aviso que leva a Ajustes do rádio. A lista continua aqui porque alimenta o explorador de ajustes: o nome usado pela wiki e a marca "Fora da wiki" vêm dela. -->
 
 Cada opção aparece com o nome do menu em português e, entre parênteses, o nome em inglês usado pela wiki. Os valores vêm da wiki e foram conferidos no código da v2.20.12. "Fora da wiki" marca opções que a wiki não descreve. A ordem de cada lista, os passos e os padrões de fábrica estão em [Ajustes do rádio](#ajustes).
 
@@ -135,7 +136,7 @@ Cada opção aparece com o nome do menu em português e, entre parênteses, o no
 | Mostrar erros PI (Show PI errors) | Ligado, Desligado | Mostra os erros no código PI quando o sinal está fraco. |
 | Usar AF (Use AF) | Desligado, Ligado com REG, Ligado sem REG | Troca automática para a frequência alternativa, para manter a recepção. |
 | Classificar AF automaticamente (Auto sort AF) | Ligado, Desligado | Ordena a lista de AF por frequência. |
-| Buffering RT, PS rápido e Mostrar PS longo | PS rápido: Off, Initial ou Always | Fora da wiki. As duas primeiras também existem no Megatron e estão em [Menus explicados](menus.md). |
+| Buffering RT, PS rápido e Mostrar PS longo | PS rápido: Off, Initial ou Always | Fora da wiki. As duas primeiras também existem no Megatron. |
 
 ### Configurações FM
 

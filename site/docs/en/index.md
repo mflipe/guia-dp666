@@ -2,7 +2,7 @@
 
 <!--HOME-->
 
-An independent guide to the DP-666 radio with the NXP TEF6686 chip. It brings together what is scattered across the manufacturer’s manuals, the firmware code, forums and hands-on tests, and covers both firmware lines: **Megatron** (the touch one, closed source) and **PE5PVB’s official firmware** (open source).
+An independent guide that brings together what is scattered across the manufacturer’s manuals, the firmware code, forums and hands-on tests, and covers both firmware lines: **Megatron** (the touch one, closed source) and **PE5PVB’s official firmware** (open source).
 
 <dl class="facts">
 <div><dt>Tuner</dt><dd>NXP TEF6686</dd></div>
@@ -21,19 +21,6 @@ An independent guide to the DP-666 radio with the NXP TEF6686 chip. It brings to
 - **On the startup screen:** Megatron shows the DEEPELEC logo and the line "Software Ver2.00.15-Mod17 by Megatron" (the mod number changes with the version). The official firmware shows its own version, such as v2.20.
 - **In the menu:** Other settings → System information shows the version, build date, tuner and patch.
 - **By its features:** if the radio accepts touch on the screen and only has Chinese and English, it is Megatron. If the menu offers 23 languages, Portuguese among them, it is the official firmware.
-
-## Full guide
-
-<div class="tiles">
-<a href="brasil.md"><strong>Setup for Brazil</strong><span>Deemphasis, extended FM, AM step, time zone and advanced mode.</span></a>
-<a href="uso.md"><strong>Using the radio</strong><span>Buttons, keypad, touch, memory channels, auto search and DX scan on Megatron.</span></a>
-<a href="oficial.md"><strong>Using the official firmware</strong><span>Buttons, the full menu, the DX scanner and the logbook of PE5PVB’s firmware.</span></a>
-<a href="hardware.md"><strong>Hardware</strong><span>Board architecture and the datasheet of each component.</span></a>
-<a href="firmwares.md"><strong>Megatron vs. official</strong><span>Differences, pros and cons and how to test without risk.</span></a>
-<a href="computador.md"><strong>Using it with a computer</strong><span>Control with XDR-GTK, RDS in RDS Spy, the radio in a browser and the logbook, step by step.</span></a>
-<a href="mod17.md"><strong>Hidden features of Mod17</strong><span>Options, pages and commands the manual doesn’t show.</span></a>
-<a href="problemas.md"><strong>Common problems</strong><span>"Tuner: !None!", a clock running fast, a silent speaker and more.</span></a>
-</div>
 
 ## Versions covered
 

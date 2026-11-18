@@ -36,7 +36,6 @@ O DP-666 aceita duas linhas de firmware. Trocar de uma para a outra não é uma 
 - **Outra interface:** telas, menus e áreas de toque mudam, e o toque precisa ser calibrado de novo.
 - **Nada migra:** configurações e memórias não passam de um firmware para o outro. Se o Mod17 responder ao comando `s` pelo USB, dá para exportar a lista de memórias antes.
 - **Pacote pronto só até a v2.20.8,** de 21/02/2026. As correções posteriores só chegam compilando o código (Arduino IDE ou PlatformIO) ou com um novo pacote.
-- **Bateria com Wi-Fi:** a leitura some com o Wi-Fi ligado nos dois firmwares, porque é limitação do hardware.
 
 !!! note "Compilando para o DP-666"
     No código oficial, os padrões do DP-666 (modelo Portable touch, tela girada, sentido do encoder e cores) só vêm se a compilação definir a opção `DEEPELEC_DP_66X`. Sem ela, esses itens precisam ser ajustados à mão depois da gravação. O passo a passo está em [Backup e gravação](backup.md), e o uso no dia a dia em [Uso da linha oficial](oficial.md).

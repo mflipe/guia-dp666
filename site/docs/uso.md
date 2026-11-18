@@ -26,29 +26,6 @@ Controles, sintonia, memórias e buscas no Megatron Mod17. Quando o comportament
 | Verso | etiqueta com as faixas, a bateria e a alimentação |
 | Fundo | chave geral, marcada Main switch: ON para o lado esquerdo, OFF para o direito; e uma grade de furos embaixo do alto-falante |
 
-## Botões
-
-- **Chave geral:** em OFF desconecta a bateria. Use para guardar o rádio e para cortar a energia de verdade quando ele travar.
-- **POWER:** toque curto liga e desliga. A opção Power off, em Main settings, desliga pelo software; para religar, use o BW (firmware).
-- **TUNING (knob):** girar muda a frequência ou navega no menu. Toque curto troca o passo e, no menu, confirma. Toque longo, de 500 ms, trava ou destrava, e a ação é configurável (firmware).
-- **VOLUME:** volume analógico. **SQL:** nível do squelch.
-- **BW:** em FM, toque curto alterna estéreo e mono; em AM, alterna entre 3, 4, 6 e 8 kHz. Toque longo abre a página de atalhos. No menu, sobe uma página (firmware).
-- **MODE:** toque curto alterna entre MAN, AUTO e MEM. Toque longo abre o menu. Dentro do menu, dos atalhos ou do teclado, toque curto sai e salva (firmware).
-- **BAND:** toque curto alterna entre LW, MW, SW, FML e FM, pulando as faixas desativadas. Toque longo abre o teclado na tela. Segurar 3 s executa a ação de Keep BAND key 3 sec., que pode ser Power off, Mute screen ou Disable (firmware). No menu, desce uma página.
-- **BOOT:** segurar ao ligar para entrar no modo de gravação.
-
-### Ao ligar segurando
-
-| Botão | Efeito |
-| --- | --- |
-| BW | inverte o sentido do encoder |
-| MODE | gira a tela |
-| BW + TUNING | restaura o padrão de fábrica |
-| TUNING | escolhe entre encoder padrão e óptico |
-| BOOT | modo de gravação |
-
-Desde o mod12, a restauração de fábrica não apaga as memórias e abre o assistente de configuração: idioma, modelo, calibração do toque e modo de uso (firmware).
-
 ## Teclado físico (firmware)
 
 - **0 a 9:** digitam a frequência. A faixa e a frequência ficam verdes enquanto você digita.

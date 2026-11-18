@@ -24,7 +24,6 @@ Settings that make a difference when you use the DP-666 in Brazil, with the rule
 ## AM and medium wave
 
 - **MW default stepsize at 10 kHz**, the medium wave grid of Brazil and the Americas.
-- **Antenna:** the DP-666 has no internal ferrite antenna. For AM, use an external wire or a loop on the SMA connector and test at night, away from chargers and electronics.
 - **AIR band Conversion:** the option exists, but the air band only works with an external converter sold separately.
 
 ## RDS

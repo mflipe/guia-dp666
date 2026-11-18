@@ -1,6 +1,6 @@
 # Using the official firmware
 
-Buttons, power-on combinations, memory channels, the DX scanner, the logbook and the full menu of PE5PVB’s official firmware. It is based on the [project wiki](https://github.com/PE5PVB/TEF6686_ESP32/wiki), checked against the code of v2.20.12, from Nov 13, 2026. Where the two differ, the guide follows the code and says so. For Megatron, see [Using the radio](uso.md) and [Menus explained](menus.md).
+Buttons, power-on combinations, memory channels, the DX scanner and the logbook of PE5PVB’s official firmware. The full menu is in [Radio settings](#ajustes--oficial). It is based on the [project wiki](https://github.com/PE5PVB/TEF6686_ESP32/wiki), checked against the code of v2.20.12, from Nov 13, 2026. Where the two differ, the guide follows the code and says so. For Megatron, see [Using the radio](uso.md).
 
 !!! note "Incomplete wiki, firmware without warranty"
     The author himself warns that the wiki is still under construction and may not cover everything. The firmware is distributed without any warranty, and whoever flashes it takes the risk.
@@ -8,7 +8,7 @@ Buttons, power-on combinations, memory channels, the DX scanner, the logbook and
 ## What the official firmware does
 
 - **Bands:** FM from 65 to 108 MHz and AM from 144 kHz to 27 MHz.
-- **Connections:** RDS Spy, XDR-GTK, fm-dx-webserver and StationList over Wi-Fi (see [Connectivity](conectividade.md)).
+- **Connections:** RDS Spy, XDR-GTK, fm-dx-webserver and StationList over Wi-Fi (see [Computer and connectivity](computador.md)).
 - **Features:** almost all of RDS, with an advanced RDS screen; automatic and manual search; squelch; battery, S-meter and modulation meter on the screen; themes; 23 languages; automatic switching to the alternative frequency (AF); 99 memory channels; and a station log (logbook).
 - **Only on the TEF6687 and TEF6689 chips:** the full RDS search (FullSearch RDS) and the FMSI stereo improvement. The DP-666 uses the TEF6686, so these two functions don’t exist on it.
 
@@ -74,11 +74,12 @@ It has existed since v2.10 and lives in FM DX Options. It looks for DX on empty 
 It has existed since v2.20.
 
 - **Log:** on FM, hold the encoder for more than 1 s. With audio feedback on, the radio beeps. If storage runs out, the screen warns you.
-- **Read it over Wi-Fi:** open the radio’s IP address in a browser, such as http://192.168.1.75, or http://tef.local.
-- **Read it over USB:** in a terminal such as PuTTY, connect to the radio’s port and send `L`. It answers with the logbook as CSV.
+- **Read it on a computer:** in a browser, at the radio’s IP address or at http://tef.local, or over the USB cable, with the `L` command, which returns the logbook as CSV. The step-by-step is in [Computer and connectivity](#computador--logbook-memory-channels-and-time).
 - **Erase it:** FM DX Options → Clear logbook.
 
 ## Full menu
+
+<!-- On the site, this section becomes a pointer to Radio settings. The list stays here because it feeds the settings explorer: the name used by the wiki and the "Not in the wiki" mark come from it. -->
 
 Each option appears with its English menu name, the same one the wiki uses. The values come from the wiki and were checked against the code of v2.20.12. "Not in the wiki" marks options the wiki doesn’t describe. The order of each list, the steps and the factory defaults are in [Radio settings](#ajustes).
 
@@ -135,7 +136,7 @@ Each option appears with its English menu name, the same one the wiki uses. The 
 | Show PI errors | On, Off | Shows errors in the PI code when the signal is weak. |
 | Use AF | Off, On with REG, On without REG | Automatic switching to the alternative frequency, to keep reception. |
 | Auto sort AF | On, Off | Sorts the AF list by frequency. |
-| RT buffering, Fast PS and Show long PS | Fast PS: Off, Initial or Always | Not in the wiki. The first two also exist on Megatron and are in [Menus explained](menus.md). |
+| RT buffering, Fast PS and Show long PS | Fast PS: Off, Initial or Always | Not in the wiki. The first two also exist on Megatron. |
 
 ### FM settings
 

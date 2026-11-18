@@ -193,7 +193,7 @@
         : '<p class="sim-hint">Escolha os botões que ficam apertados e toque em “Ligar o rádio”.</p>' + comboList();
       $(".sim-notes", root).innerHTML = D[st.fw].notas.map(function (n) { return "<li>" + n + "</li>"; }).join("");
       var ref = D[st.fw].ref;
-      $(".sim-ref", root).innerHTML = 'Detalhes em <a href="#' + ref + '">' + (st.fw === "oficial" ? "Uso da linha oficial" : "Uso do rádio") + "</a>.";
+      $(".sim-ref", root).innerHTML = ref ? 'Detalhes em <a href="#' + ref + '">Uso da linha oficial</a>.' : "";
     }
     function comboList() {
       return '<ul class="sim-acts">' + D[st.fw].ligar.map(function (l) {
@@ -616,13 +616,14 @@
       var id = String(e.detail || "");
       if (id === "ajustes--brasil") { st.view = "brasil"; showView(); return; }
       if (id.indexOf("ajustes--") !== 0) return;
-      var fw = id.indexOf("ajustes--oficial-") === 0 ? "oficial" : id.indexOf("ajustes--mod17-") === 0 ? "mod17" : null;
+      var fw = /^ajustes--oficial(-|$)/.test(id) ? "oficial" : /^ajustes--mod17(-|$)/.test(id) ? "mod17" : null;
       if (!fw) return;
       st.view = "todos"; st.fw = fw; st.q = ""; input.value = "";
       renderAll();
       showView();
       var t = document.getElementById(id);
       if (t && t.classList.contains("aj-item")) { toggle(t, true); t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash"); }
+      if (t) requestAnimationFrame(function () { t.scrollIntoView({ block: "start" }); });
     });
     onProfile(function () { st.fw = curFw(); renderAll(); });
     renderAll();
@@ -680,7 +681,6 @@
         '<div class="hlp-ask"><span>Resolveu?</span><button type="button" class="btn-solid" data-ok>Sim</button><button type="button" class="btn-ghost" data-no>Não</button></div>' +
         '<div class="hlp-after"></div></div>';
       view.dataset.others = others.map(function (o) { return o.id; }).join(",");
-      view.dataset.ref = c.ref;
     }
     function results(q) {
       var ws = words(q), hits = [];
@@ -721,13 +721,17 @@
         $(".hlp-ask", view).hidden = true;
         after.innerHTML = '<div class="hlp-more">' + (ids.length ? "<h4>Outras causas nesta categoria</h4>" + '<div class="hlp-list">' +
           ids.map(function (id) { return '<button type="button" class="hlp-sym" data-go="' + id + '">' + esc(byId[id].it.titulo) + "</button>"; }).join("") + "</div>" : "") +
-          '<p class="exp-note">Se nada disso resolver, leia a seção completa em <a href="#' + esc(view.dataset.ref) + '">Problemas comuns</a>. Antes de qualquer reparo ou regravação, faça o <a href="#backup">backup</a>.</p></div>';
+          '<p class="exp-note">Antes de qualquer reparo ou regravação, faça o <a href="#backup">backup</a>.</p></div>';
       }
     });
     input.addEventListener("input", function () { if (words(input.value).length) results(input.value); else home(); });
     document.addEventListener("app:reveal", function (e) {
       var id = String(e.detail || "");
       if (id.indexOf("ajuda--") === 0 && byId[id]) go(id, false);
+      else if (id.indexOf("problemas--") === 0) {
+        var c = cats.filter(function (x) { return x.ref === id; })[0];
+        if (c) go(c.id, false);
+      }
     });
     home();
   }

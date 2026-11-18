@@ -19,7 +19,7 @@ O DP-666 não é o melhor em tudo. Para FM e RDS, está entre os melhores portá
 - **Bluetooth de áudio:** ATS125.
 - **FM-DX fixo, pelo computador ou pela internet:** Headless TEF Lite com fm-dx-webserver.
 - **SSB (radioamador e utilitárias):** nenhum rádio TEF faz. Só rádios de outro tipo, como o Tecsun PL-330.
-- **Evite clones** como o "Sparkelec DP-666" (veja [Problemas comuns](problemas.md)).
+- **Evite clones** como o "Sparkelec DP-666" (veja [Clones](#ajuda--clones), em Problemas comuns).
 
 ## Fontes
 

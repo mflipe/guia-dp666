@@ -1,5 +1,4 @@
 {
- "uso--botões": "uso--buttons",
  "Toque curto": "Short press",
  "Alterna entre LW, MW, SW, FML e FM, pulando as faixas desativadas. No menu, desce uma página.": "Cycles through LW, MW, SW, FML and FM, skipping disabled bands. In the menu, goes down one page.",
  "Toque longo": "Long press",
@@ -24,7 +23,7 @@
  "Restaura o padrão de fábrica. Desde o mod12, não apaga as memórias e abre o assistente de configuração: idioma, modelo, calibração do toque e modo de uso.": "Restores the factory defaults. Since mod12, it keeps the memory channels and opens the setup wizard: language, model, touch calibration and usage mode.",
  "Modo de gravação, para atualizar o firmware.": "Flashing mode, to update the firmware.",
  "VOLUME e SQL são potenciômetros: volume analógico e nível do squelch.": "VOLUME and SQL are potentiometers: analog volume and squelch level.",
- "O teclado físico digita frequências e memórias. Veja [Uso do rádio](uso.md).": "The physical keypad enters frequencies and memory channels. See [Using the radio](uso.md).",
+ "O teclado físico digita frequências e memórias. Veja [Teclado físico](#uso--teclado-físico-firmware).": "The physical keypad enters frequencies and memory channels. See [Physical keypad](#uso--physical-keypad-firmware).",
  "Chave geral: em OFF desconecta a bateria. Use para guardar o rádio e para cortar a energia de verdade quando ele travar.": "Main switch: OFF disconnects the battery. Use it to store the radio and to really cut the power when it freezes.",
  "Linha oficial": "Official firmware",
  "oficial--botões": "oficial--buttons",
