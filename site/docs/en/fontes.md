@@ -1,6 +1,6 @@
 # Sources
 
-Every source cited in the guide, without repeats (120 in total). Each page also lists its own at the end.
+Every source cited in the guide, without repeats (121 in total). Each page also lists its own at the end.
 
 ## Component datasheets
 
@@ -143,6 +143,7 @@ Every source cited in the guide, without repeats (120 in total). Each page also 
 - [Ministry of Communications answer on digital radio, 2024](http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf)
 - [Anatel — Resolution No. 680/2017, restricted radiation](https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680)
 - [Anatel — Act No. 14,448/2017, restricted radiation requirements](https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448)
+- [Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [Espressif — ESP32 schematic checklist (CHIP_PU delay)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
 - [Hirose U.FL — 30 mating cycles (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
 

@@ -95,5 +95,11 @@
  "Fabricante não identificado": "Unidentified manufacturer",
  "Controlador do botão POWER: liga e desliga a energia da placa a cada toque": "POWER button controller: turns the board’s power on and off with each press",
  "ligado direto à bateria · comanda o transistor Q1, junto com a chave geral": "connected straight to the battery · drives transistor Q1, together with the main switch",
- "Sem ficha técnica encontrada": "No datasheet found"
+ "Sem ficha técnica encontrada": "No datasheet found",
+ "Unidade desmontada": "Disassembled unit",
+ "Placa, painéis, bateria e alto-falante, por Guido Schotmans": "Board, panels, battery and speaker, by Guido Schotmans",
+ "Lado da tela": "Screen side",
+ "A placa virada e a pecinha de plástico contra o erro do encoder": "The board flipped over and the small plastic piece against the encoder error",
+ "Onde vai o isolante": "Where the insulator goes",
+ "Ponto entre as soldas do encoder e os contatos da tela": "The spot between the encoder’s solder joints and the screen contacts"
 }

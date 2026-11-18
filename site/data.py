@@ -135,6 +135,9 @@ DEEP = "https://www.deepelec.com/files/dp-666/img/"
 REFS = {
     "hardware": [
         ("Esquema elétrico V2.5.4", "Esquema completo: rádio, processador, áudio e energia (PDF)", "DEEPELEC", "https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf"),
+        ("Unidade desmontada", "Placa, painéis, bateria e alto-falante, por Guido Schotmans", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_4.webp"),
+        ("Lado da tela", "A placa virada e a pecinha de plástico contra o erro do encoder", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_5.webp"),
+        ("Onde vai o isolante", "Ponto entre as soldas do encoder e os contatos da tela", "wijnants.info", "https://wijnants.info/fmdx/wp-content/uploads/2025/08/Deepelec_Guido_08-04-2025_6.webp"),
         ("Linha atual, quatro cores", "Aparência vendida desde julho de 2025", "DEEPELEC", DEEP + "dp666_new_four_c3.JPG"),
         ("Conteúdo da caixa", "Itens que acompanham o rádio", "DEEPELEC", DEEP + "dp666_new_ship_list2.JPG"),
         ("Etiquetas de série", "Etiqueta antiga e nova, com QR code", "DEEPELEC", DEEP + "dp666_old_new_sn.JPEG"),

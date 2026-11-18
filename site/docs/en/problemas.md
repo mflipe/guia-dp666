@@ -27,6 +27,7 @@ To prevent it, set Wi-Fi auto disconnect to After time sync or leave Wi-Fi off w
 - **The update won’t flash over USB:** enter flashing mode by holding BOOT while powering on and install the CH340 driver on Windows. There is an unconfirmed report that the USB port of early units can’t be used for updates.
 - **Settings disappeared after an update:** that is expected. Updates reset the settings, require a new touch calibration and, in some versions, a new Wi-Fi setup.
 - **Radio in Chinese or without the advanced options:** change the language in 显示设置 → 语言 → English. For advanced mode, with the language set to Chinese, turn on 高级模式 in 主要设置 → 系统使用模式 and switch back to English.
+- **Occasional encoder error at startup:** in one reported case, the encoder’s solder joints were touching the contacts on the back of the screen. The owner fixed it with a small piece of insulating plastic between them ([report with photos](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)); opening the case takes a 0.7 mm hex key. Under warranty, talk to the seller or DEEPELEC first.
 
 ## Audio
 
@@ -92,3 +93,4 @@ The V2.0 manual distributed by Raddy is the same as the one in SPARKELEC’s Git
 - [PE5PVB — tuner detection fix](https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d)
 - [PE5PVB — discussion #885](https://github.com/PE5PVB/TEF6686_ESP32/discussions/885)
 - [Blog or Die — DX-286 vs. DP-666](https://www.blogordie.com/?p=7848)
+- [Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)

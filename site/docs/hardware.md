@@ -1,6 +1,6 @@
 # Hardware
 
-O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam, por onde passam a energia e o som, e traz o datasheet de cada uma. A base são os esquemas elétricos da DEEPELEC: o V2.5.3, da placa das unidades originais, e o V2.5.4, publicado no site dela.
+O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam, por onde passam a energia e o som, e traz o datasheet de cada uma. A base são os esquemas elétricos da DEEPELEC: o V2.5.3, da placa das unidades originais, e o V2.5.4, [publicado no site dela](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
 
 ## Arquitetura
 
@@ -26,7 +26,7 @@ O sintonizador, o teclado e o relógio dividem o mesmo barramento I²C do ESP32,
 
 ## Por dentro do rádio
 
-Fotos de uma unidade desmontada, com a placa impressa Mini6686-V2.5.3, mostram como o rádio é montado:
+As [fotos de desmontagem de Guido Schotmans](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/), publicadas no blog FMDX de wijnants.info, mostram como o rádio é montado; a placa delas é a Mini6686-V2.5.3. Os links para cada foto estão em [Imagens de referência](#hardware--imagens-de-referência).
 
 - **Gabinete:** seis painéis feitos de placa de circuito preta, com as legendas impressas: frente, verso, topo, fundo e as duas laterais. Parafusos pretos e espaçadores de latão os prendem.
 - **Verso:** o painel leva a bateria e o alto-falante, este dentro de uma caixa fechada. Os dois chegam à placa por conectores de 2 pinos (J1 e J5).
@@ -34,7 +34,7 @@ Fotos de uma unidade desmontada, com a placa impressa Mini6686-V2.5.3, mostram c
 - **Antenas:** o SMA, no topo, chega à placa por um cabinho coaxial. O ESP32 é a versão WROOM-32U, sem antena própria: o Wi-Fi e o Bluetooth usam uma antena ligada ao módulo por outro cabinho.
 - **Bateria:** célula de lítio-polímero com o código 105565 (cerca de 10 × 55 × 65 mm), 3,7 V e 5000 mAh, com plugue de 2 pinos do tipo PH. Numa troca, confira a polaridade antes de ligar: baterias com o mesmo plugue podem vir com os fios invertidos.
 
-Na garantia, não abra o rádio: acione o vendedor ou a DEEPELEC. Se abrir, solte e encaixe os cabinhos com cuidado, porque o conector deles (U.FL) aguenta cerca de 30 encaixes.
+Na garantia, não abra o rádio: acione o vendedor ou a DEEPELEC. Para abrir, os parafusos pedem uma chave Allen de 0,7 mm. Solte e encaixe os cabinhos com cuidado, porque o conector deles (U.FL) aguenta cerca de 30 encaixes.
 
 ## Alimentação
 
@@ -138,7 +138,7 @@ As fotos de terceiros têm direitos reservados, então o guia não as copia: cad
 
 - DEEPELEC — esquema elétrico V2.5.3, com folhas de 30/10/2023 a 18/02/2024 (PDF)
 - [DEEPELEC — esquema elétrico V2.5.4](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf)
-- Fotos de uma unidade desmontada, com a placa Mini6686-V2.5.3 (abril de 2025)
+- [Guido Schotmans — DP-666 desmontado e o erro do encoder (wijnants.info, 04/08/2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [DEEPELEC DP-666](https://www.deepelec.com/en/dp-666/)
 - [DEEPELEC — RTC no DP-666](https://www.deepelec.com/en/2025/04/09/dp-666-add-rtc/)
 - [PE5PVB — TEF6686_ESP32.ino, com os pinos usados](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)

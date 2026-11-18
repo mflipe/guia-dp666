@@ -1,6 +1,6 @@
 # Hardware
 
-The DP-666 pairs an NXP TEF6686 tuner, which does all the radio work, with an ESP32 module, which handles the screen, the buttons and the connections. This page shows how the parts connect, how power and sound flow, and gives the datasheet of each part. It is based on DEEPELEC’s schematics: V2.5.3, the board of the original units, and V2.5.4, published on its site.
+The DP-666 pairs an NXP TEF6686 tuner, which does all the radio work, with an ESP32 module, which handles the screen, the buttons and the connections. This page shows how the parts connect, how power and sound flow, and gives the datasheet of each part. It is based on DEEPELEC’s schematics: V2.5.3, the board of the original units, and V2.5.4, [published on its site](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf).
 
 ## Architecture
 
@@ -26,7 +26,7 @@ The tuner, the keypad and the clock share the ESP32’s I²C bus, each at its ow
 
 ## Inside the radio
 
-Photos of a disassembled unit, with a board printed Mini6686-V2.5.3, show how the radio is built:
+[Guido Schotmans’s teardown photos](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/), published on the wijnants.info FMDX blog, show how the radio is built; their board is the Mini6686-V2.5.3. The links to each photo are under [Reference images](#hardware--reference-images).
 
 - **Case:** six panels made of black circuit board, with the labels printed on them: front, back, top, bottom and the two sides. Black screws and brass standoffs hold them together.
 - **Back:** this panel carries the battery and the speaker, which sits in a closed box. Both reach the board through 2-pin connectors (J1 and J5).
@@ -34,7 +34,7 @@ Photos of a disassembled unit, with a board printed Mini6686-V2.5.3, show how th
 - **Antennas:** the SMA, on top, reaches the board through a short coaxial cable. The ESP32 is the WROOM-32U version, which has no antenna of its own: Wi-Fi and Bluetooth use an antenna linked to the module by another short cable.
 - **Battery:** a lithium-polymer cell coded 105565 (about 10 × 55 × 65 mm), 3.7 V and 5000 mAh, with a 2-pin PH-type plug. When replacing it, check the polarity before plugging it in: batteries with the same plug can come with the wires swapped.
 
-Don’t open the radio while it is under warranty: contact the seller or DEEPELEC. If you do open it, unplug and plug the short cables carefully, because their connector (U.FL) is rated for about 30 matings.
+Don’t open the radio while it is under warranty: contact the seller or DEEPELEC. Opening it takes a 0.7 mm hex key for the screws. Unplug and plug the short cables carefully, because their connector (U.FL) is rated for about 30 matings.
 
 ## Power
 
@@ -138,7 +138,7 @@ Third-party photos are copyrighted, so the guide doesn’t copy them: each item 
 
 - DEEPELEC — schematic V2.5.3, sheets dated October 30, 2023 to February 18, 2024 (PDF)
 - [DEEPELEC — schematic V2.5.4](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf)
-- Photos of a disassembled unit, with board Mini6686-V2.5.3 (April 2025)
+- [Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [DEEPELEC DP-666](https://www.deepelec.com/en/dp-666/)
 - [DEEPELEC — RTC on the DP-666](https://www.deepelec.com/en/2025/04/09/dp-666-add-rtc/)
 - [PE5PVB — TEF6686_ESP32.ino, with the pins used](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)

@@ -27,6 +27,7 @@ Para prevenir, use Wi-Fi auto disconnect em After time sync ou deixe o Wi-Fi des
 - **Atualização não grava pelo USB:** entre no modo de gravação segurando BOOT ao ligar e instale o driver CH340 no Windows. Há relato, não confirmado, de que a porta USB de unidades antigas não serve para atualizar.
 - **Configurações sumiram depois de atualizar:** é esperado. As atualizações zeram as configurações, pedem nova calibração do toque e, em algumas versões, nova configuração do Wi-Fi.
 - **Rádio em chinês ou sem as opções avançadas:** troque o idioma em 显示设置 → 语言 → English. Para o modo avançado, com o idioma em chinês, ative 高级模式 em 主要设置 → 系统使用模式 e volte para English.
+- **Erro do encoder ao ligar, de vez em quando:** num caso relatado, as soldas do encoder encostavam nos contatos atrás da tela. O dono resolveu pondo uma pecinha de plástico isolante entre os dois ([relato com fotos](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)); abrir o gabinete pede uma chave Allen de 0,7 mm. Na garantia, fale antes com o vendedor ou a DEEPELEC.
 
 ## Áudio
 
@@ -92,3 +93,4 @@ O manual V2.0 distribuído pela Raddy é o mesmo do repositório da SPARKELEC no
 - [PE5PVB — correção de detecção do sintonizador](https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d)
 - [PE5PVB — discussão #885](https://github.com/PE5PVB/TEF6686_ESP32/discussions/885)
 - [Blog or Die — DX-286 × DP-666](https://www.blogordie.com/?p=7848)
+- [Guido Schotmans — DP-666 desmontado e o erro do encoder (wijnants.info, 04/08/2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
