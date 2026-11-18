@@ -1,6 +1,6 @@
 # Sources
 
-Every source cited in the guide, without repeats (117 in total). Each page also lists its own at the end.
+Every source cited in the guide, without repeats (120 in total). Each page also lists its own at the end.
 
 ## Component datasheets
 
@@ -59,7 +59,8 @@ Every source cited in the guide, without repeats (117 in total). Each page also 
 - [PE5PVB — partitions.csv history](https://github.com/PE5PVB/TEF6686_ESP32/commits/main/partitions.csv)
 - [PE5PVB — Releases](https://github.com/PE5PVB/TEF6686_ESP32/releases/)
 - [PE5PVB — sturdier DP-666 keypad (Nov 11, 2026)](https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d)
-- [PE5PVB — TEF6686_ESP32.ino: buttons, combinations and factory defaults](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)
+- [PE5PVB — TEF6686_ESP32.ino, with the pins used](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)
+- [PE5PVB — TEF668X.cpp, with the crystal reading on GPIO 15](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/TEF668X.cpp)
 - [PE5PVB — tuner detection fix](https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d)
 - [PE5PVB/TEF6686_ESP32](https://github.com/PE5PVB/TEF6686_ESP32)
 - [TEF6686_ESP32 wiki](https://github.com/PE5PVB/TEF6686_ESP32/wiki)
@@ -142,6 +143,8 @@ Every source cited in the guide, without repeats (117 in total). Each page also 
 - [Ministry of Communications answer on digital radio, 2024](http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf)
 - [Anatel — Resolution No. 680/2017, restricted radiation](https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680)
 - [Anatel — Act No. 14,448/2017, restricted radiation requirements](https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448)
+- [Espressif — ESP32 schematic checklist (CHIP_PU delay)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
+- [Hirose U.FL — 30 mating cycles (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
 
 ## How to cite this guide
 

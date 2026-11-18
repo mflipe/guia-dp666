@@ -16,7 +16,7 @@ Na abertura aparecem o logo e a versão do firmware e, em vermelho, "Tuner: !Non
 
 Passos, em ordem:
 
-1. Desligue no POWER, tire o cabo USB, ponha a chave geral em OFF e espere 1 a 2 minutos. Volte a chave para ON e ligue sem apertar nada durante a abertura. Desligar só no POWER pode não cortar a alimentação do chip.
+1. Desligue no POWER, tire o cabo USB, ponha a chave geral em OFF e espere 1 a 2 minutos. Volte a chave para ON e ligue sem apertar nada durante a abertura. O POWER já corta a alimentação da placa; o cabo fora desliga também a ponte USB-serial, que ele alimenta, e a chave em OFF impede que o rádio volte a ligar antes da hora.
 2. Se repetir, carregue o rádio desligado por cerca de 1 hora e repita o passo 1.
 3. Se continuar depois de 2 ou 3 tentativas, o defeito provavelmente é de hardware (solda, alimentação ou cristal do sintonizador). Procure o vendedor ou a DEEPELEC e não abra o rádio na garantia.
 
@@ -30,7 +30,7 @@ Para prevenir, use Wi-Fi auto disconnect em After time sync ou deixe o Wi-Fi des
 
 ## Áudio
 
-- **Alto-falante mudo depois de usar fone:** em alguns lotes, falha o contato interno do conector de fone (PJ-3270) que religa o alto-falante. A DEEPELEC indica abrir o rádio e limpar os contatos PIN6 e PIN2. Na garantia, prefira acionar o suporte. Se o fone funciona e o alto-falante não, a causa provável é essa.
+- **Alto-falante mudo depois de usar fone:** em alguns lotes, falha o contato interno do conector de fone (PJ-3270) que religa o alto-falante. A DEEPELEC indica abrir o rádio e limpar os contatos PIN6 e PIN2 ([por que esses dois](#hardware--caminho-do-som)). Na garantia, prefira acionar o suporte. Se o fone funciona e o alto-falante não, a causa provável é essa.
 - **Sem som mesmo com sinal:** confira o squelch (Use squelch em Off para testar), o mudo (ícone na tela ou tecla 0), o VOLUME e o Set volume em 0 dB.
 - **Chiado agudo no lugar do áudio:** Audio output está em MPX, que entrega o sinal multiplex bruto. Volte para Stereo.
 
@@ -58,7 +58,7 @@ Para prevenir, use Wi-Fi auto disconnect em After time sync ou deixe o Wi-Fi des
 - **Hora adiantada 8 horas:** é o fuso padrão chinês. Ajuste Set local time zone para o seu fuso (Brasília: GMT−03:00) e, com o NTP funcionando, deixe RDS time sync em Off.
 - **Indicador de bateria some:** limitação do ESP32 com o Wi-Fi ligado. Use Wi-Fi auto disconnect em After time sync.
 - **Hora se perde com a chave geral desligada:** indica que o aparelho não tem RTC. Sleep clock correction compensa em parte.
-- **Carga:** carregador de 5 V e 1 A ou mais, no máximo 5 W, sem carga rápida, de preferência com o rádio desligado. LED vermelho carregando, verde carregado.
+- **Carga:** carregador de 5 V e 1 A ou mais, no máximo 5 W, sem carga rápida, de preferência com o rádio desligado. LED vermelho carregando; no fim, ele muda de cor (azul no esquema V2.5.3). A carga leva mais de 5 horas e funciona com a chave geral em OFF.
 
 ## Configurações e memórias
 

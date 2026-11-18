@@ -102,7 +102,7 @@ def arquitetura():
     # energia
     b.append(_text(40, 500, "ENERGIA", "d-cap", "start"))
     power = [(40, 120, "USB-C", "5 V"), (190, 150, "TP4056 · U20", "carregador"),
-             (370, 160, "Bateria", "3,7 V · 5000 mAh"), (560, 130, "Chave geral", "ON / OFF"),
+             (370, 160, "Bateria", "3,7 V · 5000 mAh"), (560, 130, "Q1 · SI2305", "chave geral e POWER"),
              (720, 170, "RT9193-33 ×3", "U5 · U6 · U32 → 3,3 V")]
     for i, (x, w, t, s) in enumerate(power):
         b.append(_box(x, 510, w, 52, t, s))
@@ -112,7 +112,7 @@ def arquitetura():
     svg = _svg(960, 580, ("fig-arq", "Arquitetura do DP-666"),
                "Diagrama de blocos: antena, sintonizador TEF6686, processador ESP32, tela, toque, teclado, RTC, ponte USB, amplificadores de áudio e alimentação.",
                "".join(b))
-    return figure(svg, "Arquitetura do DP-666, conforme o esquema V2.5.4 da DEEPELEC e o código oficial. Os códigos U são as referências do esquema.")
+    return figure(svg, "Arquitetura do DP-666, conforme os esquemas V2.5.3 e V2.5.4 da DEEPELEC e o código oficial. Os códigos U são as referências do esquema.")
 
 
 def flash():
@@ -251,4 +251,114 @@ def _remoto_estreito(desc):
     return _svg(340, 300, ("fig-remoto-n", "Controle remoto do DP-666"), desc, "".join(b), cls="diagram d-narrow")
 
 
-DIAGRAMS = {"arquitetura": arquitetura, "flash": flash, "boot": boot, "remoto": remoto}
+CARGAS = [("U5 · RT9193", "3,3 V para o processador"), ("U32 · RT9193", "3,3 V para a tela"),
+          ("U6 · RT9193", "3,3 V para o sintonizador"), ("U2 · TPA6211A1", "alto-falante, sem regulador")]
+
+
+def energia():
+    b = ['<rect class="d-guide" x="146" y="30" width="350" height="180" rx="12" fill="none"/>',
+         _text(146, 20, "SEMPRE LIGADOS À BATERIA", "d-cap", "start"),
+         _text(746, 20, "DEPOIS DO TRANSISTOR", "d-cap", "start")]
+    b.append(_box(16, 44, 104, 52, "USB-C", "5 V"))
+    b.append(_line(120, 70, 154, 70, arrow=True))
+    b.append(_box(156, 44, 150, 52, "TP4056 · U20", "carrega com ~0,9 A"))
+    b.append(_line(306, 70, 334, 70, arrow=True))
+    b.append(_box(336, 44, 150, 52, "Bateria", "3,7 V · 5000 mAh", key=True))
+    b.append(_line(486, 70, 564, 70, "d-acc", arrow=True))
+    b.append(_text(525, 62, "BATT", "d-lbl"))
+    b.append(_box(566, 44, 140, 52, "Q1 · SI2305", "transistor da placa", key=True))
+    # a bateria também alimenta o U1 e o relógio
+    b.append(_line(411, 96, 411, 146, arrow=True))
+    b.append(_path("M411,120 H231 V146", arrow=True))
+    b.append(_box(156, 148, 150, 50, "RTC · U11", "quando existe"))
+    b.append(_box(336, 148, 150, 50, "U1 · EC8D-01B", "controle do POWER"))
+    b.append(_line(486, 173, 564, 173, arrow=True))
+    b.append(_text(525, 165, "comando", "d-lbl"))
+    b.append(_box(566, 148, 140, 50, "Chave geral", "SW5 · ON e OFF"))
+    b.append(_line(636, 148, 636, 98, arrow=True))
+    b.append(_box(336, 236, 150, 44, "POWER", "KEY1, na frente"))
+    b.append(_line(411, 236, 411, 200, arrow=True))
+    # cargas depois do transistor
+    b.append(_path("M706,70 H724 M724,55 V235", "d-acc"))
+    for i, (t, s) in enumerate(CARGAS):
+        y = 32 + i * 60
+        b.append(_box(746, y, 198, 46, t, s))
+        b.append(_line(724, y + 23, 744, y + 23, "d-acc", arrow=True))
+    desc = ("Diagrama de energia: USB-C, carregador TP4056, bateria, relógio, controlador U1 com o botão POWER, "
+            "chave geral, transistor Q1 e, depois dele, três reguladores de 3,3 V e o amplificador do alto-falante.")
+    svg = _svg(960, 290, ("fig-energia", "Caminho da energia do DP-666"), desc, "".join(b), cls="diagram d-wide")
+    return figure(svg + _energia_estreito(desc), "Caminho da energia no esquema V2.5.3. A chave geral e o POWER não ficam no caminho da corrente: os dois comandam o transistor Q1, que alimenta a placa. O carregador, o relógio e o U1 ficam sempre ligados à bateria.")
+
+
+def _energia_estreito(desc):
+    """Versão em coluna do diagrama de energia, para telas de celular."""
+    b = [_box(8, 12, 96, 46, "USB-C", "5 V"),
+         _line(104, 35, 126, 35, arrow=True),
+         _box(128, 12, 192, 46, "TP4056 · U20", "carrega com ~0,9 A"),
+         _line(224, 58, 224, 80, arrow=True),
+         _box(128, 82, 192, 46, "Bateria", "3,7 V · 5000 mAh", key=True),
+         _line(128, 105, 106, 105, arrow=True),
+         _box(8, 82, 96, 46, "RTC · U11", "quando existe"),
+         _line(224, 128, 224, 150, arrow=True),
+         _box(128, 152, 192, 46, "U1 · EC8D-01B", "controle do POWER"),
+         _line(104, 175, 126, 175, arrow=True),
+         _box(8, 152, 96, 46, "POWER", "KEY1"),
+         _line(224, 198, 224, 220, arrow=True),
+         _box(128, 222, 192, 46, "Chave geral", "SW5 · ON e OFF"),
+         _line(224, 268, 224, 290, arrow=True),
+         _box(128, 292, 192, 46, "Q1 · SI2305", "transistor da placa", key=True),
+         _path("M320,105 H332 V315 H322", "d-acc", arrow=True),
+         _text(326, 213, "BATT", "d-lbl", "end"),
+         _path("M224,338 V356 H110 V567", "d-acc")]
+    for i, (t, s) in enumerate(CARGAS):
+        y = 370 + i * 58
+        b.append(_box(124, y, 196, 46, t, s))
+        b.append(_line(110, y + 23, 122, y + 23, "d-acc", arrow=True))
+    return _svg(340, 600, ("fig-energia-n", "Caminho da energia do DP-666"), desc, "".join(b), cls="diagram d-narrow")
+
+
+def audio():
+    b = [_box(16, 92, 150, 56, "TEF6686 · U7", "conversor interno (DAC)"),
+         _line(166, 120, 194, 120, "d-acc", arrow=True),
+         _box(196, 92, 170, 56, "VOLUME · SW4", "potenciômetro duplo", key=True),
+         _path("M366,120 H400 M400,58 V182", "d-acc"),
+         _line(400, 58, 428, 58, "d-acc", arrow=True),
+         _line(400, 182, 428, 182, "d-acc", arrow=True),
+         _box(430, 30, 180, 56, "MAX97220 · U4", "fone, estéreo, 3,3 V"),
+         _box(430, 154, 180, 56, "TPA6211A1 · U2", "soma L e R, na bateria"),
+         _line(610, 58, 648, 58, "d-acc", arrow=True),
+         _line(610, 182, 648, 182, "d-acc", arrow=True),
+         _box(650, 30, 170, 56, "Fone P2", "conector PJ-3270"),
+         _box(650, 154, 170, 56, "Alto-falante", "4 Ω · mono"),
+         # o contato do conector liga um amplificador e desliga o outro
+         _path("M735,86 V120 H520", "d-dash"),
+         _line(520, 120, 520, 88, "d-dash", arrow=True),
+         _line(520, 120, 520, 152, "d-dash", arrow=True),
+         _text(628, 112, "contato 6–2 do conector", "d-lbl"),
+         _text(628, 138, "plugue: liga U4, desliga U2", "d-lbl")]
+    desc = ("Diagrama de áudio: o TEF6686 entrega som analógico ao potenciômetro de volume, que alimenta o amplificador "
+            "do fone (MAX97220) e o do alto-falante (TPA6211A1); um contato do conector de fone liga um e desliga o outro.")
+    svg = _svg(840, 226, ("fig-audio", "Caminho do som do DP-666"), desc, "".join(b), cls="diagram d-wide")
+    return figure(svg + _audio_estreito(desc), "Caminho do som no esquema V2.5.3. O volume é analógico e fica antes dos dois amplificadores. O próprio conector de fone escolhe a saída: com o plugue, o contato entre os pinos 6 e 2 se abre, liga o U4 e, por um transistor, desliga o U2.")
+
+
+def _audio_estreito(desc):
+    """Versão em coluna do diagrama de áudio, para telas de celular."""
+    b = [_box(60, 10, 220, 50, "TEF6686 · U7", "conversor interno (DAC)"),
+         _line(170, 60, 170, 82, "d-acc", arrow=True),
+         _box(60, 84, 220, 50, "VOLUME · SW4", "potenciômetro duplo", key=True),
+         _path("M170,134 V150 M85,150 H255", "d-acc"),
+         _line(85, 150, 85, 170, "d-acc", arrow=True),
+         _line(255, 150, 255, 170, "d-acc", arrow=True),
+         _box(8, 172, 154, 56, "MAX97220 · U4", "fone, estéreo"),
+         _box(178, 172, 154, 56, "TPA6211A1 · U2", "soma L e R"),
+         _line(85, 228, 85, 254, "d-acc", arrow=True),
+         _line(255, 228, 255, 254, "d-acc", arrow=True),
+         _box(8, 256, 154, 50, "Fone P2", "conector PJ-3270"),
+         _box(178, 256, 154, 50, "Alto-falante", "4 Ω · mono"),
+         _path("M85,306 V324 H255 V308", "d-dash", arrow=True),
+         _text(170, 342, "com o plugue, o alto-falante fica mudo", "d-lbl")]
+    return _svg(340, 352, ("fig-audio-n", "Caminho do som do DP-666"), desc, "".join(b), cls="diagram d-narrow")
+
+
+DIAGRAMS = {"arquitetura": arquitetura, "flash": flash, "boot": boot, "remoto": remoto, "energia": energia, "audio": audio}

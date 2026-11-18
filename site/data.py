@@ -5,7 +5,7 @@ COMPONENTS = [
     {
         "pn": "TEF6686HN/V102", "ref": "U7", "maker": "NXP",
         "role": "Sintonizador DSP: recepção AM e FM, RDS e áudio",
-        "bus": "I²C 0x64 · marcação F8602, patch 102",
+        "bus": "I²C 0x64 · marcação F8602, patch 102 · cristal de 9,216 MHz",
         "status": [("Ativo", "ok"), ("Datasheet completo só sob pedido", "muted")],
         "links": [
             ("Folheto TEF668x (PDF, NXP)", "https://cache.nxp.com/docs/en/brochure/75017468.pdf"),
@@ -44,7 +44,7 @@ COMPONENTS = [
     },
     {
         "pn": "XL9555", "ref": "U12", "maker": "Xinluda",
-        "role": "Expansor de 16 portas do teclado físico, compatível com o PCA9555",
+        "role": "Expansor de 16 portas que lê as 12 teclas do teclado numérico, uma por porta; compatível com o PCA9555",
         "bus": "I²C 0x20 · interrupção no GPIO 14",
         "status": [("Ativo", "ok")],
         "links": [
@@ -56,7 +56,7 @@ COMPONENTS = [
     {
         "pn": "RS4C8010", "ref": "U11", "maker": "RTC",
         "role": "Relógio que mantém a hora com o rádio desligado, compatível com o Epson RX8010SJ",
-        "bus": "I²C 0x32 · só em unidades enviadas a partir de 01/04/2025",
+        "bus": "I²C 0x32 · ligado direto à bateria · só em unidades enviadas a partir de 01/04/2025",
         "status": [("Unidades novas", "maybe")],
         "links": [
             ("Epson RX8010SJ, datasheet (PDF, espelho Mouser)", "https://www.mouser.com/datasheet/2/137/RX8010SJ_en-1859944.pdf"),
@@ -65,8 +65,8 @@ COMPONENTS = [
     },
     {
         "pn": "TPA6211A1", "ref": "U2", "maker": "Texas Instruments",
-        "role": "Amplificador do alto-falante de 4 Ω e 3 W",
-        "bus": "entrada de áudio analógico do TEF6686",
+        "role": "Amplificador do alto-falante: soma os canais L e R e toca em mono",
+        "bus": "alimentado direto pela bateria · desligado quando entra o fone",
         "status": [("Ativo", "ok")],
         "links": [
             ("Datasheet (PDF, SLOS367E)", "https://www.ti.com/lit/ds/symlink/tpa6211a1.pdf"),
@@ -76,7 +76,7 @@ COMPONENTS = [
     {
         "pn": "MAX97220", "ref": "U4", "maker": "Analog Devices (Maxim)",
         "role": "Amplificador do fone de ouvido",
-        "bus": "no esquema V2.5.4: MAX97220BETE+T, a versão B, com ganho por resistores externos e 130 ms para ligar",
+        "bus": "nos esquemas V2.5.3 e V2.5.4: MAX97220BETE+T, a versão B, com ganho por resistores externos e 130 ms para ligar",
         "status": [("Ativo", "ok")],
         "links": [
             ("Datasheet MAX97220A–E (PDF, Rev. 2, 07/2012)", "https://www.analog.com/media/en/technical-documentation/data-sheets/MAX97220A-MAX97220E.pdf"),
@@ -86,7 +86,7 @@ COMPONENTS = [
     {
         "pn": "CH340N", "ref": "U10", "maker": "WCH",
         "role": "Ponte USB-serial da porta USB-C, usada para gravar e conversar com o rádio",
-        "bus": "UART do ESP32",
+        "bus": "UART0 do ESP32 · alimentado pela USB · sem reinício automático do ESP32",
         "status": [("Ativo", "ok")],
         "links": [
             ("Datasheet CH340 em inglês (PDF, espelho LCSC)", "https://www.lcsc.com/datasheet/lcsc_datasheet_2202231130_WCH-Jiangsu-Qin-Heng-CH340N_C2977777.pdf"),
@@ -97,16 +97,23 @@ COMPONENTS = [
     {
         "pn": "TP4056", "ref": "U20", "maker": "Top Power",
         "role": "Carregador da bateria de lítio de 5000 mAh",
-        "bus": "alimentado pela USB-C",
+        "bus": "alimentado pela USB-C · carga de cerca de 0,9 A (R104 de 1,3 kΩ) · sensor de temperatura desativado",
         "status": [("Ativo", "ok")],
         "links": [
             ("Datasheet (PDF, REV 2.3)", "https://www.toppwr.com/uploadfile/file/20240130/65b892bb04a3c.pdf"),
         ],
     },
     {
+        "pn": "EC8D-01B", "ref": "U1", "maker": "Fabricante não identificado",
+        "role": "Controlador do botão POWER: liga e desliga a energia da placa a cada toque",
+        "bus": "ligado direto à bateria · comanda o transistor Q1, junto com a chave geral",
+        "status": [("Sem ficha técnica encontrada", "muted")],
+        "links": [],
+    },
+    {
         "pn": "RT9193-33 ×3", "ref": "U5 · U6 · U32", "maker": "Richtek",
         "role": "Reguladores de 3,3 V de baixo ruído",
-        "bus": "depois da chave geral",
+        "bus": "U5 para o processador, U32 para a tela, U6 para o sintonizador",
         "status": [("Disponível", "ok")],
         "links": [
             ("Página do produto (Richtek)", "https://www.richtek.com/Products/Linear%20Regulator/Single%20Output%20Linear%20Regulator/RT9193?sc_lang=en"),
@@ -116,7 +123,7 @@ COMPONENTS = [
     {
         "pn": "PJ-3270", "ref": "—", "maker": "Genérico",
         "role": "Conector de fone de 3,5 mm com chave que desliga o alto-falante",
-        "bus": "os pinos 2 e 6 fazem a comutação",
+        "bus": "o contato entre os pinos 6 e 2 escolhe entre fone e alto-falante",
         "status": [("Sem ficha técnica", "muted")],
         "links": [
             ("Artigo da DEEPELEC sobre o alto-falante mudo", "https://www.deepelec.com/dp-666-speaker-cannot-produce-any-sound"),

@@ -970,7 +970,40 @@ tbody tr:last-child td { border-bottom: 0; }
   function scrollToId(id) {
     try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: id })); } catch (e) {}
     var el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    if (!el) return;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    ancorar(el);
+  }
+  // Enquanto a página termina de montar ferramentas e figuras, o alvo pode descer; por alguns segundos,
+  // ele volta ao topo a cada mudança de altura. Para assim que a pessoa rola ou toca na tela.
+  var soltarAncora = null;
+  function ancorar(el) {
+    if (soltarAncora) soltarAncora();
+    var page = el.closest(".page") || document.body, fim = Date.now() + 4000, ro = null;
+    var gestos = ["wheel", "touchstart", "keydown", "mousedown"];
+    function soltar() {
+      if (ro) ro.disconnect();
+      gestos.forEach(function (t) { window.removeEventListener(t, soltar, true); });
+      soltarAncora = null;
+    }
+    function corrigir() {
+      if (soltarAncora !== soltar) return;
+      if (!el.offsetParent) { soltar(); return; }
+      var top = el.getBoundingClientRect().top;
+      if (top > window.innerHeight * 0.5 || top < -40) el.scrollIntoView({ block: "start" });
+      if (Date.now() > fim) soltar();
+    }
+    gestos.forEach(function (t) { window.addEventListener(t, soltar, true); });
+    var altura = page.offsetHeight;
+    if ("ResizeObserver" in window) {
+      ro = new ResizeObserver(function () {
+        if (page.offsetHeight === altura) return;
+        altura = page.offsetHeight; setTimeout(corrigir, 50);
+      });
+      ro.observe(page);
+    }
+    [700, 1600, 3000, 4100].forEach(function (ms) { setTimeout(corrigir, ms); });
+    soltarAncora = soltar;
   }
   var tabbar = document.querySelector(".tabbar");
   var sidebar = document.getElementById("sidebar");

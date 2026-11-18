@@ -128,7 +128,7 @@ def components_html():
             f'<article class="card"><header class="card-top"><h3 class="pn">{esc(c["pn"])}</h3>{ref}</header>'
             f'<p class="card-role">{esc(c["role"])}</p>'
             f'<p class="card-meta">{esc(c["maker"])} · {esc(c["bus"])}</p>'
-            f'<p class="card-tags">{st}</p><ul class="card-links">{links}</ul></article>')
+            f'<p class="card-tags">{st}</p>' + (f'<ul class="card-links">{links}</ul>' if links else "") + '</article>')
     return '<div class="cards">' + "".join(cards) + "</div>"
 
 

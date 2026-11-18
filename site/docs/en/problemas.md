@@ -16,7 +16,7 @@ The startup screen shows the logo and the firmware version and, in red, "Tuner: 
 
 Steps, in order:
 
-1. Turn it off with POWER, unplug the USB cable, set the main switch to OFF and wait 1 to 2 minutes. Set the switch back to ON and turn it on without pressing anything during startup. Turning it off only with POWER may not cut the chip’s power.
+1. Turn it off with POWER, unplug the USB cable, set the main switch to OFF and wait 1 to 2 minutes. Set the switch back to ON and turn it on without pressing anything during startup. POWER already cuts the board’s power; unplugging the cable also turns off the USB-serial bridge, which the cable powers, and the switch at OFF keeps the radio from turning back on too early.
 2. If it happens again, charge the radio while off for about 1 hour and repeat step 1.
 3. If it continues after 2 or 3 tries, the fault is probably in the hardware (soldering, power or the tuner’s crystal). Contact the seller or DEEPELEC and don’t open the radio while under warranty.
 
@@ -30,7 +30,7 @@ To prevent it, set Wi-Fi auto disconnect to After time sync or leave Wi-Fi off w
 
 ## Audio
 
-- **Speaker silent after using headphones:** in some batches, the internal contact of the headphone jack (PJ-3270) that reconnects the speaker fails. DEEPELEC suggests opening the radio and cleaning contacts PIN6 and PIN2. Under warranty, prefer contacting support. If the headphones work and the speaker doesn’t, this is the likely cause.
+- **Speaker silent after using headphones:** in some batches, the internal contact of the headphone jack (PJ-3270) that reconnects the speaker fails. DEEPELEC suggests opening the radio and cleaning contacts PIN6 and PIN2 ([why those two](#hardware--sound-path)). Under warranty, prefer contacting support. If the headphones work and the speaker doesn’t, this is the likely cause.
 - **No sound even with a signal:** check the squelch (Use squelch at Off to test), mute (the icon on the screen or key 0), VOLUME and Set volume at 0 dB.
 - **High-pitched hiss instead of audio:** Audio output is set to MPX, which delivers the raw multiplex signal. Switch back to Stereo.
 
@@ -58,7 +58,7 @@ To prevent it, set Wi-Fi auto disconnect to After time sync or leave Wi-Fi off w
 - **Time 8 hours ahead:** it is the default Chinese time zone. Change Set local time zone to your time zone (Brasília: GMT−03:00) and, with NTP working, leave RDS time sync at Off.
 - **The battery indicator disappears:** a limitation of the ESP32 with Wi-Fi on. Set Wi-Fi auto disconnect to After time sync.
 - **The time is lost with the main switch off:** it means the unit has no RTC. Sleep clock correction partly makes up for it.
-- **Charging:** a 5 V charger of 1 A or more, 5 W at most, without fast charging, preferably with the radio off. Red LED while charging, green when charged.
+- **Charging:** a 5 V charger of 1 A or more, 5 W at most, without fast charging, preferably with the radio off. Red LED while charging; at the end it changes color (blue in schematic V2.5.3). Charging takes more than 5 hours and works with the main switch at OFF.
 
 ## Settings and memory channels
 

@@ -393,17 +393,17 @@ BUSES = {
 # x para a direita, z para a frente; tamanhos simbólicos, fora de escala e fora da posição real
 BLOCKS = [
     {"id": "antena", "tipo": "antena", "rotulo": "Antena", "pos": [-64, -30], "tam": [4, 4],
-     "titulo": "Antena (conector SMA)", "texto": "Antena externa no conector SMA, ligada à placa por um cabo IPEX. Não há antena de ferrite interna, por isso o AM depende de fio externo ou loop."},
+     "titulo": "Antena (conector SMA)", "texto": "Antena externa no conector SMA, ligada à placa por um cabinho com conector U.FL (IPEX). Na entrada, um diodo protege o sintonizador contra eletricidade estática. Não há antena de ferrite interna, por isso o AM depende de fio externo ou loop."},
     {"id": "tef", "tipo": "chip", "rotulo": "TEF6686", "pos": [-38, -30], "tam": [10, 10], "pn": "TEF6686HN/V102"},
     {"id": "tpa", "tipo": "chip", "rotulo": "TPA6211A1", "pos": [-12, -36], "tam": [6, 6], "pn": "TPA6211A1"},
     {"id": "falante", "tipo": "falante", "rotulo": "Alto-falante", "pos": [12, -36], "tam": [14, 14],
-     "titulo": "Alto-falante", "texto": "Alto-falante de 4 Ω. O amplificador TPA6211A1 o aciona com até 3 W."},
+     "titulo": "Alto-falante", "texto": "Alto-falante de 4 Ω e 3 W. O amplificador TPA6211A1, alimentado direto pela bateria, o aciona em mono."},
     {"id": "max", "tipo": "chip", "rotulo": "MAX97220", "pos": [-12, -22], "tam": [6, 6], "pn": "MAX97220"},
     {"id": "fone", "tipo": "fone", "rotulo": "Fone", "pos": [12, -22], "tam": [6, 8], "pn": "PJ-3270"},
     {"id": "esp32", "tipo": "modulo", "rotulo": "ESP32", "pos": [-38, 4], "tam": [18, 19.2], "pn": "ESP32-WROOM-32U",
      "extra": "Os pinos do módulo, um a um, estão na visão 3D do Laboratório.", "link": ["Ver os pinos do ESP32", "#laboratorio--trocar-o-esp32-por-um-modelo-mais-novo"]},
     {"id": "controles", "tipo": "controles", "rotulo": "Controles", "pos": [-66, 4], "tam": [16, 10],
-     "titulo": "Encoder, botões e squelch", "texto": "Encoder, BAND, BW, MODE e o potenciômetro do squelch, ligados direto ao ESP32. O volume também é um potenciômetro, mas fica no caminho do áudio.", "link": ["Ver os controles em 3D", "#botoes"]},
+     "titulo": "Encoder, botões e squelch", "texto": "Encoder, BAND, BW, MODE e o potenciômetro do squelch, ligados direto ao ESP32. O volume também é um potenciômetro, mas fica no caminho do áudio. O POWER não chega ao ESP32: ele vai ao controlador de energia (U1).", "link": ["Ver os controles em 3D", "#botoes"]},
     {"id": "tela", "tipo": "tela", "rotulo": "Tela", "pos": [2, 2], "tam": [24, 18], "pn": "LCD28IPS"},
     {"id": "xpt", "tipo": "chip", "rotulo": "XPT2046", "pos": [2, 28], "tam": [5, 5], "pn": "XPT2046"},
     {"id": "xl", "tipo": "chip", "rotulo": "XL9555", "pos": [-38, 28], "tam": [6, 6], "pn": "XL9555"},
@@ -412,14 +412,14 @@ BLOCKS = [
     {"id": "rtc", "tipo": "chip", "rotulo": "RTC", "pos": [-18, 28], "tam": [4, 4], "pn": "RS4C8010", "rtc": True},
     {"id": "ch340", "tipo": "chip", "rotulo": "CH340N", "pos": [34, 2], "tam": [5, 4], "pn": "CH340N"},
     {"id": "usbc", "tipo": "usb", "rotulo": "USB-C", "pos": [60, 2], "tam": [9, 4],
-     "titulo": "Porta USB-C", "texto": "Carrega a bateria e, pelo CH340N, liga o computador à serial do ESP32 para gravar o firmware. Use carregador de 5 V e 1 A ou mais, sem carga rápida."},
+     "titulo": "Porta USB-C", "texto": "Carrega a bateria e, pelo CH340N, liga o computador à serial do ESP32 para gravar o firmware. Use carregador de 5 V e 1 A ou mais, sem carga rápida. Aceita cabo USB-C nas duas pontas."},
     {"id": "tp4056", "tipo": "chip", "rotulo": "TP4056", "pos": [60, 18], "tam": [5, 4], "pn": "TP4056"},
     {"id": "bateria", "tipo": "bateria", "rotulo": "Bateria", "pos": [60, 34], "tam": [26, 12],
-     "titulo": "Bateria de lítio", "texto": "Bateria de 5000 mAh, carregada pelo TP4056. A DEEPELEC cita cerca de 15 horas de uso."},
+     "titulo": "Bateria de lítio", "texto": "Bateria de 5000 mAh, carregada pelo TP4056 com cerca de 0,9 A. A DEEPELEC cita cerca de 15 horas de uso."},
     {"id": "chave", "tipo": "chave", "rotulo": "Chave geral", "pos": [34, 34], "tam": [6, 4],
-     "titulo": "Chave geral", "texto": "Em OFF, desconecta a bateria. Use para guardar o rádio e para cortar a energia de verdade quando ele travar."},
+     "titulo": "Chave geral", "texto": "A chave geral e o POWER comandam juntos o transistor que alimenta a placa. Em OFF, a chave desliga esse transistor e o POWER deixa de agir; o relógio, o carregador e o controlador do POWER continuam ligados à bateria."},
     {"id": "rt9193", "tipo": "chip", "rotulo": "RT9193 ×3", "pos": [34, 18], "tam": [4, 3], "pn": "RT9193-33 ×3",
-     "extra": "Os três reguladores alimentam o resto da placa com 3,3 V."},
+     "extra": "Um regulador para cada parte: U5 para o processador, U32 para a tela e U6 para o sintonizador."},
 ]
 
 # ligações: origem, destino, barramento e o traçado completo (x, z), de borda a borda
@@ -487,12 +487,12 @@ def search_entries(menus, problems):
 # ---------------------------------------------------------------- painel em 3D: controles sem firmware
 # Os botões que o firmware lê (BAND, BW, MODE, TUNING, POWER, BOOT) vêm de BUTTONS.
 PAINEL = {
-    "volume": {"titulo": "VOLUME", "texto": "Potenciômetro de volume analógico, no caminho do áudio. Deixe o volume interno do firmware em 0 dB (Set volume no Mod17, Definir volume na linha oficial) e ajuste por aqui."},
+    "volume": {"titulo": "VOLUME", "texto": "Potenciômetro duplo de volume, no caminho do áudio, antes dos amplificadores do fone e do alto-falante. Deixe o volume interno do firmware em 0 dB (Set volume no Mod17, Definir volume na linha oficial) e ajuste por aqui."},
     "sql": {"titulo": "SQL (squelch)", "texto": "Roda na lateral direita, entre TUNING e VOLUME: para o +, aumenta o squelch; para o −, diminui. É um potenciômetro lido pelo ESP32 no GPIO 35. Só age com Use squelch (Mod17) ou Usar squelch (linha oficial) ligado. Para caçar emissoras fracas, deixe o squelch desligado. Se o nível oscilar, o potenciômetro pode ter mau contato: veja [Problemas comuns](problemas.md)."},
-    "chave": {"titulo": "Chave geral", "texto": "Fica no fundo do rádio, marcada Main switch: ON para o lado esquerdo, OFF para o direito. Em OFF, desconecta a bateria. Use para guardar o rádio e para cortar a energia de verdade quando ele travar. Sem relógio interno (RTC), a hora se perde quando ela vai para OFF."},
-    "fone": {"titulo": "Fone (3,5 mm)", "texto": "Conector de fone PJ-3270. Quando o plugue entra, um contato interno desliga o alto-falante. Em alguns lotes, esse contato falha e o alto-falante fica mudo depois de usar o fone: se o fone funciona e o alto-falante não, a causa provável é essa."},
-    "falante": {"titulo": "Alto-falante", "texto": "Alto-falante de 4 Ω, acionado pelo amplificador TPA6211A1 com até 3 W. Fica mudo enquanto há um fone ligado."},
-    "usbc": {"titulo": "USB-C", "texto": "Carrega a bateria e, pelo CH340N, liga o computador ao rádio para gravar o firmware. Use carregador de 5 V e 1 A ou mais, no máximo 5 W, sem carga rápida, de preferência com o rádio desligado. O LED fica vermelho carregando e verde quando termina."},
+    "chave": {"titulo": "Chave geral", "texto": "Fica no fundo do rádio, marcada Main switch: ON para o lado esquerdo, OFF para o direito. Em OFF, desliga o transistor que alimenta a placa, e o POWER deixa de agir: use para guardar e transportar o rádio. O relógio interno (RTC), o carregador e o controlador do POWER continuam ligados à bateria, então a bateria carrega com a chave em OFF. Sem RTC, a hora se perde quando ela vai para OFF."},
+    "fone": {"titulo": "Fone (3,5 mm)", "texto": "Conector de fone PJ-3270. Ele mesmo escolhe a saída: quando o plugue entra, um contato interno (pinos 6 e 2) se abre, liga o amplificador do fone e desliga o do alto-falante. Em alguns lotes, esse contato falha e o alto-falante fica mudo depois de usar o fone: se o fone funciona e o alto-falante não, a causa provável é essa."},
+    "falante": {"titulo": "Alto-falante", "texto": "Alto-falante de 4 Ω e 3 W, acionado pelo amplificador TPA6211A1, que soma os canais esquerdo e direito: o som sai em mono. Fica mudo enquanto há um fone ligado."},
+    "usbc": {"titulo": "USB-C", "texto": "Carrega a bateria e, pelo CH340N, liga o computador ao rádio para gravar o firmware. Use carregador de 5 V e 1 A ou mais, no máximo 5 W, sem carga rápida, de preferência com o rádio desligado. Aceita cabo USB-C nas duas pontas. O LED fica vermelho carregando e muda de cor quando termina (azul no esquema V2.5.3)."},
     "antena": {"titulo": "Antena (SMA)", "texto": "Conector SMA para a antena externa, ligado à placa por um cabo IPEX. Não há antena de ferrite interna: para AM, use fio externo ou loop. Se o sinal e o áudio somem de repente, o cabo interno pode ter se soltado do SMA."},
     "tela": {"titulo": "Tela de toque", "texto": {
         "mod17": "Tela de toque de 2,8 polegadas. Na área de sinal, a metade esquerda abre os atalhos e a direita, o menu. Tocar na frequência, na barra de passo ou no rótulo da faixa abre o teclado na tela. Se o toque desalinhar, refaça a calibração em Operation settings → Touch calibration.",
@@ -501,7 +501,7 @@ PAINEL = {
         "mod17": "De 0 a 9, digitam a frequência, que fica verde enquanto você digita. Enter confirma. DX alterna entre digitar frequência e gravar memória; segurado, inicia o DX scan na tela principal. Fora da digitação, o 0 liga e desliga o mudo.",
         "oficial": "O código oficial lê o teclado pelo expansor XL9555, mas o guia ainda não descreve as teclas nessa linha."}},
     "power": {"titulo": "POWER", "texto": {
-        "oficial": "O guia ainda não descreve o POWER na linha oficial. No Megatron, o toque curto liga e desliga o rádio."}},
+        "oficial": "O POWER não passa pelo firmware: um controlador na placa (U1) liga e desliga a energia a cada toque, então ele age igual na linha oficial e no Megatron."}},
 }
 
 

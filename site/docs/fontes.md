@@ -1,6 +1,6 @@
 # Fontes
 
-Todas as fontes citadas no guia, sem repetição (117 no total). Cada página também lista as suas no fim.
+Todas as fontes citadas no guia, sem repetição (120 no total). Cada página também lista as suas no fim.
 
 ## Datasheets dos componentes
 
@@ -59,7 +59,8 @@ Todas as fontes citadas no guia, sem repetição (117 no total). Cada página ta
 - [PE5PVB — protocolo de canais de memória](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf)
 - [PE5PVB — Releases](https://github.com/PE5PVB/TEF6686_ESP32/releases/)
 - [PE5PVB — teclado do DP-666 mais robusto (11/11/2026)](https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d)
-- [PE5PVB — TEF6686_ESP32.ino: botões, combinações e padrão de fábrica](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)
+- [PE5PVB — TEF6686_ESP32.ino, com os pinos usados](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)
+- [PE5PVB — TEF668X.cpp, com a leitura do cristal no GPIO 15](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/TEF668X.cpp)
 - [PE5PVB/TEF6686_ESP32](https://github.com/PE5PVB/TEF6686_ESP32)
 - [Wiki do PE5PVB — como usar o logbook](https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-logbook)
 - [Wiki do TEF6686_ESP32](https://github.com/PE5PVB/TEF6686_ESP32/wiki)
@@ -142,6 +143,8 @@ Todas as fontes citadas no guia, sem repetição (117 no total). Cada página ta
 - [Resposta do Ministério das Comunicações sobre rádio digital, 2024](http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf)
 - [Anatel — Resolução nº 680/2017, radiação restrita](https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680)
 - [Anatel — Ato nº 14.448/2017, requisitos de radiação restrita](https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448)
+- [Espressif — checklist do esquema do ESP32 (atraso no CHIP_PU)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
+- [Hirose U.FL — 30 ciclos de encaixe (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
 
 ## Como citar este guia
 

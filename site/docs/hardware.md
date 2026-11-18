@@ -1,20 +1,12 @@
 # Hardware
 
-O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam e traz o datasheet de cada uma. A referência é o esquema elétrico V2.5.4, publicado pela DEEPELEC.
+O DP-666 junta um sintonizador NXP TEF6686, que faz todo o trabalho de rádio, a um módulo ESP32, que cuida da tela, dos botões e das conexões. Esta página mostra como as peças se ligam, por onde passam a energia e o som, e traz o datasheet de cada uma. A base são os esquemas elétricos da DEEPELEC: o V2.5.3, da placa das unidades originais, e o V2.5.4, publicado no site dela.
 
 ## Arquitetura
 
 <!--DIAGRAM:arquitetura-->
 
 O sintonizador, o teclado e o relógio dividem o mesmo barramento I²C do ESP32, cada um no seu endereço. A tela e o toque usam SPI. A porta USB-C serve para carregar a bateria e, pelo CH340N, para gravar firmware e conversar com programas no computador.
-
-## Componentes e datasheets
-
-Os códigos U2, U3 e assim por diante são as referências do esquema V2.5.4. Quando o fabricante não publica o documento, o link aponta para um espelho e isso aparece no nome do link.
-
-<!--COMPONENTS-->
-
-Também aparecem no esquema transistores de uso geral, como o SI2305 (MOSFET P) e o SS8050 (NPN), que chaveiam a alimentação. São peças genéricas, de vários fabricantes.
 
 ## Desempenho e faixas
 
@@ -32,39 +24,109 @@ Também aparecem no esquema transistores de uso geral, como o SI2305 (MOSFET P) 
 | Bateria | 3,7 V, 5000 mAh (18,5 Wh), cerca de 350 mA e 15 h de uso |
 | Medidas | 142×30×80 mm, 300 g |
 
-## Pinos e endereços no código oficial
+## Por dentro do rádio
+
+Fotos de uma unidade desmontada, com a placa impressa Mini6686-V2.5.3, mostram como o rádio é montado:
+
+- **Gabinete:** seis painéis feitos de placa de circuito preta, com as legendas impressas: frente, verso, topo, fundo e as duas laterais. Parafusos pretos e espaçadores de latão os prendem.
+- **Verso:** o painel leva a bateria e o alto-falante, este dentro de uma caixa fechada. Os dois chegam à placa por conectores de 2 pinos (J1 e J5).
+- **Placa principal:** de um lado ficam o módulo ESP32 e o sintonizador, sob uma blindagem metálica; do outro, a tela e os botões da frente. O encoder e o volume saem pela lateral direita, presos por porcas, e os botões giratórios só se encaixam no eixo.
+- **Antenas:** o SMA, no topo, chega à placa por um cabinho coaxial. O ESP32 é a versão WROOM-32U, sem antena própria: o Wi-Fi e o Bluetooth usam uma antena ligada ao módulo por outro cabinho.
+- **Bateria:** célula de lítio-polímero com o código 105565 (cerca de 10 × 55 × 65 mm), 3,7 V e 5000 mAh, com plugue de 2 pinos do tipo PH. Numa troca, confira a polaridade antes de ligar: baterias com o mesmo plugue podem vir com os fios invertidos.
+
+Na garantia, não abra o rádio: acione o vendedor ou a DEEPELEC. Se abrir, solte e encaixe os cabinhos com cuidado, porque o conector deles (U.FL) aguenta cerca de 30 encaixes.
+
+## Alimentação
+
+<!--DIAGRAM:energia-->
+
+A bateria fica sempre ligada a três peças: o carregador, o relógio (quando existe) e o U1, o controlador do botão POWER. O resto da placa recebe energia por um transistor (Q1, SI2305), que só conduz com duas condições juntas:
+
+- **Chave geral em ON:** ela não fica no caminho da corrente. Em OFF, desliga o transistor, e o POWER deixa de ter efeito.
+- **POWER ligado:** cada toque alterna o U1. O botão não passa pelo ESP32, então funciona igual em qualquer firmware, mesmo com o rádio travado.
+
+Depois do transistor, três reguladores de 3,3 V dividem as cargas: o U5 alimenta o processador, o U32 a tela e o U6 o sintonizador, que ainda separa a parte analógica da digital com filtros. O amplificador do alto-falante usa a tensão da bateria direto.
+
+- **Carga:** o TP4056 (U20) carrega a bateria com cerca de 0,9 A, valor definido pelo resistor R104, de 1,3 kΩ. Por isso o carregador de 1 A basta, e uma carga completa leva mais de 5 horas. Como o carregador fica antes do transistor, a bateria carrega com a chave em OFF.
+- **USB-C:** a porta tem os resistores de 5,1 kΩ que os carregadores USB-C exigem, então funciona também com cabo USB-C nas duas pontas. A ponte USB-serial (CH340N) é alimentada pelo cabo, e não pela bateria.
+- **Temperatura:** o sensor de temperatura do TP4056 não é usado, então a carga não para se a bateria esquentar. Carregue longe do sol e de fontes de calor.
+- **LED de carga:** duplo, atrás de um guia de luz. Pelo esquema V2.5.3, fica vermelho enquanto carrega e azul quando termina.
+- **Leitura da bateria:** dois resistores de 100 kΩ entregam metade da tensão ao GPIO 13.
+
+## Caminho do som
+
+<!--DIAGRAM:audio-->
+
+O áudio sai do TEF6686 já em analógico, pelo conversor interno dele, e o ESP32 não tem acesso ao som. Por isso o Wi-Fi e o Bluetooth não transmitem áudio.
+
+- **Volume:** o VOLUME é um potenciômetro duplo de 10 kΩ, entre o sintonizador e os amplificadores, e vale para o fone e para o alto-falante. Deixe o volume do firmware em 0 dB e ajuste por ele.
+- **Fone:** o MAX97220 (U4), alimentado com 3,3 V, entrega som estéreo ao conector de 3,5 mm.
+- **Alto-falante:** o TPA6211A1 (U2) soma os canais esquerdo e direito, então o alto-falante toca em mono. Ele é alimentado direto pela bateria.
+- **Troca de saída:** quem faz é o próprio conector de fone, sem o firmware. Sem plugue, um contato interno, entre os pinos 6 e 2 do PJ-3270, mantém o alto-falante ligado. Com o plugue, o contato se abre: o amplificador do fone liga e um transistor (QA3) desliga o do alto-falante.
+
+Isso explica o [alto-falante mudo depois de usar fone](#ajuda--audio-alto-falante-mudo-depois-de-usar-fone): se o contato entre os pinos 6 e 2 não volta a fechar, o circuito continua como se houvesse um plugue. Por isso a DEEPELEC manda limpar justamente esses dois pinos.
+
+## Antena
+
+As especificações citam só a antena externa no SMA. Não há antena de ferrite interna, por isso o AM depende de fio externo ou loop.
+
+Na placa, o cabinho do SMA chega a um conector U.FL (J7). Logo na entrada, um diodo (D4) protege o sintonizador contra descargas de eletricidade estática, e o sinal se divide entre uma entrada de FM e outra de AM. Se o sinal sumir de repente, esse cabinho pode ter se soltado.
+
+## Pinos e endereços
+
+Conferidos no esquema V2.5.3 e no código oficial.
 
 | Função | Ligação |
 | --- | --- |
-| Encoder | GPIO 34, 36 e 39 |
-| BAND, BW e MODE | GPIO 4, 25 e 26 |
+| Encoder | A no GPIO 34, B no 36 e o toque no 39 |
+| BAND, BW e MODE | GPIO 4, 25 e 26 (no esquema, o 4 se chama STB) |
 | Potenciômetro do squelch | GPIO 35 |
 | Leitura da bateria | GPIO 13 |
-| Tela (SPI): CS, DC e RST | GPIO 5, 17 e 16 |
-| Toque (SPI): CS | GPIO 32 |
-| Interrupção do toque | GPIO 33 |
+| I²C | SDA no GPIO 21 e SCL no 22 |
+| SPI da tela e do toque | MOSI no GPIO 23, MISO no 19 e clock no 18 |
+| Tela: CS, DC e RST | GPIO 5, 17 e 16 |
+| Luz da tela, em PWM | GPIO 2 |
+| Toque: CS e interrupção | GPIO 32 e 33 |
 | Interrupção do teclado | GPIO 14 |
+| Cristal do sintonizador | GPIO 15 |
+| BOOT | GPIO 0 |
+| Serial do CH340N | UART0 (TX0 e RX0) |
 | Sintonizador | I²C 0x64 (0x65 em alguns módulos) |
 | Teclado (XL9555) | I²C 0x20 |
 | Relógio (RTC) | I²C 0x32 |
 
-O GPIO 13 usa o conversor ADC2 do ESP32, que não funciona com o Wi-Fi ligado. Por isso a leitura da bateria some quando o Wi-Fi está ativo, nos dois firmwares.
+- **Bateria e Wi-Fi:** o GPIO 13 usa o conversor ADC2 do ESP32, que não funciona com o Wi-Fi ligado. Por isso a leitura da bateria some quando o Wi-Fi está ativo, nos dois firmwares.
+- **Cristal:** o código lê a tensão no GPIO 15 para saber o cristal do sintonizador. Na placa, um resistor para o terra indica 9,216 MHz.
+- **Gravação:** o CH340N não tem como reiniciar o ESP32 sozinho, porque o pino RTS# dele fica solto. Por isso o [modo de gravação](#backup) pede o BOOT na mão.
+- **POWER:** não aparece na tabela porque não chega ao ESP32. Ele age direto na alimentação.
+- **S-meter analógico:** o código oficial manda o nível de sinal em PWM pelo GPIO 27, para um medidor de ponteiro. No DP-666, essa saída (METER-DRV no esquema) não vai a nenhum conector. O GPIO 12 fica sem ligação.
+
+## Componentes e datasheets
+
+Os códigos U2, U3 e assim por diante são as referências do esquema, iguais no V2.5.3 e no V2.5.4. Quando o fabricante não publica o documento, o link aponta para um espelho e isso aparece no nome do link.
+
+<!--COMPONENTS-->
+
+O esquema também usa transistores genéricos, de vários fabricantes: o SI2305 (Q1, MOSFET P), que liga a placa; o SS8050 (Q3, NPN), que acende a luz da tela; e o WNM2030 (QA3, MOSFET N), que desliga o amplificador do alto-falante quando entra o fone.
 
 ## Revisões da placa
 
-- **Original:** a DEEPELEC diz que as unidades originais usam a placa V2.5.3. O esquema publicado no site dela é o V2.5.4.
+As notas de v2.5.1 a v2.5.3 vêm do próprio esquema V2.5.3.
+
+- **Original:** a DEEPELEC diz que as unidades originais usam a placa V2.5.3, impressa Mini6686-V2.5.3. O esquema publicado no site dela é o V2.5.4.
+- **v2.5.1:** os capacitores de entrada do alto-falante (C51 e C9) passaram de 0,1 para 0,33 µF. Com isso, a frequência abaixo da qual os graves são cortados cai para cerca de um terço.
+- **v2.5.2:** entrou o C15, de 1 µF, no pino EN do ESP32. É o capacitor que a Espressif recomenda para atrasar o reset na partida.
+- **v2.5.3:** entrou o relógio (RTC, U11).
 - **Clones:** a placa V2.5 aparece em clones como os da SPARKELEC, sem RTC. O que muda neles está em [Clones](#ajuda--clones), nos Problemas comuns.
-- **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. A DEEPELEC não oferece a atualização para as anteriores e diz que quem quiser pode tentar instalar o chip por conta própria. O anúncio dela chama o chip de RX8010SJ; o esquema V2.5.4 marca RS4C8010BW, com a nota de que ele é compatível com o RX8010SJ.
-
-## Antena
-
-As especificações citam só a antena externa no SMA, ligada à placa por um cabo IPEX. Não há antena de ferrite interna, por isso o AM depende de fio externo ou loop.
+- **Relógio interno:** só as unidades enviadas a partir de 01/04/2025 têm RTC. Como o esquema V2.5.3 já o inclui, as placas V2.5.3 anteriores devem ter o lugar dele vazio, o que combina com a sugestão da DEEPELEC de instalar o chip por conta própria; ela não oferece essa atualização. O esquema V2.5.3 e o anúncio chamam o chip de RX8010SJ; o V2.5.4 marca RS4C8010BW, com a nota de que ele é compatível com o RX8010SJ.
 
 ## Teste de RTC
 
 Para saber se o seu aparelho tem relógio interno: acerte a hora, desligue a chave geral por 1 minuto e religue com o Wi-Fi desligado. Se a hora continuar certa, há RTC.
 
-Segundo a DEEPELEC, acertar a data e a hora do relógio pede o Megatron Mod17 de 05/04/2025 (pacote TEF6686_ESP32_2.0.15mod17-20250405).
+O RTC é alimentado direto pela bateria, antes da chave geral, e não tem bateria própria. Por isso ele mantém a hora com a chave em OFF, mas a perde se a bateria for desconectada ou se esgotar por completo.
+
+Segundo a DEEPELEC, no Megatron acertar a data e a hora do relógio pede o Mod17 de 05/04/2025 (pacote TEF6686_ESP32_2.0.15mod17-20250405). Na linha oficial, o suporte veio no pacote v2.20.8.
 
 ## Imagens de referência
 
@@ -74,10 +136,16 @@ As fotos de terceiros têm direitos reservados, então o guia não as copia: cad
 
 ## Fontes
 
+- DEEPELEC — esquema elétrico V2.5.3, com folhas de 30/10/2023 a 18/02/2024 (PDF)
 - [DEEPELEC — esquema elétrico V2.5.4](https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf)
+- Fotos de uma unidade desmontada, com a placa Mini6686-V2.5.3 (abril de 2025)
 - [DEEPELEC DP-666](https://www.deepelec.com/en/dp-666/)
 - [DEEPELEC — RTC no DP-666](https://www.deepelec.com/en/2025/04/09/dp-666-add-rtc/)
+- [PE5PVB — TEF6686_ESP32.ino, com os pinos usados](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)
+- [PE5PVB — TEF668X.cpp, com a leitura do cristal no GPIO 15](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/TEF668X.cpp)
 - [Wiki do TEF6686_ESP32 — configuração da tela, com os pinos](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software)
+- [Espressif — checklist do esquema do ESP32 (atraso no CHIP_PU)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
+- [Hirose U.FL — 30 ciclos de encaixe (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
 - [DEEPELEC — clones](https://www.deepelec.com/2025/10/10/stay_away_from_cloned_products)
 - [Manual DP-666 Megatron Mod17](https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf)
 - [Radiomuseum — DEEPELEC DP-666](https://radiomuseum.org/r/unknownprc_deepelec_dp_666.html)
