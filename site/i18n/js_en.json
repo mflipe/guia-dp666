@@ -251,5 +251,10 @@
  ", na seção ": " › ",
  ". Você leu ": ". You have read ",
  "% da página.": "% of the page.",
- " seções": " sections"
+ " seções": " sections",
+ "Prévia da tela no tema ": "Screen preview with the theme ",
+ ", com a fonte ": ", with the font ",
+ "Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado.": "Tap a theme to see the screen in its colors. The colors and the digits come from the code; the rest is approximate.",
+ "Toque numa fonte para vê-la na prévia do Tema. ": "Tap a font to see it in the Theme preview. ",
+ "Números desenhados com as próprias fontes do firmware.": "Digits drawn with the firmware's own fonts."
 }

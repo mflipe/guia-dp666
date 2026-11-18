@@ -950,6 +950,20 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
 .aj-sw { align-self: center; display: inline-flex; align-items: center; gap: 2px; height: 14px; padding: 0 3px; box-sizing: border-box; border: 1px solid; border-radius: 3px; forced-color-adjust: none; }
 .aj-sw i { display: block; width: 7px; height: 4px; border-radius: 1px; }
 .aj-sw i + i { width: 4px; }
+/* prévia: opções que trocam a prévia, a telinha do rádio e as amostras das fontes da frequência */
+.aj-opt.is-pick { padding: 0; }
+.aj-pick { display: inline-flex; align-items: baseline; gap: 6px; margin: 0; padding: 3px 10px; border: 0; border-radius: inherit; background: none; color: inherit; font: inherit; line-height: inherit; text-align: left; cursor: pointer; }
+.aj-pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.aj-opt.is-on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.aj-prev { max-width: 320px; margin: 14px 0 0; }
+.aj-tela { display: block; width: 100%; height: auto; border-radius: 4px; font-family: var(--font-sans); forced-color-adjust: none; }
+.aj-prev-leg { margin: 6px 0 0; font-size: 0.8rem; color: var(--muted); }
+.aj-fs-list { display: grid; gap: 6px; max-width: 320px; margin: 2px 0 0; padding: 0; list-style: none; }
+.aj-fs .aj-pick, .aj-fs-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 4px 4px 4px 12px; border: 1px solid var(--rule); border-radius: 8px; box-sizing: border-box; }
+.aj-fs.is-on .aj-pick { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.aj-fs-n { display: inline-flex; align-items: baseline; gap: 6px; font-size: 0.84rem; }
+.aj-fs-n small { font-size: 0.68rem; font-weight: 600; color: var(--muted); }
+.aj-fs-img { display: block; flex: none; height: 34px; width: auto; color: var(--ink); forced-color-adjust: none; }
 
 /* perfil e idioma */
 .profile-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-sans); cursor: pointer; white-space: nowrap; }

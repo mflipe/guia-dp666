@@ -53,27 +53,29 @@ LANGS = ["English", "Nederlands", "Polski", "Hrvatski", "Ελληνικά", "Rom
          "Português", "Srpski", "Suomi", "Dansk", "Svenska", "Gaeilge"]
 THEMES = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
           "Ocean", "Indigo", "Queer", "GoldBrite", "Bubblegum", "Aurora", "Ember", "Glacier"]
-# cores de cada tema na v2.20.12: fundo, frequência, secundária e moldura (gui.cpp, doTheme;
-# os valores RGB565 de constants.h convertidos para hex)
-THEME_COLORS = {
-    "Essence": ("#000000", "#FFFF00", "#84CEEF", "#0000FF"),
-    "Cyan": ("#000000", "#08E7FF", "#00FFBD", "#003D4A"),
-    "Crimson": ("#000000", "#FF1819", "#FF7D7B", "#3A0000"),
-    "Monochrome": ("#000000", "#FFFFFF", "#DEFFE6", "#292D29"),
-    "Volcano": ("#080031", "#FF8200", "#FF3100", "#292D29"),
-    "Dendro": ("#000000", "#00FF00", "#00DB84", "#004100"),
-    "Sakura": ("#000000", "#F779AD", "#F70052", "#3A0829"),
-    "Whiteout": ("#DEFFE6", "#000000", "#101010", "#101010"),
-    "Tangerine": ("#000000", "#FF3100", "#EFA600", "#3A1408"),
-    "Ocean": ("#000000", "#003DFF", "#00A2FF", "#000084"),
-    "Indigo": ("#000000", "#8C00FF", "#D600FF", "#6300B5"),
-    "Queer": ("#210008", "#F70052", "#FF1819", "#6300B5"),
-    "GoldBrite": ("#000000", "#FFFFFF", "#84CEEF", "#0000FF"),
-    "Bubblegum": ("#190429", "#FFB6FF", "#F70052", "#6300B5"),
-    "Aurora": ("#000000", "#00FFBD", "#AD41E6", "#003D4A"),
-    "Ember": ("#000000", "#FF7D7B", "#84CEEF", "#3A1408"),
-    "Glacier": ("#000000", "#84CEEF", "#00FFBD", "#424163"),
-}
+# cores de cada tema na v2.20.12 (gui.cpp, doTheme; os valores RGB565 de constants.h convertidos para hex),
+# na ordem de PALETTE_KEYS: fundo, moldura, frequência, rótulos, principal, secundária, RDS, estéreo,
+# medidor abaixo de S9, medidor acima de S9, largura de banda automática e itens apagados
+PALETTE_KEYS = ["fundo", "moldura", "freq", "ativo", "prim", "sec", "rds", "st", "bar", "barS", "bw", "cinza"]
+THEME_PALETTE = {nome: dict(zip(PALETTE_KEYS, cores)) for nome, cores in {
+    "Essence": ("#000000", "#0000FF", "#FFFF00", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#3A3D3A"),
+    "Cyan": ("#000000", "#003D4A", "#08E7FF", "#FFFFFF", "#08E7FF", "#00FFBD", "#08E7FF", "#08E7FF", "#84CEEF", "#AD41E6", "#00FFBD", "#294142"),
+    "Crimson": ("#000000", "#3A0000", "#FF1819", "#FFFFFF", "#FF1819", "#FF7D7B", "#FF1819", "#FF1819", "#FF1819", "#FFFF00", "#FF7D7B", "#4A4D4A"),
+    "Monochrome": ("#000000", "#292D29", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#DEFFE6", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#DEFFE6", "#7B797B", "#4A4D4A"),
+    "Volcano": ("#080031", "#292D29", "#FF8200", "#FFFFFF", "#FF8200", "#FF3100", "#FF8200", "#FF8200", "#FF8200", "#FF3100", "#FF3100", "#522800"),
+    "Dendro": ("#000000", "#004100", "#00FF00", "#FFFFFF", "#00FF00", "#00DB84", "#00FF00", "#00FF00", "#00DB84", "#00FF00", "#00DB84", "#4A4D4A"),
+    "Sakura": ("#000000", "#3A0829", "#F779AD", "#FFFFFF", "#F779AD", "#F70052", "#F779AD", "#F779AD", "#F779AD", "#D600FF", "#F70052", "#3A1829"),
+    "Whiteout": ("#DEFFE6", "#101010", "#000000", "#000000", "#000000", "#101010", "#000000", "#000000", "#00DB84", "#000000", "#7B797B", "#7B797B"),
+    "Tangerine": ("#000000", "#3A1408", "#FF3100", "#FFFFFF", "#FF3100", "#EFA600", "#FF3100", "#FF3100", "#FF8200", "#EFA600", "#EFA600", "#63493A"),
+    "Ocean": ("#000000", "#000084", "#003DFF", "#FFFFFF", "#003DFF", "#00A2FF", "#003DFF", "#003DFF", "#08E7FF", "#003DFF", "#00A2FF", "#424163"),
+    "Indigo": ("#000000", "#6300B5", "#8C00FF", "#FFFFFF", "#8C00FF", "#D600FF", "#8C00FF", "#8C00FF", "#F70052", "#8C00FF", "#D600FF", "#4A3563"),
+    "Queer": ("#210008", "#6300B5", "#F70052", "#FFFFFF", "#F70052", "#FF1819", "#FF7D7B", "#F70052", "#F70052", "#EFA600", "#D600FF", "#422421"),
+    "GoldBrite": ("#000000", "#0000FF", "#FFFFFF", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#3A3D3A"),
+    "Bubblegum": ("#190429", "#6300B5", "#FFB6FF", "#FFFFFF", "#08E7FF", "#F70052", "#00FFBD", "#F70052", "#00FFBD", "#D600FF", "#D600FF", "#4A3563"),
+    "Aurora": ("#000000", "#003D4A", "#00FFBD", "#FFFFFF", "#00FFBD", "#AD41E6", "#00FFBD", "#AD41E6", "#00FFBD", "#AD41E6", "#AD41E6", "#4A4D4A"),
+    "Ember": ("#000000", "#3A1408", "#FF7D7B", "#FFFFFF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#84CEEF", "#4A4D4A"),
+    "Glacier": ("#000000", "#424163", "#84CEEF", "#FFFFFF", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#00FFBD", "#4A4D4A"),
+}.items()}
 # Megatron: ordem da tabela de temas e de fontes no binário do Mod17 (o Mod16 não tem o Retro)
 THEMES_MOD17 = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
                 "Ocean", "Indigo", "Maroon", "Chinese Red", "Retro", "GoldBrite"]
@@ -147,11 +149,11 @@ OFICIAL = [
         o("Tema", "Theme", dict(L(*THEMES, nota="Aurora, Ember e Glacier só existem no código da v2.20.12; o pacote "
                                 "v2.20.8 da DEEPELEC tem os outros 14. Nos pacotes v2.11.x, o Queer se chama Maroon, com "
                                 "as mesmas cores, e o Bubblegum aparece a partir da v2.11.5. O Whiteout é o único tema "
-                                "claro. Cada amostra mostra o fundo e a moldura do tema, com a cor da frequência e a cor "
-                                "secundária."), cores=THEME_COLORS), "Essence"),
+                                "claro."), paleta=THEME_PALETTE, previa="tema"), "Essence"),
         o("Fonte de frequência", "Frequency font",
-          L(*FONTS, nota="Essas fontes só têm os algarismos e o ponto. A Comic saiu do código em dezembro de 2025, para "
-                         "liberar espaço no flash; os pacotes da DEEPELEC até a v2.20 ainda a trazem."),
+          dict(L(*FONTS, nota="Essas fontes só têm os algarismos e o ponto. A Comic saiu do código em dezembro de 2025, "
+                              "para liberar espaço no flash; os pacotes da DEEPELEC até a v2.20 ainda a trazem."),
+               previa="fonte"),
           "Aura2", sub=DE, desc="Fonte dos números da frequência."),
         o("Rodar ecrã 180°", "Flip screen 180°", T(), "Ligado", sub=DE,
           desc="Gira a imagem da tela. A compilação para o DP-66X já vem girada."),
@@ -312,8 +314,8 @@ MOD17 = [
                                           "tem 14 temas. Faltam Bubblegum, Aurora, Ember e Glacier, que vieram depois na "
                                           "linha oficial. A troca automática entre favoritos fica em My settings › My theme."),
           "F C", desc="Tema de cores."),
-        m("Frequency font", L(*FONTS_MOD17, nota="As mesmas da linha oficial até a v2.20, incluindo a Comic."), "F",
-          desc="Fonte dos números da frequência."),
+        m("Frequency font", dict(L(*FONTS_MOD17, nota="As mesmas da linha oficial até a v2.20, incluindo a Comic."),
+                                 previa="fonte"), "F", desc="Fonte dos números da frequência."),
         m("Meter refresh interval", R(30, 1000, None, "ms"), "F",
           desc="Intervalo de atualização do medidor. Mais lento significa menos ruído da tela."),
         m("Meter display style", L("Classic", "New"), "M F", desc="Estilo do medidor de sinal. O manual chama de Color bar display mode."),

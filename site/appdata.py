@@ -4,6 +4,8 @@ Os botões e a placa são escritos à mão a partir dos textos do guia (uso.md, 
 hardware.md e data.py). Os ajustes e os problemas são lidos dos próprios textos, para que
 uma correção no texto apareça também na ferramenta.
 """
+import json
+import pathlib
 import re
 import unicodedata
 
@@ -330,6 +332,9 @@ def build_menus(oficial_md, inline):
                 g["itens"].append({k: v for k, v in it.items() if v not in ("", False)})
             groups.append(g)
         res[fw] = {"grupos": groups}
+    # prévia dos temas e das fontes da frequência: o número desenhado com as fontes do firmware
+    # (gerado por scripts/fontes_freq.py)
+    res["previa"] = json.loads((pathlib.Path(__file__).parent / "fontes_freq.json").read_text(encoding="utf-8"))
     res["tags"] = DD.TAGS
     res["glossario"] = [[t, inline(x)] for t, x in DD.GLOSSARIO]
     return res
