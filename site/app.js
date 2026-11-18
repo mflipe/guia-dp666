@@ -28,6 +28,9 @@
     return { set: set };
   }
 
+  // altura do que fica fixo no alto da tela (hoje nada: o guia não tem barra no topo)
+  function topoFixo() { var v = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topbar-h"), 10); return isNaN(v) ? 0 : v; }
+
   // ---------------------------------------------------------------- perfil do aparelho
   var PKEY = "dp666.perfil.v1";
   var FW_NAME = { mod17: "Mod17", oficial: "Linha oficial" };
@@ -43,13 +46,16 @@
     paintChip();
     listeners.forEach(function (fn) { try { fn(p); } catch (e) { /* ferramenta isolada */ } });
   }
-  var chip = $("#profile-btn"), dlg = $("#profile-dlg");
+  // o botão do perfil aparece na tela de título e no rodapé do menu; os dois mostram o mesmo
+  var chips = $$(".profile-chip"), dlg = $("#profile-dlg");
   function paintChip() {
-    chip.dataset.set = profile.fw ? "yes" : "no";
-    var label = chip.querySelector("span");
-    if (profile.fw) label.innerHTML = '<span class="chip-l">' + FW_NAME[profile.fw] + '</span><span class="chip-s">' + FW_SHORT[profile.fw] + "</span>";
-    else label.textContent = "Seu rádio";
-    chip.setAttribute("aria-label", "Seu rádio: " + (profile.fw ? FW_NAME[profile.fw] : "firmware não informado") + ". Toque para mudar.");
+    chips.forEach(function (chip) {
+      chip.dataset.set = profile.fw ? "yes" : "no";
+      var label = chip.querySelector("span");
+      if (profile.fw) label.innerHTML = '<span class="chip-l">' + FW_NAME[profile.fw] + '</span><span class="chip-s">' + FW_SHORT[profile.fw] + "</span>";
+      else label.textContent = "Seu rádio";
+      chip.setAttribute("aria-label", "Seu rádio: " + (profile.fw ? FW_NAME[profile.fw] : "firmware não informado") + ". Toque para mudar.");
+    });
   }
   function openProfile() {
     var f = dlg.querySelector("form");
@@ -64,7 +70,7 @@
     setProfile({ fw: a ? a.value : profile.fw, rtc: r ? r.value : (profile.rtc || "?") });
   });
   $("[data-close]", dlg).addEventListener("click", function () { if (dlg.close) dlg.close("cancel"); });
-  chip.addEventListener("click", openProfile);
+  chips.forEach(function (chip) { chip.addEventListener("click", openProfile); });
 
   function paintHome() {
     var box = $("#home-profile");
@@ -200,14 +206,14 @@
         return '<li class="' + (l[2] === "perigo" ? "perigo" : "") + '"><span class="k">' + l[0].map(label).join(" + ") + "</span>" + l[1] + "</li>";
       }).join("") + "</ul>";
     }
-    // no celular: rola só o necessário para o "onde fica" e o começo da explicação ficarem à vista, acima da barra de abas
+    // no celular: rola só o necessário para o "onde fica" e o começo da explicação ficarem à vista, acima do botão de sintonia
     function reveal() {
       if (window.innerWidth > 760) return;
       var box = $(".sim-onde", root), ini = box.hidden ? out : box;
-      var tb = $(".tabbar"), baixo = window.innerHeight - (tb && tb.getClientRects().length ? tb.offsetHeight : 0) - 12;
+      var kn = $(".sintonia"), baixo = (kn && kn.getClientRects().length ? Math.min(window.innerHeight, kn.getBoundingClientRect().top) : window.innerHeight) - 12;
       var fim = out.getBoundingClientRect().top + Math.min(out.offsetHeight, 180);
       if (fim <= baixo) return;
-      var alto = (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topbar-h"), 10) || 56) + 12;
+      var alto = topoFixo() + 12;
       var dy = Math.min(fim - baixo, ini.getBoundingClientRect().top - alto);
       if (dy > 0) window.scrollBy({ top: dy, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }
@@ -555,7 +561,7 @@
     function spy() {
       if (observer) observer.disconnect();
       if (!("IntersectionObserver" in window)) return;
-      var top = (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topbar-h"), 10) || 56) + bar.offsetHeight + 4;
+      var top = topoFixo() + bar.offsetHeight + 4;
       observer = new IntersectionObserver(function (en) {
         en.forEach(function (x) { if (x.isIntersecting) setActive(x.target.dataset.g); });
       }, { rootMargin: "-" + top + "px 0px -65% 0px" });
@@ -774,11 +780,8 @@
     });
   });
 
-  // altura real da barra do topo, para as barras fixas das ferramentas
-  var topbar = $(".topbar");
-  function syncTop() { document.documentElement.style.setProperty("--topbar-h", topbar.offsetHeight + "px"); }
-  syncTop();
-  if (window.ResizeObserver) new ResizeObserver(syncTop).observe(topbar);
+  // sem barra no topo: as barras fixas das ferramentas grudam no alto da tela
+  document.documentElement.style.setProperty("--topbar-h", "0px");
 
   paintChip();
   paintHome();

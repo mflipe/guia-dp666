@@ -247,5 +247,9 @@
  "pinos": "pins",
  "relógio interno não verificado": "internal clock not checked",
  "sem relógio interno": "without internal clock",
- "ÁUDIO": "AUDIO"
+ "ÁUDIO": "AUDIO",
+ ", na seção ": " › ",
+ ". Você leu ": ". You have read ",
+ "% da página.": "% of the page.",
+ " seções": " sections"
 }

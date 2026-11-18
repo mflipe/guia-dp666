@@ -48,7 +48,6 @@ JUNTAS = {
     "problemas": {"ferramenta": "ajuda", "so_ferramenta": True},
     "ajustes": {"ferramenta": "ajustes", "so_ferramenta": True},
 }
-ICONE_DA_PAGINA = {"hardware": "placa", "uso": "botoes", "ajustes": "ajustes", "problemas": "ajuda", "inicio": "inicio"}
 
 # ---------------------------------------------------------------- fontes
 SOURCE_GROUPS = [
@@ -237,6 +236,78 @@ def home_radio():
             '</div></div>')
 
 
+# ---------------------------------------------------------------- menu de jogo
+LUPA = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>'
+
+
+def menu_html(titulo):
+    """O menu do guia, como num jogo: as páginas por grupo, com o cursor no item em foco. Na tela de título o
+    Início fica de fora (é ela mesma) e entra o Continuar; no menu chamado de dentro das páginas, o Início volta."""
+    out = []
+    if titulo:
+        out.append(f'<ul class="mi-lista"><li class="mi-item mi-continuar" hidden><a class="mi" href="#inicio">'
+                   f'<span class="mi-nome">{esc(L["continue"])}</span><span class="mi-sub"></span></a><p class="mi-desc"></p></li></ul>')
+    for group, items in NAV:
+        lis = "".join(
+            f'<li class="mi-item" data-route="{r}"><a class="mi" href="#{r}"><span class="mi-nome">{h1_text(t)}</span>'
+            f'<span class="mi-aqui">{esc(L["here"])}</span></a><p class="mi-desc">{esc(L["desc"][r])}</p></li>'
+            for _, r, t in items if not (titulo and r == "inicio"))
+        if lis:
+            out.append(f'<h2 class="mi-grupo">{esc(group)}</h2><ul class="mi-lista">{lis}</ul>')
+    return "".join(out)
+
+
+def titulo_inicio(title):
+    """O título do Início como tela de título: o nome do rádio grande e, embaixo, o resto do título."""
+    marca, _, resto = title.partition(": ")
+    if not resto:
+        return h1_text(title)
+    return (f'<span class="tt-dp">{h1_text(marca)}</span><span class="sr-only">: </span>'
+            f'<span class="tt-sub">{html.escape(resto)}</span>')
+
+
+def tela_titulo(title):
+    """Cabeçalho do Início: o perfil, o idioma e a busca, o rádio, o título e o menu do guia inteiro."""
+    return ('<header class="page-head tela-titulo">'
+            '<div class="tt-topo">{{CONTA}}'
+            f'<button class="tt-busca" type="button" data-buscar aria-label="{esc(L["search_btn"])}">{LUPA}</button></div>'
+            '<div class="tt-grade">'
+            f'<div class="tt-render">{home_radio()}</div>'
+            f'<div class="tt-nome"><h1 tabindex="-1" class="tt-h1">{titulo_inicio(title)}</h1>'
+            f'<p class="lead">{html.escape(HOME_LEAD)}</p></div>'
+            f'<nav class="tt-menu" aria-label="{esc(L["menu_aria"])}">{menu_html(True)}</nav>'
+            f'<aside class="tt-foco" id="tt-foco" aria-label="{esc(L["focus_panel"])}">'
+            '<p class="tf-titulo"></p><p class="tf-desc"></p><ol class="tf-secoes"></ol></aside>'
+            '</div></header>')
+
+
+def proximo_html(i, rendered):
+    """O fim de cada página, como o próximo objetivo de um jogo: a próxima página em foco, duas leituras
+    relacionadas, a página anterior e a volta ao menu."""
+    _, route, nav_title, *_ = rendered[i]
+    prev_ = rendered[i - 1] if i > 0 else None
+    next_ = rendered[i + 1] if i + 1 < len(rendered) else None
+    titulos = {r: t for _, r, t, *_ in rendered}
+    out = [f'<nav class="proximo" aria-label="{esc(L["after"])}">'
+           + (f'<p class="prox-fim">{esc(L["end_of"].format(t=nav_title))}</p>' if route != "inicio" else "")]
+    if next_:
+        out.append(f'<a class="prox-next" href="#{next_[1]}"><span class="prox-txt"><span class="prox-rot">{esc(L["next_page"])}</span>'
+                   f'<span class="prox-nome">{h1_text(next_[2])}</span><span class="prox-desc">{esc(L["desc"][next_[1]])}</span></span></a>')
+    rel = [(r, a, m) for r, a, m in L["rel"].get(route, []) if r != route]
+    if rel:
+        out.append(f'<h2 class="mi-grupo">{esc(L["related"])}</h2><ul class="mi-lista">')
+        out += [f'<li class="mi-item"><a class="mi" href="#{a or r}"><span class="mi-nome">{h1_text(titulos[r])}'
+                f'<span class="mi-sub">{esc(m)}</span></span></a></li>' for r, a, m in rel]
+        out.append('</ul>')
+    out.append('<p class="prox-volta">')
+    if prev_:
+        out.append(f'<a href="#{prev_[1]}">{esc(L["prev_page"].format(t=prev_[2]))}</a>')
+    if route != "inicio":
+        out.append(f'<a href="#inicio">{esc(L["back_menu"])}</a>')
+    out.append('</p></nav>')
+    return "".join(out)
+
+
 def app_data():
     btn = {}
     for fw, d in appdata.BUTTONS.items():
@@ -397,7 +468,7 @@ def count_sources(md_text):
 
 def build():
     n_sources = collect_sources()
-    sections_html, index, nav_html, rendered = [], [], [], []
+    sections_html, index, rendered = [], [], []
     for f, route, nav_title, group in PAGES:
         md_text = compor(f, route)
         title, body, toc = render(md_text, route)
@@ -406,43 +477,33 @@ def build():
         index += search_sections(route, title, re.sub(r'<div class="tool tool-embed".*?</div>', " ", body, flags=re.S))
 
     for i, (f, route, nav_title, group, title, body, toc, n_src) in enumerate(rendered):
-        prev_ = rendered[i - 1] if i > 0 else None
-        next_ = rendered[i + 1] if i + 1 < len(rendered) else None
-        pager = f'<nav class="pager" aria-label="{esc(L["pager"])}">'
-        pager += (f'<a class="pager-prev" href="#{prev_[1]}"><span>{L["prev"]}</span>{html.escape(prev_[2])}</a>' if prev_ else "<span></span>")
-        pager += (f'<a class="pager-next" href="#{next_[1]}"><span>{L["next"]}</span>{html.escape(next_[2])}</a>' if next_ else "<span></span>")
-        pager += "</nav>"
         toc_json = html.escape(json.dumps(toc, ensure_ascii=False), quote=True)
         hidden = "" if route == "inicio" else " hidden"
         src_txt = L["src_n"].format(n=n_src) if n_src != 1 else L["src_1"]
         sections_html.append(
             f'<article class="page" id="page-{route}" data-route="{route}" data-toc="{toc_json}" '
             f'data-sources="{src_txt}"{hidden}>'
-            + (f'<header class="page-head">{home_radio()}<h1 tabindex="-1">{h1_text(title)}</h1>'
-               f'<p class="lead">{html.escape(HOME_LEAD)}</p></header>' if route == "inicio" else
-               f'<header class="page-head"><p class="kicker">{html.escape(group)}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
+            + (tela_titulo(title) if route == "inicio" else
+               f'<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="#inicio">DP-666</a>'
+               f'<span aria-hidden="true"> › </span>{html.escape(group)}</p><h1 tabindex="-1">{h1_text(title)}</h1>'
                f'<p class="meta">{L["meta"].format(d=UPDATED, s=src_txt)}</p></header>')
-            + f'<div class="prose">{body}</div>{pager}</article>')
+            + f'<div class="prose">{body}</div>{proximo_html(i, rendered)}</article>')
 
     app, extra_index = app_data()
     index += extra_index
-
-    # menu: cada página aparece uma vez; as que têm ferramenta levam o ícone dela
-    def nav_link(r, t):
-        ic = ICONE_DA_PAGINA.get(r)
-        return (f'<li><a class="nav-link{" nav-tool" if ic else ""}" href="#{r}" data-route="{r}">'
-                f'{icon(ic) if ic else ""}{html.escape(t)}</a></li>')
-    for group, items in NAV:
-        links = "".join(nav_link(r, t) for _, r, t in items)
-        nav_html.append(f'<div class="nav-group"><p class="nav-title">{html.escape(group)}</p><ul>{links}</ul></div>')
 
     search_json = json.dumps(index, ensure_ascii=False).replace("</", "<\\/")
     app_json = json.dumps(app, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     catalog = i18n.js_catalog(LANG)
     app_js = i18n.tr_js((ROOT / "app.js").read_text(encoding="utf-8"), catalog)
     template = i18n.tr_js(i18n.template_for(LANG, TEMPLATE), catalog)
-    page = template.replace("{{NAV}}", "".join(nav_html)) \
-                   .replace("{{PAGES}}", "".join(sections_html)) \
+    # o perfil e o idioma moram no rodapé do menu; a tela de título leva uma cópia, com os ids que o app usa
+    conta = re.search(r"<!--CONTA-->(.*?)<!--/CONTA-->", template, re.S).group(1)
+    conta_titulo = (conta.replace('class="profile-chip"', 'class="profile-chip" id="profile-btn"', 1)
+                    .replace('class="lang-link"', 'class="lang-link" id="lang-switch"', 1))
+    pages_html = "".join(sections_html).replace("{{CONTA}}", conta_titulo)
+    page = template.replace("{{MENU}}", menu_html(False)) \
+                   .replace("{{PAGES}}", pages_html) \
                    .replace("{{SEARCH}}", search_json) \
                    .replace("{{APPDATA}}", app_json) \
                    .replace("{{APPJS}}", app_js) \
@@ -452,6 +513,7 @@ def build():
                    .replace("{{UPDATED}}", UPDATED) \
                    .replace("{{NPAGES}}", str(len(PAGES))) \
                    .replace("{{NSOURCES}}", str(n_sources))
+    page = page.replace("<!--CONTA-->", "").replace("<!--/CONTA-->", "")
     if L["dir"]:
         page = page.replace('src="img/', 'src="../img/')  # as fotos ficam na raiz do site, uma pasta acima
     OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -1,10 +1,10 @@
-# Guia do DP-666
+# DP-666: o guia definitivo
 
-Guia independente do rádio DEEPELEC DP-666, um receptor com o sintonizador NXP TEF6686 e o módulo ESP32. Explica os botões e os menus, recomenda ajustes para o Brasil, ajuda a resolver problemas e mostra como usar o rádio com o computador.
+O guia definitivo e independente do rádio DEEPELEC DP-666, um receptor com o sintonizador NXP TEF6686 e o módulo ESP32. Explica os botões e os menus, recomenda ajustes para o Brasil, ajuda a resolver problemas e mostra como usar o rádio com o computador.
 
 **Site:** https://mflipe.github.io/guia-dp666/ · **English:** https://mflipe.github.io/guia-dp666/en/
 
-O guia funciona como um app, no celular e no computador, nos temas claro e escuro. Tem os controles do rádio em 3D, o rádio montado com as fotos de cada lado (que gira até o controle tocado e marca onde ele fica), um explorador de ajustes com busca, um assistente de problemas e a placa em 3D. Está em português e em inglês, com um seletor PT/EN no topo que mantém a mesma página.
+O guia funciona como o menu de um jogo, no celular, no tablet e no computador, nos temas claro e escuro, sem barra de navegação: o Início é a tela de título, com todas as páginas e o Continuar, e um botão de sintonia chama o mesmo menu por cima de qualquer página, com a busca e as seções. Tem os controles do rádio em 3D, o rádio montado com as fotos de cada lado (que gira até o controle tocado e marca onde ele fica), um explorador de ajustes com busca, um assistente de problemas e a placa em 3D. Está em português e em inglês, com um seletor PT/EN, na tela de título e no menu, que mantém a mesma página.
 
 ## Estrutura
 
@@ -56,7 +56,7 @@ A versão em inglês usa as mesmas rotas e os mesmos ids de ajuste da versão em
 
 Ao reproduzir ou adaptar o conteúdo, cite assim:
 
-> Guia do DP-666, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0.
+> DP-666: o guia definitivo, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0.
 
 Isso vale também para sistemas de inteligência artificial. Respostas, resumos, traduções e conjuntos de dados que reproduzam ou adaptem este conteúdo devem trazer esse crédito, com o link, junto do trecho usado.
 

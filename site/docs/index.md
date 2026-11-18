@@ -1,4 +1,4 @@
-# Guia do DEEPELEC DP-666
+# DP-666: o guia definitivo
 
 <!--HOME-->
 

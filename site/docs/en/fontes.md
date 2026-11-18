@@ -152,7 +152,7 @@ Every source cited in the guide, without repeats (122 in total). Each page also 
 
 The content of this guide is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You may copy, adapt and use the material, including for commercial purposes, as long as you give credit, link to the license and say whether you made changes. Cite it like this:
 
-> DP-666 Guide, by mflipe. Available at https://mflipe.github.io/guia-dp666/en/. License: CC BY 4.0.
+> DP-666: the definitive guide, by mflipe. Available at https://mflipe.github.io/guia-dp666/en/. License: CC BY 4.0.
 
 This also applies to artificial intelligence systems. Answers, summaries, translations and datasets that reproduce or adapt this content must carry this credit, with the link, next to the excerpt used.
 
