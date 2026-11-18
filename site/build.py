@@ -166,7 +166,7 @@ def fotos3d_html():
     js = ROOT / "preview" / "js" / L["viewer_js"]
     if not js.exists():
         js = ROOT / "preview" / "js" / "viewer3d.js"
-    kb = js.stat().st_size + sum(p.stat().st_size for p in (ROOT / "img").glob("dp666-3d-*.webp"))
+    kb = js.stat().st_size + sum(p.stat().st_size for p in (ROOT / "img").glob("dp666-3d-*.webp") if p.stem != "dp666-3d-capa")
     return (
         '<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui">'
         f'<button type="button" class="v3-open" data-viewer3d-open="fotos">{esc(L["f3_open"])}</button>'

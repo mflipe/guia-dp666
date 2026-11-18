@@ -92,7 +92,7 @@ UI = {
         "f3_open": "Ver o rádio em 3D",
         "f3_note": "Baixa cerca de {kb} KB só quando você pede. Funciona no celular e no computador.",
         "f3_caption": ("O rádio em 3D, montado com as fotos abaixo: uma caixa nas medidas do corpo, com a foto de cada lado, "
-                       "e os knobs em 3D. A antena aparece só como foto, e o topo ainda não tem foto."),
+                       "e os knobs e o conector da antena em 3D. A antena em si aparece só nas fotos."),
         "v3_note": "Baixa um arquivo de {kb} KB só quando você pede. Funciona no celular e no computador.",
         "v3_caption": ("Módulos ESP32 em escala, com os pinos coloridos pela função no DP-666. Medidas externas dos datasheets "
                        "da Espressif; a posição dos pinos laterais e do conector de antena é aproximada. A grade tem quadrados de 5 mm."),
@@ -173,8 +173,8 @@ UI = {
         "v3_open": "Open the 3D view",
         "f3_open": "See the radio in 3D",
         "f3_note": "Downloads about {kb} KB only when you ask. Works on phones and computers.",
-        "f3_caption": ("The radio in 3D, built from the photos below: a box with the body’s dimensions, the photo of each side on it "
-                       "and the knobs in 3D. The antenna shows only in the photos, and the top has no photo yet."),
+        "f3_caption": ("The radio in 3D, built from the photos below: a box with the body’s dimensions, the photo of each side on it, "
+                       "and the knobs and the antenna connector in 3D. The antenna itself shows only in the photos."),
         "v3_note": "Downloads a {kb} KB file only when you ask. Works on phones and computers.",
         "v3_caption": ("ESP32 modules to scale, with the pins colored by their function on the DP-666. Outer dimensions from "
                        "Espressif’s datasheets; the position of the side pins and of the antenna connector is approximate. "

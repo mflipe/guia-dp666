@@ -1,6 +1,6 @@
 // Modelo 3D do rádio feito com as fotos: uma caixa nas medidas do corpo, com a foto de cada lado,
-// e os dois knobs como peças 3D, com a foto do alto de cada um na ponta.
-// A antena aparece só na foto, e o topo ainda não tem foto.
+// e os dois knobs e o conector da antena como peças 3D, com a foto da ponta de cada um.
+// A antena em si aparece só nas fotos.
 import {
   AmbientLight, BoxGeometry, CanvasTexture, CircleGeometry, CylinderGeometry, DirectionalLight, DoubleSide, EdgesGeometry,
   LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial, MeshStandardMaterial, Path, PerspectiveCamera, RingGeometry,
@@ -15,13 +15,17 @@ const LADOS = [
   ['direita', 'Lateral direita', 'dp666-3d-direita.webp', [1, 0.2, 0.12]],
   ['verso', 'Verso', 'dp666-3d-verso.webp', [-0.35, 0.2, -1]],
   ['esquerda', 'Lateral esquerda', 'dp666-3d-esquerda.webp', [-1, 0.2, 0.12]],
+  ['topo', 'Topo', 'dp666-3d-topo.webp', [0.12, 1, 0.35]],
   ['fundo', 'Fundo', 'dp666-3d-fundo.webp', [0.12, -1, 0.35]],
 ];
-// ordem das faces da BoxGeometry: +x, −x, +y (topo, sem foto), −y, +z, −z
-const FACES = ['direita', 'esquerda', null, 'fundo', 'frente', 'verso'];
+// ordem das faces da BoxGeometry: +x, −x, +y, −y, +z, −z
+const FACES = ['direita', 'esquerda', 'topo', 'fundo', 'frente', 'verso'];
 // knobs da lateral direita: foto da ponta, centro e raio na foto endireitada da lateral (10 px por mm)
 const KNOBS = [['dp666-3d-knob-tuning.webp', 143, 166, 107], ['dp666-3d-knob-volume.webp', 139, 641, 110]];
 const KNOB_LEN = 11.7; // mm para fora da lateral
+// conector SMA da antena, no topo: centro da base medido na foto de cima (mm), porca sextavada e corpo rosqueado;
+// a altura vem do quanto a ponta se desloca da base na foto
+const SMA = { x: -51.7, z: -1.7, porca: 4.5, porcaAlt: 2.2, r: 3.15, alt: 7.8 };
 const F = D / 2;
 // Onde fica cada controle (mm, com o centro da caixa na origem), medido nas fotos endireitadas:
 // p = centro, n = face (z frente, x direita, -x esquerda, -y fundo, y topo), r = marca redonda, ret = marca retangular
@@ -40,7 +44,7 @@ const PONTOS = {
   fone: { p: [-W / 2, 27.5, 5.2], n: '-x', r: 4.2 },
   usbc: { p: [-W / 2, -33.1, 2.8], n: '-x', ret: [11, 5] },
   chave: { p: [-6.8, -H / 2, 4.7], n: '-y', ret: [9, 5] },
-  antena: { p: [-46.3, H / 2, 0], n: 'y', r: 4.8 },
+  antena: { p: [SMA.x, H / 2, SMA.z], n: 'y', r: 6 },
 };
 // de onde a câmera olha para ver cada face (e o giro da marca para ficar deitada nela)
 const VISTA = { z: [0.3, 0.2, 1], x: [1, 0.2, 0.35], '-x': [-1, 0.2, 0.35], '-y': [0.15, -1, 0.5], y: [-0.25, 1, 0.7] };
@@ -146,6 +150,28 @@ export function mountFotos(root, { compacto = false, dica = false } = {}) {
     ponta.position.set(W / 2 + KNOB_LEN + 0.02, y, z);
     scene.add(ponta);
   });
+
+  // conector da antena: porca e corpo dourados (rosca em listras) e a foto da ponta em cima
+  const cr = document.createElement('canvas');
+  cr.width = 16; cr.height = 64;
+  const crx = cr.getContext('2d');
+  crx.fillStyle = '#c9a24a'; crx.fillRect(0, 0, 16, 64);
+  crx.fillStyle = '#7a5a1c';
+  for (let i = 0; i < 64; i += 8) crx.fillRect(0, i, 16, 3);
+  const rosca = new CanvasTexture(cr);
+  rosca.colorSpace = SRGBColorSpace;
+  const ouro = new MeshStandardMaterial({ color: 0xc9a24a, roughness: 0.4, metalness: 0.45 });
+  const porca = new Mesh(new CylinderGeometry(SMA.porca, SMA.porca, SMA.porcaAlt, 6), ouro);
+  porca.position.set(SMA.x, H / 2 + SMA.porcaAlt / 2, SMA.z);
+  const corpoSma = new Mesh(new CylinderGeometry(SMA.r, SMA.r, SMA.alt - SMA.porcaAlt, 40, 1, true),
+    new MeshStandardMaterial({ map: rosca, roughness: 0.4, metalness: 0.45 }));
+  corpoSma.position.set(SMA.x, H / 2 + (SMA.alt + SMA.porcaAlt) / 2, SMA.z);
+  const pontaTex = loader.load(new URL('dp666-3d-sma.webp', pasta).href, wake);
+  pontaTex.colorSpace = SRGBColorSpace;
+  const pontaSma = new Mesh(new CircleGeometry(SMA.r, 40), new MeshBasicMaterial({ map: pontaTex }));
+  pontaSma.rotation.x = -Math.PI / 2; // virada para cima, com o verso para o fundo da foto, como a face do topo
+  pontaSma.position.set(SMA.x, H / 2 + SMA.alt + 0.02, SMA.z);
+  scene.add(porca, corpoSma, pontaSma);
 
   // marca de "onde fica": um contorno âmbar e um halo que pulsa algumas vezes
   const corMarca = 0xffb020;
