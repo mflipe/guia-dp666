@@ -122,7 +122,7 @@ Each option appears with its English menu name, the same one the wiki uses. The 
 | Battery options | Off, voltage, percentage | How the battery is shown. |
 | Signalmeter unit | dBµV, dBf, dBm | Unit of the signal meter. |
 | Show clock | On, Off | Shows the clock when the time is available. |
-| Theme | list | Color theme. |
+| Theme | 17 themes | Color theme. The default is Essence, and Whiteout is the only light theme. DEEPELEC's v2.20.8 package has 14: Aurora, Ember and Glacier only exist in the v2.20.12 code. |
 | Screen settings | submenu | Not in the wiki. Frequency font, screen rotated 180°, frequency keypad and touch calibration. |
 
 ### RDS settings

@@ -122,7 +122,7 @@ Cada opção aparece com o nome do menu em português e, entre parênteses, o no
 | Opções de bateria (Battery options) | Desligado, tensão, porcentagem | Como a bateria aparece. |
 | Unidade de medidor de sinal (Signalmeter unit) | dBµV, dBf, dBm | Unidade do medidor de sinal. |
 | Mostrar relógio (Show clock) | Ligado, Desligado | Mostra o relógio quando há hora disponível. |
-| Tema (Theme) | lista | Tema de cores. |
+| Tema (Theme) | 17 temas | Tema de cores. O padrão é o Essence, e o Whiteout é o único tema claro. O pacote v2.20.8 da DEEPELEC tem 14: Aurora, Ember e Glacier só existem no código da v2.20.12. |
 | Definições do ecrã (Screen settings) | submenu | Fora da wiki. Fonte da frequência, tela girada em 180°, teclado de frequência e calibração do toque. |
 
 ### Configurações RDS

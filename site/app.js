@@ -443,8 +443,14 @@
     }
     function kv(k, v, cls) { return '<div class="aj-kv' + (cls ? " " + cls : "") + '"><dt>' + k + "</dt><dd>" + v + "</dd></div>"; }
     function mark(d, b) { return d || b ? "<small>" + (d && b ? "padrão e Brasil" : d ? "padrão" : "Brasil") + "</small>" : ""; }
-    function opt(label, d, b, tag) {
-      return "<" + tag + ' class="aj-opt' + (d ? " is-def" : "") + (b ? " is-br" : "") + '">' + esc(label) + mark(d, b) + "</" + tag + ">";
+    function opt(label, d, b, tag, sw) {
+      return "<" + tag + ' class="aj-opt' + (d ? " is-def" : "") + (b ? " is-br" : "") + '">' + (sw || "") + esc(label) + mark(d, b) + "</" + tag + ">";
+    }
+    // amostra de um tema de cores: fundo e moldura do tema, com a cor da frequência e a secundária
+    function amostra(c) {
+      if (!c) return "";
+      return '<span class="aj-sw" aria-hidden="true" style="background:' + c[0] + ";border-color:" + c[3] + '">' +
+        '<i style="background:' + c[1] + '"></i><i style="background:' + c[2] + '"></i></span>';
     }
     function rangeHtml(it) {
       var s = it.spec, h = "", pd = s.pd, pb = s.pb, same = pd != null && pb != null && Math.abs(pd - pb) < 0.5;
@@ -469,7 +475,7 @@
         var many = s.opcoes.length > 12;
         v = '<ol class="aj-opts' + (many ? " is-many" : "") + '" aria-label="Opções na ordem do ciclo">' + s.opcoes.map(function (o) {
           if (o === it.padrao) inList = true;
-          return opt(o, o === it.padrao, o === it.br, "li");
+          return opt(o, o === it.padrao, o === it.br, "li", s.cores && amostra(s.cores[o]));
         }).join("") + "</ol>" + (many ? '<button type="button" class="aj-more" aria-expanded="false">Ver as ' + s.opcoes.length + " opções</button>" : "");
       } else if (s.tipo === "faixa") { v = rangeHtml(it); inList = !!s.pd_off; }
       else if (s.resumo) v = esc(s.resumo);

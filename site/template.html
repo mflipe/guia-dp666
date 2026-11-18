@@ -946,6 +946,10 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
 .aj-item.open .aj-row::before { content: ""; position: absolute; left: 10px; top: 50%; width: 9px; height: 11px; margin-top: -5.5px; background: var(--accent-mark); clip-path: polygon(0 0, 100% 50%, 0 100%); }
 .aj-item.open .aj-pad { padding-left: 28px; }
 .aj-item.open .aj-n { color: var(--accent); }
+/* amostra das cores de um tema do rádio: fundo e moldura, com a cor da frequência e a secundária */
+.aj-sw { align-self: center; display: inline-flex; align-items: center; gap: 2px; height: 14px; padding: 0 3px; box-sizing: border-box; border: 1px solid; border-radius: 3px; forced-color-adjust: none; }
+.aj-sw i { display: block; width: 7px; height: 4px; border-radius: 1px; }
+.aj-sw i + i { width: 4px; }
 
 /* perfil e idioma */
 .profile-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-sans); cursor: pointer; white-space: nowrap; }

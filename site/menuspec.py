@@ -53,7 +53,32 @@ LANGS = ["English", "Nederlands", "Polski", "Hrvatski", "Ελληνικά", "Rom
          "Português", "Srpski", "Suomi", "Dansk", "Svenska", "Gaeilge"]
 THEMES = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
           "Ocean", "Indigo", "Queer", "GoldBrite", "Bubblegum", "Aurora", "Ember", "Glacier"]
+# cores de cada tema na v2.20.12: fundo, frequência, secundária e moldura (gui.cpp, doTheme;
+# os valores RGB565 de constants.h convertidos para hex)
+THEME_COLORS = {
+    "Essence": ("#000000", "#FFFF00", "#84CEEF", "#0000FF"),
+    "Cyan": ("#000000", "#08E7FF", "#00FFBD", "#003D4A"),
+    "Crimson": ("#000000", "#FF1819", "#FF7D7B", "#3A0000"),
+    "Monochrome": ("#000000", "#FFFFFF", "#DEFFE6", "#292D29"),
+    "Volcano": ("#080031", "#FF8200", "#FF3100", "#292D29"),
+    "Dendro": ("#000000", "#00FF00", "#00DB84", "#004100"),
+    "Sakura": ("#000000", "#F779AD", "#F70052", "#3A0829"),
+    "Whiteout": ("#DEFFE6", "#000000", "#101010", "#101010"),
+    "Tangerine": ("#000000", "#FF3100", "#EFA600", "#3A1408"),
+    "Ocean": ("#000000", "#003DFF", "#00A2FF", "#000084"),
+    "Indigo": ("#000000", "#8C00FF", "#D600FF", "#6300B5"),
+    "Queer": ("#210008", "#F70052", "#FF1819", "#6300B5"),
+    "GoldBrite": ("#000000", "#FFFFFF", "#84CEEF", "#0000FF"),
+    "Bubblegum": ("#190429", "#FFB6FF", "#F70052", "#6300B5"),
+    "Aurora": ("#000000", "#00FFBD", "#AD41E6", "#003D4A"),
+    "Ember": ("#000000", "#FF7D7B", "#84CEEF", "#3A1408"),
+    "Glacier": ("#000000", "#84CEEF", "#00FFBD", "#424163"),
+}
+# Megatron: ordem da tabela de temas e de fontes no binário do Mod17 (o Mod16 não tem o Retro)
+THEMES_MOD17 = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
+                "Ocean", "Indigo", "Maroon", "Chinese Red", "Retro", "GoldBrite"]
 FONTS = ["Classic", "Roubenstil", "Motoya", "Aura2", "Modern"]
+FONTS_MOD17 = ["Classic", "Roubenstil", "Motoya", "Aura2", "Comic", "Modern"]
 # fusos do menu, em quartos de hora (gui.cpp, Definir deslocamento de tempo NTP)
 _Q = [-48, -44, -40, -38, -36, -32, -28, -24, -20, -16, -14, -12, -8, -4, 0, 4, 8, 12, 14, 16, 18, 20, 22, 23,
       24, 26, 28, 32, 35, 36, 38, 40, 42, 44, 48, 51, 52, 56]
@@ -119,8 +144,15 @@ OFICIAL = [
         o("Opções de bateria", "Battery options", L("Desligado", "Mostrar voltagem", "Mostrar porcentagem"), "Mostrar voltagem"),
         o("Unidade de medidor de sinal", "Signalmeter unit", L("dBµV", "dBf", "dBm"), "dBµV"),
         o("Mostrar relógio", "Show clock", T(), "Ligado"),
-        o("Tema", "Theme", L(*THEMES), "Essence"),
-        o("Fonte de frequência", "Frequency font", L(*FONTS), "Aura2", sub=DE, desc="Fonte dos números da frequência."),
+        o("Tema", "Theme", dict(L(*THEMES, nota="Aurora, Ember e Glacier só existem no código da v2.20.12; o pacote "
+                                "v2.20.8 da DEEPELEC tem os outros 14. Nos pacotes v2.11.x, o Queer se chama Maroon, com "
+                                "as mesmas cores, e o Bubblegum aparece a partir da v2.11.5. O Whiteout é o único tema "
+                                "claro. Cada amostra mostra o fundo e a moldura do tema, com a cor da frequência e a cor "
+                                "secundária."), cores=THEME_COLORS), "Essence"),
+        o("Fonte de frequência", "Frequency font",
+          L(*FONTS, nota="Essas fontes só têm os algarismos e o ponto. A Comic saiu do código em dezembro de 2025, para "
+                         "liberar espaço no flash; os pacotes da DEEPELEC até a v2.20 ainda a trazem."),
+          "Aura2", sub=DE, desc="Fonte dos números da frequência."),
         o("Rodar ecrã 180°", "Flip screen 180°", T(), "Ligado", sub=DE,
           desc="Gira a imagem da tela. A compilação para o DP-66X já vem girada."),
         o("Teclado frequência", "Frequency keypad", T(), "Ligado", sub=DE,
@@ -276,8 +308,12 @@ MOD17 = [
     ("Display settings", [], [
         m("Language", L("English", "简体中文"), "M", desc="O Megatron só tem inglês e chinês simplificado."),
         m("Brightness", R(1, 100, None, "%"), "W", desc="Brilho da tela."),
-        m("Theme", LR("15 temas"), "F", desc="Tema de cores."),
-        m("Frequency font", LR("6 fontes"), "F", desc="Fonte dos números da frequência."),
+        m("Theme", L(*THEMES_MOD17, nota="Chinese Red e Retro só existem no Megatron. O Retro entrou no Mod17; o Mod16 "
+                                          "tem 14 temas. Faltam Bubblegum, Aurora, Ember e Glacier, que vieram depois na "
+                                          "linha oficial. A troca automática entre favoritos fica em My settings › My theme."),
+          "F C", desc="Tema de cores."),
+        m("Frequency font", L(*FONTS_MOD17, nota="As mesmas da linha oficial até a v2.20, incluindo a Comic."), "F",
+          desc="Fonte dos números da frequência."),
         m("Meter refresh interval", R(30, 1000, None, "ms"), "F",
           desc="Intervalo de atualização do medidor. Mais lento significa menos ruído da tela."),
         m("Meter display style", L("Classic", "New"), "M F", desc="Estilo do medidor de sinal. O manual chama de Color bar display mode."),
