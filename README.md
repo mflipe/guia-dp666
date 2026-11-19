@@ -42,7 +42,7 @@ Abrir o `index.html` direto do disco não carrega o 3D, porque o navegador bloqu
 
 ## Temas do guia
 
-O botão de tema, ao lado do idioma no rodapé do menu e na tela de título, deixa escolher entre Automático (segue o claro ou o escuro do aparelho), Claro, Escuro e os 17 temas do firmware, no grupo **Do rádio**. A escolha fica guardada no navegador e é aplicada antes de a página aparecer.
+O botão de tema fica ao lado do idioma e do perfil do rádio, no alto de cada página, na tela de título e no rodapé do menu. Ele deixa escolher entre Automático (segue o claro ou o escuro do aparelho), Claro, Escuro e os 17 temas do firmware, no grupo **Do rádio**. A escolha fica guardada no navegador e é aplicada antes de a página aparecer.
 
 Os temas do rádio não têm arquivo: `site/temas_radio.py` transforma as cores de cada tema do firmware (as de `site/temas.json`, tiradas do código) nos tokens do guia. O fundo da tela vira o fundo da página, a moldura faz as linhas e as superfícies, a cor principal vira o destaque, e tudo o que é lido como texto tem contraste de pelo menos 4,5:1 com o fundo e as superfícies. Um tema que ganhar cores em `temas.json` (como o Chinese Red e o Retro, do Mod17) entra sozinho.
 

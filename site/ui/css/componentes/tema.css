@@ -3,9 +3,9 @@
 .tema-btn { display: inline-flex; flex: none; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-sans); cursor: pointer; }
 .tema-btn .ico { width: 18px; height: 18px; }
 .tema-btn .tema-meia { fill: currentColor; stroke: none; }
-/* na tela de título, só o ícone, como a lupa ao lado */
-.tt-topo .tema-btn { width: 44px; height: 44px; min-height: 0; justify-content: center; padding: 0; border: 0; background: none; color: var(--text); }
-.tt-topo .tema-btn-t { display: none; }
+/* na tela de título e no alto das páginas, só o ícone, como a lupa da tela de título */
+.tt-topo .tema-btn, .topo-conta .tema-btn { width: 44px; height: 44px; min-height: 0; justify-content: center; padding: 0; border: 0; background: none; color: var(--text); }
+.tt-topo .tema-btn-t, .topo-conta .tema-btn-t { display: none; }
 .tema-nota { margin: -8px 0 0; font-size: 0.85rem; color: var(--muted); }
 .tema-lista { gap: 8px; }
 .opt-tema { align-items: center; }

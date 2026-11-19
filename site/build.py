@@ -502,12 +502,15 @@ def build():
     catalog = i18n.js_catalog(LANG)
     app_js = i18n.tr_js((ROOT / "app.js").read_text(encoding="utf-8"), catalog)
     template = i18n.tr_js(i18n.template_for(LANG, TEMPLATE), catalog)
-    # o perfil e o idioma moram no rodapé do menu; a tela de título leva uma cópia, com os ids que o app usa
+    # o perfil, o idioma e o tema moram no rodapé do menu; a tela de título leva uma cópia, com os ids que o app usa,
+    # e o alto de cada página leva outra (a do Início some, porque lá a tela de título já tem a sua)
     conta = re.search(r"<!--CONTA-->(.*?)<!--/CONTA-->", template, re.S).group(1)
+    conta_pagina = f'<div class="topo-conta">{conta}</div>'
     conta_titulo = (conta.replace('class="profile-chip"', 'class="profile-chip" id="profile-btn"', 1)
                     .replace('class="lang-link"', 'class="lang-link" id="lang-switch"', 1))
     pages_html = "".join(sections_html).replace("{{CONTA}}", conta_titulo)
     page = template.replace("{{MENU}}", menu_html(False)) \
+                   .replace("{{CONTA_PAGINA}}", conta_pagina) \
                    .replace("{{PAGES}}", pages_html) \
                    .replace("{{SEARCH}}", search_json) \
                    .replace("{{APPDATA}}", app_json) \

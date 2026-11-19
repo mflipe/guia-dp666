@@ -14,6 +14,9 @@
 body.pausado .app { transform: scale(0.96); }
 .main { max-width: calc(var(--wrap) + 64px); margin: 0 auto; padding: 44px 32px 120px; }
 #main { min-width: 0; }
+/* perfil, idioma e tema no alto de cada página, como na tela de título (no Início, fica só o dela) */
+.topo-conta { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: 0 0 14px; }
+body.no-titulo .topo-conta { display: none; }
 .site-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.82rem; }
 .site-foot p { margin: 4px 0; max-width: 72ch; }
 .site-foot .side-foot { margin: 4px 0; }

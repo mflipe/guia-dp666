@@ -20,7 +20,7 @@
 @media (max-width: 560px) {
   .profile-chip { order: 2; }
 }
-.tt-topo .profile-chip { margin-left: 0; }
+.tt-topo .profile-chip, .topo-conta .profile-chip { margin-left: 0; }
 .pausa-conta .profile-chip { margin-left: 0; }
 .lang { display: inline-flex; flex: none; height: 40px; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--surface); }
 .lang > * { display: inline-flex; align-items: center; justify-content: center; min-width: 42px; padding: 0 9px; font: 600 0.8rem var(--font-display); letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
