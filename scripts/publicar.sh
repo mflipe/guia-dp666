@@ -20,6 +20,7 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/js" "$tmp/en"
 cp site/preview/index.html "$tmp/"
+cp site/preview/catalogo.html "$tmp/"
 cp site/preview/en/index.html "$tmp/en/"
 cp site/preview/js/viewer3d.js site/preview/js/viewer3d.en.js "$tmp/js/"
 cp -r site/preview/img "$tmp/"

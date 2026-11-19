@@ -3,3 +3,5 @@ __pycache__/
 site/preview/
 viewer3d/node_modules/
 .DS_Store
+testes/node_modules/
+testes/saida/

@@ -22,6 +22,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import appdata  # noqa: E402
 import layout  # noqa: E402
 import componentes  # noqa: E402
+import catalogo  # noqa: E402
 from componentes import botao, item_menu, nota, selo  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
@@ -582,3 +583,4 @@ if __name__ == "__main__":
         build()
         if MISSING:
             print(f"  aviso ({lang}): sem tradução, usou o português em: {', '.join(MISSING)}")
+    catalogo.gerar(ROOT / "preview" / "catalogo.html")   # os componentes nos dois temas

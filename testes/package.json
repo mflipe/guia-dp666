@@ -1,0 +1,14 @@
+{
+  "name": "guia-dp666-testes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Regressão visual do catálogo de componentes do Guia do DP-666.",
+  "type": "module",
+  "scripts": {
+    "visual": "node regressao-visual.mjs",
+    "visual:atualizar": "node regressao-visual.mjs --atualizar"
+  },
+  "devDependencies": {
+    "puppeteer-core": "25.17.0"
+  }
+}

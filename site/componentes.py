@@ -133,46 +133,62 @@ def item_menu(href, nome, op=None):
 def exemplos():
     """Cada exemplo: (componente, argumentos, moldura do catálogo com {} no lugar do componente, legenda).
     Os argumentos são os mesmos nos dois lados; a moldura dá ao componente o lugar onde ele aparece no guia."""
-    tema = {"fundo": "#000000", "moldura": "#3a3a3a", "freq": "#f8f8f8", "sec": "#a0a0a0"}
+    escuro = {"fundo": "#000000", "moldura": "#3a3a3a", "freq": "#f8f8f8", "sec": "#a0a0a0"}
     vulcao = {"fundo": "#200000", "moldura": "#8a1a00", "freq": "#ffb000", "sec": "#ff5000"}
-    sem = "<small>padrão</small>"
-    opcoes = (opcao(paleta(tema) + "Default" + sem, {"escolha": {"pv": "tema", "v": "Default"}, "padrao": True, "ativo": True}) +
-              opcao(paleta(vulcao) + "Volcano", {"escolha": {"pv": "tema", "v": "Volcano"}}) +
-              opcao("Chinese Red", {"desligada": True}))
-    lista = "".join(opcao(f"{n} kHz", {"padrao": n == 50, "brasil": n == 75}) for n in (50, 75, 100))
-    lista_longa = "".join(opcao(str(n)) for n in range(1, 15))
-    cores = ('<li class="aj-cor">' + '<div class="aj-cor-b">' + amostra("#ffb000") + '<span class="aj-cor-n">Frequência</span>'
-             '<span class="aj-cor-v">Amber <code>#ffb000</code> <code>0xFD80</code></span></div><p class="aj-cor-d">O número grande.</p></li>')
-    sec = item_menu("#uso--ligar", "Ligar e desligar", {"antes": '<span class="sec-n">1</span>'})
+    temas = (opcao(paleta(escuro) + "Default<small>padrão</small>", {"escolha": {"pv": "tema", "v": "Default"}, "padrao": True}) +
+             opcao(paleta(vulcao) + "Volcano", {"escolha": {"pv": "tema", "v": "Volcano"}, "ativo": True}) +
+             opcao("Chinese Red", {"desligada": True}))
+    passos = "".join(opcao(f"{n} kHz" + ("<small>padrão</small>" if n == 50 else "<small>Brasil</small>" if n == 75 else ""),
+                           {"padrao": n == 50, "brasil": n == 75}) for n in (50, 75, 100))
+    longa = "".join(opcao(f"{n} s") for n in range(1, 15))
+    papeis = [("Fundo da tela", "Black", "#000000", "0x0000"), ("Frequência", "Amber", "#ffb000", "0xFD80"),
+              ("Rótulos", "Grey", "#a0a0a0", "0xA514"), ("RDS", "Yellow", "#ffe000", "0xFF00"),
+              ("Barra de sinal", "Green", "#00c000", "0x0600"), ("Estéreo", "Red", "#ff2000", "0xF900"),
+              ("Bateria", "White", "#f8f8f8", "0xFFDF"), ("Wi-Fi", "Skyblue", "#40a0ff", "0x451F")]
+    cores = "".join('<li class="aj-cor"><div class="aj-cor-b">' + amostra(h) + f'<span class="aj-cor-n">{n}</span>'
+                    f'<span class="aj-cor-v">{f} <code>{h}</code> <code>{r}</code></span></div></li>' for n, f, h, r in papeis)
+    secao1 = item_menu("#uso--ligar", "Ligar e desligar", {"classe": "atual", "a": {"aria-current": "location"}, "antes": '<span class="sec-n">1</span>'})
+    aqui = '<span class="mi-aqui">Você está aqui</span>'
     return [
-        ("botao", ["Ligar o rádio", {"variante": "solido", "attrs": {"data-power": True}}], '<div class="hlp-ask">{}</div>', "Sólido: a ação principal"),
-        ("botao", ["Não, próximo passo", {"variante": "fantasma", "attrs": {"data-step-next": "1"}}], '<div class="hlp-ask">{}</div>', "Fantasma: a ação ao lado"),
+        ("botao", ["Ligar o rádio", {"variante": "solido", "attrs": {"data-power": True}}], '<div class="hp-actions">{}</div>', "Sólido: a ação principal"),
+        ("botao", ["Não, próximo passo", {"variante": "fantasma", "attrs": {"data-step-next": "1"}}],
+         '<div class="hlp-ask"><span>Resolveu?</span>' + botao("Sim", {"variante": "solido", "attrs": {"data-step-ok": True}}) + "{}</div>",
+         "Fantasma: a ação ao lado da principal"),
         ("botao", ["← Todos os problemas", {"variante": "fantasma", "classe": "hlp-back", "attrs": {"data-go": "home"}}], "{}", "Fantasma de voltar"),
         ("botao", ["Volume", {"classe": "chip-btn", "attrs": {"data-hw": "volume"}}], '<div class="sim-extra">{}</div>', "Chip"),
         ("seletor", ["Firmware", {"opcoes": opcao_seletor("Megatron Mod17", {"valor": "mod17", "marcado": True}) +
                                   opcao_seletor("Linha oficial", {"valor": "oficial"})}], '<div class="tool-bar">{}</div>', "Seletor segmentado"),
-        ("opcao_seletor", ["Todas<span>42</span>", {"valor": "", "marcado": True, "chave": "t"}], '<div class="aj-filtro" role="radiogroup">{}</div>', "Opção com contagem"),
-        ("nota", ["Toque num tema para ver a tela com as cores dele."], "{}", "Nota de ajuste"),
-        ("nota", ["Toque num controle do painel.", {"classe": "sim-hint"}], "{}", "Dica do simulador"),
-        ("selo", ["linha oficial"], "<h3>Sem som no fone {}</h3>", "Selo"),
+        ("opcao_seletor", ["Para DX<span>12</span>", {"valor": "dx", "marcado": True, "chave": "t"}],
+         '<div class="aj-filtro" role="radiogroup">' + opcao_seletor("Todas<span>42</span>", {"valor": "", "chave": "t"}) + "{}</div>", "Opção com contagem, escolhida"),
+        ("nota", ["Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado."],
+         '<div class="aj-pad">{}</div>', "Nota de um ajuste"),
+        ("nota", ["Toque num controle do painel. Segure para o toque longo.", {"classe": "sim-hint"}], "{}", "Dica do simulador"),
+        ("selo", ["linha oficial"], '<h3 style="margin:0">Sem som no fone {}</h3>', "Selo"),
         ("selo", ["Confirmado", {"tom": "ok"}], '<p class="card-tags">{}</p>', "Selo com tom"),
         ("opcao", ["50 kHz<small>padrão</small>", {"padrao": True}], '<ol class="aj-opts">{}</ol>', "Opção padrão"),
-        ("opcao", ["Volcano", {"escolha": {"pv": "tema", "v": "Volcano"}, "ativo": True}], '<ol class="aj-opts">{}</ol>', "Opção que troca a prévia, escolhida"),
+        ("opcao", ["75 kHz<small>Brasil</small>", {"brasil": True}], '<ol class="aj-opts">{}</ol>', "Opção do Brasil"),
+        ("opcao", [paleta(vulcao) + "Volcano", {"escolha": {"pv": "tema", "v": "Volcano"}, "ativo": True}], '<ol class="aj-opts">{}</ol>',
+         "Opção que troca a prévia, escolhida"),
         ("opcao", ["Chinese Red", {"desligada": True}], '<ol class="aj-opts">{}</ol>', "Opção sem prévia"),
-        ("amostra", ["#ffb000"], "{}", "Amostra de cor"),
-        ("paleta", [vulcao], "{}", "Amostra de tema"),
-        ("recolhivel", [lista, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}}], "{}", "Lista curta, sempre aberta"),
-        ("recolhivel", [lista_longa, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}, "mais": "Ver as 14 opções"}], "{}", "Lista longa, recolhida"),
-        ("recolhivel", [opcoes, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}}], "{}", "Lista de temas com prévia"),
-        ("recolhivel", [cores, {"classe": "aj-cores", "attrs": {"data-pv-cores": True, "aria-label": "Cores do tema Volcano"}, "mais": "Ver as 1 cores", "n": "cores"}],
-         "{}", "Cores de um tema"),
-        ("item_menu", ["#uso", "Uso no dia a dia", {"li": {"data-route": "uso"}, "depois": '<span class="mi-aqui">Você está aqui</span>',
-                                                    "desc": "Ligar, sintonizar, gravar memórias."}], '<ul class="mi-lista">{}</ul>', "Item do menu"),
-        ("item_menu", ["#uso--ligar", "Ligar e desligar", {"classe": "atual", "a": {"aria-current": "location"}, "antes": '<span class="sec-n">1</span>'}],
-         '<ul class="mi-lista">{}</ul>', "Seção atual no menu de pausa"),
-        ("item_menu", ["#inicio", "Continuar", {"classe": "mi-continuar", "depois": '<span class="mi-sub"></span>', "desc": ""}],
-         '<ul class="mi-lista">{}</ul>', "Continuar"),
-        ("item_menu", ["#uso--memorias", "Memórias", {"antes": '<span class="sec-n">2</span>'}], '<ul class="mi-lista">' + sec + "{}</ul>", "Seções em sequência"),
+        ("amostra", ["#ffb000"], "{}", "Amostra de uma cor"),
+        ("paleta", [vulcao], "{}", "Amostra de um tema: fundo, moldura, frequência e secundária"),
+        ("recolhivel", [passos, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}}], '<div class="aj-pad">{}</div>',
+         "Lista curta: sempre aberta"),
+        ("recolhivel", [longa, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}, "mais": "Ver as 14 opções"}],
+         '<div class="aj-pad">{}</div>', "Lista longa: começa recolhida"),
+        ("recolhivel", [temas, {"classe": "aj-opts", "attrs": {"aria-label": "Opções na ordem do ciclo"}}], '<div class="aj-pad">{}</div>',
+         "Temas que trocam a prévia"),
+        ("recolhivel", [cores, {"classe": "aj-cores", "attrs": {"data-pv-cores": True, "aria-label": "Cores do tema Volcano"}, "mais": "Ver as 8 cores", "n": "cores"}],
+         '<div class="aj-pad">{}</div>', "Cores de um tema"),
+        ("item_menu", ["#uso", "Uso no dia a dia", {"li": {"data-route": "uso"}, "depois": aqui, "desc": "Ligar, sintonizar, gravar memórias."}],
+         '<ul class="mi-lista">{}</ul>', "Item do menu"),
+        ("item_menu", ["#uso", "Uso no dia a dia", {"classe": "foco", "li": {"data-route": "uso"}, "depois": aqui, "desc": "Ligar, sintonizar, gravar memórias."}],
+         '<ul class="mi-lista">{}</ul>', "Item em foco: o cursor âmbar e a descrição"),
+        ("item_menu", ["#inicio", "Continuar", {"classe": "mi-continuar", "depois": '<span class="mi-sub">Uso no dia a dia, 40%</span>',
+                                                "desc": "Uso no dia a dia, na seção Memórias. Você leu 40% da página."}],
+         '<ul class="mi-lista">{}</ul>', "Continuar a leitura"),
+        ("item_menu", ["#uso--memorias", "Memórias", {"antes": '<span class="sec-n">2</span>'}], '<ol class="mi-lista sec-lista">' + secao1 + "{}</ol>",
+         "Seções no menu de pausa; a primeira é a atual"),
     ]
 
 
