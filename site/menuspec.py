@@ -76,6 +76,24 @@ THEME_PALETTE = {nome: dict(zip(PALETTE_KEYS, cores)) for nome, cores in {
     "Ember": ("#000000", "#3A1408", "#FF7D7B", "#FFFFFF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#84CEEF", "#4A4D4A"),
     "Glacier": ("#000000", "#424163", "#84CEEF", "#FFFFFF", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#00FFBD", "#4A4D4A"),
 }.items()}
+# Megatron: o código é fechado, então a prévia usa as cores da linha oficial em 532c4ef (01/09/2024), o estado
+# mais novo com os mesmos 13 temas em comum (ainda chama o Queer de Maroon e não tem o Bubblegum).
+# Chinese Red e Retro ficam sem prévia até termos fotos da tela.
+THEME_PALETTE_MOD17 = {nome: dict(zip(PALETTE_KEYS, cores)) for nome, cores in {
+    "Essence": ("#000000", "#0000FF", "#FFFF00", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#101010"),
+    "Cyan": ("#000000", "#003D4A", "#08E7FF", "#FFFFFF", "#08E7FF", "#00FFBD", "#08E7FF", "#08E7FF", "#08E7FF", "#FF0000", "#00FFBD", "#294142"),
+    "Crimson": ("#000000", "#3A0000", "#FF1819", "#FFFFFF", "#FF1819", "#FF7D7B", "#FF1819", "#FF1819", "#FF1819", "#FFFF00", "#FF7D7B", "#4A4D4A"),
+    "Monochrome": ("#000000", "#292D29", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#7B797B", "#FFFFFF", "#FFFFFF", "#00FF00", "#FF0000", "#7B797B", "#4A4D4A"),
+    "Volcano": ("#080031", "#292D29", "#FF8200", "#FFFFFF", "#FF8200", "#FF3100", "#FF8200", "#FF8200", "#FF8200", "#FF0000", "#FF3100", "#522800"),
+    "Dendro": ("#000000", "#004100", "#00FF00", "#FFFFFF", "#00FF00", "#00DB84", "#00FF00", "#00FF00", "#00FF00", "#FF0000", "#00DB84", "#4A4D4A"),
+    "Sakura": ("#000000", "#3A0829", "#F779AD", "#FFFFFF", "#F779AD", "#F70052", "#F779AD", "#F779AD", "#F779AD", "#FF0000", "#F70052", "#3A1829"),
+    "Whiteout": ("#DEFFE6", "#101010", "#000000", "#000000", "#000000", "#101010", "#000000", "#000000", "#00FF00", "#000000", "#7B797B", "#7B797B"),
+    "Tangerine": ("#000000", "#3A1408", "#FF3100", "#FFFFFF", "#FF3100", "#EFA600", "#FF3100", "#FF3100", "#00FF00", "#FF0000", "#EFA600", "#63493A"),
+    "Ocean": ("#000000", "#000084", "#003DFF", "#FFFFFF", "#003DFF", "#00A2FF", "#003DFF", "#003DFF", "#003DFF", "#FF0000", "#00A2FF", "#424163"),
+    "Indigo": ("#000000", "#6300B5", "#8C00FF", "#FFFFFF", "#8C00FF", "#D600FF", "#8C00FF", "#8C00FF", "#8C00FF", "#FF0000", "#D600FF", "#4A3563"),
+    "Maroon": ("#210008", "#6300B5", "#F70052", "#FFFFFF", "#F70052", "#FF1819", "#FF7D7B", "#F70052", "#F70052", "#EFA600", "#D600FF", "#422421"),
+    "GoldBrite": ("#000000", "#0000FF", "#FFFFFF", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#003DFF", "#FF0000", "#00FFBD", "#101010"),
+}.items()}
 # Megatron: ordem da tabela de temas e de fontes no binário do Mod17 (o Mod16 não tem o Retro)
 THEMES_MOD17 = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
                 "Ocean", "Indigo", "Maroon", "Chinese Red", "Retro", "GoldBrite"]
@@ -310,9 +328,10 @@ MOD17 = [
     ("Display settings", [], [
         m("Language", L("English", "简体中文"), "M", desc="O Megatron só tem inglês e chinês simplificado."),
         m("Brightness", R(1, 100, None, "%"), "W", desc="Brilho da tela."),
-        m("Theme", L(*THEMES_MOD17, nota="Chinese Red e Retro só existem no Megatron. O Retro entrou no Mod17; o Mod16 "
+        m("Theme", dict(L(*THEMES_MOD17, nota="Chinese Red e Retro só existem no Megatron. O Retro entrou no Mod17; o Mod16 "
                                           "tem 14 temas. Faltam Bubblegum, Aurora, Ember e Glacier, que vieram depois na "
                                           "linha oficial. A troca automática entre favoritos fica em My settings › My theme."),
+                        paleta=THEME_PALETTE_MOD17, previa="tema"),
           "F C", desc="Tema de cores."),
         m("Frequency font", dict(L(*FONTS_MOD17, nota="As mesmas da linha oficial até a v2.20, incluindo a Comic."),
                                  previa="fonte"), "F", desc="Fonte dos números da frequência."),

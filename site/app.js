@@ -453,12 +453,19 @@
         '<i style="background:' + c.freq + '"></i><i style="background:' + c.sec + '"></i></span>';
     }
     // prévia dos temas e das fontes da frequência: cores tiradas do código e o número desenhado com as fontes do firmware
-    var PV = D.previa || { fontes: {} }, pv = { tema: "", fonte: "" }, pvN = 0, paleta = null;
-    D.oficial.grupos.forEach(function (g) {
-      g.itens.forEach(function (x) {
-        var sp = x.spec || {};
-        if (sp.previa === "tema") { paleta = sp.paleta; pv.tema = x.padrao; }
-        if (sp.previa === "fonte" && !pv.fonte) pv.fonte = x.padrao;
+    // cada firmware guarda o seu tema e a sua fonte na prévia; temas sem cores conhecidas ficam sem prévia
+    var PV = D.previa || { fontes: {} }, pv = {}, pvN = 0, paletas = {};
+    ["oficial", "mod17"].forEach(function (fw) {
+      var e = pv[fw] = { tema: "", fonte: "" };
+      (D[fw] ? D[fw].grupos : []).forEach(function (g) {
+        g.itens.forEach(function (x) {
+          var sp = x.spec || {};
+          if (sp.previa === "tema" && sp.paleta) {
+            paletas[fw] = sp.paleta;
+            e.tema = sp.paleta[x.padrao] ? x.padrao : sp.opcoes.filter(function (o) { return sp.paleta[o]; })[0];
+          }
+          if (sp.previa === "fonte" && !e.fonte) e.fonte = PV.fontes[x.padrao] ? x.padrao : PV.fontes.Aura2 ? "Aura2" : sp.opcoes[0];
+        });
       });
     });
     function digitos(nome, cor, x, y) {
@@ -473,17 +480,17 @@
       return '<text x="' + x + '" y="' + y + '" fill="' + cor + '" font-size="' + tam + '"' + (ancora ? ' text-anchor="' + ancora + '"' : "") + ">" + t + "</text>";
     }
     // a tela principal da linha oficial, simplificada: posições de gui.cpp (BuildDisplay) e cores do tema
-    function tela() {
-      var p = paleta[pv.tema], f = PV.fontes[pv.fonte] || { w: 0, h: 0 };
+    function tela(fw) {
+      var e = pv[fw], p = paletas[fw][e.tema], f = PV.fontes[e.fonte] || { w: 0, h: 0 };
       var escala = function (lista, y) { return lista.map(function (a) { return txt(a[1], y, a[0], p.ativo, 11); }).join(""); };
-      return '<svg class="aj-tela" viewBox="0 0 320 240" role="img" aria-label="' + esc("Prévia da tela no tema " + pv.tema + ", com a fonte " + pv.fonte) + '">' +
+      return '<svg class="aj-tela" viewBox="0 0 320 240" role="img" aria-label="' + esc("Prévia da tela no tema " + e.tema + ", com a fonte " + e.fonte) + '">' +
         '<rect x="0.5" y="0.5" width="319" height="239" fill="' + p.fundo + '" stroke="' + p.moldura + '"/>' +
         '<path d="M0 30.5H320M0 100.5H320M0 160.5H195M0 180.5H320M0 217.5H320M30.5 0V30M66.5 0V30M105.5 0V30M162.5 0V30M248.5 0V30' +
         'M195.5 100V180M195 144.5H320M210.5 180V217M257.5 144V180" fill="none" stroke="' + p.moldura + '"/>' +
         '<g fill="none" stroke="' + p.st + '" stroke-width="2"><circle cx="42" cy="16" r="7"/><circle cx="53" cy="16" r="7"/></g>' +
         txt(85.5, 21, "RDS", p.rds, 12, "middle") + txt(201, 25, "236", p.bw, 22, "end") + txt(245, 25, "kHz", p.ativo, 22, "end") +
         '<path d="M255 12h5l6-5v18l-6-5h-5z" fill="' + p.cinza + '"/>' +
-        digitos(pv.fonte, p.freq, 244 - f.w, 42) +
+        digitos(e.fonte, p.freq, 244 - f.w, 42) +
         txt(7, 113, "S", p.ativo, 12, "middle") + '<path d="M16 114.5H189M16 143.5H189" stroke="' + p.ativo + '"/>' +
         '<rect x="22" y="110" width="82" height="3" fill="' + p.bar + '"/><rect x="106" y="110" width="40" height="3" fill="' + p.barS + '"/>' +
         escala([["1", 21], ["3", 41], ["5", 61], ["7", 81], ["9", 101], ["+10", 127], ["+30", 160]], 127) +
@@ -496,31 +503,35 @@
         txt(34, 175, "Pop", p.rds, 12) + txt(36, 208, "DP-666", p.rds, 22) + txt(265, 204, "C201", p.rds, 13, "middle") +
         txt(36, 233, "DP-666 FM 98.10 MHz", p.rds, 12) + "</svg>";
     }
-    function telaBox() {
-      return '<div class="aj-prev" data-pv-box="tema">' + tela() + '<p class="aj-prev-leg" aria-live="polite">' +
-        esc(pv.tema + ", com a fonte " + pv.fonte + ".") + "</p></div>" +
-        '<p class="aj-note">' + "Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado." + "</p>";
+    function telaBox(fw) {
+      var e = pv[fw];
+      return '<div class="aj-prev" data-pv-box="tema">' + tela(fw) + '<p class="aj-prev-leg" aria-live="polite">' +
+        esc(e.tema + ", com a fonte " + e.fonte + ".") + "</p></div>" + '<p class="aj-note">' + (fw === "oficial" ?
+        "Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado." :
+        "Toque num tema para ver a tela com as cores dele. As cores vêm da linha oficial, e os temas apagados ainda não têm prévia.") + "</p>";
     }
     // amostra de uma fonte: o número sobre o fundo do tema da prévia (sem tema, na cor do texto)
     function amostraFonte(nome, fw) {
       var f = PV.fontes[nome];
       if (!f) return "";
-      var p = fw === "oficial" && paleta ? paleta[pv.tema] : null;
+      var p = paletas[fw] ? paletas[fw][pv[fw].tema] : null;
       return '<svg class="aj-fs-img" viewBox="0 0 ' + (f.w + 16) + " " + (f.h + 12) + '" aria-hidden="true">' +
         (p ? '<rect width="100%" height="100%" rx="4" fill="' + p.fundo + '"/>' : "") + digitos(nome, p && p.freq, 8, 6) + "</svg>";
     }
     function fontesHtml(it, fw) {
-      var pick = fw === "oficial";
+      var pick = !!paletas[fw], e = pv[fw];
       return '<ol class="aj-fs-list" aria-label="Opções na ordem do ciclo">' + it.spec.opcoes.map(function (o) {
         var nome = '<span class="aj-fs-n">' + esc(o) + mark(o === it.padrao, o === it.br) + "</span>" + amostraFonte(o, fw);
-        return '<li class="aj-fs' + (pick && o === pv.fonte ? " is-on" : "") + '">' + (pick ?
-          '<button type="button" class="aj-pick" data-pv="fonte" data-v="' + esc(o) + '" aria-pressed="' + (o === pv.fonte) + '">' + nome + "</button>" :
+        return '<li class="aj-fs' + (pick && o === e.fonte ? " is-on" : "") + '">' + (pick ?
+          '<button type="button" class="aj-pick" data-pv="fonte" data-v="' + esc(o) + '" aria-pressed="' + (o === e.fonte) + '">' + nome + "</button>" :
           '<div class="aj-fs-row">' + nome + "</div>") + "</li>";
-      }).join("") + "</ol>" + '<p class="aj-note">' + (pick ? "Toque numa fonte para vê-la na prévia do Tema. " : "") +
+      }).join("") + "</ol>" + '<p class="aj-note">' + (pick ? "Toque numa fonte para vê-la na prévia do tema. " : "") +
         "Números desenhados com as próprias fontes do firmware." + "</p>";
     }
     function pintarPrevia(tipo, v) {
-      pv[tipo] = v;
+      var fw = st.fw;
+      if (!pv[fw]) return;
+      pv[fw][tipo] = v;
       $$('[data-pv="' + tipo + '"]', list).forEach(function (b) {
         var on = b.dataset.v === v;
         b.setAttribute("aria-pressed", String(on));
@@ -528,15 +539,15 @@
       });
       $$('[data-pv-box="tema"]', list).forEach(function (box) {
         var svg = $("svg", box), leg = $(".aj-prev-leg", box);
-        if (svg) svg.outerHTML = tela();
-        if (leg) leg.textContent = pv.tema + ", com a fonte " + pv.fonte + ".";
+        if (svg) svg.outerHTML = tela(fw);
+        if (leg) leg.textContent = pv[fw].tema + ", com a fonte " + pv[fw].fonte + ".";
       });
       if (tipo === "tema") $$(".aj-fs-list", list).forEach(function (ol) {
         $$(".aj-fs", ol).forEach(function (li) {
           var b = $(".aj-pick", li);
           if (!b) return;
           var velho = $(".aj-fs-img", b);
-          if (velho) velho.outerHTML = amostraFonte(b.dataset.v, "oficial");
+          if (velho) velho.outerHTML = amostraFonte(b.dataset.v, fw);
         });
       });
     }
@@ -564,15 +575,16 @@
         v = fontesHtml(it, fw);
       } else if (s.opcoes) {
         // a lista que troca a prévia fica sempre inteira, para todos os temas estarem a um toque
-        var pick = s.previa === "tema" && paleta && fw === "oficial", many = s.opcoes.length > 12 && !pick;
+        var pick = s.previa === "tema" && !!paletas[fw], many = s.opcoes.length > 12 && !pick;
         v = '<ol class="aj-opts' + (many ? " is-many" : "") + '" aria-label="Opções na ordem do ciclo">' + s.opcoes.map(function (o) {
           if (o === it.padrao) inList = true;
           var sw = s.paleta && amostra(s.paleta[o]);
           if (!pick) return opt(o, o === it.padrao, o === it.br, "li", sw);
-          return '<li class="aj-opt is-pick' + (o === it.padrao ? " is-def" : "") + (o === pv.tema ? " is-on" : "") + '"><button type="button" class="aj-pick" data-pv="tema" data-v="' +
-            esc(o) + '" aria-pressed="' + (o === pv.tema) + '">' + sw + esc(o) + mark(o === it.padrao, o === it.br) + "</button></li>";
+          if (!s.paleta[o]) return '<li class="aj-opt is-pick is-off"><button type="button" class="aj-pick" disabled>' + esc(o) + mark(o === it.padrao, o === it.br) + "</button></li>";
+          return '<li class="aj-opt is-pick' + (o === it.padrao ? " is-def" : "") + (o === pv[fw].tema ? " is-on" : "") + '"><button type="button" class="aj-pick" data-pv="tema" data-v="' +
+            esc(o) + '" aria-pressed="' + (o === pv[fw].tema) + '">' + sw + esc(o) + mark(o === it.padrao, o === it.br) + "</button></li>";
         }).join("") + "</ol>" + (many ? '<button type="button" class="aj-more" aria-expanded="false">Ver as ' + s.opcoes.length + " opções</button>" : "") +
-          (pick ? telaBox() : "");
+          (pick ? telaBox(fw) : "");
       } else if (s.tipo === "faixa") { v = rangeHtml(it); inList = !!s.pd_off; }
       else if (s.resumo) v = esc(s.resumo);
       if (s.nota) v += '<p class="aj-note">' + esc(s.nota) + "</p>";

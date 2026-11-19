@@ -955,6 +955,8 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
 .aj-pick { display: inline-flex; align-items: baseline; gap: 6px; margin: 0; padding: 3px 10px; border: 0; border-radius: inherit; background: none; color: inherit; font: inherit; line-height: inherit; text-align: left; cursor: pointer; }
 .aj-pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .aj-opt.is-on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.aj-opt.is-off { border-style: dashed; }
+.aj-opt.is-off .aj-pick { color: var(--muted); cursor: not-allowed; }
 .aj-prev { max-width: 320px; margin: 14px 0 0; }
 .aj-tela { display: block; width: 100%; height: auto; border-radius: 4px; font-family: var(--font-sans); forced-color-adjust: none; }
 .aj-prev-leg { margin: 6px 0 0; font-size: 0.8rem; color: var(--muted); }
