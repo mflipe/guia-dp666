@@ -1337,7 +1337,7 @@ tbody tr:last-child td { border-bottom: 0; }
 @media (max-width: 560px) {
   .profile-chip { order: 2; }
 }
-.tt-topo .profile-chip { margin-left: 0; }
+.tt-topo .profile-chip, .topo-conta .profile-chip { margin-left: 0; }
 .pausa-conta .profile-chip { margin-left: 0; }
 .lang { display: inline-flex; flex: none; height: 40px; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--surface); }
 .lang > * { display: inline-flex; align-items: center; justify-content: center; min-width: 42px; padding: 0 9px; font: 600 0.8rem var(--font-display); letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
@@ -1350,9 +1350,9 @@ tbody tr:last-child td { border-bottom: 0; }
 .tema-btn { display: inline-flex; flex: none; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-sans); cursor: pointer; }
 .tema-btn .ico { width: 18px; height: 18px; }
 .tema-btn .tema-meia { fill: currentColor; stroke: none; }
-/* na tela de título, só o ícone, como a lupa ao lado */
-.tt-topo .tema-btn { width: 44px; height: 44px; min-height: 0; justify-content: center; padding: 0; border: 0; background: none; color: var(--text); }
-.tt-topo .tema-btn-t { display: none; }
+/* na tela de título e no alto das páginas, só o ícone, como a lupa da tela de título */
+.tt-topo .tema-btn, .topo-conta .tema-btn { width: 44px; height: 44px; min-height: 0; justify-content: center; padding: 0; border: 0; background: none; color: var(--text); }
+.tt-topo .tema-btn-t, .topo-conta .tema-btn-t { display: none; }
 .tema-nota { margin: -8px 0 0; font-size: 0.85rem; color: var(--muted); }
 .tema-lista { gap: 8px; }
 .opt-tema { align-items: center; }
@@ -1874,6 +1874,9 @@ html.sem-rolagem { overflow: hidden; }
 body.pausado .app { transform: scale(0.96); }
 .main { max-width: calc(var(--wrap) + 64px); margin: 0 auto; padding: 44px 32px 120px; }
 #main { min-width: 0; }
+/* perfil, idioma e tema no alto de cada página, como na tela de título (no Início, fica só o dela) */
+.topo-conta { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: 0 0 14px; }
+body.no-titulo .topo-conta { display: none; }
 .site-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.82rem; }
 .site-foot p { margin: 4px 0; max-width: 72ch; }
 .site-foot .side-foot { margin: 4px 0; }
