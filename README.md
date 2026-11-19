@@ -14,8 +14,9 @@ O guia funciona como o menu de um jogo, no celular, no tablet e no computador, n
 | `site/docs/en/` | O texto das páginas em inglês, com os mesmos nomes de arquivo |
 | `site/i18n.py` e `site/i18n/` | A tradução do resto: textos da interface, catálogos português → inglês dos dados, dos diagramas e do JavaScript, e os nomes dos menus da linha oficial em inglês (`menuspec_en.py`, `didatica_en.py`) |
 | `site/` | O gerador. O `build.py` junta o texto, as peças do layout em `ui/` (montadas pelo `layout.py`), o `app.js`, os dados dos menus (`menuspec.py`, `didatica.py`, `appdata.py`, `data.py`) e os diagramas (`diagrams.py`) num único `index.html` |
-| `site/ui/css/` | Os estilos, um arquivo por componente, em camadas na ordem `tokens`, `base`, `conteudo`, `componentes`, `ferramentas` e `layout`: uma camada posterior vence a anterior, sem depender da especificidade. As cores ficam só em `tokens/tokens.css`; o tema escuro é escrito uma vez e o `layout.py` o repete para quem segue o tema do sistema |
+| `site/ui/css/` | Os estilos, um arquivo por componente, em camadas na ordem `tokens`, `base`, `conteudo`, `componentes`, `ferramentas` e `layout`: uma camada posterior vence a anterior, sem depender da especificidade. As cores ficam só nos tokens (`tokens/`): `tokens.css` é o tema Claro, a base, e cada outro tema tem um arquivo só com o que muda |
 | `site/componentes.py` e `site/ui/componentes.js` | Os componentes da interface (botão, nota, selo, seletor, opção, amostra de cor, lista recolhível, item do menu), com os mesmos nomes e o mesmo HTML nos dois lados: o `build.py` usa o de Python; o `app.js` e o `navegacao.js`, o de JavaScript. O build confere os dois com os exemplos de `componentes.py` |
+| `site/tema.py` | Os temas do guia (Automático, Claro, Escuro): a lista dos temas e tudo o que sai dela, dos blocos de CSS ao botão e à janela de escolha |
 | `site/catalogo.py` | Gera o `catalogo.html`: cada componente no lugar onde aparece no guia, nos temas claro e escuro, e as cores dos tokens |
 | `testes/` | A regressão visual: fotografa cada seção do catálogo e compara com as referências em `testes/referencia/` |
 | `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |
@@ -38,6 +39,15 @@ python3 -m http.server -d site/preview
 ```
 
 Abrir o `index.html` direto do disco não carrega o 3D, porque o navegador bloqueia módulos JavaScript fora de um servidor.
+
+## Temas do guia
+
+O botão de tema, ao lado do idioma no rodapé do menu e na tela de título, deixa escolher entre Automático (segue o claro ou o escuro do aparelho), Claro e Escuro. A escolha fica guardada no navegador e é aplicada antes de a página aparecer. Para criar um tema:
+
+1. Acrescente uma entrada na lista `TEMAS` de `site/tema.py`: o id, o nome em português e em inglês, o esquema (`light` ou `dark`) e, se quiser partir de um tema que já existe, `base` com o id dele.
+2. Crie `site/ui/css/tokens/<id>.css` com um bloco `:root { … }` só com os tokens que mudam em relação ao Claro (ou ao tema de `base`).
+
+O build faz o resto: o bloco do tema na folha de estilos, o papel quadriculado na cor de `--grid`, a cor da barra do navegador (a de `--bg`), a opção na janela, com a amostra das cores, e uma coluna a mais no catálogo. Para o Automático usar outro tema no claro ou no escuro, mude `AUTOMATICO` no mesmo arquivo.
 
 ## Conferir a aparência
 

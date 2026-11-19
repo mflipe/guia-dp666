@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer-core';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
-const SITE = path.resolve(AQUI, '..', 'site', 'preview');
+const SITE = path.resolve(process.env.SITE || path.join(AQUI, '..', 'site', 'preview'));   // SITE=pasta: outro build
 const REF = path.join(AQUI, 'referencia');
 const SAIDA = path.join(AQUI, 'saida');
 const ATUALIZAR = process.argv.includes('--atualizar');
@@ -87,8 +87,15 @@ try {
     p.on('request', (r) => (r.url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
     await p.goto(url, { waitUntil: 'load' });
     await p.evaluate(() => document.fonts.ready);
-    for (const secao of await p.$$('.cat-sec')) {
-      const nome = `${tela}-${await secao.evaluate((e) => e.id)}.png`;
+    const ids = await p.$$eval('.cat-sec', (ss) => ss.map((e) => e.id));
+    for (const id of ids) {
+      // cada seção sozinha no alto da página: a foto não depende do que vem antes dela
+      await p.evaluate((i) => {
+        document.querySelectorAll('.cat-topo, .cat-sec').forEach((e) => { e.style.display = e.id === i ? '' : 'none'; });
+        window.scrollTo(0, 0);
+      }, id);
+      const secao = await p.$('#' + id);
+      const nome = `${tela}-${id}.png`;
       const ref = path.join(REF, nome);
       const foto = Buffer.from(await secao.screenshot());
       if (ATUALIZAR || !fs.existsSync(ref)) { fs.writeFileSync(ref, foto); conta.gravadas++; continue; }

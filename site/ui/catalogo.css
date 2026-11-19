@@ -16,15 +16,15 @@
 .cat-ex > figcaption { display: grid; gap: 3px; margin: 0 0 8px; }
 .cat-ex > figcaption b { font-weight: 600; color: var(--ink); }
 .cat-ex > figcaption code { font-size: 0.76rem; color: var(--muted); overflow-wrap: anywhere; }
-.cat-par { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+/* um painel por tema: lado a lado enquanto couberem, um embaixo do outro no celular */
+.cat-par { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
 .cat-tema { position: relative; min-width: 0; padding: 32px 18px 18px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--text); }
 .cat-tema::before { content: attr(data-tema); position: absolute; top: 9px; left: 18px; font: 500 0.72rem var(--font-sans); color: var(--muted); }
-@media (max-width: 700px) {
-  .cat-par { grid-template-columns: minmax(0, 1fr); }
-}
 /* cores: a amostra usa o token de verdade, resolvido dentro de cada tema */
 .cat-cores { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
 .cat-cores li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 0.82rem; }
 .cat-cores i { width: 22px; height: 22px; border-radius: 4px; box-shadow: inset 0 0 0 1px var(--rule); }
 .cat-cores code { color: var(--ink); overflow-wrap: anywhere; }
 .cat-cores span { font: 0.74rem var(--font-mono); color: var(--muted); text-align: right; }
+/* a janela do tema aberta, numa moldura com o visual da janela, que cabe no painel */
+.cat-janela { margin-top: 16px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); }

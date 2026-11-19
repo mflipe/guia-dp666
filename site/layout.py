@@ -12,13 +12,15 @@ Peças:
 As camadas (@layer) decidem quem vence sem depender da especificidade: uma regra de uma camada
 posterior vence qualquer regra de uma camada anterior. Dentro da camada, vale a ordem dos arquivos.
 
-O tema escuro é escrito uma vez só, em tokens.css (:root[data-theme="dark"]). A montagem repete o
-bloco para quem não escolheu tema e usa o sistema no escuro (veja tema_do_sistema).
+Os temas do guia (Claro, Escuro e os que vierem) moram em tema.py: a camada tokens leva tokens.css (a base)
+e, depois dela, os blocos de cada tema; o <head> leva a cor da barra do navegador e o script que aplica o tema
+escolhido antes de a página aparecer. O build põe o botão do tema ({{TEMA_BOTAO}}) e a janela ({{JANELA_TEMA}}).
 
 O build preenche os marcadores {{PAGES}}, {{MENU}}, {{APPDATA}}, {{APPJS}}, {{SEARCH}} e os demais.
 """
 import pathlib
-import re
+
+import tema
 
 UI = pathlib.Path(__file__).parent / "ui"
 
@@ -27,7 +29,7 @@ CAMADAS = {
     "tokens": ["tokens"],                       # cores, fontes e medidas dos dois temas
     "base": ["base"],                           # elementos do HTML, foco, seleção, utilitários
     "conteudo": ["cabecalho", "prosa", "figuras", "tabelas", "blocos", "diagramas", "inicio"],
-    "componentes": ["icones", "perfil", "botoes", "busca"],
+    "componentes": ["icones", "perfil", "tema", "botoes", "busca"],
     "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist"],
     "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo"],
 }
@@ -37,22 +39,9 @@ def ler(nome):
     return (UI / nome).read_text(encoding="utf-8")
 
 
-ESCURO = re.compile(r'^:root\[data-theme="dark"\] \{\n(.*?)\n\}', re.S | re.M)
-
-
-def tema_do_sistema(texto):
-    """Põe, antes do bloco do tema escuro, a cópia dele para o sistema no escuro sem tema escolhido."""
-    m = ESCURO.search(texto)
-    if not m:
-        raise SystemExit('tokens.css: falta o bloco :root[data-theme="dark"] { ... }')
-    corpo = "\n".join("  " + linha for linha in m[1].split("\n"))
-    sistema = '@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n' + corpo + "\n  }\n}\n"
-    return texto[:m.start()] + sistema + texto[m.start():]
-
-
 def folha(camada, arquivo):
     texto = ler(f"css/{camada}/{arquivo}.css").rstrip()
-    return tema_do_sistema(texto) if (camada, arquivo) == ("tokens", "tokens") else texto
+    return texto + "\n" + tema.css() if (camada, arquivo) == ("tokens", "tokens") else texto
 
 
 def css():
@@ -64,8 +53,8 @@ def css():
 
 
 def montar():
-    rodape = (ler("perfil.html") +
+    rodape = (ler("perfil.html") + "{{JANELA_TEMA}}" +
               '\n<script type="application/json" id="app-data">{{APPDATA}}</script>\n<script>\n' + ler("componentes.js") + '{{APPJS}}\n</script>\n'
               '<script type="application/json" id="search-data">{{SEARCH}}</script>\n<script>\n' +
               ler("navegacao.js") + "</script>\n</body>\n</html>\n")
-    return ler("cabeca.html") + "\n<style>\n" + css() + "\n</style>\n</head>\n" + ler("corpo.html") + rodape
+    return ler("cabeca.html").replace("<!--TEMA-->\n", tema.cabeca()) + "\n<style>\n" + css() + "\n</style>\n</head>\n" + ler("corpo.html") + rodape

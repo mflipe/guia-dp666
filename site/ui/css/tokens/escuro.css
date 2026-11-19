@@ -1,0 +1,32 @@
+/* tema Escuro: só os tokens que mudam em relação ao Claro (tokens.css). O tema.py põe este bloco em
+   :root[data-theme="escuro"] e, para quem não escolheu tema, no aparelho em modo escuro. */
+:root {
+  --bg: #0e131d;
+  --grid: #161e2e;
+  --surface: #151c2a;
+  --surface-2: #1d2637;
+  --ink: #e6ebf3;
+  --text: #cdd5e1;
+  --muted: #9aa6b8;
+  --rule: #2b3548;
+  --tick: #4f5b70;
+  --accent: #f2b14c;
+  --accent-mark: #f2b14c;
+  --accent-ink: #1a1209;
+  --accent-soft: #2a2112;
+  --brass: #6e5532;
+  --trace: #24324e;
+  --eye: #4fd1a0;
+  --eye-dark: #0d2e25;
+  --eye-border: #2f8f72;
+  --eye-glow: rgb(79 209 160 / 0.35);
+  --knob: #0b0f17;
+  --scrim: rgb(6 9 14 / 0.9);
+  --ok: #6fcf97;
+  --warn: #ff9466;
+  --maybe: #c8d36a;
+  --danger: #ff8a80;
+  --note: #8fb4d9;
+  --shadow: 0 16px 40px rgb(0 0 0 / 0.55);
+  --stage: #a7b0bc;
+}

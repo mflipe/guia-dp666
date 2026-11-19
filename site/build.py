@@ -23,6 +23,7 @@ import appdata  # noqa: E402
 import layout  # noqa: E402
 import componentes  # noqa: E402
 import catalogo  # noqa: E402
+import tema  # noqa: E402
 from componentes import botao, item_menu, nota, selo  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
@@ -516,7 +517,8 @@ def build():
                    .replace("{{ICON_MAIS}}", icon("mais")) \
                    .replace("{{UPDATED}}", UPDATED) \
                    .replace("{{NPAGES}}", str(len(PAGES))) \
-                   .replace("{{NSOURCES}}", str(n_sources))
+                   .replace("{{NSOURCES}}", str(n_sources)) \
+                   .replace("{{TEMA_BOTAO}}", tema.botao(LANG, L)).replace("{{JANELA_TEMA}}", tema.janela(LANG, L))
     page = page.replace("<!--CONTA-->", "").replace("<!--/CONTA-->", "")
     if L["dir"]:
         page = page.replace('src="img/', 'src="../img/')  # as fotos ficam na raiz do site, uma pasta acima

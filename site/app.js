@@ -100,6 +100,39 @@
     else setProfile({ fw: b.dataset.fw, rtc: profile.rtc || "?" });
   });
 
+  // ---------------------------------------------------------------- tema do guia (tema.py)
+  // o botão fica no rodapé do menu e na tela de título; a escolha vale na hora. O script do <head> já aplicou a
+  // escolha guardada antes de a página aparecer, e é ele que troca o tema (window.dp666Tema).
+  var TKEY = "dp666.tema", temaDlg = $("#tema-dlg"), temaBtns = $$(".tema-btn"), temaNomes = {};
+  if (temaDlg) {
+    $$('input[name="tema"]', temaDlg).forEach(function (i) { temaNomes[i.value] = $("strong", i.parentNode).textContent; });
+    var temaAtual = function () { var t = store.get(TKEY, ""); return Object.prototype.hasOwnProperty.call(temaNomes, t) && t !== "auto" ? t : "auto"; };
+    var pintarTema = function () {
+      var nome = temaNomes[temaAtual()];
+      temaBtns.forEach(function (b) { b.setAttribute("aria-label", b.dataset.rotulo + ": " + nome); $(".tema-btn-t", b).textContent = nome; });
+    };
+    var aplicarTema = function (t) {
+      store.set(TKEY, t === "auto" ? "" : t);
+      if (window.dp666Tema) window.dp666Tema(t === "auto" ? "" : t);
+      pintarTema();
+    };
+    temaBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var t = temaAtual();
+        $$('input[name="tema"]', temaDlg).forEach(function (i) { i.checked = i.value === t; });
+        if (temaDlg.showModal) temaDlg.showModal(); else temaDlg.setAttribute("open", "");
+      });
+    });
+    temaDlg.addEventListener("change", function (e) { if (e.target.name === "tema") aplicarTema(e.target.value); });
+    // a escolha feita em outra aba vale nesta também
+    window.addEventListener("storage", function (e) {
+      if (e.key !== TKEY) return;
+      if (window.dp666Tema) window.dp666Tema(temaAtual() === "auto" ? "" : temaAtual());
+      pintarTema();
+    });
+    pintarTema();
+  }
+
   // ---------------------------------------------------------------- simulador de botões
   var VKEY = "dp666.botoes.vista";
   var HW_ORDER = ["volume", "sql", "chave", "fone", "falante", "usbc", "antena", "tela", "teclado", "power"];

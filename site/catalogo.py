@@ -1,10 +1,10 @@
 """Gera o catálogo de componentes (preview/catalogo.html).
 
 Cada componente de componentes.py aparece com os exemplos de componentes.exemplos(), no lugar onde ele fica no
-guia (a moldura do exemplo), duas vezes: no tema claro e no escuro. A página usa a mesma folha de estilos do
-guia; os dois temas vêm dos blocos de tokens.css, aplicados a cada metade (.tema-claro e .tema-escuro).
-Também lista as cores dos tokens nos dois temas. Os estilos do catálogo ficam numa camada abaixo das do guia, para
-não mexer nos componentes. É a página que testes/regressao-visual.mjs fotografa.
+guia (a moldura do exemplo), uma vez em cada tema do guia (tema.py), lado a lado. A página usa a mesma folha de
+estilos do guia; cada metade recebe os tokens inteiros do seu tema (.tema-<id>). Também mostra as cores dos
+tokens em cada tema e a janela de escolha do tema. Os estilos do catálogo ficam numa camada abaixo das do guia,
+para não mexer nos componentes. É a página que testes/regressao-visual.mjs fotografa.
 """
 import html
 import inspect
@@ -13,21 +13,12 @@ import pathlib
 import re
 
 import componentes
+import i18n
 import layout
+import tema
 
 UI = pathlib.Path(__file__).parent / "ui"
 COR = re.compile(r"#[0-9a-fA-F]{3,8}|rgba?\([^)]*\)")
-
-
-def tokens():
-    """Os dois blocos de tokens.css (claro e escuro), como texto, e os valores de cada um."""
-    t = (UI / "css" / "tokens" / "tokens.css").read_text(encoding="utf-8")
-    claro = re.search(r"^:root \{\n(.*?)\n\}", t, re.S | re.M)[1]
-    escuro = layout.ESCURO.search(t)[1]
-
-    def valores(bloco):
-        return dict(re.findall(r"(--[\w-]+)\s*:\s*([^;]+);", re.sub(r"/\*.*?\*/", "", bloco, flags=re.S)))
-    return claro, escuro, valores(claro), valores(escuro)
 
 
 def curto(v):
@@ -42,28 +33,24 @@ def curto(v):
 
 
 def par(conteudo):
-    """O mesmo conteúdo nos dois temas, lado a lado."""
-    return ('<div class="cat-par">'
-            f'<div class="cat-tema tema-claro" data-tema="Claro">{conteudo}</div>'
-            f'<div class="cat-tema tema-escuro" data-tema="Escuro">{conteudo}</div></div>')
+    """O mesmo conteúdo em cada tema, lado a lado."""
+    return ('<div class="cat-par">' + "".join(f'<div class="cat-tema tema-{t["id"]}" data-tema="{html.escape(t["nome"]["pt"])}">{conteudo}</div>'
+                                            for t in tema.TEMAS) + "</div>")
 
 
-def cores(claro, escuro):
-    def lista(tema):
-        linhas = []
-        for nome, v in claro.items():
-            if not COR.fullmatch(v.strip()):
-                continue
-            valor = (escuro.get(nome, v) if tema == "escuro" else v).strip()
-            linhas.append(f'<li><i style="background:var({nome})"></i><code>{nome}</code><span>{html.escape(valor)}</span></li>')
-        return '<ul class="cat-cores">' + "".join(linhas) + "</ul>"
-    return ('<div class="cat-par">'
-            f'<div class="cat-tema tema-claro" data-tema="Claro">{lista("claro")}</div>'
-            f'<div class="cat-tema tema-escuro" data-tema="Escuro">{lista("escuro")}</div></div>')
+def cores():
+    """Os tokens de cor, cada tema com os seus valores; a amostra usa o token de verdade, dentro do tema."""
+    nomes = [n for n, v in tema.valores(tema.BASE).items() if COR.fullmatch(v.strip())]
+    colunas = []
+    for t in tema.TEMAS:
+        v = tema.valores(t)
+        linhas = "".join(f'<li><i style="background:var({n})"></i><code>{n}</code><span>{html.escape(v[n].strip())}</span></li>' for n in nomes)
+        colunas.append(f'<div class="cat-tema tema-{t["id"]}" data-tema="{html.escape(t["nome"]["pt"])}"><ul class="cat-cores">{linhas}</ul></div>')
+    return '<div class="cat-par">' + "".join(colunas) + "</div>"
 
 
 def gerar(destino):
-    bloco_claro, bloco_escuro, claro, escuro = tokens()
+    L = i18n.UI["pt"]
     secoes, ordem = {}, []
     for nome, args, moldura, legenda in componentes.exemplos():
         if nome not in secoes:
@@ -78,8 +65,17 @@ def gerar(destino):
         doc = " ".join(inspect.getdoc(getattr(componentes, nome)).split())
         corpo.append(f'<section class="cat-sec" id="{nome}"><h2><code>{nome}</code></h2><p class="cat-desc">{html.escape(doc)}</p>'
                      + "".join(secoes[nome]) + "</section>")
+    escopos = "\n".join(f".tema-{t['id']} {{\n{tema.escopo(t)}\n}}" for t in tema.TEMAS)
+    # o botão no rodapé do menu e o conteúdo da janela, numa moldura do catálogo (a janela de verdade tem largura fixa)
+    janela = ('<div class="pausa-conta">' + tema.botao("pt", L) + "</div>"
+              f'<div class="cat-janela"><div class="profile-form"><h2>{html.escape(L["tema_rotulo"])}</h2>'
+              f'<p class="tema-nota">{html.escape(L["tema_nota"])}</p>' + tema.opcoes("pt", L) + "</div></div>")
+    corpo.append('<section class="cat-sec" id="tema"><h2>Tema do guia</h2><p class="cat-desc">O botão do tema, como fica no rodapé do menu, e as '
+                 'opções da janela que ele abre, com a amostra de cada tema. Os temas moram em <code>site/tema.py</code>; para criar '
+                 "um, acrescente a entrada lá e o arquivo com os tokens que mudam.</p>" + par(janela) + "</section>")
     fontes = "\n".join(l for l in layout.ler("cabeca.html").splitlines() if l.startswith(('<link rel="preconnect"', '<link rel="stylesheet"')))
-    indice = '<a href="#cores">cores</a>' + "".join(f'<a href="#{n}"><code>{n}</code></a>' for n in ordem)
+    indice = ('<a href="#cores">cores</a>' + "".join(f'<a href="#{n}"><code>{n}</code></a>' for n in ordem)
+              + '<a href="#tema">tema do guia</a>')
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -92,12 +88,7 @@ def gerar(destino):
 @layer catalogo;
 {layout.css()}
 @layer catalogo {{
-.tema-claro {{
-{bloco_claro}
-}}
-.tema-escuro {{
-{bloco_escuro}
-}}
+{escopos}
 {layout.ler("catalogo.css").rstrip()}
 }}
 </style>
@@ -107,13 +98,13 @@ def gerar(destino):
 <header class="cat-topo">
 <p class="cat-volta"><a href="./">DP-666: o guia definitivo</a></p>
 <h1>Catálogo de componentes</h1>
-<p class="cat-intro">Cada componente do guia, no lugar onde aparece nas páginas, no tema claro e no escuro. Os componentes ficam em
+<p class="cat-intro">Cada componente do guia, no lugar onde aparece nas páginas, em cada tema do guia. Os componentes ficam em
 <code>site/componentes.py</code> e <code>site/ui/componentes.js</code>, com os mesmos nomes e o mesmo HTML; o build confere os dois
 com estes exemplos antes de gerar o site.</p>
 <nav class="cat-indice" aria-label="Componentes">{indice}</nav>
 </header>
-<section class="cat-sec" id="cores"><h2>Cores</h2><p class="cat-desc">Os tokens de cor de <code>site/ui/css/tokens/tokens.css</code>. Os
-componentes usam só estes, nunca a cor direto; os que não mudam de um tema para o outro repetem o valor.</p>{cores(claro, escuro)}</section>
+<section class="cat-sec" id="cores"><h2>Cores</h2><p class="cat-desc">Os tokens de cor de <code>site/ui/css/tokens/</code>, em cada tema. Os
+componentes usam só estes, nunca a cor direto; os que um tema não muda repetem o valor da base.</p>{cores()}</section>
 {"".join(corpo)}
 </main>
 </body>
