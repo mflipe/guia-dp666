@@ -1,0 +1,74 @@
+/* DP-666: o guia definitivo. Experiência de menu de jogo, sem barra de navegação: o Início é a tela de título, com o
+   menu do guia inteiro, e o botão de sintonia chama o mesmo menu por cima de qualquer página.
+   Âmbar de válvula sobre o papel quadriculado do esquema; o anel verde, como o olho mágico, mostra quanto já foi lido. */
+:root {
+  --bg: #eef1f5;
+  --grid: #e0e5eb;
+  --grid-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 .5H24M.5 0V24' stroke='%23e0e5eb' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+  --surface: #ffffff;
+  --surface-2: #e5e9ef;
+  --ink: #0f141c;
+  --text: #253041;
+  --muted: #4b5668;
+  --rule: #c9d1dc;
+  --tick: #9aa6b8;
+  --accent: #8a5a00;
+  --accent-mark: #b87300;
+  --accent-ink: #ffffff;
+  --accent-soft: #f3e6cc;
+  --brass: #a68246;
+  --trace: #d3dae5;
+  --eye: #1e8a66;
+  --eye-dark: #cde8dd;
+  --eye-border: #1e8a66;
+  --eye-glow: rgb(30 138 102 / 0.25);
+  --knob: #121824;
+  --scrim: rgb(238 241 245 / 0.94);
+  --ok: #1f6f43;
+  --warn: #a3400e;
+  --maybe: #5d6b00;
+  --danger: #b42318;
+  --note: #3b5b7a;
+  --screen: #0b0d10;
+  --shadow: 0 16px 40px rgb(15 20 28 / 0.16);
+  --font-sans: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: "Tektur", "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  --wrap: 860px;
+  --top-h: 0px;
+  --topbar-h: 0px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e131d; --grid: #161e2e; --grid-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 .5H24M.5 0V24' stroke='%23161e2e' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    --surface: #151c2a; --surface-2: #1d2637; --ink: #e6ebf3; --text: #cdd5e1; --muted: #9aa6b8; --rule: #2b3548; --tick: #4f5b70;
+    --accent: #f2b14c; --accent-mark: #f2b14c; --accent-ink: #1a1209; --accent-soft: #2a2112;
+    --brass: #6e5532; --trace: #24324e;
+    --eye: #4fd1a0; --eye-dark: #0d2e25; --eye-border: #2f8f72; --eye-glow: rgb(79 209 160 / 0.35);
+    --knob: #0b0f17; --scrim: rgb(6 9 14 / 0.9);
+    --ok: #6fcf97; --warn: #ff9466; --maybe: #c8d36a; --danger: #ff8a80; --note: #8fb4d9;
+    --shadow: 0 16px 40px rgb(0 0 0 / 0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e131d; --grid: #161e2e; --grid-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 .5H24M.5 0V24' stroke='%23161e2e' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+  --surface: #151c2a; --surface-2: #1d2637; --ink: #e6ebf3; --text: #cdd5e1; --muted: #9aa6b8; --rule: #2b3548; --tick: #4f5b70;
+  --accent: #f2b14c; --accent-mark: #f2b14c; --accent-ink: #1a1209; --accent-soft: #2a2112;
+  --brass: #6e5532; --trace: #24324e;
+  --eye: #4fd1a0; --eye-dark: #0d2e25; --eye-border: #2f8f72; --eye-glow: rgb(79 209 160 / 0.35);
+  --knob: #0b0f17; --scrim: rgb(6 9 14 / 0.9);
+  --ok: #6fcf97; --warn: #ff9466; --maybe: #c8d36a; --danger: #ff8a80; --note: #8fb4d9;
+  --shadow: 0 16px 40px rgb(0 0 0 / 0.55);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+html.sem-rolagem { overflow: hidden; }
+body { margin: 0; background-color: var(--bg); background-image: var(--grid-img); background-size: 24px 24px; color: var(--text); font: 400 16.5px/1.65 var(--font-sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; border-radius: 3px; }
+::selection { background: var(--accent-soft); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

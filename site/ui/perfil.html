@@ -1,0 +1,20 @@
+<dialog class="profile-dlg" id="profile-dlg" aria-labelledby="profile-title">
+  <form method="dialog" class="profile-form">
+    <h2 id="profile-title">Seu rádio</h2>
+    <fieldset>
+      <legend>Firmware instalado</legend>
+      <label class="opt"><input type="radio" name="fw" value="mod17"><span><strong>Megatron Mod17</strong><small>A abertura mostra o logo da DEEPELEC e “Mod17”.</small></span></label>
+      <label class="opt"><input type="radio" name="fw" value="oficial"><span><strong>Linha oficial (PE5PVB)</strong><small>Menu em português, versão v2.20 ou mais nova.</small></span></label>
+    </fieldset>
+    <fieldset>
+      <legend>Relógio interno (RTC)</legend>
+      <div class="opt-row">
+        <label class="opt"><input type="radio" name="rtc" value="sim"><span>Tem</span></label>
+        <label class="opt"><input type="radio" name="rtc" value="nao"><span>Não tem</span></label>
+        <label class="opt"><input type="radio" name="rtc" value="?"><span>Não sei</span></label>
+        <a class="dlg-link" href="#hardware--teste-de-rtc" data-close>Como saber</a>
+      </div>
+    </fieldset>
+    <div class="dlg-actions"><button class="btn-ghost" value="cancel">Cancelar</button><button class="btn-solid" value="ok">Salvar</button></div>
+  </form>
+</dialog>

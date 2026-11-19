@@ -13,7 +13,7 @@ O guia funciona como o menu de um jogo, no celular, no tablet e no computador, n
 | `site/docs/` | O texto das páginas, em Markdown |
 | `site/docs/en/` | O texto das páginas em inglês, com os mesmos nomes de arquivo |
 | `site/i18n.py` e `site/i18n/` | A tradução do resto: textos da interface, catálogos português → inglês dos dados, dos diagramas e do JavaScript, e os nomes dos menus da linha oficial em inglês (`menuspec_en.py`, `didatica_en.py`) |
-| `site/` | O gerador. O `build.py` junta o texto, o `template.html`, o `app.js`, os dados dos menus (`menuspec.py`, `didatica.py`, `appdata.py`, `data.py`) e os diagramas (`diagrams.py`) num único `index.html` |
+| `site/` | O gerador. O `build.py` junta o texto, as peças do layout em `ui/` (montadas pelo `layout.py`), o `app.js`, os dados dos menus (`menuspec.py`, `didatica.py`, `appdata.py`, `data.py`) e os diagramas (`diagrams.py`) num único `index.html` |
 | `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |
 | `scripts/publicar.sh` | Gera o site e publica no GitHub Pages |
 
@@ -49,7 +49,7 @@ A versão em inglês usa as mesmas rotas e os mesmos ids de ajuste da versão em
 
 ## Licença
 
-- **Conteúdo:** os textos do guia, onde quer que estejam no repositório (o Markdown de `site/docs/`, as explicações e os dados em Python e os textos do `site/template.html`), os diagramas, as fotos do rádio (`site/img/`) e o site gerado estão sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br), no arquivo [`LICENSE`](LICENSE). Pode copiar, adaptar e usar, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças.
+- **Conteúdo:** os textos do guia, onde quer que estejam no repositório (o Markdown de `site/docs/`, as explicações e os dados em Python e os textos das peças em `site/ui/`), os diagramas, as fotos do rádio (`site/img/`) e o site gerado estão sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br), no arquivo [`LICENSE`](LICENSE). Pode copiar, adaptar e usar, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças.
 - **Código:** a programação (Python, JavaScript, CSS e scripts, incluindo os visualizadores 3D) está sob a licença MIT, no arquivo [`LICENSE-CODE`](LICENSE-CODE).
 
 ## Como citar

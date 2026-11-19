@@ -1,0 +1,47 @@
+<body>
+<div class="fundo" aria-hidden="true"><svg class="f-esq" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="tr" d="M8 30 V970"></path><path class="pu" pathLength="1000" d="M8 30 V970"></path></svg><svg class="f-dir" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="tr" d="M8 30 V970"></path><path class="pu" pathLength="1000" d="M8 970 V30"></path></svg></div>
+<div class="app" id="app">
+  <div class="main">
+    <main id="main">{{PAGES}}</main>
+    <footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de {{UPDATED}} · {{NPAGES}} páginas · {{NSOURCES}} fontes citadas.</p>
+    </footer>
+  </div>
+</div>
+<nav class="mapa" id="mapa" aria-label="Mapa da página" hidden></nav>
+<div class="cartao" id="cartao" aria-hidden="true"><span class="cartao-t"></span><span class="cartao-n"></span></div>
+<button class="sintonia" id="sintonia" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir o menu" data-abrir="Abrir o menu" data-rotulo="Menu" data-fechar="Voltar à leitura"><span class="sin-rot">Menu</span><span class="sin-anel" aria-hidden="true"><svg class="sin-knob" viewBox="0 0 46 46"><circle class="sk-disco" cx="23" cy="23" r="22.5"></circle><path class="sk-ponteiro" d="M23 23 V6"></path><circle class="sk-eixo" cx="23" cy="23" r="3"></circle></svg></span></button>
+<div class="pausa" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="pausa-fundo" data-fechar></div>
+  <div class="pausa-folha">
+    <span class="pausa-alca" aria-hidden="true"></span>
+    <div class="pausa-topo">
+      <div class="search" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <label for="q" class="sr-only">Buscar no guia</label>
+        <input id="q" type="search" placeholder="Buscar no guia" autocomplete="off" spellcheck="false" aria-controls="results" aria-expanded="false">
+      </div>
+      <button class="pausa-x" type="button" data-fechar aria-label="Fechar o menu"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4 L14 14 M14 4 L4 14"></path></svg></button>
+    </div>
+    <div class="pausa-corpo">
+      <div class="results" id="results" role="listbox" aria-label="Resultados da busca" hidden></div>
+      <nav class="pausa-menu" aria-label="Menu do guia">
+        <ul class="mi-lista"><li class="mi-item mi-lendo foco"><button class="mi" type="button" data-fechar><span class="mi-nome">Continuar lendo</span></button><p class="mi-desc" id="lendo-desc"></p></li></ul>
+        <section class="pausa-secoes" id="pausa-secoes" aria-labelledby="secoes-titulo">
+          <h2 class="mi-grupo" id="secoes-titulo">Nesta página</h2>
+          <ol class="mi-lista sec-lista" id="sec-lista"></ol>
+          <button class="sec-mais" id="sec-mais" type="button" hidden></button>
+        </section>
+        {{MENU}}
+        <div class="pausa-pe">
+          <div class="pausa-conta"><!--CONTA--><button class="profile-chip" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button><div class="lang" role="group" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></div><!--/CONTA--></div>
+          <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+          <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -20,6 +20,7 @@ from markdown.extensions.toc import slugify_unicode
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import appdata  # noqa: E402
+import layout  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
 import i18n  # noqa: E402
@@ -568,7 +569,8 @@ def use_lang(lang):
     MISSING.clear()
 
 
-TEMPLATE = (ROOT / "template.html").read_text(encoding="utf-8")
+# o modelo da página é montado das peças em ui/ (veja layout.py)
+TEMPLATE = layout.montar()
 
 if __name__ == "__main__":
     shutil.copytree(ROOT / "img", ROOT / "preview" / "img", dirs_exist_ok=True)

@@ -1,7 +1,7 @@
 """Textos de interface do gerador, em português (pt) e inglês (en).
 
 O conteúdo das páginas fica em docs/ (português) e docs/en/ (inglês). Aqui ficam os rótulos que o
-build.py e o appdata.py montam por conta própria, as trocas de texto do template.html na versão em
+build.py e o appdata.py montam por conta própria, as trocas de texto do modelo da página (as peças em ui/) na versão em
 inglês e o catálogo dos textos do JavaScript (i18n/js_en.json).
 """
 import json
@@ -268,7 +268,7 @@ UI = {
     },
 }
 
-# Trocas no template.html para a versão em inglês: (trecho em português, trecho em inglês).
+# Trocas no modelo da página (peças em ui/) para a versão em inglês: (trecho em português, trecho em inglês).
 # O build confere que cada trecho aparece no template; se o template mudar, ele avisa em vez de deixar português.
 TEMPLATE_EN = [
     ('<html lang="pt-BR">', '<html lang="en">'),
