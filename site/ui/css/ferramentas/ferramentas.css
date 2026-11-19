@@ -1,30 +1,17 @@
+/* ferramentas: o encaixe no texto, a lista e os cartões */
 .tool-fallback { color: var(--muted); }
 /* ferramentas dentro das páginas de texto: o texto fecha, a ferramenta entra, o texto continua */
 .tool-embed { margin: 6px 0 36px; }
 .prose .tool-lead { margin-top: -4px; color: var(--muted); }
-.tool-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px; }
-.tool-search { width: 100%; height: 42px; font: inherit; padding: 0 14px; border-radius: 10px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); }
-.tool-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.tool-card { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--bg); color: var(--ink); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
-.tool-card:hover { border-color: var(--accent); transform: translateY(-1px); }
-.tool-card strong { font-size: 0.98rem; }
+.tool-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0 32px; margin-bottom: 20px; border-bottom: 1px solid var(--rule); }
+.tool-search { width: 100%; height: 42px; font: inherit; padding: 0 14px; color: var(--ink); font-size: 0.95rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+.tool-card:hover { border-color: var(--accent); transform: none; }
+.tool-card strong { font: 600 1.02rem var(--font-display); letter-spacing: 0.01em; }
 .tool-card span { font-size: 0.84rem; line-height: 1.45; color: var(--muted); }
-@media (max-width: 900px) {
-  .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 560px) {
-  .tool-grid { gap: 10px; }
-  .tool-card { padding: 14px; }
-}
-.tool-search { border: 0; background: var(--surface); }
 .tool-search:focus { outline: 2px solid var(--accent); outline-offset: 0; }
-/* abas planas no lugar das pílulas */
-.tool-bar { gap: 0 32px; margin-bottom: 20px; border-bottom: 1px solid var(--rule); }
-.tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-.tool-card { display: grid; grid-template-columns: 26px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-items: start; padding: 14px 0; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: none; transition: none; }
-.tool-card:hover { transform: none; }
+.tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.tool-card { flex-direction: column; gap: 6px; color: var(--ink); text-decoration: none; display: grid; grid-template-columns: 26px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-items: start; padding: 14px 0; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: none; transition: none; }
 .tool-card:hover strong { color: var(--accent); }
-.tool-search { font-size: 0.95rem; }
 @media (max-width: 900px) {
   .tool-grid, .tiles { grid-template-columns: minmax(0, 1fr); }
 }
@@ -32,8 +19,6 @@
   .tool-bar { gap: 0; border-bottom: 0; }
 }
 .aj-bar .tool-search { height: 44px; }
-.tool-search { border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
-.tool-card strong { font: 600 1.02rem var(--font-display); letter-spacing: 0.01em; }
 @media (hover: hover) {
   .tool-card:hover strong, .tool-card:hover .ico { color: var(--accent); }
 }

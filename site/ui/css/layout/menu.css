@@ -1,3 +1,4 @@
+/* menu do guia: itens com o cursor, grupos de seções e o menu de pausa */
 html.sem-rolagem { overflow: hidden; }
 @keyframes cursor { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
 /* itens de menu: o cursor âmbar marca o item em foco, como num jogo */
@@ -28,12 +29,13 @@ html.sem-rolagem { overflow: hidden; }
 .sec-mais { display: flex; align-items: center; min-height: 40px; padding: 0 12px 0 64px; border: 0; background: none; color: var(--muted); font: 500 0.88rem var(--font-sans); cursor: pointer; }
 .sec-mais[hidden] { display: none; }
 @media (min-width: 760px) {
-  .tt-menu .mi-desc { display: none !important; }
+  /* na tela de título larga, o item em foco não abre a descrição */
+  .tt-menu .mi-item.foco > .mi-desc, .tt-menu .mi-lendo > .mi-desc { display: none; }
 }
 /* o menu sobre a página, como a pausa de um jogo: no celular sobe do rodapé; na tela grande cobre a página */
 .pausa { position: fixed; inset: 0; z-index: 70; }
 .pausa[hidden] { display: none; }
-.pausa-fundo { position: absolute; inset: 0; background: rgb(5 8 13 / 0.45); opacity: 0; transition: opacity 0.3s ease; }
+.pausa-fundo { position: absolute; inset: 0; background: var(--veil-pause); opacity: 0; transition: opacity 0.3s ease; }
 .pausa.aberta .pausa-fundo { opacity: 1; }
 .pausa-folha { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; display: flex; flex-direction: column; border-radius: 18px 18px 0 0; background-color: var(--bg); background-image: var(--grid-img); background-size: 24px 24px; box-shadow: 0 -1px 0 var(--brass), 0 -14px 36px rgb(0 0 0 / 0.4); transform: translateY(calc(100% + 24px)); transition: transform 0.36s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .pausa.aberta .pausa-folha { transform: none; }
@@ -57,7 +59,7 @@ html.sem-rolagem { overflow: hidden; }
   .pausa-menu > * { grid-column: 1; }
   .pausa-secoes { grid-column: 2; grid-row: 1 / span 40; max-width: 460px; }
   .pausa-secoes .mi-grupo { padding-top: 12px; }
-  .sec-mais { display: none !important; }
+  .sec-mais { display: none; }
 }
 @media (min-width: 760px) and (max-width: 1279px) {
   .pausa-topo { padding-left: 0; padding-right: 0; }

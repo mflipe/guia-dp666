@@ -1,10 +1,7 @@
 /* tabelas: só linhas horizontais */
-.table-wrap { overflow-x: auto; margin: 4px 0 22px; }
+.table-wrap { overflow-x: auto; margin: 4px 0 22px; padding: 0 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
 table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
-th { text-align: left; padding: 0 16px 8px 0; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { text-align: left; padding: 0 16px 8px 0; color: var(--muted); border-bottom: 1px solid var(--rule); white-space: nowrap; padding-top: 12px; font: 600 0.8rem var(--font-display); letter-spacing: 0.03em; text-transform: none; }
 td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 td code { white-space: nowrap; }
-/* painéis */
-.table-wrap { padding: 0 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; }
-th { padding-top: 12px; font: 600 0.8rem var(--font-display); letter-spacing: 0.03em; text-transform: none; }
 tbody tr:last-child td { border-bottom: 0; }

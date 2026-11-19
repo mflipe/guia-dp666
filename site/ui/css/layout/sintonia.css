@@ -1,13 +1,13 @@
 /* o botão de sintonia: o único controle fixo. Abre o menu; o anel verde mostra quanto da página foi lido */
-.sintonia { position: fixed; z-index: 60; right: 16px; bottom: 18px; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 0 0 18px; border: 0; border-radius: 28px; background: var(--knob); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 8px 24px rgb(0 0 0 / 0.4); color: #e6ebf3; cursor: pointer; -webkit-tap-highlight-color: transparent;
-transition: padding 0.25s ease, gap 0.25s ease, background-color 0.25s ease, opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.sintonia { position: fixed; z-index: 60; right: 16px; bottom: 18px; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 0 0 18px; border: 0; border-radius: 28px; background: var(--knob); box-shadow: inset 0 0 0 1px var(--hud-edge), var(--hud-shadow); color: var(--hud-ink); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: padding 0.25s ease, gap 0.25s ease, background-color 0.25s ease, opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .sin-rot { display: block; overflow: hidden; max-width: 170px; font: 600 15px var(--font-display); letter-spacing: 0.02em; white-space: nowrap; transition: max-width 0.25s ease, opacity 0.2s ease; }
 .sin-anel { width: 56px; height: 56px; flex: none; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--eye) calc(var(--p, 0) * 1turn), var(--eye-dark) 0); box-shadow: 0 0 0 1px var(--eye-border), 0 0 14px var(--eye-glow); }
 .sin-knob { display: block; width: 46px; height: 46px; }
 .sk-disco { fill: var(--knob); stroke: var(--brass); }
-.sk-ponteiro { fill: none; stroke: #f2b14c; stroke-width: 2.2; stroke-linecap: round; transform-origin: 23px 23px; transform: rotate(calc(-135deg + var(--p, 0) * 270deg)); transition: transform 0.2s ease; }
-.sk-eixo { fill: #c9a66b; }
-.sintonia.compacto { gap: 0; padding-left: 0; border-radius: 50%; background: transparent; box-shadow: 0 8px 24px rgb(0 0 0 / 0.4); }
+.sk-ponteiro { fill: none; stroke: var(--hud-pointer); stroke-width: 2.2; stroke-linecap: round; transform-origin: 23px 23px; transform: rotate(calc(-135deg + var(--p, 0) * 270deg)); transition: transform 0.2s ease; }
+.sk-eixo { fill: var(--hud-axis); }
+.sintonia.compacto { gap: 0; padding-left: 0; border-radius: 50%; background: transparent; box-shadow: var(--hud-shadow); }
 .sintonia.compacto .sin-rot { max-width: 0; opacity: 0; }
 .sintonia:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 3px; }
 body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; transform: translateY(16px); pointer-events: none; }

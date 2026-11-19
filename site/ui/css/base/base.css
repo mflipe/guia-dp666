@@ -1,3 +1,4 @@
+/* base: caixa, rolagem, corpo da página, links, foco, seleção e utilitários */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body { margin: 0; background-color: var(--bg); background-image: var(--grid-img); background-size: 24px 24px; color: var(--text); font: 400 16.5px/1.65 var(--font-sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }

@@ -1,9 +1,10 @@
+/* tela de título: a busca, o nome do guia, o menu e o item em foco */
 .tt-topo { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 6px; }
 .tt-busca { width: 44px; height: 44px; flex: none; display: inline-grid; place-items: center; padding: 0; border: 0; border-radius: 8px; background: none; color: var(--text); cursor: pointer; }
 .tt-busca svg, .search svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
 .tt-grade { display: grid; gap: 6px 48px; }
 .tt-nome { text-align: center; }
-#page-inicio .page-head .tt-h1 { margin: 4px 0 0; display: grid; gap: 8px; font: 700 clamp(2.6rem, 10vw, 4.5rem)/1 var(--font-display); letter-spacing: 0.08em; color: var(--ink); text-shadow: 0 0 22px rgb(242 177 76 / 0.25); }
+#page-inicio .page-head .tt-h1 { margin: 4px 0 0; display: grid; gap: 8px; font: 700 clamp(2.6rem, 10vw, 4.5rem)/1 var(--font-display); letter-spacing: 0.08em; color: var(--ink); text-shadow: 0 0 22px var(--glow-amber-soft); }
 .tt-sub { font: 600 clamp(1.1rem, 4.2vw, 1.45rem)/1.2 var(--font-display); letter-spacing: 0.03em; color: var(--text); text-shadow: none; }
 .tt-nome .lead { margin: 12px auto 0; max-width: 46ch; font-size: 0.95rem; color: var(--muted); }
 .tt-menu { margin: 14px -12px 0; }

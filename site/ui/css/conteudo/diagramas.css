@@ -1,3 +1,4 @@
+/* diagramas em SVG: versões larga e estreita, traços, rótulos, faixas de FM e a tela do rádio */
 .figure svg.d-narrow { display: none; min-width: 0; }
 @media (max-width: 640px) {
   .figure svg.d-wide { display: none; }
@@ -26,11 +27,11 @@
 .d-band-rc { fill: var(--muted); opacity: 0.7; }
 .d-band-lbl { font: 600 12px var(--font-sans); fill: var(--accent); }
 .d-screen { fill: var(--screen); }
-.d-scr-title { font: 600 15px var(--font-sans); fill: #f2f4f7; }
-.d-scr-text { font: 400 11px var(--font-sans); fill: #c9ced6; }
-.d-scr-err { font: 600 15px var(--font-sans); fill: #ff5a52; }
-.d-scr-dim { font: 400 11px var(--font-sans); fill: #6b737e; }
-.d-scr-logo { fill: none; stroke: #3a414b; stroke-dasharray: 3 3; }
-.d-mk1 { fill: #f5c542; }
-.d-mk2 { fill: #ff5a52; }
-.d-mk3 { fill: #3a414b; }
+.d-scr-title { font: 600 15px var(--font-sans); fill: var(--screen-title); }
+.d-scr-text { font: 400 11px var(--font-sans); fill: var(--screen-text); }
+.d-scr-err { font: 600 15px var(--font-sans); fill: var(--screen-red); }
+.d-scr-dim { font: 400 11px var(--font-sans); fill: var(--screen-dim); }
+.d-scr-logo { fill: none; stroke: var(--screen-off); stroke-dasharray: 3 3; }
+.d-mk1 { fill: var(--screen-yellow); }
+.d-mk2 { fill: var(--screen-red); }
+.d-mk3 { fill: var(--screen-off); }

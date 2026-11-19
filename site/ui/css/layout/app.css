@@ -1,6 +1,4 @@
-@media (max-width: 900px) {
-  .main { padding: 20px 16px 24px; }
-}
+/* moldura: o fundo animado, a coluna de leitura, o rodapé e o movimento reduzido */
 @keyframes pulso { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
 /* fundo: trilhas de circuito nas bordas da tela, com pulsos âmbar */
 .fundo { position: fixed; inset: 0; z-index: -1; pointer-events: none; }

@@ -10,9 +10,13 @@ Peças:
 As camadas (@layer) decidem quem vence sem depender da especificidade: uma regra de uma camada
 posterior vence qualquer regra de uma camada anterior. Dentro da camada, vale a ordem dos arquivos.
 
+O tema escuro é escrito uma vez só, em tokens.css (:root[data-theme="dark"]). A montagem repete o
+bloco para quem não escolheu tema e usa o sistema no escuro (veja tema_do_sistema).
+
 O build preenche os marcadores {{PAGES}}, {{MENU}}, {{APPDATA}}, {{APPJS}}, {{SEARCH}} e os demais.
 """
 import pathlib
+import re
 
 UI = pathlib.Path(__file__).parent / "ui"
 
@@ -31,10 +35,28 @@ def ler(nome):
     return (UI / nome).read_text(encoding="utf-8")
 
 
+ESCURO = re.compile(r'^:root\[data-theme="dark"\] \{\n(.*?)\n\}', re.S | re.M)
+
+
+def tema_do_sistema(texto):
+    """Põe, antes do bloco do tema escuro, a cópia dele para o sistema no escuro sem tema escolhido."""
+    m = ESCURO.search(texto)
+    if not m:
+        raise SystemExit('tokens.css: falta o bloco :root[data-theme="dark"] { ... }')
+    corpo = "\n".join("  " + linha for linha in m[1].split("\n"))
+    sistema = '@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n' + corpo + "\n  }\n}\n"
+    return texto[:m.start()] + sistema + texto[m.start():]
+
+
+def folha(camada, arquivo):
+    texto = ler(f"css/{camada}/{arquivo}.css").rstrip()
+    return tema_do_sistema(texto) if (camada, arquivo) == ("tokens", "tokens") else texto
+
+
 def css():
     partes = ["@layer " + ", ".join(CAMADAS) + ";"]
     for camada, arquivos in CAMADAS.items():
-        corpo = "\n".join(f"/* ---------- {camada}/{a}.css ---------- */\n" + ler(f"css/{camada}/{a}.css").rstrip() for a in arquivos)
+        corpo = "\n".join(f"/* ---------- {camada}/{a}.css ---------- */\n" + folha(camada, a) for a in arquivos)
         partes.append(f"@layer {camada} {{\n{corpo}\n}}")
     return "\n".join(partes)
 
