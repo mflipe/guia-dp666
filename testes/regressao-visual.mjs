@@ -87,7 +87,8 @@ try {
     p.on('request', (r) => (r.url().startsWith('http://127.0.0.1:') ? r.continue() : r.abort()));
     await p.goto(url, { waitUntil: 'load' });
     await p.evaluate(() => document.fonts.ready);
-    const ids = await p.$$eval('.cat-sec', (ss) => ss.map((e) => e.id));
+    // data-telas="pc" numa seção: ela só é fotografada nessas telas (a dos temas do rádio, longa demais no celular)
+    const ids = await p.$$eval('.cat-sec', (ss, t) => ss.filter((e) => !e.dataset.telas || e.dataset.telas.split(' ').includes(t)).map((e) => e.id), tela);
     for (const id of ids) {
       // cada seção sozinha no alto da página: a foto não depende do que vem antes dela
       await p.evaluate((i) => {

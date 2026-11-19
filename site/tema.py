@@ -1,5 +1,7 @@
 """Temas do guia: as cores que a pessoa escolhe no botão de tema (Automático, Claro, Escuro…).
 
+Os temas do firmware entram sozinhos (temas_radio.py): cada um vira um tema do guia, com as cores do rádio.
+
 Para criar um tema:
   1. acrescente uma entrada em TEMAS: id, nome em cada idioma, esquema ("light" ou "dark", para os controles do
      navegador) e, se quiser partir de outro tema em vez da base, "base" com o id dele;
@@ -15,16 +17,18 @@ import json
 import pathlib
 import re
 
+import temas_radio
 from componentes import botao as _botao, paleta
 
 TOKENS = pathlib.Path(__file__).parent / "ui" / "css" / "tokens"
 CHAVE = "dp666.tema"   # onde o navegador guarda a escolha, em JSON, como o store do app.js
 
-# o primeiro é a base: os tokens dele são os de tokens.css
+# o primeiro é a base: os tokens dele são os de tokens.css. grupo: "guia" (os temas do guia) ou "radio" (os
+# temas do firmware, que temas_radio.py transforma em temas do guia: não têm arquivo, as cores saem de temas.json)
 TEMAS = [
-    {"id": "claro", "nome": {"pt": "Claro", "en": "Light"}, "esquema": "light"},
-    {"id": "escuro", "nome": {"pt": "Escuro", "en": "Dark"}, "esquema": "dark"},
-]
+    {"id": "claro", "nome": {"pt": "Claro", "en": "Light"}, "esquema": "light", "grupo": "guia"},
+    {"id": "escuro", "nome": {"pt": "Escuro", "en": "Dark"}, "esquema": "dark", "grupo": "guia"},
+] + temas_radio.temas()
 # o tema que o modo Automático usa com o aparelho no claro e no escuro
 AUTOMATICO = {"light": "claro", "dark": "escuro"}
 
@@ -46,7 +50,8 @@ def mudancas(t):
     if t is BASE:
         return []
     pai = POR_ID.get(t.get("base"))
-    return (mudancas(pai) if pai else []) + _tokens(f"{t['id']}.css")
+    proprias = temas_radio.mudancas(t["radio"]) if t.get("radio") else _tokens(f"{t['id']}.css")
+    return (mudancas(pai) if pai else []) + proprias
 
 
 def valores(t):
@@ -130,14 +135,22 @@ def amostra(t):
 
 
 def opcoes(lang, L):
-    """As opções da janela: o Automático (com as amostras dos dois temas que ele usa) e cada tema."""
-    def opcao(valor, desenho, nome, desc=""):
-        return (f'<label class="opt opt-tema"><input type="radio" name="tema" value="{valor}">{desenho}'
+    """As opções da janela: o Automático (com as amostras dos dois temas que ele usa), os temas do guia e, num
+    grupo à parte, os temas do rádio."""
+    def opcao(valor, desenho, nome, desc="", classe="opt opt-tema"):
+        return (f'<label class="{classe}"><input type="radio" name="tema" value="{valor}">{desenho}'
                 f'<span><strong>{html.escape(nome)}</strong>' + (f"<small>{html.escape(desc)}</small>" if desc else "") + "</span></label>")
     auto = '<span class="tema-par">' + "".join(amostra(POR_ID[i]) for i in AUTOMATICO.values()) + "</span>"
-    return (f'<fieldset class="tema-lista"><legend class="sr-only">{html.escape(L["tema_rotulo"])}</legend>'
-            + opcao("auto", auto, L["tema_auto"], L["tema_auto_desc"])
-            + "".join(opcao(t["id"], amostra(t), t["nome"][lang]) for t in TEMAS) + "</fieldset>")
+    guia = [t for t in TEMAS if t.get("grupo") != "radio"]
+    radio = [t for t in TEMAS if t.get("grupo") == "radio"]
+    out = (f'<fieldset class="tema-lista"><legend class="sr-only">{html.escape(L["tema_rotulo"])}</legend>'
+           + opcao("auto", auto, L["tema_auto"], L["tema_auto_desc"])
+           + "".join(opcao(t["id"], amostra(t), t["nome"][lang]) for t in guia) + "</fieldset>")
+    if radio:
+        out += (f'<fieldset class="tema-lista tema-radio"><legend>{html.escape(L["tema_radio"])}</legend>'
+                f'<p class="tema-nota">{html.escape(L["tema_radio_nota"])}</p><div class="tema-grade">'
+                + "".join(opcao(t["id"], amostra(t), t["nome"][lang], classe="opt opt-tema opt-curta") for t in radio) + "</div></fieldset>")
+    return out
 
 
 def janela(lang, L):

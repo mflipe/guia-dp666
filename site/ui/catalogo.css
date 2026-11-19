@@ -28,3 +28,6 @@
 .cat-cores span { font: 0.74rem var(--font-mono); color: var(--muted); text-align: right; }
 /* a janela do tema aberta, numa moldura com o visual da janela, que cabe no painel */
 .cat-janela { margin-top: 16px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); }
+/* amostra de cada tema do rádio */
+.cat-tema .cat-texto { margin: 12px 0; line-height: 1.55; }
+.cat-tema .admonition { margin: 12px 0; }

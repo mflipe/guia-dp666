@@ -14,3 +14,13 @@
 .opt-tema .aj-sw i { width: 11px; height: 6px; }
 .opt-tema .aj-sw i + i { width: 6px; }
 .tema-par { display: inline-flex; flex: none; gap: 4px; }
+/* temas do rádio: uma grade de opções curtas, com a amostra e o nome */
+.tema-radio { margin-top: 4px; }
+.tema-radio .tema-nota { margin: 0; }
+.tema-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.opt-curta { position: relative; padding: 8px; gap: 6px; align-items: center; }
+.opt-curta strong { font-size: 0.9rem; font-weight: 600; }
+/* nas opções curtas a marca é a própria opção (borda e fundo do destaque): o círculo sai da vista, mas continua lá
+   para o teclado e para o leitor de tela */
+.opt-curta input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.opt-curta:has(input:focus-visible) { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
