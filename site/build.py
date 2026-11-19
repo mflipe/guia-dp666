@@ -21,6 +21,8 @@ from markdown.extensions.toc import slugify_unicode
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import appdata  # noqa: E402
 import layout  # noqa: E402
+import componentes  # noqa: E402
+from componentes import botao, item_menu, nota, selo  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
 import i18n  # noqa: E402
@@ -121,7 +123,7 @@ def esc(t):
 def components_html():
     cards = []
     for c in data.COMPONENTS:
-        st = "".join(f'<span class="tag tag-{tone}">{esc(t)}</span>' for t, tone in c["status"])
+        st = "".join(selo(esc(t), {"tom": tone}) for t, tone in c["status"])
         links = "".join(f'<li><a href="{esc(u)}" target="_blank" rel="noopener noreferrer">{esc(l)}</a></li>' for l, u in c["links"])
         ref = f'<span class="card-ref">{esc(c["ref"])}</span>' if c["ref"] != "—" else ""
         cards.append(
@@ -150,9 +152,9 @@ def viewer3d_html():
     size_kb = round(js.stat().st_size / 1024)
     return (
         '<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui">'
-        f'<button type="button" class="v3-open" data-viewer3d-open>{esc(L["v3_open"])}</button>'
-        f'<p class="v3-note">{esc(L["v3_note"].format(kb=size_kb))}</p>'
-        "</div></div></div>"
+        + botao(esc(L["v3_open"]), {"classe": "v3-open", "attrs": {"data-viewer3d-open": True}})
+        + nota(esc(L["v3_note"].format(kb=size_kb)), {"classe": "v3-note"})
+        + "</div></div></div>"
         f"<figcaption>{esc(L['v3_caption'])}</figcaption></figure>"
     )
 
@@ -164,9 +166,9 @@ def fotos3d_html():
     kb = js.stat().st_size + sum(p.stat().st_size for p in (ROOT / "img").glob("dp666-3d-*.webp") if p.stem != "dp666-3d-capa")
     return (
         '<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui">'
-        f'<button type="button" class="v3-open" data-viewer3d-open="fotos">{esc(L["f3_open"])}</button>'
-        f'<p class="v3-note">{esc(L["f3_note"].format(kb=round(kb / 1024)))}</p>'
-        "</div></div></div>"
+        + botao(esc(L["f3_open"]), {"classe": "v3-open", "attrs": {"data-viewer3d-open": "fotos"}})
+        + nota(esc(L["f3_note"].format(kb=round(kb / 1024))), {"classe": "v3-note"})
+        + "</div></div></div>"
         f"<figcaption>{esc(L['f3_caption'])}</figcaption></figure>"
     )
 
@@ -233,8 +235,8 @@ def home_radio():
     """O rádio montado com as fotos, no alto do Início: uma imagem que vira o 3D quando a pessoa toca."""
     return ('<div class="home-radio viewer3d"><div class="v3-stage f3-stage f3-home">'
             f'<img class="f3-capa" src="img/dp666-3d-capa.webp" width="{CAPA[0]}" height="{CAPA[1]}" alt="{esc(L["f3_capa_alt"])}">'
-            f'<button type="button" class="v3-open f3-girar" data-viewer3d-open="fotos-home">{esc(L["f3_girar"])}</button>'
-            '</div></div>')
+            + botao(esc(L["f3_girar"]), {"classe": "v3-open f3-girar", "attrs": {"data-viewer3d-open": "fotos-home"}})
+            + '</div></div>')
 
 
 # ---------------------------------------------------------------- menu de jogo
@@ -246,12 +248,12 @@ def menu_html(titulo):
     Início fica de fora (é ela mesma) e entra o Continuar; no menu chamado de dentro das páginas, o Início volta."""
     out = []
     if titulo:
-        out.append(f'<ul class="mi-lista"><li class="mi-item mi-continuar" hidden><a class="mi" href="#inicio">'
-                   f'<span class="mi-nome">{esc(L["continue"])}</span><span class="mi-sub"></span></a><p class="mi-desc"></p></li></ul>')
+        out.append('<ul class="mi-lista">' + item_menu("#inicio", esc(L["continue"]), {
+            "classe": "mi-continuar", "li": {"hidden": True}, "depois": '<span class="mi-sub"></span>', "desc": ""}) + "</ul>")
     for group, items in NAV:
         lis = "".join(
-            f'<li class="mi-item" data-route="{r}"><a class="mi" href="#{r}"><span class="mi-nome">{h1_text(t)}</span>'
-            f'<span class="mi-aqui">{esc(L["here"])}</span></a><p class="mi-desc">{esc(L["desc"][r])}</p></li>'
+            item_menu(f"#{r}", h1_text(t), {"li": {"data-route": r}, "depois": f'<span class="mi-aqui">{esc(L["here"])}</span>',
+                                            "desc": esc(L["desc"][r])})
             for _, r, t in items if not (titulo and r == "inicio"))
         if lis:
             out.append(f'<h2 class="mi-grupo">{esc(group)}</h2><ul class="mi-lista">{lis}</ul>')
@@ -573,6 +575,7 @@ def use_lang(lang):
 TEMPLATE = layout.montar()
 
 if __name__ == "__main__":
+    componentes.conferir()   # os componentes dão o mesmo HTML em Python e em JavaScript
     shutil.copytree(ROOT / "img", ROOT / "preview" / "img", dirs_exist_ok=True)
     for lang in (sys.argv[1:] or i18n.LANGS):
         use_lang(lang)

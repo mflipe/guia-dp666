@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  var C = Componentes;   // os componentes de ui/componentes.js (par de componentes.py)
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var comMouse = window.matchMedia && window.matchMedia("(hover: hover)").matches;
   var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
@@ -189,8 +190,8 @@
     else for (i = 0; i < n; i++) idx.push(i);
     secLista.innerHTML = idx.map(function (k) {
       var s = secs[k], at = k === secAtual;
-      return '<li class="mi-item' + (at ? " atual" : "") + '"><a class="mi" href="#' + esc(s.id) + '"' + (at ? ' aria-current="location"' : "") +
-        '><span class="sec-n">' + (k + 1) + '</span><span class="mi-nome">' + esc(s.t) + "</span></a></li>";
+      return C.item_menu("#" + s.id, esc(s.t), { classe: at ? "atual" : "", a: { "aria-current": at ? "location" : null },
+        antes: '<span class="sec-n">' + (k + 1) + "</span>" });
     }).join("");
     secMais.hidden = !compacto;
     secMais.textContent = verTodas ? "Mostrar menos" : "Ver as " + n + " seções";

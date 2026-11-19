@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  var C = Componentes;   // os componentes de ui/componentes.js (par de componentes.py)
   var DECIMAL = /^pt/.test(document.documentElement.lang) ? "," : ".";   // separador decimal do idioma da página
   var APP = JSON.parse(document.getElementById("app-data").textContent);
 
@@ -16,7 +17,7 @@
   };
   function seg(box, options, value, onChange) {
     box.innerHTML = options.map(function (o) {
-      return '<button type="button" role="radio" aria-checked="' + (o[0] === value) + '" data-v="' + o[0] + '">' + esc(o[1]) + "</button>";
+      return C.opcao_seletor(esc(o[1]), { valor: o[0], marcado: o[0] === value });
     }).join("");
     function set(v) { $$("button", box).forEach(function (b) { b.setAttribute("aria-checked", String(b.dataset.v === v)); }); }
     box.addEventListener("click", function (e) {
@@ -79,8 +80,8 @@
       box.innerHTML = '<div class="hp-main"><p class="hp-title">Qual firmware está no seu rádio?</p>' +
         '<p class="hp-sub">Com isso, os botões e os menus aparecem como no seu aparelho. Na dúvida, veja ' +
         '<a href="#inicio--qual-firmware-está-no-meu-rádio">como descobrir</a>.</p></div>' +
-        '<div class="hp-actions"><button type="button" class="btn-solid" data-fw="mod17">Megatron Mod17</button>' +
-        '<button type="button" class="btn-ghost" data-fw="oficial">Linha oficial</button></div>';
+        '<div class="hp-actions">' + C.botao("Megatron Mod17", { variante: "solido", attrs: { "data-fw": "mod17" } }) +
+        C.botao("Linha oficial", { variante: "fantasma", attrs: { "data-fw": "oficial" } }) + "</div>";
       return;
     }
     var rtc = { sim: "com relógio interno", nao: "sem relógio interno", "?": "relógio interno não verificado" }[profile.rtc || "?"];
@@ -90,7 +91,7 @@
     else if (profile.rtc !== "sim") tip = 'Não sabe se o rádio tem relógio? Faça o <a href="#hardware--teste-de-rtc">teste do RTC</a>.';
     box.innerHTML = '<div class="hp-main"><p class="hp-title">Seu rádio: ' + esc(FW_NAME[profile.fw]) + ", " + rtc + "</p>" +
       (tip ? '<p class="hp-sub">' + tip + "</p>" : "") + '</div><div class="hp-actions">' +
-      '<button type="button" class="btn-ghost" data-open-profile>Mudar</button></div>';
+      C.botao("Mudar", { variante: "fantasma", attrs: { "data-open-profile": true } }) + "</div>";
   }
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("#home-profile [data-fw], #home-profile [data-open-profile]");
@@ -107,13 +108,12 @@
     var st = { fw: curFw(), mode: "uso", combo: {}, rot: 0, view: store.get(VKEY, "3d") === "2d" ? "2d" : "3d" };
     var shown = false, p3 = null, p3loading = false;
     root.innerHTML =
-      '<div class="tool-bar"><div class="seg" role="radiogroup" aria-label="Firmware"></div>' +
-      '<div class="seg" role="radiogroup" aria-label="Situação"></div><div class="seg" role="radiogroup" aria-label="Visualização"></div></div>' +
+      '<div class="tool-bar">' + C.seletor("Firmware") + C.seletor("Situação") + C.seletor("Visualização") + "</div>" +
       '<div class="sim-wrap"><div class="sim-left">' +
       '<div class="sim-3d" hidden><div class="p3-stage"><div class="pl-load">Carregando o painel em 3D…</div></div>' +
-      '<p class="sim-hint p3-hint">Toque num controle; segure para o toque longo. O painel agrupa os controles por função e não segue a forma do rádio.</p></div>' +
+      C.nota("Toque num controle; segure para o toque longo. O painel agrupa os controles por função e não segue a forma do rádio.", { classe: "sim-hint p3-hint" }) + "</div>" +
       '<div class="sim-panel" role="group" aria-label="Controles"></div>' +
-      '<div class="sim-boot" hidden><button type="button" class="btn-solid" data-power>Ligar o rádio</button></div>' +
+      '<div class="sim-boot" hidden>' + C.botao("Ligar o rádio", { variante: "solido", attrs: { "data-power": true } }) + "</div>" +
       '<div class="sim-extra" role="group" aria-label="Outros controles"></div></div>' +
       '<div><div class="sim-onde" hidden><p class="sim-onde-t">Onde fica no rádio</p><div class="viewer3d"><div class="sim-onde-box"></div></div></div>' +
       '<div class="sim-out" aria-live="polite"></div><ul class="sim-notes"></ul><p class="sim-ref"></p></div></div>';
@@ -129,7 +129,7 @@
       if (onde3d) { onde3d.show(id); return; }
       if (st.view === "3d") carregarOnde();
       else if (!ondeCarregando && !$(".sim-onde-btn", box)) {
-        $(".sim-onde-box", box).innerHTML = '<button type="button" class="btn-ghost sim-onde-btn">Ver onde fica no rádio</button>';
+        $(".sim-onde-box", box).innerHTML = C.botao("Ver onde fica no rádio", { variante: "fantasma", classe: "sim-onde-btn" });
       }
     }
     function carregarOnde() {
@@ -142,7 +142,7 @@
         if (onde3d && ondeId) onde3d.show(ondeId);
       }).catch(function () {
         ondeCarregando = false;
-        alvo.innerHTML = '<p class="sim-hint">Não foi possível abrir o rádio em 3D. As fotos estão em <a href="#uso--onde-fica-cada-coisa">Onde fica cada coisa</a>.</p>';
+        alvo.innerHTML = C.nota('Não foi possível abrir o rádio em 3D. As fotos estão em <a href="#uso--onde-fica-cada-coisa">Onde fica cada coisa</a>.', { classe: "sim-hint" });
       });
     }
     root.addEventListener("click", function (e) { if (e.target.closest(".sim-onde-btn")) carregarOnde(); });
@@ -179,24 +179,24 @@
         var small = cs.filter(function (c) { return c.id === "boot" || c.id === "power"; });
         panel.innerHTML =
           '<div class="sim-knob-row">' +
-          (uso ? '<button type="button" class="sim-rot" data-rot="-1" aria-label="Girar o ' + esc(knob.rotulo) + ' para a esquerda">↺</button>' : "") +
+          (uso ? C.botao("↺", { classe: "sim-rot", attrs: { "data-rot": "-1", "aria-label": "Girar o " + knob.rotulo + " para a esquerda" } }) : "") +
           '<div class="sim-knob' + (st.combo[knob.id] ? " on" : "") + '" role="button" tabindex="0" data-c="' + knob.id + '" style="--rot:' + st.rot + 'deg"' +
           (uso ? "" : ' aria-pressed="' + !!st.combo[knob.id] + '"') + '><span class="mark" aria-hidden="true"></span>' + esc(knob.rotulo) + "</div>" +
-          (uso ? '<button type="button" class="sim-rot" data-rot="1" aria-label="Girar o ' + esc(knob.rotulo) + ' para a direita">↻</button>' : "") +
+          (uso ? C.botao("↻", { classe: "sim-rot", attrs: { "data-rot": "1", "aria-label": "Girar o " + knob.rotulo + " para a direita" } }) : "") +
           "</div>" +
           '<div class="sim-keys">' + big.map(function (c) { return key(c, st.combo[c.id] ? " on" : ""); }).join("") + "</div>" +
           '<div class="sim-keys">' + small.map(function (c) { return key(c, " small" + (st.combo[c.id] ? " on" : "")); }).join("") + "</div>";
         $(".sim-extra", root).innerHTML = '<span class="sim-hint">Outros controles:</span>' + hwList().map(function (id) {
-          return '<button type="button" class="chip-btn" data-hw="' + id + '">' + esc(hwText(id).titulo) + "</button>";
+          return C.botao(esc(hwText(id).titulo), { classe: "chip-btn", attrs: { "data-hw": id } });
         }).join("");
       } else if (shown) {
         ensure3d();
       }
       if (p3) { p3.setMode(st.mode); p3.setHeld(st.combo); }
       out.innerHTML = uso
-        ? '<p class="sim-hint">' + (is3d ? "Toque num controle do painel." : "Toque num botão para o toque curto.") +
-          " Segure para o toque longo: " + (is3d ? "a barra no pé do painel" : "a barra embaixo dele") + " mostra o tempo.</p>"
-        : '<p class="sim-hint">Escolha os botões que ficam apertados e toque em “Ligar o rádio”.</p>' + comboList();
+        ? C.nota((is3d ? "Toque num controle do painel." : "Toque num botão para o toque curto.") +
+          " Segure para o toque longo: " + (is3d ? "a barra no pé do painel" : "a barra embaixo dele") + " mostra o tempo.", { classe: "sim-hint" })
+        : C.nota("Escolha os botões que ficam apertados e toque em “Ligar o rádio”.", { classe: "sim-hint" }) + comboList();
       $(".sim-notes", root).innerHTML = D[st.fw].notas.map(function (n) { return "<li>" + n + "</li>"; }).join("");
       var ref = D[st.fw].ref;
       $(".sim-ref", root).innerHTML = ref ? 'Detalhes em <a href="#' + ref + '">Uso da linha oficial</a>.' : "";
@@ -224,7 +224,8 @@
         c.acoes.map(function (a) {
           return '<li class="' + (a[0] === kind ? "hit" : "") + '"><span class="k">' + esc(a[1]) + "</span>" + a[2] + "</li>";
         }).join("") + "</ul>" +
-        (c.knob && st.view === "3d" ? '<div class="p3-rot"><button type="button" class="btn-ghost" data-rot3="-1">↺ Girar</button><button type="button" class="btn-ghost" data-rot3="1">Girar ↻</button></div>' : "");
+        (c.knob && st.view === "3d" ? '<div class="p3-rot">' + C.botao("↺ Girar", { variante: "fantasma", attrs: { "data-rot3": "-1" } }) +
+          C.botao("Girar ↻", { variante: "fantasma", attrs: { "data-rot3": "1" } }) + "</div>" : "");
       onde(c.id);
       reveal();
     }
@@ -242,7 +243,7 @@
       var body = !ids.length ? "O rádio liga normalmente."
         : hit ? hit[1] : "Nenhuma combinação conhecida com esses botões. As documentadas estão na lista abaixo.";
       out.innerHTML = "<h3>" + esc(head) + '</h3><ul class="sim-acts"><li class="hit' + (hit && hit[2] === "perigo" ? " perigo" : "") + '">' + body + "</li></ul>" +
-        '<p class="sim-hint" style="margin-top:14px">Todas as combinações:</p>' + comboList();
+        C.nota("Todas as combinações:", { classe: "sim-hint", attrs: { style: "margin-top:14px" } }) + comboList();
       reveal();
     }
     function kindFor(c, ms) {
@@ -275,7 +276,7 @@
           },
           press: function (id, ms) {
             var c = ctrl(id);
-            if (st.mode === "ligar" && c) { toggleCombo(id); out.innerHTML = '<p class="sim-hint">Apertados: ' + (Object.keys(st.combo).filter(function (k) { return st.combo[k]; }).map(label).join(" + ") || "nenhum") + ". Toque em “Ligar o rádio”.</p>" + comboList(); return; }
+            if (st.mode === "ligar" && c) { toggleCombo(id); out.innerHTML = C.nota("Apertados: " + (Object.keys(st.combo).filter(function (k) { return st.combo[k]; }).map(label).join(" + ") || "nenhum") + ". Toque em “Ligar o rádio”.", { classe: "sim-hint" }) + comboList(); return; }
             if (c) showAction(c, kindFor(c, ms), ms);
             else showHw(id);
           },
@@ -382,8 +383,7 @@
     var done = store.get(DKEY, { mod17: [], oficial: [] });
     var byId = {};
     root.innerHTML =
-      '<div class="tool-bar"><div class="seg" role="radiogroup" aria-label="Firmware"></div>' +
-      '<div class="seg" role="radiogroup" aria-label="Lista"></div></div>' +
+      '<div class="tool-bar">' + C.seletor("Firmware") + C.seletor("Lista") + "</div>" +
       '<div class="aj-todos"><div class="aj-filtro" role="radiogroup" aria-label="Mostrar"></div><div class="aj-bar">' +
       '<input class="tool-search" type="search" placeholder="Buscar: desênfase, AGC, fuso…" aria-label="Buscar ajuste">' +
       '<p class="aj-count" aria-live="polite"></p><nav class="aj-chips" aria-label="Grupos"></nav></div>' +
@@ -421,8 +421,7 @@
       var all = [].concat.apply([], D[st.fw].grupos.map(function (g) { return g.itens; }));
       var n = function (t) { return all.filter(function (it) { return !t || it.tag === t; }).length; };
       filtro.innerHTML = [["", "Todas"], ["ajuste", TAGS.ajuste || "Vale ajustar"], ["dx", TAGS.dx || "Para DX"]].map(function (o) {
-        return '<button type="button" role="radio" aria-checked="' + (st.tag === o[0]) + '" data-t="' + o[0] + '">' + esc(o[1]) +
-          "<span>" + n(o[0]) + "</span></button>";
+        return C.opcao_seletor(esc(o[1]) + "<span>" + n(o[0]) + "</span>", { valor: o[0], marcado: st.tag === o[0], chave: "t" });
       }).join("");
     }
     filtro.addEventListener("click", function (e) {
@@ -444,13 +443,7 @@
     function kv(k, v, cls) { return '<div class="aj-kv' + (cls ? " " + cls : "") + '"><dt>' + k + "</dt><dd>" + v + "</dd></div>"; }
     function mark(d, b) { return d || b ? "<small>" + (d && b ? "padrão e Brasil" : d ? "padrão" : "Brasil") + "</small>" : ""; }
     function opt(label, d, b, tag, sw) {
-      return "<" + tag + ' class="aj-opt' + (d ? " is-def" : "") + (b ? " is-br" : "") + '">' + (sw || "") + esc(label) + mark(d, b) + "</" + tag + ">";
-    }
-    // amostra de um tema de cores: fundo e moldura do tema, com a cor da frequência e a secundária
-    function amostra(c) {
-      if (!c) return "";
-      return '<span class="aj-sw" aria-hidden="true" style="background:' + c.fundo + ";border-color:" + c.moldura + '">' +
-        '<i style="background:' + c.freq + '"></i><i style="background:' + c.sec + '"></i></span>';
+      return C.opcao((sw || "") + esc(label) + mark(d, b), { tag: tag, padrao: d, brasil: b });
     }
     // prévia dos temas e das fontes da frequência: cores tiradas do código e o número desenhado com as fontes do firmware
     // cada firmware guarda o seu tema e a sua fonte na prévia; temas sem cores conhecidas ficam sem prévia
@@ -555,23 +548,22 @@
       if (!nomes) return "";
       return PAPEIS.filter(function (r) { return nomes[r[0]]; }).map(function (r) {
         var n = nomes[r[0]], on = e.foco === r[0];
-        var cab = '<span class="aj-cor-sw" style="background:' + p[r[0]] + '"></span><span class="aj-cor-n">' + esc(r[1]) +
+        var cab = C.amostra(p[r[0]]) + '<span class="aj-cor-n">' + esc(r[1]) +
           '</span><span class="aj-cor-v">' + esc(n[0]) + " <code>" + esc(p[r[0]]) + "</code> <code>" + esc(n[1]) + "</code></span>";
         return '<li class="aj-cor' + (on ? " is-on" : "") + '">' + (r[3] ?
-          '<button type="button" class="aj-pick aj-cor-b" data-pv="cor" data-v="' + r[0] + '" aria-pressed="' + on + '">' + cab + "</button>" :
+          C.botao(cab, { classe: "aj-pick aj-cor-b", attrs: { "data-pv": "cor", "data-v": r[0], "aria-pressed": String(on) } }) :
           '<div class="aj-cor-b">' + cab + "</div>") + '<p class="aj-cor-d">' + esc(r[2]) + "</p></li>";
       }).join("");
     }
     function telaBox(fw) {
       var e = pv[fw], n = PAPEIS.filter(function (r) { return nomesCor[fw] && nomesCor[fw][e.tema] && nomesCor[fw][e.tema][r[0]]; }).length;
       return '<div class="aj-prev" data-pv-box="tema">' + tela(fw) + '<p class="aj-prev-leg" aria-live="polite">' +
-        esc(e.tema + ", com a fonte " + e.fonte + ".") + "</p></div>" + '<p class="aj-note">' + (fw === "oficial" ?
+        esc(e.tema + ", com a fonte " + e.fonte + ".") + "</p></div>" + C.nota(fw === "oficial" ?
         "Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado." :
-        "Toque num tema para ver a tela com as cores dele. As cores vêm da linha oficial, e os temas apagados ainda não têm prévia.") + "</p>" +
-        (n ? '<ol class="aj-cores is-many" data-pv-cores aria-label="' + esc("Cores do tema " + e.tema) + '">' + coresLinhas(fw) + "</ol>" +
-          '<button type="button" class="aj-more" data-n="cores" aria-expanded="false">' + "Ver as " + n + " cores" + "</button>" +
-          '<p class="aj-note">' + "O firmware guarda cada cor em 16 bits (RGB565); o hex de 24 bits é a conversão. Toque numa cor para ver onde ela aparece na tela." +
-          (fw === "oficial" ? "" : " " + "Onde cada cor aparece segue o código da linha oficial.") + "</p>" : "");
+        "Toque num tema para ver a tela com as cores dele. As cores vêm da linha oficial, e os temas apagados ainda não têm prévia.") +
+        (n ? C.recolhivel(coresLinhas(fw), { classe: "aj-cores", attrs: { "data-pv-cores": true, "aria-label": "Cores do tema " + e.tema }, mais: "Ver as " + n + " cores", n: "cores" }) +
+          C.nota("O firmware guarda cada cor em 16 bits (RGB565); o hex de 24 bits é a conversão. Toque numa cor para ver onde ela aparece na tela." +
+          (fw === "oficial" ? "" : " " + "Onde cada cor aparece segue o código da linha oficial.")) : "");
     }
     // amostra de uma fonte: o número sobre o fundo do tema da prévia (sem tema, na cor do texto)
     function amostraFonte(nome, fw) {
@@ -583,13 +575,13 @@
     }
     function fontesHtml(it, fw) {
       var pick = !!paletas[fw], e = pv[fw];
-      return '<ol class="aj-fs-list" aria-label="Opções na ordem do ciclo">' + it.spec.opcoes.map(function (o) {
+      return C.recolhivel(it.spec.opcoes.map(function (o) {
         var nome = '<span class="aj-fs-n">' + esc(o) + mark(o === it.padrao, o === it.br) + "</span>" + amostraFonte(o, fw);
         return '<li class="aj-fs' + (pick && o === e.fonte ? " is-on" : "") + '">' + (pick ?
-          '<button type="button" class="aj-pick" data-pv="fonte" data-v="' + esc(o) + '" aria-pressed="' + (o === e.fonte) + '">' + nome + "</button>" :
+          C.botao(nome, { classe: "aj-pick", attrs: { "data-pv": "fonte", "data-v": o, "aria-pressed": String(o === e.fonte) } }) :
           '<div class="aj-fs-row">' + nome + "</div>") + "</li>";
-      }).join("") + "</ol>" + '<p class="aj-note">' + (pick ? "Toque numa fonte para vê-la na prévia do tema. " : "") +
-        "Números desenhados com as próprias fontes do firmware." + "</p>";
+      }).join(""), { classe: "aj-fs-list", attrs: { "aria-label": "Opções na ordem do ciclo" } }) +
+        C.nota((pick ? "Toque numa fonte para vê-la na prévia do tema. " : "") + "Números desenhados com as próprias fontes do firmware.");
     }
     function pintarPrevia(tipo, v) {
       var fw = st.fw;
@@ -634,7 +626,7 @@
       if (s.off) h += opt(s.offlbl, !!s.pd_off, !!s.pb_off, "span") + '<span class="aj-or">ou</span>';
       h += '<span class="aj-range"><span class="aj-rmin">' + s.minf + '</span><span class="aj-track' + (pb != null && !same ? " has-above" : "") + (pd != null ? " has-below" : "") +
         '" aria-hidden="true">' + marks + '</span><span class="aj-rmax"><span class="sr-only">a </span>' + s.maxf + (s.unidade ? " " + esc(s.unidade) : "") + "</span></span>";
-      return '<div class="aj-rangewrap">' + h + "</div>" + (s.passof ? '<p class="aj-note">' + esc(s.passof) + "</p>" : "");
+      return '<div class="aj-rangewrap">' + h + "</div>" + (s.passof ? C.nota(esc(s.passof)) : "");
     }
     function specHtml(it, fw) {
       var s = it.spec || {}, h = "", v = "", inList = false;
@@ -644,18 +636,17 @@
       } else if (s.opcoes) {
         // a lista que troca a prévia fica sempre inteira, para todos os temas estarem a um toque
         var pick = s.previa === "tema" && !!paletas[fw], many = s.opcoes.length > 12 && !pick;
-        v = '<ol class="aj-opts' + (many ? " is-many" : "") + '" aria-label="Opções na ordem do ciclo">' + s.opcoes.map(function (o) {
+        v = C.recolhivel(s.opcoes.map(function (o) {
           if (o === it.padrao) inList = true;
-          var sw = s.paleta && amostra(s.paleta[o]);
+          var sw = s.paleta && C.paleta(s.paleta[o]);
           if (!pick) return opt(o, o === it.padrao, o === it.br, "li", sw);
-          if (!s.paleta[o]) return '<li class="aj-opt is-pick is-off"><button type="button" class="aj-pick" disabled>' + esc(o) + mark(o === it.padrao, o === it.br) + "</button></li>";
-          return '<li class="aj-opt is-pick' + (o === it.padrao ? " is-def" : "") + (o === pv[fw].tema ? " is-on" : "") + '"><button type="button" class="aj-pick" data-pv="tema" data-v="' +
-            esc(o) + '" aria-pressed="' + (o === pv[fw].tema) + '">' + sw + esc(o) + mark(o === it.padrao, o === it.br) + "</button></li>";
-        }).join("") + "</ol>" + (many ? '<button type="button" class="aj-more" aria-expanded="false">Ver as ' + s.opcoes.length + " opções</button>" : "") +
+          if (!s.paleta[o]) return C.opcao(esc(o) + mark(o === it.padrao, o === it.br), { desligada: true });
+          return C.opcao(sw + esc(o) + mark(o === it.padrao, o === it.br), { escolha: { pv: "tema", v: o }, padrao: o === it.padrao, ativo: o === pv[fw].tema });
+        }).join(""), { classe: "aj-opts", attrs: { "aria-label": "Opções na ordem do ciclo" }, mais: many ? "Ver as " + s.opcoes.length + " opções" : "" }) +
           (pick ? telaBox(fw) : "");
       } else if (s.tipo === "faixa") { v = rangeHtml(it); inList = !!s.pd_off; }
       else if (s.resumo) v = esc(s.resumo);
-      if (s.nota) v += '<p class="aj-note">' + esc(s.nota) + "</p>";
+      if (s.nota) v += C.nota(esc(s.nota));
       if (v) h += kv(s.tl, v);
       var settable = ["lista", "liga", "faixa", "texto"].indexOf(s.tipo) >= 0;
       if (it.padrao && !inList) h += kv("Padrão", esc(it.padrao));
@@ -829,8 +820,8 @@
     root.innerHTML = '<input class="tool-search" type="search" placeholder="Buscar: sem som, hora errada…" aria-label="Buscar problema"><div class="hlp-view"></div>';
     var view = $(".hlp-view", root), input = $(".tool-search", root);
 
-    function tag(it) { return it.tag === "oficial" ? '<span class="tag">linha oficial</span>' : ""; }
-    function back(to, text) { return '<button type="button" class="btn-ghost hlp-back" data-go="' + to + '">← ' + esc(text) + "</button>"; }
+    function tag(it) { return it.tag === "oficial" ? C.selo("linha oficial") : ""; }
+    function back(to, text) { return C.botao("← " + esc(text), { variante: "fantasma", classe: "hlp-back", attrs: { "data-go": to } }); }
     function home() {
       input.value = "";
       view.innerHTML = '<div class="hlp-cats">' + cats.map(function (c) {
@@ -860,15 +851,16 @@
       box.innerHTML = '<div class="hlp-card" style="margin-top:12px"><p class="hlp-step">Passo ' + (i + 1) + " de " + c.passos.length + "</p>" +
         "<p>" + c.passos[i] + "</p>" +
         (last ? (c.depois.length ? '<div class="hlp-done">' + c.depois.join(" ") + "</div>" : "") + '<div class="hlp-ask">' + back("home", "Voltar ao início") + "</div>"
-          : '<div class="hlp-ask"><span>Resolveu?</span><button type="button" class="btn-solid" data-step-ok>Sim</button>' +
-            '<button type="button" class="btn-ghost" data-step-next="' + (i + 1) + '">Não, próximo passo</button></div>') + "</div>";
+          : '<div class="hlp-ask"><span>' + "Resolveu?" + "</span>" + C.botao("Sim", { variante: "solido", attrs: { "data-step-ok": true } }) +
+            C.botao("Não, próximo passo", { variante: "fantasma", attrs: { "data-step-next": i + 1 } }) + "</div>") + "</div>";
       box.dataset.cat = c.id;
     }
     function itemView(c, it) {
       var others = c.itens.filter(function (o) { return o !== it; });
       var body = it.html.replace(/^((?:<[^>]+>)*)([a-zà-ú])/, function (m, a, b) { return a + b.toUpperCase(); });
       view.innerHTML = back(c.id, c.titulo) + '<div class="hlp-card" id="' + it.id + '"><h3>' + esc(it.titulo) + tag(it) + "</h3><p>" + body + "</p>" +
-        '<div class="hlp-ask"><span>Resolveu?</span><button type="button" class="btn-solid" data-ok>Sim</button><button type="button" class="btn-ghost" data-no>Não</button></div>' +
+        '<div class="hlp-ask"><span>' + "Resolveu?" + "</span>" + C.botao("Sim", { variante: "solido", attrs: { "data-ok": true } }) +
+        C.botao("Não", { variante: "fantasma", attrs: { "data-no": true } }) + "</div>" +
         '<div class="hlp-after"></div></div>';
       view.dataset.others = others.map(function (o) { return o.id; }).join(",");
     }

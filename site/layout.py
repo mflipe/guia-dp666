@@ -6,6 +6,8 @@ Peças:
   ui/corpo.html      o corpo: fundo, área de leitura, botão de sintonia, menu de pausa
   ui/perfil.html     a janela "Seu rádio"
   ui/navegacao.js    o script da navegação (tela de título, menu, mapa da página, cartão da seção)
+  ui/componentes.js  os componentes (botão, nota, opção, lista recolhível…), par de componentes.py; entra
+                     no mesmo <script> do app.js, antes dele, e o navegacao.js também os usa
 
 As camadas (@layer) decidem quem vence sem depender da especificidade: uma regra de uma camada
 posterior vence qualquer regra de uma camada anterior. Dentro da camada, vale a ordem dos arquivos.
@@ -63,7 +65,7 @@ def css():
 
 def montar():
     rodape = (ler("perfil.html") +
-              '\n<script type="application/json" id="app-data">{{APPDATA}}</script>\n<script>\n{{APPJS}}\n</script>\n'
+              '\n<script type="application/json" id="app-data">{{APPDATA}}</script>\n<script>\n' + ler("componentes.js") + '{{APPJS}}\n</script>\n'
               '<script type="application/json" id="search-data">{{SEARCH}}</script>\n<script>\n' +
               ler("navegacao.js") + "</script>\n</body>\n</html>\n")
     return ler("cabeca.html") + "\n<style>\n" + css() + "\n</style>\n</head>\n" + ler("corpo.html") + rodape

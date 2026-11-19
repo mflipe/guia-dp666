@@ -15,6 +15,7 @@ O guia funciona como o menu de um jogo, no celular, no tablet e no computador, n
 | `site/i18n.py` e `site/i18n/` | A tradução do resto: textos da interface, catálogos português → inglês dos dados, dos diagramas e do JavaScript, e os nomes dos menus da linha oficial em inglês (`menuspec_en.py`, `didatica_en.py`) |
 | `site/` | O gerador. O `build.py` junta o texto, as peças do layout em `ui/` (montadas pelo `layout.py`), o `app.js`, os dados dos menus (`menuspec.py`, `didatica.py`, `appdata.py`, `data.py`) e os diagramas (`diagrams.py`) num único `index.html` |
 | `site/ui/css/` | Os estilos, um arquivo por componente, em camadas na ordem `tokens`, `base`, `conteudo`, `componentes`, `ferramentas` e `layout`: uma camada posterior vence a anterior, sem depender da especificidade. As cores ficam só em `tokens/tokens.css`; o tema escuro é escrito uma vez e o `layout.py` o repete para quem segue o tema do sistema |
+| `site/componentes.py` e `site/ui/componentes.js` | Os componentes da interface (botão, nota, selo, seletor, opção, amostra de cor, lista recolhível, item do menu), com os mesmos nomes e o mesmo HTML nos dois lados: o `build.py` usa o de Python; o `app.js` e o `navegacao.js`, o de JavaScript. O build confere os dois com os exemplos de `componentes.py` |
 | `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |
 | `scripts/publicar.sh` | Gera o site e publica no GitHub Pages |
 
