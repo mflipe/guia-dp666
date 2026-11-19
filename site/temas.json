@@ -1,0 +1,2942 @@
+{
+ "oficial": {
+  "base": "v2.20.12",
+  "temas": {
+   "Essence": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "freq": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "sec": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rds": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "rdsQueda": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "st": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "cinza": [
+     "#3A3D3A",
+     "BlackOlive",
+     "0x39E7"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "wifi": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "wifiS": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ]
+   },
+   "Cyan": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#003D4A",
+     "CyanFrame",
+     "0x01E9"
+    ],
+    "freq": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "sec": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "rds": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "rdsQueda": [
+     "#5A757B",
+     "CyanDark",
+     "0x5BAF"
+    ],
+    "st": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "cinza": [
+     "#294142",
+     "CyanGrey",
+     "0x2A08"
+    ],
+    "bar": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "barS": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "mod": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "modS": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "wifi": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "wifiS": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ]
+   },
+   "Crimson": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A0000",
+     "CrimsonSmooth",
+     "0x3800"
+    ],
+    "freq": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "sec": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "rds": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "rdsQueda": [
+     "#6B4142",
+     "CrimsonDark",
+     "0x6A08"
+    ],
+    "st": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "barS": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "mod": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "modS": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "bw": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FF516B",
+     "Watermelon",
+     "0xFA8D"
+    ],
+    "wifi": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "wifiS": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ]
+   },
+   "Monochrome": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#292D29",
+     "GreenGrey",
+     "0x2965"
+    ],
+    "freq": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "sec": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ],
+    "rds": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "rdsQueda": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "st": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "barS": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ],
+    "mod": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "modS": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ],
+    "bw": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "wifi": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "wifiS": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ]
+   },
+   "Volcano": {
+    "fundo": [
+     "#080031",
+     "Prussian",
+     "0x0806"
+    ],
+    "moldura": [
+     "#292D29",
+     "GreenGrey",
+     "0x2965"
+    ],
+    "freq": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "sec": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "rds": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "rdsQueda": [
+     "#6B5131",
+     "Dallas",
+     "0x6A86"
+    ],
+    "st": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "cinza": [
+     "#522800",
+     "Maroon",
+     "0x5140"
+    ],
+    "bar": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "barS": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "mod": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "modS": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "bw": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "wifi": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "wifiS": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ]
+   },
+   "Dendro": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#004100",
+     "GreenDark",
+     "0x0200"
+    ],
+    "freq": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "sec": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "rds": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "rdsQueda": [
+     "#739273",
+     "Laurel",
+     "0x748E"
+    ],
+    "st": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "barS": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "mod": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "modS": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bw": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "bat": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "wifi": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "wifiS": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ]
+   },
+   "Sakura": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A0829",
+     "Tyrian",
+     "0x3845"
+    ],
+    "freq": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "sec": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "rds": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "rdsQueda": [
+     "#9C7184",
+     "SakuraGrey",
+     "0x9B90"
+    ],
+    "st": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "cinza": [
+     "#3A1829",
+     "Blackberry",
+     "0x38C5"
+    ],
+    "bar": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "barS": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "mod": [
+     "#FFB6FF",
+     "Pink",
+     "0xFDBF"
+    ],
+    "modS": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "bw": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#FFB6FF",
+     "Pink",
+     "0xFDBF"
+    ],
+    "bat": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "wifi": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "wifiS": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ]
+   },
+   "Whiteout": {
+    "fundo": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ],
+    "moldura": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "freq": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "ativo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "prim": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "sec": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "rds": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "rdsQueda": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "st": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "cinza": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "bar": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "barS": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "bw": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "wifi": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "wifiS": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ]
+   },
+   "Tangerine": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A1408",
+     "Chocolate",
+     "0x38A1"
+    ],
+    "freq": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "sec": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "rds": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "rdsQueda": [
+     "#9C716B",
+     "Copper",
+     "0x9B8D"
+    ],
+    "st": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "cinza": [
+     "#63493A",
+     "Spice",
+     "0x6247"
+    ],
+    "bar": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "barS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "mod": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "modS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "bw": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "bat": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "wifi": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "wifiS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ]
+   },
+   "Ocean": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#000084",
+     "Navy",
+     "0x0010"
+    ],
+    "freq": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "sec": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "rds": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "rdsQueda": [
+     "#737DA5",
+     "Cove",
+     "0x73F4"
+    ],
+    "st": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "cinza": [
+     "#424163",
+     "Cornblue",
+     "0x420C"
+    ],
+    "bar": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "barS": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "mod": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "modS": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "bw": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "bat": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "wifi": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "wifiS": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ]
+   },
+   "Indigo": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#6300B5",
+     "Electric",
+     "0x6016"
+    ],
+    "freq": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "sec": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "rds": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "rdsQueda": [
+     "#9C92B5",
+     "Logan",
+     "0x9C96"
+    ],
+    "st": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "cinza": [
+     "#4A3563",
+     "Meteorite",
+     "0x49AC"
+    ],
+    "bar": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "barS": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "mod": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "modS": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "bw": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "bat": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "wifi": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "wifiS": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ]
+   },
+   "Queer": {
+    "fundo": [
+     "#210008",
+     "MaroonSmooth",
+     "0x2001"
+    ],
+    "moldura": [
+     "#6300B5",
+     "Electric",
+     "0x6016"
+    ],
+    "freq": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "sec": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "rds": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "rdsQueda": [
+     "#9C92B5",
+     "Logan",
+     "0x9C96"
+    ],
+    "st": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "cinza": [
+     "#422421",
+     "CoralSmooth",
+     "0x4124"
+    ],
+    "bar": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "barS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "mod": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "bat": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "wifi": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "wifiS": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ]
+   },
+   "GoldBrite": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "freq": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "sec": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rds": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "rdsQueda": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "st": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "cinza": [
+     "#3A3D3A",
+     "BlackOlive",
+     "0x39E7"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "modS": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "wifi": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "wifiS": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ]
+   },
+   "Bubblegum": {
+    "fundo": [
+     "#190429",
+     "EerieBlack",
+     "0x1825"
+    ],
+    "moldura": [
+     "#6300B5",
+     "Electric",
+     "0x6016"
+    ],
+    "freq": [
+     "#FFB6FF",
+     "Pink",
+     "0xFDBF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "sec": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "rds": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "rdsQueda": [
+     "#9C92B5",
+     "Logan",
+     "0x9C96"
+    ],
+    "st": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "cinza": [
+     "#4A3563",
+     "Meteorite",
+     "0x49AC"
+    ],
+    "bar": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "barS": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "mod": [
+     "#FFB6FF",
+     "Pink",
+     "0xFDBF"
+    ],
+    "modS": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "bw": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "alerta": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "ok": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "bat": [
+     "#00FFFF",
+     "Turquoise",
+     "0x07FF"
+    ],
+    "wifi": [
+     "#00FFFF",
+     "Turquoise",
+     "0x07FF"
+    ],
+    "wifiS": [
+     "#FFB6FF",
+     "Pink",
+     "0xFDBF"
+    ]
+   },
+   "Aurora": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#003D4A",
+     "CyanFrame",
+     "0x01E9"
+    ],
+    "freq": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "sec": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "rds": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "rdsQueda": [
+     "#5A757B",
+     "CyanDark",
+     "0x5BAF"
+    ],
+    "st": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "barS": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "mod": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "modS": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "bw": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "wifi": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "wifiS": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ]
+   },
+   "Ember": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A1408",
+     "Chocolate",
+     "0x38A1"
+    ],
+    "freq": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "sec": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rds": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "rdsQueda": [
+     "#9C716B",
+     "Copper",
+     "0x9B8D"
+    ],
+    "st": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "barS": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "mod": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "modS": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "bw": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "wifi": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "wifiS": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ]
+   },
+   "Glacier": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#424163",
+     "Cornblue",
+     "0x420C"
+    ],
+    "freq": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "sec": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "rds": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rdsQueda": [
+     "#737DA5",
+     "Cove",
+     "0x73F4"
+    ],
+    "st": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "barS": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "mod": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "modS": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "wifi": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "wifiS": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ]
+   }
+  }
+ },
+ "mod17": {
+  "base": "532c4ef",
+  "temas": {
+   "Essence": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "freq": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "sec": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rds": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "rdsQueda": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "st": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "cinza": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ]
+   },
+   "Cyan": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#003D4A",
+     "CyanFrame",
+     "0x01E9"
+    ],
+    "freq": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "sec": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "rds": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "rdsQueda": [
+     "#5A757B",
+     "CyanDark",
+     "0x5BAF"
+    ],
+    "st": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "cinza": [
+     "#294142",
+     "CyanGrey",
+     "0x2A08"
+    ],
+    "bar": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ]
+   },
+   "Crimson": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A0000",
+     "CrimsonSmooth",
+     "0x3800"
+    ],
+    "freq": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "sec": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "rds": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "rdsQueda": [
+     "#6B4142",
+     "CrimsonDark",
+     "0x6A08"
+    ],
+    "st": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "barS": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "mod": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "modS": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "bw": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "alerta": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FF516B",
+     "Watermelon",
+     "0xFA8D"
+    ]
+   },
+   "Monochrome": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#292D29",
+     "GreenGrey",
+     "0x2965"
+    ],
+    "freq": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "sec": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "rds": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "rdsQueda": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "st": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ]
+   },
+   "Volcano": {
+    "fundo": [
+     "#080031",
+     "Prussian",
+     "0x0806"
+    ],
+    "moldura": [
+     "#292D29",
+     "GreenGrey",
+     "0x2965"
+    ],
+    "freq": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "sec": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "rds": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "rdsQueda": [
+     "#6B5131",
+     "Dallas",
+     "0x6A86"
+    ],
+    "st": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "cinza": [
+     "#522800",
+     "Maroon",
+     "0x5140"
+    ],
+    "bar": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#FF8200",
+     "Orange",
+     "0xFC00"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ]
+   },
+   "Dendro": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#004100",
+     "GreenDark",
+     "0x0200"
+    ],
+    "freq": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "sec": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "rds": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "rdsQueda": [
+     "#739273",
+     "Laurel",
+     "0x748E"
+    ],
+    "st": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "cinza": [
+     "#4A4D4A",
+     "PaleGrey",
+     "0x4A69"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#00DB84",
+     "Cabbage",
+     "0x06D0"
+    ]
+   },
+   "Sakura": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A0829",
+     "Tyrian",
+     "0x3845"
+    ],
+    "freq": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "sec": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "rds": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "rdsQueda": [
+     "#9C7184",
+     "SakuraGrey",
+     "0x9B90"
+    ],
+    "st": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "cinza": [
+     "#3A1829",
+     "Blackberry",
+     "0x38C5"
+    ],
+    "bar": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#F779AD",
+     "Sakura",
+     "0xF3D5"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ]
+   },
+   "Whiteout": {
+    "fundo": [
+     "#DEFFE6",
+     "Honeydew",
+     "0xDFFC"
+    ],
+    "moldura": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "freq": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "ativo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "prim": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "sec": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "rds": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "rdsQueda": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "st": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "cinza": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "bw": [
+     "#7B797B",
+     "PureGrey",
+     "0x7BCF"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ]
+   },
+   "Tangerine": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#3A1408",
+     "Chocolate",
+     "0x38A1"
+    ],
+    "freq": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "sec": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "rds": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "rdsQueda": [
+     "#9C716B",
+     "Copper",
+     "0x9B8D"
+    ],
+    "st": [
+     "#FF3100",
+     "Tangerine",
+     "0xF980"
+    ],
+    "cinza": [
+     "#63493A",
+     "Spice",
+     "0x6247"
+    ],
+    "bar": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ]
+   },
+   "Ocean": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#000084",
+     "Navy",
+     "0x0010"
+    ],
+    "freq": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "sec": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "rds": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "rdsQueda": [
+     "#737DA5",
+     "Cove",
+     "0x73F4"
+    ],
+    "st": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "cinza": [
+     "#424163",
+     "Cornblue",
+     "0x420C"
+    ],
+    "bar": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#08E7FF",
+     "Cyan",
+     "0x0F3F"
+    ],
+    "bat": [
+     "#00A2FF",
+     "Deepsky",
+     "0x051F"
+    ]
+   },
+   "Indigo": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#6300B5",
+     "Electric",
+     "0x6016"
+    ],
+    "freq": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "sec": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "rds": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "rdsQueda": [
+     "#9C92B5",
+     "Logan",
+     "0x9C96"
+    ],
+    "st": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "cinza": [
+     "#4A3563",
+     "Meteorite",
+     "0x49AC"
+    ],
+    "bar": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#8C00FF",
+     "Indigo",
+     "0x881F"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "bat": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ]
+   },
+   "Maroon": {
+    "fundo": [
+     "#210008",
+     "MaroonSmooth",
+     "0x2001"
+    ],
+    "moldura": [
+     "#6300B5",
+     "Electric",
+     "0x6016"
+    ],
+    "freq": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "sec": [
+     "#FF1819",
+     "Crimson",
+     "0xF8C3"
+    ],
+    "rds": [
+     "#FF7D7B",
+     "Coral",
+     "0xFBEF"
+    ],
+    "rdsQueda": [
+     "#9C92B5",
+     "Logan",
+     "0x9C96"
+    ],
+    "st": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "cinza": [
+     "#422421",
+     "CoralSmooth",
+     "0x4124"
+    ],
+    "bar": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "barS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "mod": [
+     "#F70052",
+     "Cherry",
+     "0xF00A"
+    ],
+    "modS": [
+     "#EFA600",
+     "Yolk",
+     "0xED20"
+    ],
+    "bw": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#D600FF",
+     "Violet",
+     "0xD01F"
+    ],
+    "bat": [
+     "#AD41E6",
+     "Purple",
+     "0xAA1C"
+    ]
+   },
+   "GoldBrite": {
+    "fundo": [
+     "#000000",
+     "Black",
+     "0x0000"
+    ],
+    "moldura": [
+     "#0000FF",
+     "Blue",
+     "0x001F"
+    ],
+    "freq": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "ativo": [
+     "#FFFFFF",
+     "White",
+     "0xFFFF"
+    ],
+    "prim": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "sec": [
+     "#84CEEF",
+     "Skyblue",
+     "0x867D"
+    ],
+    "rds": [
+     "#FFFF00",
+     "Yellow",
+     "0xFFE0"
+    ],
+    "rdsQueda": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "st": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "cinza": [
+     "#101010",
+     "Darkgrey",
+     "0x1082"
+    ],
+    "bar": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "barS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "mod": [
+     "#00FF00",
+     "Green",
+     "0x07E0"
+    ],
+    "modS": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "bw": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ],
+    "alerta": [
+     "#FF0000",
+     "Red",
+     "0xF800"
+    ],
+    "ok": [
+     "#003DFF",
+     "Ocean",
+     "0x01FF"
+    ],
+    "bat": [
+     "#00FFBD",
+     "Teal",
+     "0x07F7"
+    ]
+   }
+  }
+ }
+}

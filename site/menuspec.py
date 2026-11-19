@@ -8,6 +8,9 @@ wiki da linha oficial (W) e opção vista num aparelho (O). As listas estão na 
 Cada item tem: nome no rádio, nome em inglês (linha oficial), especificação, padrão de fábrica, descrição
 (quando o guia não tem uma), submenu, valor para o Brasil e a chave do texto do guia de onde vem a descrição.
 """
+import json
+import pathlib
+
 
 
 def L(*opts, nota=""):
@@ -53,47 +56,16 @@ LANGS = ["English", "Nederlands", "Polski", "Hrvatski", "Ελληνικά", "Rom
          "Português", "Srpski", "Suomi", "Dansk", "Svenska", "Gaeilge"]
 THEMES = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
           "Ocean", "Indigo", "Queer", "GoldBrite", "Bubblegum", "Aurora", "Ember", "Glacier"]
-# cores de cada tema na v2.20.12 (gui.cpp, doTheme; os valores RGB565 de constants.h convertidos para hex),
-# na ordem de PALETTE_KEYS: fundo, moldura, frequência, rótulos, principal, secundária, RDS, estéreo,
-# medidor abaixo de S9, medidor acima de S9, largura de banda automática e itens apagados
-PALETTE_KEYS = ["fundo", "moldura", "freq", "ativo", "prim", "sec", "rds", "st", "bar", "barS", "bw", "cinza"]
-THEME_PALETTE = {nome: dict(zip(PALETTE_KEYS, cores)) for nome, cores in {
-    "Essence": ("#000000", "#0000FF", "#FFFF00", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#3A3D3A"),
-    "Cyan": ("#000000", "#003D4A", "#08E7FF", "#FFFFFF", "#08E7FF", "#00FFBD", "#08E7FF", "#08E7FF", "#84CEEF", "#AD41E6", "#00FFBD", "#294142"),
-    "Crimson": ("#000000", "#3A0000", "#FF1819", "#FFFFFF", "#FF1819", "#FF7D7B", "#FF1819", "#FF1819", "#FF1819", "#FFFF00", "#FF7D7B", "#4A4D4A"),
-    "Monochrome": ("#000000", "#292D29", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#DEFFE6", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#DEFFE6", "#7B797B", "#4A4D4A"),
-    "Volcano": ("#080031", "#292D29", "#FF8200", "#FFFFFF", "#FF8200", "#FF3100", "#FF8200", "#FF8200", "#FF8200", "#FF3100", "#FF3100", "#522800"),
-    "Dendro": ("#000000", "#004100", "#00FF00", "#FFFFFF", "#00FF00", "#00DB84", "#00FF00", "#00FF00", "#00DB84", "#00FF00", "#00DB84", "#4A4D4A"),
-    "Sakura": ("#000000", "#3A0829", "#F779AD", "#FFFFFF", "#F779AD", "#F70052", "#F779AD", "#F779AD", "#F779AD", "#D600FF", "#F70052", "#3A1829"),
-    "Whiteout": ("#DEFFE6", "#101010", "#000000", "#000000", "#000000", "#101010", "#000000", "#000000", "#00DB84", "#000000", "#7B797B", "#7B797B"),
-    "Tangerine": ("#000000", "#3A1408", "#FF3100", "#FFFFFF", "#FF3100", "#EFA600", "#FF3100", "#FF3100", "#FF8200", "#EFA600", "#EFA600", "#63493A"),
-    "Ocean": ("#000000", "#000084", "#003DFF", "#FFFFFF", "#003DFF", "#00A2FF", "#003DFF", "#003DFF", "#08E7FF", "#003DFF", "#00A2FF", "#424163"),
-    "Indigo": ("#000000", "#6300B5", "#8C00FF", "#FFFFFF", "#8C00FF", "#D600FF", "#8C00FF", "#8C00FF", "#F70052", "#8C00FF", "#D600FF", "#4A3563"),
-    "Queer": ("#210008", "#6300B5", "#F70052", "#FFFFFF", "#F70052", "#FF1819", "#FF7D7B", "#F70052", "#F70052", "#EFA600", "#D600FF", "#422421"),
-    "GoldBrite": ("#000000", "#0000FF", "#FFFFFF", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#3A3D3A"),
-    "Bubblegum": ("#190429", "#6300B5", "#FFB6FF", "#FFFFFF", "#08E7FF", "#F70052", "#00FFBD", "#F70052", "#00FFBD", "#D600FF", "#D600FF", "#4A3563"),
-    "Aurora": ("#000000", "#003D4A", "#00FFBD", "#FFFFFF", "#00FFBD", "#AD41E6", "#00FFBD", "#AD41E6", "#00FFBD", "#AD41E6", "#AD41E6", "#4A4D4A"),
-    "Ember": ("#000000", "#3A1408", "#FF7D7B", "#FFFFFF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#FF7D7B", "#84CEEF", "#84CEEF", "#4A4D4A"),
-    "Glacier": ("#000000", "#424163", "#84CEEF", "#FFFFFF", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#84CEEF", "#00FFBD", "#00FFBD", "#4A4D4A"),
-}.items()}
-# Megatron: o código é fechado, então a prévia usa as cores da linha oficial em 532c4ef (01/09/2024), o estado
-# mais novo com os mesmos 13 temas em comum (ainda chama o Queer de Maroon e não tem o Bubblegum).
-# Chinese Red e Retro ficam sem prévia até termos fotos da tela.
-THEME_PALETTE_MOD17 = {nome: dict(zip(PALETTE_KEYS, cores)) for nome, cores in {
-    "Essence": ("#000000", "#0000FF", "#FFFF00", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#00FF00", "#FF0000", "#00FFBD", "#101010"),
-    "Cyan": ("#000000", "#003D4A", "#08E7FF", "#FFFFFF", "#08E7FF", "#00FFBD", "#08E7FF", "#08E7FF", "#08E7FF", "#FF0000", "#00FFBD", "#294142"),
-    "Crimson": ("#000000", "#3A0000", "#FF1819", "#FFFFFF", "#FF1819", "#FF7D7B", "#FF1819", "#FF1819", "#FF1819", "#FFFF00", "#FF7D7B", "#4A4D4A"),
-    "Monochrome": ("#000000", "#292D29", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#7B797B", "#FFFFFF", "#FFFFFF", "#00FF00", "#FF0000", "#7B797B", "#4A4D4A"),
-    "Volcano": ("#080031", "#292D29", "#FF8200", "#FFFFFF", "#FF8200", "#FF3100", "#FF8200", "#FF8200", "#FF8200", "#FF0000", "#FF3100", "#522800"),
-    "Dendro": ("#000000", "#004100", "#00FF00", "#FFFFFF", "#00FF00", "#00DB84", "#00FF00", "#00FF00", "#00FF00", "#FF0000", "#00DB84", "#4A4D4A"),
-    "Sakura": ("#000000", "#3A0829", "#F779AD", "#FFFFFF", "#F779AD", "#F70052", "#F779AD", "#F779AD", "#F779AD", "#FF0000", "#F70052", "#3A1829"),
-    "Whiteout": ("#DEFFE6", "#101010", "#000000", "#000000", "#000000", "#101010", "#000000", "#000000", "#00FF00", "#000000", "#7B797B", "#7B797B"),
-    "Tangerine": ("#000000", "#3A1408", "#FF3100", "#FFFFFF", "#FF3100", "#EFA600", "#FF3100", "#FF3100", "#00FF00", "#FF0000", "#EFA600", "#63493A"),
-    "Ocean": ("#000000", "#000084", "#003DFF", "#FFFFFF", "#003DFF", "#00A2FF", "#003DFF", "#003DFF", "#003DFF", "#FF0000", "#00A2FF", "#424163"),
-    "Indigo": ("#000000", "#6300B5", "#8C00FF", "#FFFFFF", "#8C00FF", "#D600FF", "#8C00FF", "#8C00FF", "#8C00FF", "#FF0000", "#D600FF", "#4A3563"),
-    "Maroon": ("#210008", "#6300B5", "#F70052", "#FFFFFF", "#F70052", "#FF1819", "#FF7D7B", "#F70052", "#F70052", "#EFA600", "#D600FF", "#422421"),
-    "GoldBrite": ("#000000", "#0000FF", "#FFFFFF", "#FFFFFF", "#FFFF00", "#84CEEF", "#FFFF00", "#FF0000", "#003DFF", "#FF0000", "#00FFBD", "#101010"),
-}.items()}
+# cores de cada tema, geradas por scripts/temas.py a partir do código do firmware: para cada papel
+# (fundo, moldura, frequência...), o hex, o nome da cor no firmware e o valor RGB565. Linha oficial: v2.20.12.
+# Megatron: o código é fechado, então vale a linha oficial em 532c4ef (01/09/2024), o estado mais novo com os
+# mesmos 13 temas em comum (ainda chama o Queer de Maroon e não tem o Bubblegum). Chinese Red e Retro ficam
+# sem prévia até termos fotos da tela.
+_TEMAS = json.loads((pathlib.Path(__file__).parent / "temas.json").read_text(encoding="utf-8"))
+THEME_PALETTE = {t: {k: v[0] for k, v in pp.items()} for t, pp in _TEMAS["oficial"]["temas"].items()}
+THEME_NAMES = {t: {k: v[1:] for k, v in pp.items()} for t, pp in _TEMAS["oficial"]["temas"].items()}
+THEME_PALETTE_MOD17 = {t: {k: v[0] for k, v in pp.items()} for t, pp in _TEMAS["mod17"]["temas"].items()}
+THEME_NAMES_MOD17 = {t: {k: v[1:] for k, v in pp.items()} for t, pp in _TEMAS["mod17"]["temas"].items()}
 # Megatron: ordem da tabela de temas e de fontes no binário do Mod17 (o Mod16 não tem o Retro)
 THEMES_MOD17 = ["Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine",
                 "Ocean", "Indigo", "Maroon", "Chinese Red", "Retro", "GoldBrite"]
@@ -167,7 +139,7 @@ OFICIAL = [
         o("Tema", "Theme", dict(L(*THEMES, nota="Aurora, Ember e Glacier só existem no código da v2.20.12; o pacote "
                                 "v2.20.8 da DEEPELEC tem os outros 14. Nos pacotes v2.11.x, o Queer se chama Maroon, com "
                                 "as mesmas cores, e o Bubblegum aparece a partir da v2.11.5. O Whiteout é o único tema "
-                                "claro."), paleta=THEME_PALETTE, previa="tema"), "Essence"),
+                                "claro."), paleta=THEME_PALETTE, nomes=THEME_NAMES, previa="tema"), "Essence"),
         o("Fonte de frequência", "Frequency font",
           dict(L(*FONTS, nota="Essas fontes só têm os algarismos e o ponto. A Comic saiu do código em dezembro de 2025, "
                               "para liberar espaço no flash; os pacotes da DEEPELEC até a v2.20 ainda a trazem."),
@@ -331,7 +303,7 @@ MOD17 = [
         m("Theme", dict(L(*THEMES_MOD17, nota="Chinese Red e Retro só existem no Megatron. O Retro entrou no Mod17; o Mod16 "
                                           "tem 14 temas. Faltam Bubblegum, Aurora, Ember e Glacier, que vieram depois na "
                                           "linha oficial. A troca automática entre favoritos fica em My settings › My theme."),
-                        paleta=THEME_PALETTE_MOD17, previa="tema"),
+                        paleta=THEME_PALETTE_MOD17, nomes=THEME_NAMES_MOD17, previa="tema"),
           "F C", desc="Tema de cores."),
         m("Frequency font", dict(L(*FONTS_MOD17, nota="As mesmas da linha oficial até a v2.20, incluindo a Comic."),
                                  previa="fonte"), "F", desc="Fonte dos números da frequência."),

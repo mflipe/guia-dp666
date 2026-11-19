@@ -454,61 +454,124 @@
     }
     // prévia dos temas e das fontes da frequência: cores tiradas do código e o número desenhado com as fontes do firmware
     // cada firmware guarda o seu tema e a sua fonte na prévia; temas sem cores conhecidas ficam sem prévia
-    var PV = D.previa || { fontes: {} }, pv = {}, pvN = 0, paletas = {};
+    var PV = D.previa || { fontes: {} }, pv = {}, pvN = 0, paletas = {}, nomesCor = {};
     ["oficial", "mod17"].forEach(function (fw) {
-      var e = pv[fw] = { tema: "", fonte: "" };
+      var e = pv[fw] = { tema: "", fonte: "", foco: "" };
       (D[fw] ? D[fw].grupos : []).forEach(function (g) {
         g.itens.forEach(function (x) {
           var sp = x.spec || {};
           if (sp.previa === "tema" && sp.paleta) {
             paletas[fw] = sp.paleta;
+            nomesCor[fw] = sp.nomes;
             e.tema = sp.paleta[x.padrao] ? x.padrao : sp.opcoes.filter(function (o) { return sp.paleta[o]; })[0];
           }
           if (sp.previa === "fonte" && !e.fonte) e.fonte = PV.fontes[x.padrao] ? x.padrao : PV.fontes.Aura2 ? "Aura2" : sp.opcoes[0];
         });
       });
     });
-    function digitos(nome, cor, x, y) {
+    function digitos(nome, cor, x, y, pp) {
       var f = PV.fontes[nome];
       if (!f) return "";
       var id = "pvf" + (++pvN);
       return '<filter id="' + id + '" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feFlood ' +
         (cor ? 'flood-color="' + cor + '"' : 'style="flood-color:var(--ink)"') + '/><feComposite in2="SourceAlpha" operator="in"/></filter>' +
-        '<image href="' + f.png + '" x="' + x + '" y="' + y + '" width="' + f.w + '" height="' + f.h + '" filter="url(#' + id + ')"/>';
+        '<image href="' + f.png + '" x="' + x + '" y="' + y + '" width="' + f.w + '" height="' + f.h + '" filter="url(#' + id + ')"' + (pp || "") + "/>";
     }
-    function txt(x, y, t, cor, tam, ancora) {
-      return '<text x="' + x + '" y="' + y + '" fill="' + cor + '" font-size="' + tam + '"' + (ancora ? ' text-anchor="' + ancora + '"' : "") + ">" + t + "</text>";
+    // papéis de cor de um tema: rótulo, onde aparece (segundo o código da linha oficial) e se está na telinha
+    var PAPEIS = [
+      ["fundo", "Fundo da tela", "O fundo de todas as telas. Também o texto dentro das etiquetas acesas, como MAN e AUTO BW.", 1],
+      ["moldura", "Moldura", "A borda e as linhas que dividem a tela principal e as telas de RDS e de AF. Nos menus de toque, o fundo dos botões.", 1],
+      ["freq", "Frequência", "O número grande da frequência e o nível do sinal.", 1],
+      ["ativo", "Rótulos", "Os textos fixos: MHz, kHz, dBµV, CN, US, MP, as escalas dos medidores, a borda da bateria e os nomes e títulos dos menus.", 1],
+      ["prim", "Principal", "Os valores que mudam: CN, US, MP, os valores nos menus, as bandas no seletor e a marca de pico da modulação. O alto-falante fica nessa cor quando o squelch corta o som.", 1],
+      ["sec", "Secundária", "O fundo das etiquetas acesas: o modo de sintonia (MAN, AUTO ou MEM), AUTO BW, iMS e EQ.", 1],
+      ["rds", "RDS", "O nome da estação (PS), o PI, o PTY, o RadioText, o relógio do RDS e o logo RDS aceso.", 1],
+      ["st", "Estéreo", "O ícone de estéreo, aceso quando a estação transmite em estéreo.", 1],
+      ["cinza", "Apagado", "O que está desligado: etiquetas apagadas, os ícones de estéreo e RDS sem sinal, TP, TA e AF ausentes, a parte vazia dos medidores e o alto-falante com som.", 1],
+      ["bar", "Medidor de sinal, início", "O começo do medidor de sinal, que passa em degradê para a cor do fim. Também a carga da bateria e a barra da memória automática.", 1],
+      ["barS", "Medidor de sinal, fim", "O fim do medidor de sinal, com sinal forte. Também a bateria vazia e o Wi-Fi sem conexão.", 1],
+      ["mod", "Medidor de modulação, início", "O começo do medidor de modulação, que passa em degradê para a cor do fim.", 1],
+      ["modS", "Medidor de modulação, fim", "O fim do medidor de modulação e a marca de pico quando a modulação passa de 80%.", 1],
+      ["bw", "Banda automática", "O número da largura de banda quando ela está no automático. Na tela de AF, a frequência, o PS e o PI.", 1],
+      ["rdsQueda", "RDS perdido", "Os mesmos textos do RDS quando o sinal do RDS cai: a tela mantém o último texto nessa cor.", 0],
+      ["alerta", "Alerta", "Avisos: erro no RDS, sintonia fora do centro, o número digitado no teclado de frequência, a etiqueta MEM enquanto grava e o número de uma memória ocupada, que seria sobrescrita.", 0],
+      ["ok", "Tudo certo", "Sinais de que está tudo bem: RDS sem erro, sintonia no centro, o passo de sintonia, o RadioText A/B e o número de uma memória vazia.", 0],
+      ["bat", "Bateria", "A tensão ou a porcentagem da bateria, quando o rádio mostra números no lugar do ícone.", 0],
+      ["wifi", "Wi-Fi fraco", "O ícone de Wi-Fi com sinal fraco.", 0],
+      ["wifiS", "Wi-Fi forte", "O ícone de Wi-Fi com sinal forte.", 0]
+    ];
+    // atributo de papel: com uma cor em destaque, o que não é dela fica apagado na telinha
+    function papel(e, lista) {
+      return ' data-c="' + lista + '"' + (e.foco && (" " + lista + " ").indexOf(" " + e.foco + " ") < 0 ? ' class="pv-off"' : "");
+    }
+    function txt(x, y, t, cor, tam, ancora, pp) {
+      return '<text x="' + x + '" y="' + y + '" fill="' + cor + '" font-size="' + tam + '"' + (ancora ? ' text-anchor="' + ancora + '"' : "") + (pp || "") + ">" + t + "</text>";
+    }
+    function caixa(x, y, w, h, cor, pp) {
+      return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="2" fill="' + cor + '"' + pp + "/>";
     }
     // a tela principal da linha oficial, simplificada: posições de gui.cpp (BuildDisplay) e cores do tema
     function tela(fw) {
-      var e = pv[fw], p = paletas[fw][e.tema], f = PV.fontes[e.fonte] || { w: 0, h: 0 };
-      var escala = function (lista, y) { return lista.map(function (a) { return txt(a[1], y, a[0], p.ativo, 11); }).join(""); };
+      var e = pv[fw], p = paletas[fw][e.tema], f = PV.fontes[e.fonte] || { w: 0, h: 0 }, g1 = "pvg" + (++pvN), g2 = "pvg" + (++pvN);
+      var A = papel(e, "ativo"), R = papel(e, "rds"), F = papel(e, "fundo");
+      var escala = function (lista, y) { return lista.map(function (a) { return txt(a[1], y, a[0], p.ativo, 11, "", A); }).join(""); };
+      var etiqueta = function (x, y, w, t, lig) {
+        return caixa(x, y, w, 18, lig ? p.sec : p.cinza, papel(e, lig ? "sec" : "cinza")) + txt(x + w / 2, y + 14, t, p.fundo, 11, "middle", F);
+      };
       return '<svg class="aj-tela" viewBox="0 0 320 240" role="img" aria-label="' + esc("Prévia da tela no tema " + e.tema + ", com a fonte " + e.fonte) + '">' +
-        '<rect x="0.5" y="0.5" width="319" height="239" fill="' + p.fundo + '" stroke="' + p.moldura + '"/>' +
+        '<defs><linearGradient id="' + g1 + '" gradientUnits="userSpaceOnUse" x1="58" x2="120" y1="0" y2="0"><stop offset="0" stop-color="' + p.bar +
+        '"/><stop offset="1" stop-color="' + p.barS + '"/></linearGradient><linearGradient id="' + g2 + '" gradientUnits="userSpaceOnUse" x1="58" x2="120" y1="0" y2="0"><stop offset="0" stop-color="' +
+        p.mod + '"/><stop offset="1" stop-color="' + p.modS + '"/></linearGradient></defs>' +
+        '<rect width="320" height="240" fill="' + p.fundo + '"/>' +
+        '<g fill="none" stroke="' + p.moldura + '"' + papel(e, "moldura") + '><rect x="0.5" y="0.5" width="319" height="239"/>' +
         '<path d="M0 30.5H320M0 100.5H320M0 160.5H195M0 180.5H320M0 217.5H320M30.5 0V30M66.5 0V30M105.5 0V30M162.5 0V30M248.5 0V30' +
-        'M195.5 100V180M195 144.5H320M210.5 180V217M257.5 144V180" fill="none" stroke="' + p.moldura + '"/>' +
-        '<g fill="none" stroke="' + p.st + '" stroke-width="2"><circle cx="42" cy="16" r="7"/><circle cx="53" cy="16" r="7"/></g>' +
-        txt(85.5, 21, "RDS", p.rds, 12, "middle") + txt(201, 25, "236", p.bw, 22, "end") + txt(245, 25, "kHz", p.ativo, 22, "end") +
-        '<path d="M255 12h5l6-5v18l-6-5h-5z" fill="' + p.cinza + '"/>' +
-        digitos(e.fonte, p.freq, 244 - f.w, 42) +
-        txt(7, 113, "S", p.ativo, 12, "middle") + '<path d="M16 114.5H189M16 143.5H189" stroke="' + p.ativo + '"/>' +
-        '<rect x="22" y="110" width="82" height="3" fill="' + p.bar + '"/><rect x="106" y="110" width="40" height="3" fill="' + p.barS + '"/>' +
+        'M195.5 100V180M195 144.5H320M210.5 180V217M257.5 144V180"/></g>' +
+        '<g fill="none" stroke="' + p.st + '" stroke-width="2"' + papel(e, "st") + '><circle cx="42" cy="16" r="7"/><circle cx="53" cy="16" r="7"/></g>' +
+        txt(85.5, 21, "RDS", p.rds, 12, "middle", R) + txt(201, 25, "236", p.bw, 22, "end", papel(e, "bw")) + txt(245, 25, "kHz", p.ativo, 22, "end", A) +
+        '<path d="M255 12h5l6-5v18l-6-5h-5z" fill="' + p.cinza + '"' + papel(e, "cinza") + "/>" +
+        '<g' + A + '><rect x="277.5" y="6.5" width="36" height="19" rx="2" fill="none" stroke="' + p.ativo + '"/><rect x="313" y="13" width="4" height="6" rx="1" fill="' + p.ativo + '"/></g>' +
+        caixa(279, 8, 24, 16, p.bar, papel(e, "bar")) +
+        etiqueta(2, 36, 40, "MAN", true) + etiqueta(2, 58, 40, "AUTO", false) + etiqueta(2, 80, 40, "MEM", false) +
+        etiqueta(248, 36, 69, "AUTO BW", true) + etiqueta(249, 57, 30, "iMS", true) + etiqueta(287, 57, 30, "EQ", false) +
+        digitos(e.fonte, p.freq, 244 - f.w, 42, papel(e, "freq")) + txt(258, 96, "MHz", p.ativo, 20, "", A) +
+        txt(7, 113, "S", p.ativo, 12, "middle", A) + '<path d="M16 114.5H189M16 143.5H189" stroke="' + p.ativo + '"' + A + "/>" +
+        '<rect x="16" y="105" width="42" height="6" fill="' + p.bar + '"' + papel(e, "bar") + '/><rect x="58" y="105" width="62" height="6" fill="url(#' + g1 + ')"' + papel(e, "bar barS") +
+        '/><rect x="120" y="105" width="6" height="6" fill="' + p.barS + '"' + papel(e, "barS") + '/><rect x="126" y="105" width="64" height="6" fill="' + p.cinza + '"' + papel(e, "cinza") + "/>" +
         escala([["1", 21], ["3", 41], ["5", 61], ["7", 81], ["9", 101], ["+10", 127], ["+30", 160]], 127) +
-        txt(7, 140, "A", p.ativo, 12, "middle") + '<rect x="22" y="139" width="64" height="3" fill="' + p.bar + '"/>' +
+        txt(7, 140, "A", p.ativo, 12, "middle", A) +
+        '<rect x="16" y="133" width="42" height="6" fill="' + p.mod + '"' + papel(e, "mod") + '/><rect x="58" y="133" width="38" height="6" fill="url(#' + g2 + ')"' + papel(e, "mod modS") +
+        '/><rect x="96" y="133" width="94" height="6" fill="' + p.cinza + '"' + papel(e, "cinza") + '/><rect x="108" y="133" width="2" height="6" fill="' + p.prim + '"' + papel(e, "prim") + "/>" +
         escala([["10", 24], ["30", 54], ["50", 84], ["70", 114], ["100", 160]], 156) +
-        txt(280, 141, "45", p.freq, 40, "end") + txt(285, 124, ".2", p.freq, 22) + txt(316, 141, "dBµV", p.ativo, 11, "end") +
-        txt(197, 177, "CN:", p.ativo, 12) + txt(234, 177, "18", p.prim, 12, "end") + txt(255, 177, "dB", p.ativo, 12, "end") +
-        txt(259, 159, "US:", p.ativo, 12) + txt(299, 159, "3", p.prim, 12, "end") + txt(316, 159, "%", p.ativo, 12, "end") +
-        txt(259, 177, "MP:", p.ativo, 12) + txt(299, 177, "2", p.prim, 12, "end") + txt(316, 177, "%", p.ativo, 12, "end") +
-        txt(34, 175, "Pop", p.rds, 12) + txt(36, 208, "DP-666", p.rds, 22) + txt(265, 204, "C201", p.rds, 13, "middle") +
-        txt(36, 233, "DP-666 FM 98.10 MHz", p.rds, 12) + "</svg>";
+        txt(280, 141, "45", p.freq, 40, "end", papel(e, "freq")) + txt(285, 124, ".2", p.freq, 22, "", papel(e, "freq")) + txt(316, 141, "dBµV", p.ativo, 11, "end", A) +
+        txt(197, 177, "CN:", p.ativo, 12, "", A) + txt(234, 177, "18", p.prim, 12, "end", papel(e, "prim")) + txt(255, 177, "dB", p.ativo, 12, "end", A) +
+        txt(259, 159, "US:", p.ativo, 12, "", A) + txt(299, 159, "3", p.prim, 12, "end", papel(e, "prim")) + txt(316, 159, "%", p.ativo, 12, "end", A) +
+        txt(259, 177, "MP:", p.ativo, 12, "", A) + txt(299, 177, "2", p.prim, 12, "end", papel(e, "prim")) + txt(316, 177, "%", p.ativo, 12, "end", A) +
+        txt(34, 175, "Pop", p.rds, 12, "", R) + txt(36, 208, "DP-666", p.rds, 22, "", R) + txt(265, 204, "C201", p.rds, 13, "middle", R) +
+        txt(36, 233, "DP-666 FM 98.10 MHz", p.rds, 12, "", R) + "</svg>";
+    }
+    // as cores do tema da prévia: nome no firmware, hex e onde aparecem; as que estão na telinha viram botões
+    function coresLinhas(fw) {
+      var e = pv[fw], nomes = nomesCor[fw] && nomesCor[fw][e.tema], p = paletas[fw][e.tema];
+      if (!nomes) return "";
+      return PAPEIS.filter(function (r) { return nomes[r[0]]; }).map(function (r) {
+        var n = nomes[r[0]], on = e.foco === r[0];
+        var cab = '<span class="aj-cor-sw" style="background:' + p[r[0]] + '"></span><span class="aj-cor-n">' + esc(r[1]) +
+          '</span><span class="aj-cor-v">' + esc(n[0]) + " <code>" + esc(p[r[0]]) + "</code> <code>" + esc(n[1]) + "</code></span>";
+        return '<li class="aj-cor' + (on ? " is-on" : "") + '">' + (r[3] ?
+          '<button type="button" class="aj-pick aj-cor-b" data-pv="cor" data-v="' + r[0] + '" aria-pressed="' + on + '">' + cab + "</button>" :
+          '<div class="aj-cor-b">' + cab + "</div>") + '<p class="aj-cor-d">' + esc(r[2]) + "</p></li>";
+      }).join("");
     }
     function telaBox(fw) {
-      var e = pv[fw];
+      var e = pv[fw], n = PAPEIS.filter(function (r) { return nomesCor[fw] && nomesCor[fw][e.tema] && nomesCor[fw][e.tema][r[0]]; }).length;
       return '<div class="aj-prev" data-pv-box="tema">' + tela(fw) + '<p class="aj-prev-leg" aria-live="polite">' +
         esc(e.tema + ", com a fonte " + e.fonte + ".") + "</p></div>" + '<p class="aj-note">' + (fw === "oficial" ?
         "Toque num tema para ver a tela com as cores dele. As cores e os números vêm do código; o resto é aproximado." :
-        "Toque num tema para ver a tela com as cores dele. As cores vêm da linha oficial, e os temas apagados ainda não têm prévia.") + "</p>";
+        "Toque num tema para ver a tela com as cores dele. As cores vêm da linha oficial, e os temas apagados ainda não têm prévia.") + "</p>" +
+        (n ? '<ol class="aj-cores is-many" data-pv-cores aria-label="' + esc("Cores do tema " + e.tema) + '">' + coresLinhas(fw) + "</ol>" +
+          '<button type="button" class="aj-more" data-n="cores" aria-expanded="false">' + "Ver as " + n + " cores" + "</button>" +
+          '<p class="aj-note">' + "O firmware guarda cada cor em 16 bits (RGB565); o hex de 24 bits é a conversão. Toque numa cor para ver onde ela aparece na tela." +
+          (fw === "oficial" ? "" : " " + "Onde cada cor aparece segue o código da linha oficial.") + "</p>" : "");
     }
     // amostra de uma fonte: o número sobre o fundo do tema da prévia (sem tema, na cor do texto)
     function amostraFonte(nome, fw) {
@@ -531,7 +594,8 @@
     function pintarPrevia(tipo, v) {
       var fw = st.fw;
       if (!pv[fw]) return;
-      pv[fw][tipo] = v;
+      if (tipo === "cor" && pv[fw].foco === v) v = "";   // tocar de novo na mesma cor tira o destaque
+      pv[fw][tipo === "cor" ? "foco" : tipo] = v;
       $$('[data-pv="' + tipo + '"]', list).forEach(function (b) {
         var on = b.dataset.v === v;
         b.setAttribute("aria-pressed", String(on));
@@ -541,6 +605,10 @@
         var svg = $("svg", box), leg = $(".aj-prev-leg", box);
         if (svg) svg.outerHTML = tela(fw);
         if (leg) leg.textContent = pv[fw].tema + ", com a fonte " + pv[fw].fonte + ".";
+      });
+      if (tipo === "tema") $$("[data-pv-cores]", list).forEach(function (ol) {
+        ol.innerHTML = coresLinhas(fw);
+        ol.setAttribute("aria-label", "Cores do tema " + v);
       });
       if (tipo === "tema") $$(".aj-fs-list", list).forEach(function (ol) {
         $$(".aj-fs", ol).forEach(function (li) {
@@ -648,7 +716,7 @@
         var ol = more.previousElementSibling, on = !ol.classList.contains("open");
         ol.classList.toggle("open", on);
         more.setAttribute("aria-expanded", String(on));
-        more.textContent = on ? "Mostrar menos" : "Ver as " + ol.children.length + " opções";
+        more.textContent = on ? "Mostrar menos" : "Ver as " + ol.children.length + (more.dataset.n === "cores" ? " cores" : " opções");
         return;
       }
       var b = e.target.closest(".aj-row");
