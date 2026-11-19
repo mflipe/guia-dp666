@@ -1,0 +1,23 @@
+/* placa */
+.pl-stage { position: relative; height: 480px; background: var(--bg); overflow: hidden; }
+.pl-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.pl-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.pl-label { position: absolute; left: 0; top: 0; padding: 2px 6px; border-radius: 6px; background: var(--bg); box-shadow: 0 0 0 1px var(--rule); font: 600 0.68rem var(--font-mono); white-space: nowrap; color: var(--ink); will-change: transform; }
+.pl-label.dim { opacity: 0.35; }
+.pl-label.sel { background: var(--ink); color: var(--bg); box-shadow: none; }
+.pl-buses { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.pl-info { padding: 16px 18px; border-radius: 14px; border: 1px solid var(--rule); background: var(--bg); line-height: 1.55; }
+.pl-info h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.pl-info ul { margin: 8px 0 0; padding-left: 18px; }
+.pl-load { display: grid; place-items: center; height: 100%; padding: 20px; text-align: center; color: var(--muted); }
+@media (max-width: 760px) {
+  .pl-stage { height: 440px; }
+}
+.pl-stage { background: none; }
+/* placa */
+.pl-info { padding: 14px 0 0; border: 0; border-top: 1px solid var(--rule); border-radius: 0; background: none; }
+.pl-label { box-shadow: none; }
+.pl-label { border-radius: 3px; }
+@media (max-width: 760px) {
+  .pl-stage { margin-left: -16px; margin-right: -16px; }
+}

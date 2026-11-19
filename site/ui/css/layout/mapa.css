@@ -1,0 +1,18 @@
+/* o mapa da página: a escala de um mostrador, uma marca por seção e a agulha onde você está lendo */
+.mapa { display: none; }
+@media (min-width: 1180px) {
+  .mapa { display: block; position: fixed; z-index: 30; top: 120px; bottom: 120px; left: calc(50% + var(--wrap) / 2 + 56px); width: min(240px, calc(50% - var(--wrap) / 2 - 80px)); }
+  .mapa[hidden] { display: none; }
+}
+.mapa-escala { position: absolute; left: 10px; top: 0; bottom: 0; width: 1px; background: var(--tick); }
+.mapa-escala::before { content: ""; position: absolute; left: -4px; top: 0; bottom: 0; width: 4px; background: repeating-linear-gradient(var(--rule) 0 1px, transparent 1px 9px); }
+.mapa-marca { position: absolute; left: -4px; width: 28px; height: 18px; margin-top: -9px; padding: 0; border: 0; background: none; cursor: pointer; }
+.mapa-marca::before { content: ""; position: absolute; left: 4px; top: 8px; width: 11px; height: 1.5px; background: var(--tick); transition: width 0.15s, background-color 0.15s; }
+.mapa-marca:hover::before, .mapa-marca:focus-visible::before { width: 16px; background: var(--accent-mark); }
+.mapa-dica { position: absolute; left: 34px; top: -1px; padding: 1px 7px; border-radius: 4px; background: var(--surface); box-shadow: 0 0 0 1px var(--rule); color: var(--ink); font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s; }
+.mapa-marca:hover .mapa-dica, .mapa-marca:focus-visible .mapa-dica { opacity: 1; z-index: 2; }
+.mapa-agulha { position: absolute; left: -6px; width: 26px; height: 2px; margin-top: -1px; border-radius: 1px; background: var(--accent-mark); box-shadow: 0 0 6px rgb(242 177 76 / 0.45); pointer-events: none; transition: top 0.12s linear; }
+.mapa-olho { position: absolute; left: 3px; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--eye); box-shadow: 0 0 0 1px var(--eye-border), 0 0 8px var(--eye-glow); pointer-events: none; transition: top 0.12s linear; }
+.mapa-rot { position: absolute; left: 32px; right: 0; margin-top: -11px; display: grid; gap: 2px; pointer-events: none; transition: top 0.12s linear; }
+.mapa-rot b { font: 600 14px/1.25 var(--font-display); letter-spacing: 0.02em; color: var(--accent); }
+.mapa-rot span { font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--muted); }

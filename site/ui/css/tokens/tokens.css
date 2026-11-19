@@ -64,11 +64,6 @@
   color-scheme: dark;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scrollbar-gutter: stable; }
-html.sem-rolagem { overflow: hidden; }
-body { margin: 0; background-color: var(--bg); background-image: var(--grid-img); background-size: 24px 24px; color: var(--text); font: 400 16.5px/1.65 var(--font-sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; border-radius: 3px; }
-::selection { background: var(--accent-soft); }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (min-width: 1180px) and (max-width: 1279px) {
+  :root { --wrap: 760px; }
+}

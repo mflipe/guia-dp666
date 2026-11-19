@@ -1,0 +1,58 @@
+/* marcas de certeza (cor só no texto) e de origem */
+.st { font: 600 0.7rem var(--font-mono); letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap; vertical-align: 0.06em; }
+.st::before { content: "● "; font-size: 0.6rem; vertical-align: 0.1em; }
+.st-ok { color: var(--ok); }
+.st-maybe { color: var(--maybe); }
+.st-unk { color: var(--muted); }
+/* ficha rápida e atalhos da página inicial */
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 24px; margin: 26px 0 30px; padding: 20px 22px; background: var(--surface); border-radius: 12px; }
+.facts div { min-width: 0; }
+.facts dt { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 3px 0 0; font-weight: 500; font-variant-numeric: tabular-nums; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 8px 0 24px; }
+.tiles a { display: grid; gap: 2px; padding: 12px 14px; border-radius: 10px; color: var(--ink); text-decoration: none; }
+.tiles a:hover { background: var(--surface); }
+.tiles strong { color: var(--accent); font-weight: 600; }
+.tiles span { font-size: 0.9rem; color: var(--muted); line-height: 1.45; }
+/* fichas de componentes */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin: 18px 0 26px; }
+.card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 14px; background: var(--surface); border-radius: 12px; min-width: 0; }
+.card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.prose .card h3.pn { margin: 0; font: 600 0.98rem var(--font-mono); letter-spacing: -0.01em; scroll-margin-top: calc(var(--topbar-h, var(--top-h)) + 24px); }
+.card-ref { font: 500 0.75rem var(--font-mono); color: var(--muted); white-space: nowrap; }
+.prose .card p { margin: 0; }
+.card-role { font-weight: 500; line-height: 1.45; }
+.card-meta { font-size: 0.84rem; color: var(--muted); line-height: 1.45; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.tag { font: 600 0.68rem var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.tag::before { content: "● "; font-size: 0.6rem; vertical-align: 0.1em; }
+.tag-ok { color: var(--ok); }
+.tag-warn { color: var(--warn); }
+.tag-maybe { color: var(--maybe); }
+.tag-muted { color: var(--muted); }
+.prose .card-links { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 3px; font-size: 0.86rem; }
+.prose .card-links li { margin: 0; }
+.card-links a { text-decoration: none; font-weight: 500; }
+.card-links a::after, .refs a::after { content: " ↗"; font-size: 0.8em; }
+.card-links a:hover, .refs a:hover { text-decoration: underline; }
+.ref-title { font-weight: 600; text-decoration: none; }
+.ref-shows { font-size: 0.92rem; }
+.ref-meta { font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 900px) {
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 16px; }
+  .tiles, .prose .refs { grid-template-columns: minmax(0, 1fr); }
+}
+.tag { display: inline-block; vertical-align: 2px; margin-left: 6px; padding: 1px 6px; border: 1px solid var(--rule); border-radius: 6px; font: 600 0.66rem var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.st { font-family: var(--font-sans); font-size: 0.76rem; letter-spacing: 0; text-transform: none; }
+.tag { font-family: var(--font-sans); font-size: 0.72rem; letter-spacing: 0; text-transform: none; }
+.facts { padding: 16px 0; background: none; border-radius: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.facts dt { font-size: 0.8rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.tiles { gap: 0 32px; }
+.tiles a { padding: 12px 0; border-radius: 0; border-bottom: 1px solid var(--rule); }
+.tiles a:hover { background: none; }
+.tiles a:hover strong { text-decoration: underline; }
+.cards { gap: 0 32px; }
+.card { padding: 16px 0; background: none; border-radius: 0; border-top: 1px solid var(--rule); }
+.tiles strong { font-family: var(--font-display); letter-spacing: 0.01em; }
+.r-path { font: 500 0.78rem var(--font-sans); color: var(--muted); }
+.r-snip { font-size: 0.9rem; line-height: 1.45; color: var(--text); }

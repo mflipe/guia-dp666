@@ -1,0 +1,29 @@
+@media (max-width: 900px) {
+  .main { padding: 20px 16px 24px; }
+}
+@keyframes pulso { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+/* fundo: trilhas de circuito nas bordas da tela, com pulsos âmbar */
+.fundo { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.fundo svg { position: absolute; top: 0; width: 16px; height: 100%; }
+.fundo .f-esq { left: 0; }
+.fundo .f-dir { right: 0; }
+.fundo path { fill: none; stroke-linecap: round; }
+.fundo .tr { stroke: var(--trace); stroke-width: 1.5; }
+.fundo .pu { stroke: var(--accent-mark); stroke-width: 2; stroke-dasharray: 26 974; animation: pulso 9s linear infinite; }
+.fundo .f-dir .pu { animation-delay: -4.5s; }
+/* moldura: uma coluna de leitura no centro e nada fixo além do botão de sintonia */
+.app { transform-origin: 50% 0; transition: transform 0.34s cubic-bezier(0.2, 0.8, 0.2, 1); }
+body.pausado .app { transform: scale(0.96); }
+.main { max-width: calc(var(--wrap) + 64px); margin: 0 auto; padding: 44px 32px 120px; }
+#main { min-width: 0; }
+.site-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.82rem; }
+.site-foot p { margin: 4px 0; max-width: 72ch; }
+.site-foot .side-foot { margin: 4px 0; }
+@media (max-width: 900px) {
+  .main { padding: 24px 16px 120px; }
+}
+.no-res { margin: 12px 12px 0 32px; font-size: 0.9rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  .fundo .pu, .mi-item.foco > .mi::before, .prox-next::before, .tool-card::before, .tiles a::before, .hlp-cat::before, .hlp-sym::before { animation: none !important; }
+  .app, body.pausado .app { transform: none; }
+}

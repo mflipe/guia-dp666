@@ -1,0 +1,78 @@
+.viewer3d .f3-stage { background: #e6e9ee; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .viewer3d .f3-stage { background: #a7b0bc; }
+}
+:root[data-theme="dark"] .viewer3d .f3-stage { background: #a7b0bc; }
+.viewer3d { --v3-h: 340px; }
+.v3-open { font: 600 0.92rem var(--font-sans); padding: 10px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+.v3-open:disabled { opacity: 0.7; cursor: progress; }
+/* a margem vem de .prose p: a nota sempre fica dentro do texto da página */
+.v3-note { font-size: 0.82rem; color: var(--muted); }
+.v3-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.v3-tab { font: 500 0.82rem var(--font-sans); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer; }
+.v3-tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.v3-desc { margin: 0 0 10px; font-size: 0.88rem; line-height: 1.5; }
+.v3-stage { position: relative; height: var(--v3-h); border-radius: 10px; border: 1px solid var(--rule); background: var(--bg); overflow: hidden; }
+.v3-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.v3-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 10px 0; }
+.v3-btn { font: 500 0.8rem var(--font-sans); padding: 5px 11px; border-radius: 6px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer; }
+.v3-btn[aria-pressed="true"] { border-color: var(--ink); }
+.v3-hint, .v3-muted { font-size: 0.8rem; color: var(--muted); }
+.v3-legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.v3-chip { display: inline-flex; align-items: center; gap: 6px; font: 500 0.78rem var(--font-sans); padding: 4px 10px 4px 8px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer; }
+.v3-chip[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.v3-n { font: 0.72rem var(--font-mono); color: var(--muted); }
+.v3-sw { display: inline-grid; place-items: center; flex: none; width: 11px; height: 11px; border-radius: 3px; font: 700 9px/1 var(--font-sans); font-style: normal; color: #fff; }
+.v3-sw-alert { width: 14px; height: 14px; border-radius: 50%; }
+.v3-info { margin: 12px 0 0; min-height: 3.2em; padding: 10px 12px; font-size: 0.88rem; line-height: 1.55; border: 1px solid var(--rule); border-radius: 8px; background: var(--bg); }
+.v3-tag { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; font-size: 0.78rem; color: var(--muted); }
+.v3-err { padding: 20px; color: var(--muted); }
+@media (max-width: 640px) {
+  .viewer3d { --v3-h: 280px; }
+}
+.home-radio .f3-home { height: clamp(210px, 32vw, 330px); }
+.f3-capa { display: block; width: 100%; height: 100%; object-fit: contain; }
+.f3-girar { position: absolute; top: 10px; right: 10px; padding: 7px 12px; font-size: 0.82rem; }
+.f3-home .f3-capa { cursor: pointer; }
+@media (max-width: 420px) {
+  .f3-girar { top: 8px; right: 8px; padding: 6px 10px; font-size: 0.78rem; }
+}
+/* o fundo do palco é claro nos dois temas, então a dica usa tinta escura fixa */
+.f3-dica { position: absolute; top: 10px; right: 12px; font-size: 0.8rem; font-weight: 500; color: #3a414c; pointer-events: none; transition: opacity 0.4s; }
+.f3-dica.sai { opacity: 0; }
+.sim-onde .f3-stage, .sim-onde-box .pl-load { height: 220px; }
+.p3-stage { position: relative; height: 430px; border-radius: 18px; border: 1px solid var(--rule); background: var(--surface); overflow: hidden; }
+.p3-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.p3-hold { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 8px 12px; border-radius: 10px; background: var(--bg); box-shadow: 0 0 0 1px var(--rule); font-size: 0.8rem; color: var(--muted); }
+.p3-bar { position: relative; height: 6px; margin: 2px 0 6px; border-radius: 3px; background: var(--rule); }
+.p3-bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 3px; background: var(--accent); }
+.p3-bar b { position: absolute; top: -3px; width: 2px; height: 12px; margin-left: -1px; background: var(--ink); }
+.p3-hint { margin-top: 8px !important; }
+.p3-rot { display: flex; gap: 8px; margin-top: 12px; }
+@media (max-width: 760px) {
+  .p3-stage { height: 470px; }
+}
+.v3-tabs { gap: 22px; margin-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.v3-tab { padding: 10px 0; border: 0; border-radius: 0; background: none; color: var(--muted); font-size: 0.86rem; box-shadow: inset 0 -2px 0 transparent; }
+.v3-tab[aria-selected="true"] { background: none; color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+.v3-chip { border: 0; background: var(--surface); }
+.v3-info { padding: 14px 0 0; border: 0; border-top: 1px solid var(--rule); border-radius: 0; background: none; }
+.v3-stage, .p3-stage { border: 0; border-radius: 0; }
+.v3-stage, .p3-stage { background: var(--surface); }
+.p3-stage { height: auto; aspect-ratio: 3 / 2; }
+@media (max-width: 760px) {
+  .p3-stage { height: 470px; aspect-ratio: auto; }
+  .v3-stage, .p3-stage { margin-left: -16px; margin-right: -16px; }
+}
+.v3-open { border-radius: 6px; }
+.v3-btn { border-radius: 4px; }
+.v3-stage, .p3-stage { border: 0; border-radius: 4px; background: var(--surface); box-shadow: 0 0 0 1px var(--rule); }
+@media (max-width: 760px) {
+  .v3-stage, .p3-stage { border-radius: 0; }
+}
+.tela-titulo .f3-home { height: clamp(150px, 40vw, 330px); }
+/* na tela de título o rádio flutua sobre o fundo; o palco claro volta quando o 3D abre */
+#page-inicio .tela-titulo .f3-home:not(:has(canvas)) { background: transparent; box-shadow: none; }
+@media (min-width: 760px) {
+  .tela-titulo .f3-home { height: clamp(220px, 26vw, 330px); }
+}

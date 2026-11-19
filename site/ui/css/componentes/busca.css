@@ -1,0 +1,20 @@
+.search { position: relative; flex: 1 1 auto; min-width: 0; }
+.search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.search input { width: 100%; height: 44px; padding: 0 12px 0 40px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 400 16px var(--font-sans); }
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: 2px solid var(--accent-mark); outline-offset: -1px; }
+/* resultados da busca, no lugar do menu enquanto há texto no campo */
+.results { display: grid; gap: 2px; }
+.results[hidden] { display: none; }
+.result { position: relative; display: grid; gap: 2px; padding: 10px 12px 10px 32px; border-radius: 6px; color: var(--ink); text-decoration: none; }
+.result::before { content: ""; position: absolute; left: 13px; top: 16px; width: 9px; height: 11px; background: var(--accent-mark); clip-path: polygon(0 0, 100% 50%, 0 100%); opacity: 0; }
+.result[aria-selected="true"] { background: var(--accent-soft); }
+.result[aria-selected="true"]::before { opacity: 1; }
+@media (hover: hover) {
+  .result:hover { background: var(--accent-soft); }
+}
+.result mark { background: transparent; color: var(--accent); font-weight: 600; }
+@media (min-width: 760px) {
+  .pausa-topo .search { flex: 0 1 420px; }
+  .results { max-width: 760px; }
+}

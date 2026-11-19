@@ -1,0 +1,12 @@
+/* o fim de cada página: o próximo passo em foco, leituras relacionadas e a volta ao menu */
+.proximo { max-width: 68ch; margin-top: 56px; padding-top: 12px; border-top: 1px solid var(--brass); }
+.prox-fim { margin: 0 0 8px; font-size: 0.84rem; color: var(--muted); }
+.prox-next { position: relative; display: flex; padding: 12px 12px 12px 32px; border-radius: 6px; background: var(--accent-soft); text-decoration: none; }
+.prox-next::before { content: ""; position: absolute; left: 13px; top: 42px; width: 9px; height: 11px; background: var(--accent-mark); clip-path: polygon(0 0, 100% 50%, 0 100%); animation: cursor 1.1s ease-in-out infinite; }
+.prox-txt { display: grid; gap: 3px; }
+.prox-rot { font-size: 0.8rem; color: var(--muted); }
+.prox-nome { font: 600 1.35rem/1.25 var(--font-display); letter-spacing: 0.02em; color: var(--accent); }
+.prox-desc { font-size: 0.92rem; line-height: 1.45; color: var(--text); }
+.prox-volta { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 8px 0 0; padding-left: 32px; }
+.prox-volta a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font: 500 0.95rem var(--font-display); letter-spacing: 0.02em; text-decoration: none; }
+.prox-volta a:hover { color: var(--accent); text-decoration: underline; }

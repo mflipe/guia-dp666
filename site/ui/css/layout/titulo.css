@@ -1,0 +1,24 @@
+.tt-topo { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 6px; }
+.tt-busca { width: 44px; height: 44px; flex: none; display: inline-grid; place-items: center; padding: 0; border: 0; border-radius: 8px; background: none; color: var(--text); cursor: pointer; }
+.tt-busca svg, .search svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.tt-grade { display: grid; gap: 6px 48px; }
+.tt-nome { text-align: center; }
+#page-inicio .page-head .tt-h1 { margin: 4px 0 0; display: grid; gap: 8px; font: 700 clamp(2.6rem, 10vw, 4.5rem)/1 var(--font-display); letter-spacing: 0.08em; color: var(--ink); text-shadow: 0 0 22px rgb(242 177 76 / 0.25); }
+.tt-sub { font: 600 clamp(1.1rem, 4.2vw, 1.45rem)/1.2 var(--font-display); letter-spacing: 0.03em; color: var(--text); text-shadow: none; }
+.tt-nome .lead { margin: 12px auto 0; max-width: 46ch; font-size: 0.95rem; color: var(--muted); }
+.tt-menu { margin: 14px -12px 0; }
+.tt-foco { display: none; }
+.tf-titulo { margin: 0; font: 600 1.7rem/1.2 var(--font-display); letter-spacing: 0.02em; color: var(--accent); }
+.tf-desc { margin: 8px 0 0; max-width: 62ch; color: var(--text); }
+.tf-secoes { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.tf-secoes a { display: flex; gap: 10px; padding: 5px 0; color: var(--text); font-size: 0.92rem; line-height: 1.35; text-decoration: none; }
+.tf-secoes a:hover, .tf-secoes a.atual { color: var(--accent); }
+.tf-secoes span { width: 18px; flex: none; padding-top: 2px; font-size: 0.8rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+@media (min-width: 760px) {
+  .tt-grade { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); grid-template-areas: "nome render" "menu render" "menu foco"; grid-template-rows: auto auto 1fr; align-items: start; }
+  .tt-nome { grid-area: nome; text-align: left; }
+  .tt-nome .lead { margin-left: 0; }
+  .tt-render { grid-area: render; }
+  .tt-menu { grid-area: menu; margin: 8px 0 0 -12px; }
+  .tt-foco { grid-area: foco; display: block; padding-top: 8px; }
+}
