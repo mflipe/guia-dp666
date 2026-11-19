@@ -51,6 +51,7 @@
     try { document.dispatchEvent(new CustomEvent("app:reveal", { detail: id })); } catch (e) {}
     var el = document.getElementById(id);
     if (!el) return;
+    if (telas && telas.page.contains(el)) { irAoElemento(el); return; }
     el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     ancorar(el);
   }
@@ -97,6 +98,7 @@
   function atualizar() {
     raf = 0;
     if (!pagina || menuAberto) return;
+    if (telas) { pintarTelas(); return; }
     var y = window.scrollY || window.pageYOffset || 0, vh = window.innerHeight;
     var r = pagina.getBoundingClientRect(), ini = r.top + y, alt = Math.max(1, r.height);
     var fim = ini + alt - vh;
@@ -118,7 +120,7 @@
     }, 400);
   }
   function mostrarCartao(i) {
-    if (secs.length < 2 || visivel(mapa)) return;
+    if (secs.length < 2 || visivel(mapa) || telas) return;
     cartao.querySelector(".cartao-t").textContent = secs[i].t;
     cartao.querySelector(".cartao-n").textContent = (i + 1) + " de " + secs.length;
     cartao.classList.add("on");
@@ -132,7 +134,7 @@
   function montarMapa() {
     mapa.innerHTML = "";
     agulha = olho = rotulo = null;
-    if (!pagina || secs.length < 2 || current === "inicio") { mapa.hidden = true; return; }
+    if (!pagina || secs.length < 2 || current === "inicio" || telas) { mapa.hidden = true; return; }
     mapa.hidden = false;
     var y = window.scrollY || window.pageYOffset || 0;
     var r = pagina.getBoundingClientRect(), ini = r.top + y, alt = Math.max(1, r.height);
@@ -158,6 +160,333 @@
     rotulo.firstChild.textContent = secs[i] ? secs[i].t : "";
     rotulo.lastChild.textContent = (i + 1) + " de " + secs.length;
   }
+
+  /* modo telas (protótipo): nas páginas com data-telas, a página não rola. O texto corre em colunas do tamanho da
+     tela, lado a lado, e a pessoa vira as telas: arrastando para o lado (ou para cima), com as setas, Page Down,
+     espaço, a roda do mouse ou os botões da barra. A página é o contêiner que rola na horizontal, sempre de tela em
+     tela. Uma âncora (o primeiro caractere da tela, ou o alvo de um link) segura a leitura no lugar quando a tela
+     muda de tamanho ou uma ferramenta termina de montar. O estilo está em ui/css/layout/telas.css. */
+  var telas = null, barra = null, barraPos = null, barraAnt = null, barraProx = null;
+  var animTelas = 0, tAjuste = 0, tReajuste = 0, obsTelas = null, toque = null, roda = { acc: 0, ult: 0, seguido: false };
+  function montarBarra() {
+    if (barra) return;
+    var seta = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + d + '"></path></svg>'; };
+    barra = document.createElement("nav");
+    barra.className = "telas-nav";
+    barra.setAttribute("aria-label", "Telas da página");
+    barra.hidden = true;
+    barra.innerHTML = C.botao(seta("M14.5 5.5 8 12l6.5 6.5"), { classe: "telas-btn", attrs: { "data-dir": "-1", "aria-label": "Tela anterior" } })
+      + '<p class="telas-pos" aria-live="polite"><b></b><span></span></p>'
+      + C.botao(seta("M9.5 5.5 16 12l-6.5 6.5"), { classe: "telas-btn", attrs: { "data-dir": "1", "aria-label": "Próxima tela" } });
+    document.getElementById("main").insertAdjacentElement("afterend", barra);
+    barraPos = barra.querySelector(".telas-pos");
+    barraAnt = barra.querySelector('[data-dir="-1"]');
+    barraProx = barra.querySelector('[data-dir="1"]');
+    barra.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-dir]");
+      if (b && telas && b.getAttribute("aria-disabled") !== "true") virar(+b.getAttribute("data-dir"));
+    });
+  }
+  function ligarTelas(page, mesma) {
+    if (telas && telas.page !== page) desligarTelas();
+    if (!page.hasAttribute("data-telas")) return;
+    montarBarra();
+    if (!telas) {
+      telas = { page: page, i: 0, n: 1, passo: 1, pad: 0, ancora: null, secTela: [] };
+      document.documentElement.classList.add("em-telas");
+      document.body.classList.add("em-telas");
+      barra.hidden = false;
+      ouvir(true);
+      page.addEventListener("scroll", aoRolarTelas, { passive: true });
+      if ("ResizeObserver" in window) {
+        obsTelas = new ResizeObserver(function () { clearTimeout(tReajuste); tReajuste = setTimeout(reajustarTelas, 80); });
+        $$(":scope > *, .prose > *", page).forEach(function (el) { obsTelas.observe(el); });
+      }
+      mesma = false;
+    }
+    if (!mesma) { telas.i = 0; telas.ancora = null; }
+    medirTelas();
+    irParaTela(mesma ? telas.i : 0, true);
+  }
+  function desligarTelas() {
+    if (!telas) return;
+    pararTelas();
+    ouvir(false);
+    telas.page.removeEventListener("scroll", aoRolarTelas);
+    if (obsTelas) { obsTelas.disconnect(); obsTelas = null; }
+    telas.page.scrollLeft = 0;
+    telas.page.style.removeProperty("--tela-h");
+    telas = null;
+    toque = null;
+    document.documentElement.classList.remove("em-telas");
+    document.body.classList.remove("em-telas");
+    if (barra) barra.hidden = true;
+  }
+  // largura de uma tela (coluna + espaço entre colunas), quantas telas há e em que tela começa cada seção
+  function medirTelas() {
+    var p = telas.page, cs = getComputedStyle(p);
+    var padL = parseFloat(cs.paddingLeft) || 0, padR = parseFloat(cs.paddingRight) || 0, gap = parseFloat(cs.columnGap) || 0;
+    p.style.setProperty("--tela-h", p.clientHeight + "px");
+    telas.pad = padL;
+    telas.passo = Math.max(1, p.clientWidth - padL - padR + gap);
+    telas.n = 1e6;
+    organizarTelas(p.clientHeight);
+    var n = Math.round((p.scrollWidth - padL - padR + gap) / telas.passo);
+    var ult = p.lastElementChild;
+    if (ult) { var rs = ult.getClientRects(); if (rs.length) n = Math.max(n, telaDoRetangulo(rs[rs.length - 1]) + 1); }
+    telas.n = Math.max(1, n);
+    telas.secTela = secs.map(function (s) { return telaDe(s.el); });
+  }
+  // Ajustes de diagramação, refeitos a cada medida. A ferramenta que vem depois do título da seção cabe no resto
+  // da tela dele e rola por dentro. Uma seção que abriria deixando a tela de antes quase vazia (menos de 40%)
+  // começa ali mesmo, se o título e o começo do texto couberem juntos; o fim da página também.
+  function vizinho(el, lado) {
+    for (; el && el !== telas.page; el = el.parentElement) {
+      var v = lado < 0 ? el.previousElementSibling : el.nextElementSibling;
+      if (v) return v;
+    }
+    return null;
+  }
+  function fimDe(el) { var rs = el.getClientRects(); return rs.length ? rs[rs.length - 1] : null; }
+  function margem(el, lado) { return parseFloat(getComputedStyle(el)["margin" + lado]) || 0; }
+  // a margem de baixo que chega até o próximo bloco: a do elemento e a dos últimos filhos, que se juntam a ela
+  function margemDeBaixo(el) {
+    var m = 0;
+    for (; el; el = el.lastElementChild) {
+      m = Math.max(m, margem(el, "Bottom"));
+      var cs = getComputedStyle(el);
+      if (parseFloat(cs.paddingBottom) || parseFloat(cs.borderBottomWidth) || cs.display !== "block" || cs.overflow !== "visible") break;
+    }
+    return m;
+  }
+  function organizarTelas(H) {
+    var p = telas.page, topo = p.getBoundingClientRect().top + (parseFloat(getComputedStyle(p).paddingTop) || 0);
+    var ferramentas = $$(".tool-embed", p), aberturas = $$(".prose h2, .proximo", p);
+    aberturas.forEach(function (h) { h.classList.remove("tela-segue"); });
+    function caber() {
+      ferramentas.forEach(function (t) {
+        t.style.maxHeight = "";
+        var ant = vizinho(t, -1), r = ant && fimDe(ant);
+        if (!r) return;
+        var resto = H - (r.bottom - topo) - Math.max(margemDeBaixo(ant), margem(t, "Top")) - 1;
+        if (resto >= H * 0.5 && resto < H) t.style.maxHeight = Math.floor(resto) + "px";
+      });
+    }
+    caber();
+    aberturas.forEach(function (h) {
+      var ant = vizinho(h, -1), r = ant && fimDe(ant);
+      if (!r || r.bottom - topo > H * 0.4) return;
+      var tela = telaDoRetangulo(r);
+      if (telaDe(h) !== tela + 1) return;
+      h.classList.add("tela-segue");
+      var texto = h.classList.contains("proximo") ? h : vizinho(h, 1);
+      if (texto && texto.classList.contains("tool-lead")) texto = vizinho(texto, 1);
+      if (telaDe(h) !== tela || !texto || telaDe(texto) !== tela) h.classList.remove("tela-segue");
+    });
+    caber();
+  }
+  function telaDoRetangulo(r) {
+    var p = telas.page, x = r.left - (p.getBoundingClientRect().left + telas.pad - p.scrollLeft);
+    return Math.max(0, Math.min(telas.n - 1, Math.floor((x + 4) / telas.passo)));
+  }
+  // em que tela está um elemento ou um trecho de texto (o começo dele)
+  function telaDe(alvo) {
+    var rs = alvo.getClientRects(), r = rs.length ? rs[0] : alvo.getBoundingClientRect();
+    return telaDoRetangulo(r);
+  }
+  // o primeiro caractere visível no alto da tela: segura a leitura no lugar quando a largura muda
+  function ancoraNoTopo() {
+    var p = telas.page, r = p.getBoundingClientRect(), x = r.left + telas.pad + 14;
+    for (var y = r.top + 10; y < r.bottom - 10; y += 16) {
+      var rg = null;
+      try {
+        if (document.caretRangeFromPoint) rg = document.caretRangeFromPoint(x, y);
+        else if (document.caretPositionFromPoint) {
+          var cp = document.caretPositionFromPoint(x, y);
+          if (cp) { rg = document.createRange(); rg.setStart(cp.offsetNode, cp.offset); }
+        }
+      } catch (e) { rg = null; }
+      if (rg && p.contains(rg.startContainer) && rg.startContainer.nodeType === 3) {
+        var t = rg.startContainer;
+        if (rg.startOffset < t.length) rg.setEnd(t, rg.startOffset + 1);
+        return rg;
+      }
+      var el = document.elementFromPoint(x, y);
+      if (el && el !== p && p.contains(el) && !el.classList.contains("prose")) return el;
+    }
+    return null;
+  }
+  function ancoraValida(a) {
+    if (!a || !telas) return false;
+    var no = a.startContainer || a;
+    return document.contains(no) && telas.page.contains(no);
+  }
+  function reajustarTelas() {
+    if (!telas || toque) return;
+    medirTelas();
+    irParaTela(ancoraValida(telas.ancora) ? telaDe(telas.ancora) : telas.i, true);
+  }
+  function irAoElemento(el) {
+    medirTelas();
+    telas.ancora = el;
+    irParaTela(telaDe(el), true);
+  }
+  function virar(d) {
+    if (!telas) return;
+    var i = Math.max(0, Math.min(telas.n - 1, telas.i + d));
+    if (i === telas.i) { rolarTelas(i * telas.passo, false); return; }
+    irParaTela(i, false);
+  }
+  function irParaTela(i, ja) {
+    if (!telas) return;
+    i = Math.max(0, Math.min(telas.n - 1, i));
+    var longe = Math.abs(i - telas.i) > 1;
+    telas.i = i;
+    rolarTelas(i * telas.passo, ja || longe || reduce);
+    pintarTelas();
+  }
+  // vira a tela com uma animação curta; a âncora vem do que ficou no alto da tela
+  function rolarTelas(x, ja) {
+    var p = telas.page;
+    pararTelas();
+    var x0 = p.scrollLeft, d = x - x0;
+    if (ja || Math.abs(d) < 1) { p.scrollLeft = x; if (!ja) telas.ancora = ancoraNoTopo(); return; }
+    var t0 = performance.now(), dur = Math.min(380, 200 + Math.abs(d) / 5);
+    function quadro(t) {
+      if (!telas) { animTelas = 0; return; }
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      p.scrollLeft = x0 + d * e;
+      if (k < 1) animTelas = requestAnimationFrame(quadro);
+      else { animTelas = 0; p.scrollLeft = x; telas.ancora = ancoraNoTopo(); }
+    }
+    animTelas = requestAnimationFrame(quadro);
+  }
+  function pararTelas() { if (animTelas) { cancelAnimationFrame(animTelas); animTelas = 0; } }
+  // a barra, o anel do botão de sintonia e a seção atual acompanham a tela
+  function pintarTelas() {
+    if (!telas || !barraPos) return;
+    var i = telas.i, n = telas.n, at = -1;
+    for (var k = 0; k < telas.secTela.length; k++) { if (telas.secTela[k] <= i) at = k; else break; }
+    secAtual = at;
+    progresso = n > 1 ? i / (n - 1) : 1;
+    knob.style.setProperty("--p", progresso.toFixed(3));
+    knob.classList.toggle("compacto", i > 0);
+    var h1 = telas.page.querySelector("h1");
+    barraPos.firstChild.textContent = at >= 0 ? secs[at].t : (h1 ? h1.textContent : "");
+    barraPos.lastChild.textContent = (i + 1) + " de " + n;
+    barraAnt.setAttribute("aria-disabled", i === 0 ? "true" : "false");
+    barraProx.setAttribute("aria-disabled", i >= n - 1 ? "true" : "false");
+    lembrar();
+  }
+  // rolagem que não veio daqui (foco, busca do navegador): volta a alinhar numa tela inteira
+  function aoRolarTelas() {
+    if (!telas || animTelas || toque) return;
+    clearTimeout(tAjuste);
+    tAjuste = setTimeout(function () {
+      if (!telas || animTelas || toque) return;
+      var x = telas.page.scrollLeft, i = Math.round(x / telas.passo);
+      if (i === telas.i && Math.abs(x - i * telas.passo) < 2) return;
+      irParaTela(i, true);
+      telas.ancora = ancoraNoTopo();
+    }, 140);
+  }
+  function janelaAberta() { return !!document.querySelector("dialog[open]"); }
+  // quem já usa o gesto: campos, o 3D, e caixas que rolam por dentro na mesma direção
+  function donoDoGesto(el, eixo, sentido) {
+    for (; el && el !== document.body; el = el.parentElement) {
+      if (telas && el === telas.page) return false;
+      if (el.matches && el.matches("input, select, textarea, canvas, [contenteditable], .viewer3d, [data-gesto]")) return true;
+      var cs = getComputedStyle(el), ov = eixo === "x" ? cs.overflowX : cs.overflowY;
+      if (ov !== "auto" && ov !== "scroll") continue;
+      var max = eixo === "x" ? el.scrollWidth - el.clientWidth : el.scrollHeight - el.clientHeight;
+      if (max <= 1) continue;
+      if (!sentido) return true;
+      var pos = eixo === "x" ? el.scrollLeft : el.scrollTop;
+      if ((sentido > 0 && pos < max - 1) || (sentido < 0 && pos > 0)) return true;
+    }
+    return false;
+  }
+  function aoTocar(e) {
+    toque = null;
+    if (!telas || menuAberto || janelaAberta() || e.touches.length !== 1 || !app.contains(e.target)) return;
+    var t = e.touches[0];
+    toque = { x0: t.clientX, y0: t.clientY, t0: Date.now(), alvo: e.target, eixo: "", s0: 0, dx: 0, dy: 0 };
+  }
+  function aoMover(e) {
+    if (!toque || !telas) return;
+    if (e.touches.length !== 1) { var s = toque.eixo === "x"; toque = null; if (s) irParaTela(telas.i, false); return; }
+    var t = e.touches[0];
+    toque.dx = t.clientX - toque.x0; toque.dy = t.clientY - toque.y0;
+    if (!toque.eixo) {
+      if (Math.abs(toque.dx) < 8 && Math.abs(toque.dy) < 8) return;
+      toque.eixo = Math.abs(toque.dx) > Math.abs(toque.dy) ? "x" : "y";
+      if (donoDoGesto(toque.alvo, toque.eixo)) { toque = null; return; }
+      pararTelas();
+      toque.s0 = telas.page.scrollLeft;
+    }
+    if (e.cancelable) e.preventDefault();
+    if (toque.eixo === "x") {
+      var max = (telas.n - 1) * telas.passo;
+      telas.page.scrollLeft = Math.max(0, Math.min(max, toque.s0 - toque.dx));
+    }
+  }
+  function soltarToque(e) {
+    var tq = toque;
+    toque = null;
+    if (!tq || !tq.eixo || !telas) return;
+    var d = tq.eixo === "x" ? tq.dx : tq.dy, dt = Math.max(1, Date.now() - tq.t0);
+    var rapido = Math.abs(d) > 24 && Math.abs(d) / dt > 0.35;
+    var longe = tq.eixo === "x" ? Math.abs(d) > telas.passo * 0.22 : Math.abs(d) > 56;
+    var dir = e.type === "touchend" && (rapido || longe) ? (d < 0 ? 1 : -1) : 0;
+    virar(dir);
+  }
+  function aoRodar(e) {
+    if (!telas || menuAberto || e.ctrlKey || janelaAberta() || !app.contains(e.target)) return;
+    var eixo = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? "x" : "y", d = eixo === "x" ? e.deltaX : e.deltaY;
+    if (!d || donoDoGesto(e.target, eixo, d)) return;
+    e.preventDefault();
+    // um gesto, uma tela: depois de virar, só vira de novo quando a roda (ou a inércia do touchpad) para um instante
+    var agora = Date.now();
+    if (agora - roda.ult > 160) { roda.acc = 0; roda.seguido = false; }
+    roda.ult = agora;
+    if (roda.seguido) return;
+    roda.acc += e.deltaMode === 1 ? d * 33 : d;
+    if (Math.abs(roda.acc) < 40) return;
+    virar(roda.acc > 0 ? 1 : -1);
+    roda.acc = 0;
+    roda.seguido = true;
+  }
+  function aoTeclar(e) {
+    if (!telas || menuAberto || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || janelaAberta()) return;
+    var el = e.target, k = e.key, dir = 0;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable) return;
+    if (el.closest && el.closest('[role="slider"], [role="tablist"], [role="listbox"], [role="radiogroup"], [role="menu"], [role="grid"], .viewer3d')) return;
+    if (k === " " && el.closest && el.closest("button, a, summary, [role='button']")) return;
+    if (k === "ArrowRight" || k === "PageDown" || (k === " " && !e.shiftKey)) dir = 1;
+    else if (k === "ArrowLeft" || k === "PageUp" || (k === " " && e.shiftKey)) dir = -1;
+    else if ((k === "ArrowDown" || k === "ArrowUp") && !donoDoGesto(el, "y")) dir = k === "ArrowDown" ? 1 : -1;
+    else if (k === "Home" || k === "End") { e.preventDefault(); irParaTela(k === "Home" ? 0 : telas.n - 1, true); telas.ancora = ancoraNoTopo(); return; }
+    if (!dir) return;
+    e.preventDefault();
+    virar(dir);
+  }
+  // Tab leva o foco a outra tela: a tela vai junto
+  function aoFocar(e) {
+    if (!telas || toque || !telas.page.contains(e.target)) return;
+    var i = telaDe(e.target);
+    if (i !== telas.i) { irParaTela(i, true); telas.ancora = e.target; }
+  }
+  // os ouvintes ficam ligados só enquanto há uma página em telas: fora dela, a rolagem não espera por eles
+  var OUVINTES = [["touchstart", aoTocar, { passive: true }], ["touchmove", aoMover, { passive: false }], ["touchend", soltarToque],
+    ["touchcancel", soltarToque], ["wheel", aoRodar, { passive: false }], ["keydown", aoTeclar], ["focusin", aoFocar]];
+  function ouvir(liga) {
+    OUVINTES.forEach(function (o) {
+      if (liga) document.addEventListener(o[0], o[1], o[2] || false);
+      else document.removeEventListener(o[0], o[1], o[2] || false);
+    });
+  }
+  window.addEventListener("resize", function () { if (telas) { clearTimeout(tReajuste); tReajuste = setTimeout(reajustarTelas, 60); } });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (telas) reajustarTelas(); });
 
   /* o menu sobre a página: abre pelo botão de sintonia, pela busca ou pela tecla /, fecha pelo Esc */
   function prepararMenu() {
@@ -349,6 +678,7 @@
     pages.forEach(function (p) { p.hidden = p !== page; });
     pagina = page;
     coletar(page);
+    ligarTelas(page, mesma);
     secAtual = -2;
     current = route;
     document.body.classList.toggle("no-titulo", route === "inicio");

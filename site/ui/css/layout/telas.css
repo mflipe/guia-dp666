@@ -1,0 +1,44 @@
+/* modo telas (protótipo): nas páginas com data-telas a página não rola. O texto corre em colunas do tamanho da
+   tela, lado a lado, e a pessoa vira as telas: arrastando, com as setas, Page Down, espaço, a roda do mouse ou os
+   botões ‹ › da barra no pé da tela. Cada seção começa numa tela nova; figuras, avisos e ferramentas não se partem.
+   O navegacao.js liga o modo (html.em-telas, body.em-telas), mede as telas e vira a página de tela em tela. */
+html.em-telas, body.em-telas { overflow: hidden; overscroll-behavior: none; }
+body.em-telas .site-foot, body.em-telas .mapa { display: none; }
+body.em-telas .main { --tela-pad: 32px; display: flex; flex-direction: column; box-sizing: border-box; height: 100vh; height: 100dvh; padding-bottom: 0; }
+body.em-telas #main { flex: 1 1 0; min-height: 0; }
+/* a página é a moldura que rola na horizontal; ela se estende até a borda da coluna, para o texto que entra e sai
+   na virada não ser cortado no meio do caminho */
+body.em-telas .page[data-telas] { --tela-gap: 48px; box-sizing: border-box; height: 100%; margin: 0 calc(-1 * var(--tela-pad)); padding: 0 var(--tela-pad);
+  column-count: 1; column-gap: var(--tela-gap); column-fill: auto; overflow: hidden; scroll-behavior: auto; overscroll-behavior: contain; }
+/* cada seção e o fim da página começam numa tela nova, sem a margem que separava as seções na rolagem */
+body.em-telas .page[data-telas] .prose h2, body.em-telas .page[data-telas] .proximo { break-before: column; margin-top: 4px; }
+body.em-telas .page[data-telas] .prose :is(h2, h3) { break-after: avoid; }
+/* quando a tela de antes ficaria quase vazia, a seção começa nela mesma (o navegacao.js decide) */
+body.em-telas .page[data-telas] :is(.prose h2, .proximo).tela-segue { break-before: auto; margin-top: 40px; }
+body.em-telas .page[data-telas] :is(figure, .admonition, pre, .facts, blockquote, .tool-embed, .table-wrap, .proximo, tr, li) { break-inside: avoid; }
+/* o que é maior que uma tela fica inteiro numa tela e rola por dentro */
+body.em-telas .page[data-telas] :is(.tool-embed, .table-wrap) { max-height: var(--tela-h, 70vh); overflow-y: auto; overscroll-behavior: contain; }
+body.em-telas .page[data-telas] figure img { max-height: calc(var(--tela-h, 70vh) - 4rem); object-fit: contain; }
+/* o painel 3D dos controles fica mais baixo, para a explicação do controle tocado aparecer na mesma tela */
+body.em-telas .page[data-telas] .p3-stage { max-height: calc(var(--tela-h, 70vh) * 0.38); }
+/* as fotos do rádio ficam menores, para caberem duas ou três por tela */
+body.em-telas .page[data-telas] .foto img { max-height: calc(var(--tela-h, 70vh) * 0.4); }
+body.em-telas .page[data-telas] .foto-lado img { height: min(400px, calc(var(--tela-h, 70vh) * 0.4)); }
+
+/* o pé da tela: ‹ seção, tela 3 de 14 › ; à direita fica o botão de sintonia */
+.telas-nav { display: flex; flex: none; align-items: center; gap: 10px; height: 56px; margin: 8px 0 18px; padding-right: 76px; }
+body.em-telas:has(.sintonia:not(.compacto)) .telas-nav { padding-right: 150px; }
+.telas-btn { display: inline-grid; flex: none; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: var(--surface); color: var(--ink); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.telas-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.telas-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; }
+.telas-btn:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
+.telas-pos { display: grid; flex: 1; min-width: 0; margin: 0; line-height: 1.3; }
+.telas-pos b { overflow: hidden; font: 600 0.92rem var(--font-display); color: var(--ink); white-space: nowrap; text-overflow: ellipsis; }
+.telas-pos span { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) {
+  body.em-telas .main { --tela-pad: 16px; }
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 1280px) {
+  .telas-nav, body.em-telas:has(.sintonia:not(.compacto)) .telas-nav { padding-right: 0; }
+  .telas-pos { text-align: center; }
+}

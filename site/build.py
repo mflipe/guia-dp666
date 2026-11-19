@@ -481,13 +481,15 @@ def build():
         rendered.append((f, route, nav_title, group, title, body, toc, n_src))
         index += search_sections(route, title, re.sub(r'<div class="tool tool-embed".*?</div>', " ", body, flags=re.S))
 
+    # páginas lidas em telas, sem rolar (protótipo: só Uso); o resto continua rolando. Veja ui/css/layout/telas.css
+    EM_TELAS = {"uso"}
     for i, (f, route, nav_title, group, title, body, toc, n_src) in enumerate(rendered):
         toc_json = html.escape(json.dumps(toc, ensure_ascii=False), quote=True)
         hidden = "" if route == "inicio" else " hidden"
         src_txt = L["src_n"].format(n=n_src) if n_src != 1 else L["src_1"]
         sections_html.append(
             f'<article class="page" id="page-{route}" data-route="{route}" data-toc="{toc_json}" '
-            f'data-sources="{src_txt}"{hidden}>'
+            f'data-sources="{src_txt}"{" data-telas" if route in EM_TELAS else ""}{hidden}>'
             + (tela_titulo(title) if route == "inicio" else
                f'<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="#inicio">DP-666</a>'
                f'<span aria-hidden="true"> › </span>{html.escape(group)}</p><h1 tabindex="-1">{h1_text(title)}</h1>'

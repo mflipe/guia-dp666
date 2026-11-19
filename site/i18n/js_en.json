@@ -299,5 +299,8 @@
  "Apertados: ": "Held down: ",
  "Escolha os botões que ficam apertados e toque em “Ligar o rádio”.": "Choose the buttons to hold down and tap “Power on the radio”.",
  "Não foi possível abrir o rádio em 3D. As fotos estão em <a href=\"#uso--onde-fica-cada-coisa\">Onde fica cada coisa</a>.": "The radio in 3D couldn’t open. The photos are in <a href=\"#uso--where-everything-is\">Where everything is</a>.",
- "linha oficial": "official firmware"
+ "linha oficial": "official firmware",
+ "Telas da página": "Page screens",
+ "Tela anterior": "Previous screen",
+ "Próxima tela": "Next screen"
 }

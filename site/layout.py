@@ -31,7 +31,7 @@ CAMADAS = {
     "conteudo": ["cabecalho", "prosa", "figuras", "tabelas", "blocos", "diagramas", "inicio"],
     "componentes": ["icones", "perfil", "tema", "botoes", "busca"],
     "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist"],
-    "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo"],
+    "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo", "telas"],
 }
 
 

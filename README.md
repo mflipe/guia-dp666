@@ -53,6 +53,10 @@ Para criar um tema do guia:
 
 O build faz o resto: o bloco do tema na folha de estilos, o papel quadriculado na cor de `--grid`, a cor da barra do navegador (a de `--bg`), a opção na janela, com a amostra das cores, e uma coluna a mais no catálogo. Para o Automático usar outro tema no claro ou no escuro, mude `AUTOMATICO` no mesmo arquivo.
 
+## Modo telas (protótipo)
+
+Nas páginas listadas em `EM_TELAS`, em `site/build.py` (por enquanto só Uso), a página não rola. O texto corre em colunas do tamanho da tela e a leitura avança de tela em tela: gesto para o lado ou para cima, setas, Page Down, espaço, roda do mouse ou os botões ‹ › da barra no pé da tela, que mostra a seção e a tela (3 de 15). Cada seção começa numa tela nova, a não ser que a tela de antes ficasse quase vazia. Figuras, avisos, tabelas e ferramentas não se partem; o que é maior que a tela rola por dentro. Links para seções, o menu, a busca, o Continuar e o Tab levam à tela certa, e a leitura fica no mesmo trecho quando a tela gira. O estilo está em `site/ui/css/layout/telas.css`, e a lógica, em `site/ui/navegacao.js`. As outras páginas continuam rolando como antes.
+
 ## Conferir a aparência
 
 O build gera também o `site/preview/catalogo.html`, com cada componente nos dois temas (publicado em https://mflipe.github.io/guia-dp666/catalogo.html). A regressão visual fotografa as seções do catálogo no celular e no computador e compara com as referências:
