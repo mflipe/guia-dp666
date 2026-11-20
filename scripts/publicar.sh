@@ -24,6 +24,7 @@ cp site/preview/catalogo.html "$tmp/"
 cp site/preview/en/index.html "$tmp/en/"
 cp site/preview/js/viewer3d.js site/preview/js/viewer3d.en.js "$tmp/js/"
 cp -r site/preview/img "$tmp/"
+cp -r site/preview/radio "$tmp/"   # o rádio virtual, que o botão do alto das páginas abre
 touch "$tmp/.nojekyll"
 git -C "$tmp" init -q -b gh-pages
 git -C "$tmp" add -A

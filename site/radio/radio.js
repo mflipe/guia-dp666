@@ -307,8 +307,9 @@
       letreiro(t, 16, rol.rt, [36, 220, 275, 19], 2, crds, sv(crds));
     }
     qualidade(t, c, e, 204);
-    // o canto do relógio: tocando nele, o Mod17 troca entre a hora, a data com a hora e o PI
-    var modo = e.relogio ? e.relogioModo : "pi";
+    // o canto do relógio: a hora (Time only), a data com a hora (Date + Time) ou o PI (relógio desligado); tocando
+    // nele, o Mod17 passa de um para o outro
+    var modo = e.relogioModo;
     if (modo === "pi") {
       t.texto(16, "PI:", 212, 193, -1, c.ativo, sv(c.ativo));
       if (e.rds && e.pi) t.texto(28, e.pi, 267, 187, 0, crds, sv(crds));

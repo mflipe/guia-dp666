@@ -133,6 +133,48 @@
     pintarTema();
   }
 
+  // ---------------------------------------------------------------- rádio virtual (radio/, radio_guia.py)
+  // o botão fica ao lado do tema, no alto de cada página, na tela de título e no rodapé do menu. O rádio só carrega
+  // no primeiro toque (painel.css, radio.js, painel.js e dados.json) e abre por cima de qualquer página. Tocar no
+  // botão com o rádio aberto minimiza; o fechar fica no próprio painel. Aberto ou minimizado, ele volta assim ao
+  // trocar de idioma (a escolha fica guardada só nesta aba).
+  var RKEY = "dp666.radio.painel", radioDoca = $("#radio-doca"), radioBtns = $$(".radio-btn"), radioCtrl = null, radioCarga = null;
+  if (radioDoca) {
+    var radioBase = radioDoca.getAttribute("data-base");
+    var radioArquivo = function (src, css) {
+      return new Promise(function (ok, erro) {
+        var e = document.createElement(css ? "link" : "script");
+        if (css) { e.rel = "stylesheet"; e.href = src; } else e.src = src;
+        e.onload = ok; e.onerror = erro;
+        document.head.appendChild(e);
+      });
+    };
+    var radioMudou = function (s) {
+      radioBtns.forEach(function (b) { b.setAttribute("aria-expanded", String(s === "aberto")); b.setAttribute("data-estado", s); });
+      try { window.sessionStorage.setItem(RKEY, s); } catch (e) { /* armazenamento indisponível */ }
+    };
+    var radioCarregar = function () {
+      return radioCarga || (radioCarga = Promise.all([
+        radioArquivo(radioBase + "painel.css", true),
+        radioArquivo(radioBase + "radio.js").then(function () { return radioArquivo(radioBase + "painel.js"); }),
+      ]).then(function () {
+        radioCtrl = window.RadioVirtual.montar(radioDoca, { lingua: /^en/.test(document.documentElement.lang) ? "en" : "pt", base: radioBase, modo: "painel", aoMudar: radioMudou });
+        return radioCtrl.pronto;
+      }));
+    };
+    var radioMostrar = function (s, focar) {
+      return radioCarregar().then(function () { return radioCtrl.mostrar(s); }).then(function () { if (focar) radioCtrl.focar(); });
+    };
+    radioBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        radioMostrar(radioCtrl && radioCtrl.situacao() === "aberto" ? "minimizado" : "aberto", true);
+      });
+    });
+    var radioAntes = null;
+    try { radioAntes = window.sessionStorage.getItem(RKEY); } catch (e) { /* armazenamento indisponível */ }
+    if (radioAntes === "aberto" || radioAntes === "minimizado") radioMostrar(radioAntes, false);
+  }
+
   // ---------------------------------------------------------------- simulador de botões
   var VKEY = "dp666.botoes.vista";
   var HW_ORDER = ["volume", "sql", "chave", "fone", "falante", "usbc", "antena", "tela", "teclado", "power"];

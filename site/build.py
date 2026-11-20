@@ -24,6 +24,7 @@ import layout  # noqa: E402
 import componentes  # noqa: E402
 import catalogo  # noqa: E402
 import tema  # noqa: E402
+import radio_guia  # noqa: E402
 from componentes import botao, item_menu, nota, selo  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
@@ -521,7 +522,8 @@ def build():
                    .replace("{{UPDATED}}", UPDATED) \
                    .replace("{{NPAGES}}", str(len(PAGES))) \
                    .replace("{{NSOURCES}}", str(n_sources)) \
-                   .replace("{{TEMA_BOTAO}}", tema.botao(LANG, L)).replace("{{JANELA_TEMA}}", tema.janela(LANG, L))
+                   .replace("{{TEMA_BOTAO}}", tema.botao(LANG, L)).replace("{{JANELA_TEMA}}", tema.janela(LANG, L)) \
+                   .replace("{{RADIO_BOTAO}}", radio_guia.botao(L)).replace("{{RADIO_DOCA}}", radio_guia.doca(L))
     page = page.replace("<!--CONTA-->", "").replace("<!--/CONTA-->", "")
     if L["dir"]:
         page = page.replace('src="img/', 'src="../img/')  # as fotos ficam na raiz do site, uma pasta acima
@@ -583,6 +585,7 @@ TEMPLATE = layout.montar()
 if __name__ == "__main__":
     componentes.conferir()   # os componentes dão o mesmo HTML em Python e em JavaScript
     shutil.copytree(ROOT / "img", ROOT / "preview" / "img", dirs_exist_ok=True)
+    radio_guia.copiar(ROOT / "preview" / "radio")   # o rádio virtual, que o botão do alto das páginas abre
     for lang in (sys.argv[1:] or i18n.LANGS):
         use_lang(lang)
         build()

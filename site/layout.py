@@ -29,7 +29,7 @@ CAMADAS = {
     "tokens": ["tokens"],                       # cores, fontes e medidas dos dois temas
     "base": ["base"],                           # elementos do HTML, foco, seleção, utilitários
     "conteudo": ["cabecalho", "prosa", "figuras", "tabelas", "blocos", "diagramas", "inicio"],
-    "componentes": ["icones", "perfil", "tema", "botoes", "busca"],
+    "componentes": ["icones", "perfil", "tema", "radio", "botoes", "busca"],
     "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist"],
     "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo"],
 }
@@ -53,7 +53,7 @@ def css():
 
 
 def montar():
-    rodape = (ler("perfil.html") + "{{JANELA_TEMA}}" +
+    rodape = (ler("perfil.html") + "{{JANELA_TEMA}}" + "{{RADIO_DOCA}}" +
               '\n<script type="application/json" id="app-data">{{APPDATA}}</script>\n<script>\n' + ler("componentes.js") + '{{APPJS}}\n</script>\n'
               '<script type="application/json" id="search-data">{{SEARCH}}</script>\n<script>\n' +
               ler("navegacao.js") + "</script>\n</body>\n</html>\n")
