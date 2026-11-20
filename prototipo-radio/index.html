@@ -11,49 +11,84 @@
   @media (prefers-color-scheme: dark) { :root { --bg: #0e131d; --ink: #e6ebf3; --muted: #9aa6b8; --rule: #2b3548; --surface: #151c2a; --accent: #f2b14c; } }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 680px; margin: 0 auto; padding: 20px 16px 48px; }
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 48px; }
   h1 { margin: 0 0 4px; font-size: 1.5rem; }
-  .lead { margin: 0 0 16px; color: var(--muted); }
-  .visor { padding: 10px; border-radius: 14px; background: #05070a; }
+  .lead { max-width: 60ch; margin: 0 0 8px; color: var(--muted); }
+  .palco { display: grid; gap: 0 40px; }
+  /* no celular, a tela e a troca de emissora ficam presas no alto enquanto os ajustes passam por baixo */
+  .fixo { position: sticky; top: 0; z-index: 1; margin: 0 -16px; padding: 6px 16px 8px; background: var(--bg); box-shadow: 0 1px 0 var(--rule); }
+  .visor { max-width: calc(36vh * 4 / 3 + 20px); margin: 0 auto; padding: 10px; border-radius: 14px; background: #05070a; }
   #tela { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
-  .sintonia { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 12px 0 0; }
+  .troca { display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center; gap: 8px; margin-top: 6px; }
+  .troca button { display: grid; place-items: center; min-height: 44px; padding: 0; }
+  #emissora { margin: 0; text-align: center; line-height: 1.25; }
+  #emissora strong { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  #emissora span { display: block; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
   .som { display: flex; align-items: center; gap: 12px; margin: 12px 0 0; }
   .som button { flex: none; }
   #som-info { margin: 0; font-size: 0.88rem; color: var(--muted); }
-  #memorias { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-top: 6px; }
-  #memorias button { display: flex; gap: 6px; align-items: baseline; text-align: left; font-variant-numeric: tabular-nums; }
-  #memorias b { min-width: 1.4em; }
-  #memorias span { overflow: hidden; color: var(--muted); white-space: nowrap; text-overflow: ellipsis; }
-  fieldset { margin: 16px 0 0; padding: 0; border: 0; }
-  legend { padding: 0; font-weight: 600; }
-  legend small { font-weight: 400; color: var(--muted); }
+  h2 { margin: 28px 0 0; font-size: 1.1rem; }
+  .intro { margin: 2px 0 0; font-size: 0.92rem; color: var(--muted); }
+  fieldset, .campo { margin: 16px 0 0; padding: 0; border: 0; }
+  legend, label { padding: 0; font-weight: 600; }
   .opcoes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-  button { min-height: 40px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 0.92rem; cursor: pointer; }
+  button, select { min-height: 40px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 0.92rem; cursor: pointer; }
+  select { display: block; min-width: 12rem; margin-top: 6px; }
   button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); font-weight: 600; }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
-  input[type=range] { width: 100%; margin-top: 8px; accent-color: var(--accent); }
-  .dica { margin: 6px 0 0; font-size: 0.82rem; color: var(--muted); }
-  .notas { margin-top: 24px; font-size: 0.88rem; color: var(--muted); }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input[type=range] { width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+  .dica { margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); }
+  .notas { max-width: 70ch; margin-top: 32px; font-size: 0.88rem; color: var(--muted); }
   .notas p { margin: 0 0 8px; }
+  @media (max-width: 879px) { .radio { display: contents; } }
+  @media (max-width: 879px) and (max-height: 560px) { .fixo { position: static; box-shadow: none; } }
+  /* no computador, a tela fica na coluna da esquerda e os ajustes na da direita */
+  @media (min-width: 880px) {
+    .palco { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; }
+    .radio { position: sticky; top: 16px; }
+    .fixo { position: static; margin: 0; padding: 0; box-shadow: none; }
+    .visor { max-width: none; }
+    .ajustes h2:first-child { margin-top: 0; }
+  }
 </style>
 </head>
 <body>
 <main>
   <h1>Rádio virtual</h1>
-  <p class="lead">A tela do DP-666 com o Megatron Mod17, desenhada como o firmware desenha, sintonizando emissoras de verdade pela internet. Mude os ajustes e veja o efeito na hora, sem abrir menu.</p>
-  <div class="visor"><canvas id="tela" width="320" height="240" role="img" aria-label="Tela do rádio"></canvas></div>
-  <div class="som"><button type="button" id="som" aria-pressed="false">Ligar o som</button><p id="som-info" aria-live="polite">Som desligado.</p></div>
-  <div class="sintonia"><button type="button" id="busca-menos" aria-label="Buscar emissora para baixo">◀◀</button><button type="button" id="menos">− 0,1</button><button type="button" id="mais">+ 0,1</button><button type="button" id="busca-mais" aria-label="Buscar emissora para cima">▶▶</button></div>
-  <p id="dica-sintonia" class="dica">◀◀ e ▶▶ buscam a próxima emissora; − e + andam 0,1 MHz.</p>
-  <fieldset><legend>Memórias <small>(emissoras de São Paulo)</small></legend><div id="memorias"></div></fieldset>
-  <fieldset><legend>Theme <small>(Display settings)</small></legend><div class="opcoes" id="o-tema"></div></fieldset>
-  <fieldset><legend>Frequency font <small>(Display settings)</small></legend><div class="opcoes" id="o-fonte"></div></fieldset>
-  <fieldset><legend>RDS Show underscore <small>(RDS settings)</small></legend><div class="opcoes" id="o-sub"></div></fieldset>
-  <fieldset><legend>Show RDS clock <small>(RDS settings)</small></legend><div class="opcoes" id="o-relogio"></div></fieldset>
-  <fieldset><legend>Brightness <small>(Display settings)</small> <span id="o-brilho-v">100%</span></legend><input type="range" id="o-brilho" min="1" max="100" value="100" aria-label="Brightness"></fieldset>
+  <p class="lead">A tela do DP-666 com o Megatron Mod17 e dez emissoras de São Paulo pela internet. Troque de emissora e mude os ajustes de tela: o efeito aparece na hora, sem abrir menu.</p>
+  <div class="palco">
+    <div class="radio">
+      <div class="fixo">
+        <div class="visor"><canvas id="tela" width="320" height="240" role="img" aria-label="Tela do rádio"></canvas></div>
+        <div class="troca">
+          <button type="button" id="anterior" aria-label="Emissora anterior"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <p id="emissora" aria-live="polite"><strong></strong><span></span></p>
+          <button type="button" id="proxima" aria-label="Próxima emissora"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="som"><button type="button" id="som" aria-pressed="false">Ligar o som</button><p id="som-info" aria-live="polite">Som desligado.</p></div>
+    </div>
+    <div class="ajustes">
+      <h2>Display settings</h2>
+      <p class="intro">Os ajustes de tela do rádio, na ordem e com os nomes do menu.</p>
+      <div class="campo"><label for="o-idioma">Language</label><select id="o-idioma"></select><p class="dica">Na tela principal, muda o nome do tipo de programa (PTY).</p></div>
+      <fieldset><legend>Display brightness <span id="o-brilho-v">100%</span></legend><input type="range" id="o-brilho" min="1" max="100" value="100" aria-label="Display brightness"></fieldset>
+      <fieldset><legend>Modulation meter</legend><div class="opcoes" id="o-mod"></div></fieldset>
+      <fieldset><legend>Screensaver</legend><div class="opcoes" id="o-protecao"></div><p class="dica">Conta o tempo sem tocar na página. Um toque acorda a tela.</p></fieldset>
+      <fieldset><legend>Screensaver options</legend><div class="opcoes" id="o-protecao-modo"></div></fieldset>
+      <fieldset><legend>Battery options</legend><div class="opcoes" id="o-bateria"></div></fieldset>
+      <fieldset><legend>Signalmeter unit</legend><div class="opcoes" id="o-unidade"></div></fieldset>
+      <fieldset><legend>Show clock</legend><div class="opcoes" id="o-relogio"></div></fieldset>
+      <fieldset><legend>Theme</legend><div class="opcoes" id="o-tema"></div></fieldset>
+      <fieldset><legend>Frequency font</legend><div class="opcoes" id="o-fonte"></div></fieldset>
+      <h2>RDS settings</h2>
+      <fieldset><legend>Show underscore in RDS</legend><div class="opcoes" id="o-sub"></div></fieldset>
+    </div>
+  </div>
   <div class="notas">
-    <p>Posições e fontes vêm do código do firmware (PE5PVB/TEF6686_ESP32, GPL-3.0); as cores do Essence foram conferidas numa foto da tela do Mod17. Os outros temas usam as cores do código e ainda podem diferir do rádio; Chinese Red e Retro ficam de fora até termos uma foto deles.</p>
-    <p>As emissoras são de São Paulo, nas frequências delas. O som é a transmissão online de cada uma, achada no diretório aberto <a href="https://www.radio-browser.info">Radio Browser</a>; quando uma transmissão não responde, o rádio tenta outra da mesma emissora. O nível do sinal e o RDS da tela são simulados a partir do nome da emissora. Entre as emissoras, o rádio chia.</p>
+    <p>Posições, fontes e textos vêm do código do firmware (PE5PVB/TEF6686_ESP32, GPL-3.0); as cores do Essence foram conferidas numa foto da tela do Mod17. Os outros temas usam as cores do código e podem diferir do rádio; Chinese Red e Retro ficam de fora até termos uma foto deles. Simplified Chinese não está entre os idiomas: com ele, o firmware troca a fonte da tela inteira.</p>
+    <p>As emissoras são de São Paulo, nas frequências delas. O som é a transmissão online de cada uma, achada no diretório aberto <a href="https://www.radio-browser.info">Radio Browser</a>; quando uma transmissão não responde, o rádio tenta outra da mesma emissora. O sinal e o RDS da tela são simulados.</p>
     <p>No lugar do logo do RDS, que é marca registrada, aparece a palavra RDS.</p>
   </div>
 </main>

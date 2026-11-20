@@ -1,65 +1,57 @@
-/* Página do rádio virtual: o estado do rádio, a sintonia, as memórias, o som e a animação da tela.
-   As emissoras são reais, de São Paulo (capital), nas frequências delas. O som vem da transmissão online de cada
-   uma, achada no Radio Browser (diretório aberto de rádios na internet, https://www.radio-browser.info); o RDS da
-   tela é simulado a partir do nome da emissora. Entre as emissoras, o rádio chia, como um rádio de verdade. */
+/* Página do rádio virtual: a troca de emissora, o som, os ajustes de tela e a animação da tela.
+   As emissoras são reais, de São Paulo (capital), nas frequências delas, guardadas nas memórias 1 a 10. O som vem
+   da transmissão online de cada uma, achada no Radio Browser (diretório aberto de rádios na internet,
+   https://www.radio-browser.info); o sinal e o RDS da tela são simulados a partir do nome da emissora. Os ajustes
+   são os do menu Display settings do firmware, mais o sublinhado do RDS settings, com os nomes e valores do menu. */
 (function () {
   "use strict";
-  // frequência (em dezenas de kHz), nome, nome curto, PS de 8 letras, PTY e o termo de busca no diretório
+  // frequência (em dezenas de kHz), nome, PS de 8 letras, código do tipo de programa (PTY) e o termo de busca
   var EMISSORAS = [
-    [9050, "CBN São Paulo", "CBN", "CBN SP", "News", "CBN"],
-    [9250, "Kiss FM", "Kiss FM", "KISS FM", "Rock Music", "Kiss FM"],
-    [9370, "Rádio USP", "Rádio USP", "USP FM", "Culture", "USP"],
-    [9470, "Antena 1", "Antena 1", "ANTENA 1", "Easy Listening", "Antena 1"],
-    [9610, "Band FM", "Band FM", "BAND FM", "Pop Music", "Band FM"],
-    [9690, "BandNews FM", "BandNews", "BANDNEWS", "News", "BandNews"],
-    [10090, "Jovem Pan FM", "Jovem Pan", "JOVEMPAN", "Pop Music", "Jovem Pan"],
-    [10170, "Alpha FM", "Alpha FM", "ALPHA FM", "Easy Listening", "Alpha FM"],
-    [10330, "Rádio Cultura FM", "Cultura", "CULTURA", "Serious Classical", "Cultura FM"],
-    [10630, "Mix FM", "Mix FM", "MIX FM", "Pop Music", "Mix FM"]
-  ].map(function (e, i) { return { freq: e[0], nome: e[1], curto: e[2], ps: e[3], pty: e[4], busca: e[5], mem: i + 1 }; });
+    [9050, "CBN São Paulo", "CBN SP", 1, "CBN"],
+    [9250, "Kiss FM", "KISS FM", 11, "Kiss FM"],
+    [9370, "Rádio USP", "USP FM", 7, "USP"],
+    [9470, "Antena 1", "ANTENA 1", 12, "Antena 1"],
+    [9610, "Band FM", "BAND FM", 10, "Band FM"],
+    [9690, "BandNews FM", "BANDNEWS", 1, "BandNews"],
+    [10090, "Jovem Pan FM", "JOVEMPAN", 10, "Jovem Pan"],
+    [10170, "Alpha FM", "ALPHA FM", 12, "Alpha FM"],
+    [10330, "Rádio Cultura FM", "CULTURA", 14, "Cultura FM"],
+    [10630, "Mix FM", "MIX FM", 10, "Mix FM"]
+  ].map(function (e, i) { return { freq: e[0], nome: e[1], ps: e[2], pty: e[3], busca: e[4], mem: i + 1 }; });
   var SERVIDORES = ["https://de1.api.radio-browser.info", "https://nl1.api.radio-browser.info", "https://at1.api.radio-browser.info", "https://de2.api.radio-browser.info"];
   var reduz = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // o que a tela mostra: a emissora numa memória, com estéreo e RDS
   var estado = {
     freq: EMISSORAS[0].freq, banda: "FM", modo: "mem", memoria: 1, passo: 0, fonte: "Comic", bw: 236, bwAuto: true, ims: true, eq: true,
-    estereo: false, offset: 0, squelchCorta: false, rds: false, rdsOk: false, pty: "", ps: "", rtAB: false, qualidade: 0,
-    sinal: 100, unidade: "dBuV", cn: 0, mod: 40, pico: 60, modulacao: true, relogio: true, hora: "", bateria: "porcentagem",
+    estereo: true, offset: 0, squelchCorta: false, rds: true, rdsOk: true, pty: "", ps: "", rtAB: false, qualidade: 4,
+    sinal: 600, unidade: "dBuV", cn: 36, mod: 40, pico: 60, modulacao: true, relogio: true, hora: "", bateria: "porcentagem",
     carga: 73, wifi: false, sublinhado: "sim"
   };
-  var tema = "Essence", base = 10, rt = { texto: "", x: 0, largura: 0, espera: 0 }, tela = null, dados = null;
-  var sintonizou = 0, parado = false, atual = null, buscando = 0;
+  // os ajustes que ficam fora do desenho: tema, idioma do PTY, brilho e protetor de tela (segundos e modo)
+  var ajustes = { tema: "Essence", idioma: "English", brilho: 100, protecao: 0, protecaoModo: "1" };
+  var indice = 0, base = 60, rt = { texto: "", x: 0, largura: 0, espera: 0 }, tela = null, dados = null, parado = false;
 
-  function emissoraEm(f) { for (var i = 0; i < EMISSORAS.length; i++) if (EMISSORAS[i].freq === f) return EMISSORAS[i]; return null; }
   function sorteio(n, k) { var x = Math.sin(n * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); }
+  function mhz(f) { return (f / 100).toFixed(1).replace(".", ","); }
   function novoRT(txt) {
     rt.texto = txt; rt.x = 0; rt.espera = 1000;
-    var f16 = tela.f[16], larg = f16.largura(estado.sublinhado === "sim" ? txt.replace(/ /g, "_") : txt);
-    rt.largura = larg >= 270 ? f16.largura(txt + "   ") : 0;
+    // como o firmware: o RadioText corre só quando não cabe nos 270 pixels, com um respiro de três espaços
+    var f16 = tela.f[16], mostra = estado.sublinhado === "sim" ? txt.replace(/ /g, "_") : txt;
+    rt.largura = f16.largura(mostra) >= 270 ? f16.largura(mostra + "   ") : 0;
   }
   function relogio() {
     var d = new Date(), h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
     estado.hora = (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
   }
-  function semAcento(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase(); }
+  function nomePTY(em) { return (dados.pty[ajustes.idioma] || dados.pty.English)[em.pty]; }
 
-  /* o som: a transmissão online da emissora sintonizada, ou um chiado baixo entre as emissoras */
+  /* o som: a transmissão online da emissora sintonizada */
   var som = (function () {
-    var audio = new Audio(), ligado = false, ctx = null, ganho = null, cache = {}, vez = 0, pendentes = {};
+    var audio = new Audio(), ligado = false, cache = {}, vez = 0, pendentes = {};
     audio.preload = "none";
     try { cache = JSON.parse(localStorage.getItem("radioVirtual.streams") || "{}"); } catch (e) { cache = {}; }
     function guardar() { try { localStorage.setItem("radioVirtual.streams", JSON.stringify(cache)); } catch (e) {} }
     function avisar(t) { var el = document.getElementById("som-info"); if (el) el.textContent = t; }
-    function chiado(liga) { if (ctx) ganho.gain.setTargetAtTime(liga ? 0.035 : 0, ctx.currentTime, 0.05); }
-    function prepararChiado() {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC || ctx) return;
-      ctx = new AC();
-      var n = ctx.sampleRate * 2, buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
-      for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
-      var fonte = ctx.createBufferSource(), filtro = ctx.createBiquadFilter();
-      fonte.buffer = buf; fonte.loop = true; filtro.type = "bandpass"; filtro.frequency.value = 2500; filtro.Q.value = 0.4;
-      ganho = ctx.createGain(); ganho.gain.value = 0;
-      fonte.connect(filtro); filtro.connect(ganho); ganho.connect(ctx.destination); fonte.start();
-    }
     // nota de cada resultado do diretório: vale mais o que cita a frequência ou São Paulo, vale menos outra cidade
     function nota(s, em) {
       var txt = (s.name + " " + s.state + " " + s.tags).toLowerCase(), f = (em.freq / 100).toFixed(1), p = 0;
@@ -92,16 +84,17 @@
         return cache[k];
       }).finally(function () { delete pendentes[k]; }));
     }
+    // toca a transmissão; se ela falha, tenta a próxima da mesma emissora
     function tocar(em, tentativa) {
       var minha = ++vez, n = tentativa || 0;
       var comeca = function (c) {
-        if (minha !== vez || !ligado || atual !== em) return;
+        if (minha !== vez || !ligado) return;
         var url = c.urls[n];
-        if (!url) { avisar(em.nome + ": a transmissão online não respondeu agora."); chiado(true); return; }
-        audio.onplaying = function () { if (minha === vez) { chiado(false); avisar("Tocando a transmissão online da " + em.nome + " (" + (em.freq / 100).toFixed(1) + " MHz)."); } };
+        if (!url) { avisar("A transmissão da " + em.nome + " não respondeu agora."); return; }
+        audio.onplaying = function () { if (minha === vez) avisar("Tocando a " + em.nome + " pela internet."); };
         audio.onerror = function () { if (minha === vez && ligado) tocar(em, n + 1); };
         audio.src = url;
-        avisar("Conectando à transmissão online da " + em.nome + "…");
+        avisar("Conectando à " + em.nome + "…");
         var p = audio.play();
         if (p && p.catch) p.catch(function (e) { if (minha === vez && e && e.name !== "AbortError") tocar(em, n + 1); });
       };
@@ -109,66 +102,52 @@
       if (c && Date.now() - c.t < 3 * 864e5) comeca(c);
       else {
         avisar("Procurando a transmissão da " + em.nome + "…");
-        procurar(em).then(comeca, function () { if (minha === vez) { avisar("Não achei a transmissão da " + em.nome + " agora."); chiado(true); } });
+        procurar(em).then(comeca, function () { if (minha === vez) avisar("Não achei a transmissão da " + em.nome + " agora."); });
       }
     }
-    function sintonia() {
-      vez++;
-      if (!ligado) return;
-      audio.pause();
-      chiado(true);
-      if (atual) tocar(atual);
-      else avisar("Nenhuma emissora em " + (estado.freq / 100).toFixed(1).replace(".", ",") + " MHz: só chiado.");
-    }
-    function ligar(liga) {
+    function trocar(em) { if (ligado) { audio.pause(); tocar(em); } }
+    function ligar(liga, em) {
       ligado = liga;
       if (liga) {
-        prepararChiado();
-        if (ctx && ctx.state === "suspended") ctx.resume();
-        // toca um silêncio no próprio toque, que destrava o áudio no iPhone, e procura as memórias em segundo plano
+        // toca um silêncio no próprio toque, que destrava o áudio no iPhone, e procura as outras emissoras em segundo plano
         audio.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
         var p = audio.play(); if (p && p.catch) p.catch(function () {});
-        sintonia();
-        EMISSORAS.reduce(function (pr, em) { return pr.then(function () { return procurar(em).catch(function () {}); }); }, Promise.resolve());
-      } else { vez++; audio.pause(); chiado(false); avisar("Som desligado."); }
+        tocar(em);
+        EMISSORAS.reduce(function (pr, x) { return pr.then(function () { return procurar(x).catch(function () {}); }); }, Promise.resolve());
+      } else {
+        vez++; audio.pause(); audio.removeAttribute("src"); audio.load();  // para também o download da transmissão
+        avisar("Som desligado.");
+      }
     }
-    return { ligar: ligar, sintonia: sintonia, ligado: function () { return ligado; } };
+    return { ligar: ligar, trocar: trocar, ligado: function () { return ligado; } };
   })();
 
-  function sintonizar(f, modo, mem) {
-    estado.freq = Math.max(8750, Math.min(10800, f));
-    atual = emissoraEm(estado.freq);
-    // nível: forte nas emissoras, ruído entre elas
-    base = atual ? 52 + Math.round(sorteio(estado.freq, 2) * 18) : 4 + Math.round(sorteio(estado.freq, 3) * 8);
-    estado.sinal = base * 10;
-    estado.rds = false; estado.rdsOk = false; estado.ps = ""; estado.pty = ""; estado.qualidade = 0;
-    estado.estereo = false; estado.cn = 0; estado.modo = modo || "man";
-    if (mem) estado.memoria = mem;
-    rt.texto = ""; rt.x = 0; rt.largura = 0;
-    sintonizou = performance.now();
-    som.sintonia();
-    pintarMemorias();
+  // troca de emissora em círculo: depois da última vem a primeira
+  function sintonizar(i) {
+    var n = EMISSORAS.length;
+    indice = (i % n + n) % n;
+    var em = EMISSORAS[indice];
+    estado.freq = em.freq; estado.memoria = em.mem; estado.ps = em.ps; estado.pty = nomePTY(em);
+    base = 52 + Math.round(sorteio(em.freq, 2) * 18);
+    estado.sinal = base * 10; estado.cn = Math.round(base * 0.62 - 1); estado.qualidade = base > 62 ? 4 : 3;
+    novoRT(em.nome + " " + mhz(em.freq) + " MHz - ao vivo pela internet no rádio virtual do guia DP-666");
+    var el = document.getElementById("emissora");
+    el.querySelector("strong").textContent = em.nome;
+    el.querySelector("span").textContent = mhz(em.freq) + " MHz · memória " + em.mem + " de " + n;
+    som.trocar(em);
   }
 
-  // o rádio vivo: sinal oscilando, modulação com pico, RDS chegando depois de sintonizar e o RadioText correndo
+  // a tela viva: sinal oscilando, modulação com pico, relógio e RadioText correndo
   var ult = 0, acc = 0;
   function quadro(t) {
     if (parado) return;
     var dt = ult ? Math.min(100, t - ult) : 16;
     ult = t; acc += dt;
-    if (atual && t - sintonizou > 300) estado.estereo = true;
-    if (t - sintonizou > 400) estado.cn = atual ? Math.max(0, Math.round(base * 0.62 - 1)) : 0;
-    if (atual && !estado.rds && t - sintonizou > 900) {
-      estado.rds = true; estado.rdsOk = true; estado.qualidade = base > 62 ? 4 : 3;
-      estado.pty = atual.pty; estado.ps = atual.ps;
-      novoRT(semAcento(atual.nome) + " " + (atual.freq / 100).toFixed(1) + " SAO PAULO - AO VIVO PELA INTERNET NO RADIO VIRTUAL DO GUIA DP-666");
-    }
     if (acc >= 80) {
       acc = 0;
       if (!reduz) {
         estado.sinal = Math.round(base * 10 + (Math.random() - 0.5) * 8);
-        var alvo = atual ? 70 : 15;
-        estado.mod = Math.max(2, Math.min(115, estado.mod + (alvo - estado.mod) * 0.08 + (Math.random() - 0.5) * 22));
+        estado.mod = Math.max(2, Math.min(115, estado.mod + (70 - estado.mod) * 0.08 + (Math.random() - 0.5) * 22));
         if (estado.mod > estado.pico) estado.pico = estado.mod; else estado.pico = Math.max(estado.mod, estado.pico - 1.2);
       }
       relogio();
@@ -177,30 +156,41 @@
       if (rt.espera > 0) rt.espera -= dt;
       else { rt.x -= dt / 15; if (rt.x < -rt.largura) { rt.x = 0; rt.espera = 1000; } }
     }
-    tela.desenhar(estado, dados.temas[tema], { texto: rt.texto, x: Math.round(rt.x), largura: rt.largura });
+    tela.desenhar(estado, dados.temas[ajustes.tema], { texto: rt.texto, x: Math.round(rt.x), largura: rt.largura });
     requestAnimationFrame(quadro);
   }
 
-  // busca: anda de 0,1 em 0,1 MHz até achar uma emissora, como o AUTO do rádio
-  function buscar(dir) {
-    clearInterval(buscando);
-    var f = estado.freq;
-    atual = null; som.sintonia();
-    buscando = setInterval(function () {
-      f += dir * 10;
-      if (f > 10800) f = 8750; else if (f < 8750) f = 10800;
-      estado.freq = f; estado.modo = "auto"; estado.rds = false; estado.ps = ""; estado.pty = ""; estado.estereo = false;
-      rt.texto = ""; rt.largura = 0; base = 6; estado.sinal = 60;
-      if (emissoraEm(f)) { clearInterval(buscando); sintonizar(f, "auto"); }
-    }, reduz ? 1 : 25);
+  /* brilho como o firmware: o backlight vai de 15 a 255 (de 255) conforme o ajuste de 1 a 100%. O protetor de tela
+     apaga a tela ou baixa o brilho para 1%, 25% ou 50% do ajuste depois de alguns segundos sem mexer nos controles;
+     aqui conta o tempo sem tocar na página, e qualquer toque acorda a tela */
+  var protegida = false, timerProtecao = 0;
+  function aplicarBrilho() {
+    var v = ajustes.brilho, f;
+    if (protegida && ajustes.protecaoModo === "0") f = 0;
+    else {
+      if (protegida) v = Math.floor(v / { "1": 100, "2": 4, "3": 2 }[ajustes.protecaoModo]);
+      f = (15 + 2.4 * v) / 255;
+    }
+    tela.cv.style.filter = f > 0.999 ? "" : "brightness(" + f.toFixed(3) + ")";
+  }
+  function acordar() {
+    clearTimeout(timerProtecao);
+    if (protegida) { protegida = false; aplicarBrilho(); }
+    if (ajustes.protecao) timerProtecao = setTimeout(function () { protegida = true; aplicarBrilho(); }, ajustes.protecao * 1000);
   }
 
-  // os ajustes e os controles da página
-  function opcoes(id, lista, atualV, fn, desligados) {
+  // no celular, com a tela presa no alto, o navegador rola até um campo (pelo teclado, por exemplo) sem escondê-lo
+  function folga() {
+    var fixo = document.querySelector(".fixo");
+    document.documentElement.style.scrollPaddingTop = getComputedStyle(fixo).position === "sticky" ? fixo.offsetHeight + 8 + "px" : "";
+  }
+
+  // os ajustes: cada grupo de botões funciona como as opções de um item do menu
+  function opcoes(id, lista, atual, fn, desligados) {
     var el = document.getElementById(id);
     el.innerHTML = lista.map(function (o) {
       var v = Array.isArray(o) ? o[0] : o, r = Array.isArray(o) ? o[1] : o, off = desligados && desligados.indexOf(v) >= 0;
-      return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === atualV) + '"' + (off ? ' disabled title="Sem cores conhecidas"' : "") + ">" + r + "</button>";
+      return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === atual) + '"' + (off ? ' disabled title="Sem cores conhecidas"' : "") + ">" + r + "</button>";
     }).join("");
     el.addEventListener("click", function (ev) {
       var b = ev.target.closest("button");
@@ -209,47 +199,51 @@
       fn(b.getAttribute("data-v"));
     });
   }
-  function pintarMemorias() {
-    document.querySelectorAll("#memorias button").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(estado.modo === "mem" && +b.getAttribute("data-m") === estado.memoria));
-    });
-  }
   function iniciar(d) {
     dados = d;
     tela = new TelaRadio(document.getElementById("tela"), d);
-    var temas = Object.keys(d.temas), sem = temas.filter(function (n) { return !d.temas[n]; });
-    opcoes("o-tema", temas, tema, function (v) { tema = v; }, sem);
-    opcoes("o-fonte", Object.keys(d.freq), estado.fonte, function (v) { estado.fonte = v; });
-    opcoes("o-sub", [["nao", "Off"], ["sim", "On"], ["ps", "PS only"]], estado.sublinhado, function (v) { estado.sublinhado = v; if (rt.texto) novoRT(rt.texto); });
-    opcoes("o-relogio", [["nao", "Off"], ["sim", "On"]], "sim", function (v) { estado.relogio = v === "sim"; });
+    var idioma = document.getElementById("o-idioma");
+    Object.keys(d.pty).forEach(function (n) { idioma.add(new Option(n, n, n === ajustes.idioma, n === ajustes.idioma)); });
+    idioma.addEventListener("change", function () { ajustes.idioma = idioma.value; estado.pty = nomePTY(EMISSORAS[indice]); });
     var b = document.getElementById("o-brilho"), bv = document.getElementById("o-brilho-v");
-    b.addEventListener("input", function () { bv.textContent = b.value + "%"; tela.cv.style.filter = "brightness(" + (0.12 + 0.88 * b.value / 100) + ")"; });
-    var mems = document.getElementById("memorias");
-    mems.innerHTML = EMISSORAS.map(function (em) {
-      return '<button type="button" data-m="' + em.mem + '"><b>' + em.mem + "</b> " + (em.freq / 100).toFixed(1).replace(".", ",") + " <span>" + em.curto + "</span></button>";
-    }).join("");
-    mems.addEventListener("click", function (ev) {
-      var bt = ev.target.closest("button");
-      if (!bt) return;
-      clearInterval(buscando);
-      var em = EMISSORAS[+bt.getAttribute("data-m") - 1];
-      sintonizar(em.freq, "mem", em.mem);
+    b.addEventListener("input", function () { ajustes.brilho = +b.value; bv.textContent = b.value + "%"; aplicarBrilho(); });
+    opcoes("o-mod", [["0", "Off"], ["1", "On"]], "1", function (v) { estado.modulacao = v === "1"; });
+    opcoes("o-protecao", [["0", "Off"], ["3", "3 Sec"], ["10", "10 Sec"], ["30", "30 Sec"], ["60", "60 Sec"]], "0", function (v) { ajustes.protecao = +v; acordar(); });
+    opcoes("o-protecao-modo", [["0", "Screen off"], ["1", "1% brightness"], ["2", "25% brightness"], ["3", "50% brightness"]], ajustes.protecaoModo, function (v) { ajustes.protecaoModo = v; });
+    opcoes("o-bateria", [["nenhum", "Off"], ["volts", "Show voltage"], ["porcentagem", "Show percentage"]], estado.bateria, function (v) { estado.bateria = v; });
+    opcoes("o-unidade", [["dBuV", "dBμV"], ["dBf", "dBf"], ["dBm", "dBm"]], estado.unidade, function (v) { estado.unidade = v; });
+    opcoes("o-relogio", [["0", "Off"], ["1", "On"]], "1", function (v) { estado.relogio = v === "1"; });
+    var temas = Object.keys(d.temas), sem = temas.filter(function (n) { return !d.temas[n]; });
+    opcoes("o-tema", temas, ajustes.tema, function (v) { ajustes.tema = v; }, sem);
+    opcoes("o-fonte", Object.keys(d.freq), estado.fonte, function (v) { estado.fonte = v; });
+    opcoes("o-sub", [["nao", "Off"], ["ps", "PS only"], ["sim", "On"]], estado.sublinhado, function (v) { estado.sublinhado = v; novoRT(rt.texto); });
+
+    document.getElementById("anterior").addEventListener("click", function () { sintonizar(indice - 1); });
+    document.getElementById("proxima").addEventListener("click", function () { sintonizar(indice + 1); });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.altKey || ev.ctrlKey || ev.metaKey || (ev.target.closest && ev.target.closest("input, select, textarea"))) return;
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") { ev.preventDefault(); sintonizar(indice + (ev.key === "ArrowLeft" ? -1 : 1)); }
     });
-    document.getElementById("menos").addEventListener("click", function () { clearInterval(buscando); sintonizar(estado.freq - 10); });
-    document.getElementById("mais").addEventListener("click", function () { clearInterval(buscando); sintonizar(estado.freq + 10); });
-    document.getElementById("busca-menos").addEventListener("click", function () { buscar(-1); });
-    document.getElementById("busca-mais").addEventListener("click", function () { buscar(1); });
     var bs = document.getElementById("som");
     bs.addEventListener("click", function () {
       var liga = !som.ligado();
-      som.ligar(liga);
+      som.ligar(liga, EMISSORAS[indice]);
       bs.setAttribute("aria-pressed", String(liga));
       bs.textContent = liga ? "Desligar o som" : "Ligar o som";
     });
-    sintonizar(estado.freq, "mem", 1);
+    document.addEventListener("pointerdown", acordar, true);
+    document.addEventListener("keydown", acordar, true);
+    window.addEventListener("resize", folga);
+    folga();
+
+    sintonizar(0);
     relogio();
+    aplicarBrilho();
     requestAnimationFrame(quadro);
-    window.radioVirtual = { estado: estado, rt: rt, tela: tela, dados: d, tema: function (n) { tema = n; }, novoRT: novoRT, parar: function () { parado = true; }, emissoras: EMISSORAS };
+    window.radioVirtual = {
+      estado: estado, ajustes: ajustes, rt: rt, tela: tela, dados: d, emissoras: EMISSORAS, ir: sintonizar, novoRT: novoRT,
+      tema: function (n) { ajustes.tema = n; }, parar: function () { parado = true; }
+    };
   }
   fetch("dados.json").then(function (r) { return r.json(); }).then(iniciar);
 })();
