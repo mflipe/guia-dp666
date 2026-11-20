@@ -24,7 +24,6 @@
   });
   var SERVIDORES = ["https://de1.api.radio-browser.info", "https://nl1.api.radio-browser.info", "https://at1.api.radio-browser.info", "https://de2.api.radio-browser.info"];
   var DIAS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  var reduz = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   // o que a tela mostra: a emissora numa memória, com estéreo e RDS; tela é "principal", "rds", "af" ou "eon"
   var estado = {
     tela: "principal", freq: EMISSORAS[0].freq, banda: "FM", modo: "mem", memoria: 1, passo: 0, fonte: "Comic", bw: 236, bwAuto: true,
@@ -139,23 +138,30 @@
     som.trocar(em);
   }
 
-  /* PTY, PS e RT sobem em partes quando não cabem: cada parte fica 3 s e a próxima sobe em 0,45 s (sem a subida,
-     com o movimento reduzido no aparelho). As larguras são as do firmware, na tela principal e na do RDS avançado */
-  var FICA = 3000, SOBE = 450, LARGURA = { principal: { pty: 174, ps: 150, rt: 270 }, rds: { pty: 174, ps: 150, rt: 165 } };
-  var tAnim = 0, cacheLinhas = {}, inicio = { pty: 0, ps: 0, rt: 0 }, ultimas = {};
-  function linhasDe(campo) {
+  /* PTY, PS e RT que não cabem correm para a esquerda, como o RT no firmware: 1 pixel a cada 15 ms, parando 1 s no
+     começo de cada volta. As larguras são as do firmware, na tela principal e na do RDS avançado */
+  var VELOCIDADE = 1 / 15, LARGURA = { principal: { pty: 174, ps: 150, rt: 270 }, rds: { pty: 174, ps: 150, rt: 165 } };
+  var letreiros = {};
+  function letreiro(campo) {
     var tl = estado.tela === "rds" ? "rds" : "principal", txt = campo === "pty" ? estado.pty : campo === "ps" ? estado.ps : rtTexto;
     // o sublinhado troca os espaços do PS e do RT (que vêm do RDS), não os do nome do PTY (que vem do idioma)
-    var sep = campo !== "pty" && (estado.sublinhado === "sim" || (estado.sublinhado === "ps" && campo === "ps")) ? "_" : " ";
-    var chave = [campo, tl, sep, txt].join("|");
-    return cacheLinhas[chave] || (cacheLinhas[chave] = tela.paginar(campo === "ps" ? 28 : 16, txt, LARGURA[tl][campo], sep));
+    if (campo !== "pty" && (estado.sublinhado === "sim" || (estado.sublinhado === "ps" && campo === "ps"))) txt = txt.replace(/ /g, "_");
+    var chave = [tl, txt].join("|"), L = letreiros[campo];
+    if (!L || L.chave !== chave) {
+      // texto novo: começa do início, parado por 1 s
+      var f = tela.f[campo === "ps" ? 28 : 16], cabe = f.largura(txt) < LARGURA[tl][campo], volta = txt + "      ";
+      L = letreiros[campo] = { chave: chave, texto: cabe ? txt : volta, x: 0, largura: cabe ? 0 : f.largura(volta), espera: 1000 };
+    }
+    return L;
   }
-  function rolagem(campo) {
-    var linhas = linhasDe(campo), n = linhas.length;
-    if (linhas !== ultimas[campo]) { ultimas[campo] = linhas; inicio[campo] = tAnim; }  // texto novo: começa do início
-    if (n < 2) return { linhas: linhas, i: 0, t: 0 };
-    var ciclo = FICA + SOBE, tt = tAnim - inicio[campo], dentro = tt % ciclo, t = dentro > FICA ? (dentro - FICA) / SOBE : 0;
-    return { linhas: linhas, i: Math.floor(tt / ciclo) % n, t: reduz ? 0 : t * t * (3 - 2 * t) };
+  function correr(dt) {
+    ["pty", "ps", "rt"].forEach(function (k) {
+      var L = letreiro(k);
+      if (!L.largura) return;
+      if (L.espera > 0) { L.espera -= dt; return; }
+      L.x -= dt * VELOCIDADE;
+      if (L.x <= -L.largura) { L.x = 0; L.espera = 1000; }
+    });
   }
 
   /* os medidores, só para ilustrar: S varia pouco (cerca de 1,5 dB em volta do nível da emissora) e M varia
@@ -180,11 +186,12 @@
     var dt = ult ? Math.min(100, t - ult) : 16;
     ult = t;
     if (ajustes.animar) {
-      tAnim += dt; acc += dt;
+      acc += dt;
       while (acc >= 60) { acc -= 60; medidores(); }
+      correr(dt);
     }
     if (t - ultRelogio >= 250) { ultRelogio = t; relogio(); }
-    tela.desenhar(estado, dados.temas[ajustes.tema], { pty: rolagem("pty"), ps: rolagem("ps"), rt: rolagem("rt") });
+    tela.desenhar(estado, dados.temas[ajustes.tema], { pty: letreiro("pty"), ps: letreiro("ps"), rt: letreiro("rt") });
     requestAnimationFrame(quadro);
   }
 
@@ -306,7 +313,7 @@
     aplicarBrilho();
     requestAnimationFrame(quadro);
     window.radioVirtual = {
-      estado: estado, ajustes: ajustes, tela: tela, dados: d, emissoras: EMISSORAS, ir: sintonizar, tocar: tocar, rolagem: rolagem,
+      estado: estado, ajustes: ajustes, tela: tela, dados: d, emissoras: EMISSORAS, ir: sintonizar, tocar: tocar, letreiro: letreiro,
       tema: function (n) { ajustes.tema = n; }, parar: function () { parado = true; }
     };
   }

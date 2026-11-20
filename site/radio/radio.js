@@ -178,30 +178,13 @@
   }
   function unidade(e) { return { dBf: "dBf", dBm: "dBm" }[e.unidade] || "dBμV"; }
 
-  /* quebra o texto em linhas que cabem na largura, palavra por palavra (uma palavra maior que a linha é cortada);
-     sep junta as palavras: o espaço, ou o sublinhado quando o ajuste troca os espaços */
-  T.paginar = function (tam, txt, larg, sep) {
-    var f = this.f[tam], linhas = [], atual = "";
-    txt.split(" ").filter(function (p) { return p; }).forEach(function (p) {
-      var junto = atual ? atual + sep + p : p;
-      if (f.largura(junto) <= larg) { atual = junto; return; }
-      if (atual) linhas.push(atual);
-      while (f.largura(p) > larg && p.length > 1) {
-        var k = p.length - 1;
-        while (k > 1 && f.largura(p.slice(0, k)) > larg) k--;
-        linhas.push(p.slice(0, k)); p = p.slice(k);
-      }
-      atual = p;
-    });
-    if (atual) linhas.push(atual);
-    return linhas.length ? linhas : [""];
-  };
-  /* texto que sobe em partes dentro da caixa (x, y, largura, altura): r = { linhas, i, t }, com t de 0 a 1 na subida
-     para a linha seguinte. No rádio, o RT corre para o lado; aqui, PTY, PS e RT sobem quando não cabem */
-  function rolando(t, tam, r, caixa, y, cor, sv) {
-    var n = r.linhas.length, d = Math.round(r.t * caixa[3]);
-    t.texto(tam, r.linhas[r.i % n], 0, y - d, -1, cor, sv, caixa);
-    if (d > 0) t.texto(tam, r.linhas[(r.i + 1) % n], 0, y - d + caixa[3], -1, cor, sv, caixa);
+  /* letreiro, como o RT no firmware e os letreiros dos canais de notícia: quando o texto não cabe na caixa, ele corre
+     para a esquerda e volta pelo outro lado, com seis espaços entre o fim e o começo. r = { texto, x, largura }
+     (largura 0: o texto cabe e fica parado); a caixa (x, y, largura, altura) corta o que passa dela */
+  function letreiro(t, tam, r, caixa, y, cor, sv) {
+    var x = Math.round(r.x);
+    t.texto(tam, r.texto, x, y, -1, cor, sv, caixa);
+    if (r.largura) t.texto(tam, r.texto, x + r.largura, y, -1, cor, sv, caixa);
   }
 
   function fundo(t, c, linhas) {
@@ -247,7 +230,7 @@
     for (var i = 0; i < 4; i++) t.ret(187 + 6 * i, base - 6 * i, 4, 9 + 6 * i, i < e.qualidade ? c.ok : c.apagado);
   }
 
-  /* a tela do rádio, a partir do estado (e) e das linhas que sobem (rol: { pty, ps, rt }). e.tela escolhe a tela:
+  /* a tela do rádio, a partir do estado (e) e dos letreiros do PTY, do PS e do RT (rol). e.tela escolhe a tela:
      "principal", "rds" (a do RDS avançado) ou "af" e "eon" (as duas páginas da lista de AF e EON) */
   T.desenhar = function (e, tema, rol) {
     var c = cores(tema);
@@ -319,9 +302,9 @@
     t.texto(16, "PS:", 3, 193, -1, rotulo, sv(rotulo));
     t.texto(16, "RT:", 3, 221, -1, rotulo, sv(rotulo));
     if (e.rds) {
-      rolando(t, 16, rol.pty, [36, 161, 174, 19], 2, crds, sv(crds));
-      rolando(t, 28, rol.ps, [36, 185, 150, 32], 2, crds, sv(crds));
-      rolando(t, 16, rol.rt, [36, 220, 275, 19], 2, crds, sv(crds));
+      letreiro(t, 16, rol.pty, [36, 161, 174, 19], 2, crds, sv(crds));
+      letreiro(t, 28, rol.ps, [36, 185, 150, 32], 2, crds, sv(crds));
+      letreiro(t, 16, rol.rt, [36, 220, 275, 19], 2, crds, sv(crds));
     }
     qualidade(t, c, e, 204);
     // o canto do relógio: tocando nele, o Mod17 troca entre a hora, a data com a hora e o PI
@@ -363,10 +346,10 @@
     var n = nivel(e);
     t.texto(16, (n < 0 && n > -10 ? "-" : "") + (n / 10 | 0) + "." + Math.abs(n % 10), 278, 51, 1, c.prim, sv(c.prim));
     // PS, qualidade, PI, PTY e PTYN
-    rolando(t, 28, rol.ps, [36, 72, 150, 32], 2, rd, sv(rd));
+    letreiro(t, 28, rol.ps, [36, 72, 150, 32], 2, rd, sv(rd));
     qualidade(t, c, e, 92);
     if (e.pi) t.texto(28, e.pi, 270, 75, 0, rd, sv(rd));
-    rolando(t, 16, rol.pty, [36, 105, 174, 21], 4, rd, sv(rd));
+    letreiro(t, 16, rol.pty, [36, 105, 174, 21], 4, rd, sv(rd));
     t.texto(16, "PTYN N/A", 216, 109, -1, rd, sv(rd));
     // os blocos recebidos (como na foto: o primeiro em verde e um com erro)
     for (var i = 0; i < 33; i++) t.disco(6 * i + 10, 133, 2, i === 0 ? c.ok : i === 4 ? c.alerta : cin);
@@ -374,7 +357,7 @@
     t.texto(16, av.semRTmais, 0, 2, -1, rd, sv(rd), [35, 146, 165, 19]);
     t.texto(16, av.semEON, 0, 2, -1, rd, sv(rd), [35, 172, 165, 19]);
     t.texto(16, av.semAF, 0, 2, -1, rd, sv(rd), [35, 197, 165, 19]);
-    rolando(t, 16, rol.rt, [36, 220, 165, 19], 2, rd, sv(rd));
+    letreiro(t, 16, rol.rt, [36, 220, 165, 19], 2, rd, sv(rd));
     t.disco(203, 223, 2, e.rtAB ? cin : c.ok); t.disco(203, 234, 2, e.rtAB ? c.ok : cin);
     // PTY dinâmico, cabeça artificial, comprimido (não) e estéreo; ECC, LIC e PIN
     [137, 153, 168].forEach(function (y) { t.disco(310, y, 5, c.alerta); });
