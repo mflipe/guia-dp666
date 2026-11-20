@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rádio virtual</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="painel.css">
+<style>
+  /* o rádio virtual sozinho, com os tokens do guia (claro e escuro); em inglês com ?lang=en */
+  :root { color-scheme: light dark; --bg: #eef1f5; --surface: #ffffff; --surface-2: #e5e9ef; --ink: #0f141c; --text: #253041; --muted: #4b5668; --rule: #c9d1dc;
+    --accent: #8a5a00; --accent-mark: #b87300; --accent-soft: #f3e6cc; --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif; --font-display: var(--font-sans); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0e131d; --surface: #151c2a; --surface-2: #1d2637; --ink: #e6ebf3; --text: #cdd5e1; --muted: #9aa6b8; --rule: #2b3548; --accent: #f2b14c; --accent-mark: #f2b14c; --accent-soft: #2a2112; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { margin: 0 0 4px; font-size: 1.5rem; }
+  .lead { max-width: 60ch; margin: 0 0 8px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="titulo">Rádio virtual</h1>
+  <p class="lead" id="lead"></p>
+  <div id="radio"></div>
+</main>
+<script src="radio.js"></script>
+<script src="painel.js"></script>
+<script>
+  (function () {
+    var lingua = /[?&]lang=en\b/.test(location.search) ? "en" : "pt", T = RadioVirtual.textos[lingua];
+    document.documentElement.lang = lingua === "en" ? "en" : "pt-BR";
+    document.title = T.titulo;
+    document.getElementById("titulo").textContent = T.titulo;
+    document.getElementById("lead").textContent = T.lead;
+    RadioVirtual.montar(document.getElementById("radio"), { lingua: lingua, base: "", modo: "pagina" });
+  })();
+</script>
+</body>
+</html>
