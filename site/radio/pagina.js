@@ -1,8 +1,9 @@
-/* Página do rádio virtual: a troca de emissora, o som, os ajustes de tela e a animação da tela.
+/* Página do rádio virtual: a troca de emissora, o som, os ajustes de tela, os toques na tela e a animação.
    As emissoras são reais, de São Paulo (capital), nas frequências delas, guardadas nas memórias 1 a 10. O som vem
    da transmissão online de cada uma, achada no Radio Browser (diretório aberto de rádios na internet,
-   https://www.radio-browser.info); o sinal e o RDS da tela são simulados a partir do nome da emissora. Os ajustes
-   são os do menu Display settings do firmware, mais o sublinhado do RDS settings, com os nomes e valores do menu. */
+   https://www.radio-browser.info). O sinal, a modulação e o RDS (PS, PTY, RT e PI) são simulados, só para
+   ilustrar: a transmissão pela internet não traz essas informações. Os ajustes são os do menu Display settings
+   do firmware, mais o sublinhado do RDS settings, com os nomes e valores do menu. */
 (function () {
   "use strict";
   // frequência (em dezenas de kHz), nome, PS de 8 letras, código do tipo de programa (PTY) e o termo de busca
@@ -17,31 +18,31 @@
     [10170, "Alpha FM", "ALPHA FM", 12, "Alpha FM"],
     [10330, "Rádio Cultura FM", "CULTURA", 14, "Cultura FM"],
     [10630, "Mix FM", "MIX FM", 10, "Mix FM"]
-  ].map(function (e, i) { return { freq: e[0], nome: e[1], ps: e[2], pty: e[3], busca: e[4], mem: i + 1 }; });
+  ].map(function (e, i) {
+    // o PI também é simulado: sai da frequência, em hexadecimal
+    return { freq: e[0], nome: e[1], ps: e[2], pty: e[3], busca: e[4], mem: i + 1, pi: ("000" + (e[0] / 10).toString(16).toUpperCase()).slice(-4) };
+  });
   var SERVIDORES = ["https://de1.api.radio-browser.info", "https://nl1.api.radio-browser.info", "https://at1.api.radio-browser.info", "https://de2.api.radio-browser.info"];
+  var DIAS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var reduz = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // o que a tela mostra: a emissora numa memória, com estéreo e RDS
+  // o que a tela mostra: a emissora numa memória, com estéreo e RDS; tela é "principal", "rds", "af" ou "eon"
   var estado = {
-    freq: EMISSORAS[0].freq, banda: "FM", modo: "mem", memoria: 1, passo: 0, fonte: "Comic", bw: 236, bwAuto: true, ims: true, eq: true,
-    estereo: true, offset: 0, squelchCorta: false, rds: true, rdsOk: true, pty: "", ps: "", rtAB: false, qualidade: 4,
-    sinal: 600, unidade: "dBuV", cn: 36, mod: 40, pico: 60, modulacao: true, relogio: true, hora: "", bateria: "porcentagem",
-    carga: 73, wifi: false, sublinhado: "sim"
+    tela: "principal", freq: EMISSORAS[0].freq, banda: "FM", modo: "mem", memoria: 1, passo: 0, fonte: "Comic", bw: 236, bwAuto: true,
+    ims: true, eq: true, estereo: true, offset: 0, squelchCorta: false, rds: true, rdsOk: true, pty: "", ps: "", pi: "", fala: false,
+    rtAB: false, qualidade: 4, sinal: 600, unidade: "dBuV", cn: 36, mod: 40, pico: 60, modulacao: true, relogio: true,
+    relogioModo: "hora", hora: "", data: "", bateria: "porcentagem", carga: 73, wifi: false, sublinhado: "sim", avisos: null
   };
-  // os ajustes que ficam fora do desenho: tema, idioma do PTY, brilho e protetor de tela (segundos e modo)
-  var ajustes = { tema: "Essence", idioma: "English", brilho: 100, protecao: 0, protecaoModo: "1" };
-  var indice = 0, base = 60, rt = { texto: "", x: 0, largura: 0, espera: 0 }, tela = null, dados = null, parado = false;
+  // os ajustes que ficam fora do desenho: tema, idioma, brilho, protetor de tela (segundos e modo) e a animação
+  var ajustes = { tema: "Essence", idioma: "English", brilho: 100, protecao: 0, protecaoModo: "1", animar: true };
+  var indice = 0, base = 60, rtTexto = "", tela = null, dados = null, parado = false;
 
   function sorteio(n, k) { var x = Math.sin(n * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); }
   function mhz(f) { return (f / 100).toFixed(1).replace(".", ","); }
-  function novoRT(txt) {
-    rt.texto = txt; rt.x = 0; rt.espera = 1000;
-    // como o firmware: o RadioText corre só quando não cabe nos 270 pixels, com um respiro de três espaços
-    var f16 = tela.f[16], mostra = estado.sublinhado === "sim" ? txt.replace(/ /g, "_") : txt;
-    rt.largura = f16.largura(mostra) >= 270 ? f16.largura(mostra + "   ") : 0;
-  }
+  function dois(n) { return (n < 10 ? "0" : "") + n; }
   function relogio() {
-    var d = new Date(), h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
-    estado.hora = (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+    var d = new Date();
+    estado.hora = dois(d.getHours()) + ":" + dois(d.getMinutes()) + ":" + dois(d.getSeconds());
+    estado.data = d.getFullYear() + "-" + dois(d.getMonth() + 1) + "-" + dois(d.getDate()) + "  " + DIAS[d.getDay()];
   }
   function nomePTY(em) { return (dados.pty[ajustes.idioma] || dados.pty.English)[em.pty]; }
 
@@ -127,37 +128,87 @@
     var n = EMISSORAS.length;
     indice = (i % n + n) % n;
     var em = EMISSORAS[indice];
-    estado.freq = em.freq; estado.memoria = em.mem; estado.ps = em.ps; estado.pty = nomePTY(em);
+    estado.freq = em.freq; estado.memoria = em.mem; estado.ps = em.ps; estado.pty = nomePTY(em); estado.pi = em.pi;
+    estado.fala = em.pty === 1;  // notícias: a marca de fala (S) acesa; o resto, a de música (M)
     base = 52 + Math.round(sorteio(em.freq, 2) * 18);
-    estado.sinal = base * 10; estado.cn = Math.round(base * 0.62 - 1); estado.qualidade = base > 62 ? 4 : 3;
-    novoRT(em.nome + " " + mhz(em.freq) + " MHz - ao vivo pela internet no rádio virtual do guia DP-666");
+    estado.sinal = base * 10; estado.cn = Math.round(base * 0.62 - 1); estado.qualidade = base > 62 ? 4 : 3; desvio = 0;
+    rtTexto = em.nome + " " + mhz(em.freq) + " MHz - ao vivo pela internet no rádio virtual do guia DP-666";
     var el = document.getElementById("emissora");
     el.querySelector("strong").textContent = em.nome;
     el.querySelector("span").textContent = mhz(em.freq) + " MHz · memória " + em.mem + " de " + n;
     som.trocar(em);
   }
 
-  // a tela viva: sinal oscilando, modulação com pico, relógio e RadioText correndo
-  var ult = 0, acc = 0;
+  /* PTY, PS e RT sobem em partes quando não cabem: cada parte fica 3 s e a próxima sobe em 0,45 s (sem a subida,
+     com o movimento reduzido no aparelho). As larguras são as do firmware, na tela principal e na do RDS avançado */
+  var FICA = 3000, SOBE = 450, LARGURA = { principal: { pty: 174, ps: 150, rt: 270 }, rds: { pty: 174, ps: 150, rt: 165 } };
+  var tAnim = 0, cacheLinhas = {}, inicio = { pty: 0, ps: 0, rt: 0 }, ultimas = {};
+  function linhasDe(campo) {
+    var tl = estado.tela === "rds" ? "rds" : "principal", txt = campo === "pty" ? estado.pty : campo === "ps" ? estado.ps : rtTexto;
+    // o sublinhado troca os espaços do PS e do RT (que vêm do RDS), não os do nome do PTY (que vem do idioma)
+    var sep = campo !== "pty" && (estado.sublinhado === "sim" || (estado.sublinhado === "ps" && campo === "ps")) ? "_" : " ";
+    var chave = [campo, tl, sep, txt].join("|");
+    return cacheLinhas[chave] || (cacheLinhas[chave] = tela.paginar(campo === "ps" ? 28 : 16, txt, LARGURA[tl][campo], sep));
+  }
+  function rolagem(campo) {
+    var linhas = linhasDe(campo), n = linhas.length;
+    if (linhas !== ultimas[campo]) { ultimas[campo] = linhas; inicio[campo] = tAnim; }  // texto novo: começa do início
+    if (n < 2) return { linhas: linhas, i: 0, t: 0 };
+    var ciclo = FICA + SOBE, tt = tAnim - inicio[campo], dentro = tt % ciclo, t = dentro > FICA ? (dentro - FICA) / SOBE : 0;
+    return { linhas: linhas, i: Math.floor(tt / ciclo) % n, t: reduz ? 0 : t * t * (3 - 2 * t) };
+  }
+
+  /* os medidores, só para ilustrar: S varia pouco (cerca de 1,5 dB em volta do nível da emissora) e M varia
+     bastante, como o áudio, subindo rápido nos picos e descendo mais devagar. O pico fica parado 1 s e depois desce
+     3 segmentos a cada 20 ms, como no firmware (aqui, 9 segmentos, ou 11,6%, a cada passo de 60 ms) */
+  var desvio = 0, segura = 0;
+  function medidores() {
+    desvio += (Math.random() - 0.5) * 0.6 - desvio * 0.1;
+    var dbuv = base + desvio;
+    estado.sinal = Math.round(dbuv * 10);
+    estado.cn = Math.max(0, Math.round(dbuv * 0.62 - 1));
+    var alvo = Math.random() < 0.3 ? 5 + Math.random() * 25 : 50 + Math.random() * 55;  // pausas curtas entre os trechos fortes
+    estado.mod += (alvo - estado.mod) * (alvo > estado.mod ? 0.8 : 0.55);
+    if (estado.mod >= estado.pico) { estado.pico = estado.mod; segura = 1000; }
+    else if (segura > 0) segura -= 60;
+    else estado.pico = Math.max(estado.mod, estado.pico - 11.6);
+  }
+
+  var ult = 0, acc = 0, ultRelogio = 0;
   function quadro(t) {
     if (parado) return;
     var dt = ult ? Math.min(100, t - ult) : 16;
-    ult = t; acc += dt;
-    if (acc >= 80) {
-      acc = 0;
-      if (!reduz) {
-        estado.sinal = Math.round(base * 10 + (Math.random() - 0.5) * 8);
-        estado.mod = Math.max(2, Math.min(115, estado.mod + (70 - estado.mod) * 0.08 + (Math.random() - 0.5) * 22));
-        if (estado.mod > estado.pico) estado.pico = estado.mod; else estado.pico = Math.max(estado.mod, estado.pico - 1.2);
-      }
-      relogio();
+    ult = t;
+    if (ajustes.animar) {
+      tAnim += dt; acc += dt;
+      while (acc >= 60) { acc -= 60; medidores(); }
     }
-    if (rt.largura && !reduz) {
-      if (rt.espera > 0) rt.espera -= dt;
-      else { rt.x -= dt / 15; if (rt.x < -rt.largura) { rt.x = 0; rt.espera = 1000; } }
-    }
-    tela.desenhar(estado, dados.temas[ajustes.tema], { texto: rt.texto, x: Math.round(rt.x), largura: rt.largura });
+    if (t - ultRelogio >= 250) { ultRelogio = t; relogio(); }
+    tela.desenhar(estado, dados.temas[ajustes.tema], { pty: rolagem("pty"), ps: rolagem("ps"), rt: rolagem("rt") });
     requestAnimationFrame(quadro);
+  }
+
+  /* os toques na tela, como no Mod17: no RDS da barra de cima, abre a tela do RDS avançado; nela e nas listas de AF
+     e EON, cada toque vai para a próxima, e depois da EON volta à principal; no canto do relógio, troca entre a
+     hora, a data com a hora e o PI */
+  var NOMES = { principal: "principal", rds: "do RDS avançado", af: "da lista de AF", eon: "da lista de EON" };
+  function mudarTela(nova) {
+    estado.tela = nova;
+    tela.cv.setAttribute("aria-label", "Tela " + NOMES[nova] + " do rádio");
+  }
+  function tocar(qual) {
+    if (qual === "rds") mudarTela(estado.tela === "principal" ? "rds" : { rds: "af", af: "eon", eon: "principal" }[estado.tela]);
+    else if (qual === "relogio") {
+      if (estado.tela !== "principal") mudarTela("principal");
+      estado.relogioModo = { hora: "completo", completo: "pi", pi: "hora" }[estado.relogioModo];
+    }
+  }
+  function alvo(ev) {
+    var r = tela.cv.getBoundingClientRect(), x = (ev.clientX - r.left) * 320 / r.width, y = (ev.clientY - r.top) * 240 / r.height;
+    if (estado.tela !== "principal") return "rds";
+    if (x >= 112 && x <= 166 && y <= 34) return "rds";
+    if (x >= 210 && y >= 180 && y <= 217 && estado.relogio) return "relogio";
+    return null;
   }
 
   /* brilho como o firmware: o backlight vai de 15 a 255 (de 255) conforme o ajuste de 1 a 100%. O protetor de tela
@@ -202,9 +253,12 @@
   function iniciar(d) {
     dados = d;
     tela = new TelaRadio(document.getElementById("tela"), d);
+    estado.avisos = d.avisos[ajustes.idioma];
     var idioma = document.getElementById("o-idioma");
     Object.keys(d.pty).forEach(function (n) { idioma.add(new Option(n, n, n === ajustes.idioma, n === ajustes.idioma)); });
-    idioma.addEventListener("change", function () { ajustes.idioma = idioma.value; estado.pty = nomePTY(EMISSORAS[indice]); });
+    idioma.addEventListener("change", function () {
+      ajustes.idioma = idioma.value; estado.pty = nomePTY(EMISSORAS[indice]); estado.avisos = d.avisos[idioma.value];
+    });
     var b = document.getElementById("o-brilho"), bv = document.getElementById("o-brilho-v");
     b.addEventListener("input", function () { ajustes.brilho = +b.value; bv.textContent = b.value + "%"; aplicarBrilho(); });
     opcoes("o-mod", [["0", "Off"], ["1", "On"]], "1", function (v) { estado.modulacao = v === "1"; });
@@ -216,13 +270,24 @@
     var temas = Object.keys(d.temas), sem = temas.filter(function (n) { return !d.temas[n]; });
     opcoes("o-tema", temas, ajustes.tema, function (v) { ajustes.tema = v; }, sem);
     opcoes("o-fonte", Object.keys(d.freq), estado.fonte, function (v) { estado.fonte = v; });
-    opcoes("o-sub", [["nao", "Off"], ["ps", "PS only"], ["sim", "On"]], estado.sublinhado, function (v) { estado.sublinhado = v; novoRT(rt.texto); });
+    opcoes("o-sub", [["nao", "Off"], ["ps", "PS only"], ["sim", "On"]], estado.sublinhado, function (v) { estado.sublinhado = v; });
 
     document.getElementById("anterior").addEventListener("click", function () { sintonizar(indice - 1); });
     document.getElementById("proxima").addEventListener("click", function () { sintonizar(indice + 1); });
     document.addEventListener("keydown", function (ev) {
       if (ev.altKey || ev.ctrlKey || ev.metaKey || (ev.target.closest && ev.target.closest("input, select, textarea"))) return;
       if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") { ev.preventDefault(); sintonizar(indice + (ev.key === "ArrowLeft" ? -1 : 1)); }
+      else if (ev.key === "Escape" && estado.tela !== "principal") mudarTela("principal");
+    });
+    var cv = tela.cv;
+    cv.addEventListener("click", function (ev) { var q = alvo(ev); if (q) tocar(q); });
+    cv.addEventListener("mousemove", function (ev) { cv.style.cursor = alvo(ev) ? "pointer" : ""; });
+    document.getElementById("toque-rds").addEventListener("click", function () { tocar("rds"); });
+    document.getElementById("toque-relogio").addEventListener("click", function () { tocar("relogio"); });
+    var anima = document.getElementById("animacao");
+    anima.addEventListener("click", function () {
+      ajustes.animar = !ajustes.animar;
+      anima.textContent = ajustes.animar ? "Pausar animação" : "Retomar animação";
     });
     var bs = document.getElementById("som");
     bs.addEventListener("click", function () {
@@ -241,7 +306,7 @@
     aplicarBrilho();
     requestAnimationFrame(quadro);
     window.radioVirtual = {
-      estado: estado, ajustes: ajustes, rt: rt, tela: tela, dados: d, emissoras: EMISSORAS, ir: sintonizar, novoRT: novoRT,
+      estado: estado, ajustes: ajustes, tela: tela, dados: d, emissoras: EMISSORAS, ir: sintonizar, tocar: tocar, rolagem: rolagem,
       tema: function (n) { ajustes.tema = n; }, parar: function () { parado = true; }
     };
   }

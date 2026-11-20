@@ -1,8 +1,9 @@
-/* Rádio virtual: a tela principal do DP-666 com o Megatron Mod17, desenhada pixel a pixel num canvas de 320x240,
-   do jeito que o firmware desenha. As posições vêm do código da linha oficial no commit ee2e338, que o Mod17
-   segue; o que o Mod17 muda (o relógio no lugar do PI, as etiquetas apagadas com contorno, as cores do medidor)
-   foi conferido numa foto da tela. As letras são as fontes do próprio firmware (dados.json), com a mesma
-   suavização do TFT_eSPI. O logo do RDS é marca registrada: no lugar dele vai a palavra RDS. */
+/* Rádio virtual: as telas do DP-666 com o Megatron Mod17 (a principal, a do RDS avançado e a lista de AF e EON),
+   desenhadas pixel a pixel num canvas de 320x240, do jeito que o firmware desenha. As posições vêm do código da
+   linha oficial no commit ee2e338, que o Mod17 segue; o que o Mod17 muda (o relógio no lugar do PI, as etiquetas
+   apagadas com contorno, as cores do medidor, os alinhamentos do RDS avançado) foi conferido em fotos da tela.
+   As letras são as fontes do próprio firmware (dados.json), com a mesma suavização do TFT_eSPI. O logo do RDS é
+   marca registrada: no lugar dele vai a palavra RDS. */
 (function (raiz) {
   "use strict";
   var W = 320, H = 240;
@@ -165,38 +166,54 @@
     return c;
   }
 
-  // o texto do RDS com o sublinhado no lugar dos espaços, como o ajuste RDS Show underscore
+  // o texto do RDS com o sublinhado no lugar dos espaços, como o ajuste Show underscore in RDS
   function sublinha(s, onde, campo) {
     return onde === "sim" || (onde === "ps" && campo === "ps") ? s.replace(/ /g, "_") : s;
   }
   function doisDigitos(n) { return (n < 10 ? "0" : "") + n; }
+  function mhz(f) { return Math.floor(f / 100) + "." + doisDigitos(f % 100); }
+  // o nível na unidade escolhida, em décimos (dBf soma 10,875 dB; dBm tira 10·log10(75) + 90)
+  function nivel(e) {
+    return e.unidade === "dBf" ? Math.floor(e.sinal + 108.75) : e.unidade === "dBm" ? Math.round(e.sinal - 10 * (10 * Math.log10(75) + 90)) : Math.round(e.sinal);
+  }
+  function unidade(e) { return { dBf: "dBf", dBm: "dBm" }[e.unidade] || "dBμV"; }
 
-  /* a tela inteira, a partir do estado do rádio (e: veja o estado inicial em RadioVirtual) */
-  T.desenhar = function (e, tema, rt) {
-    var c = cores(tema), t = this, sv = c.suave;
-    t.ret(0, 0, W, H, c.fundo);
-    // a moldura e as divisões
-    t.contorno(0, 0, 320, 240, c.moldura);
-    [[0, 30, 320, 30], [0, 100, 320, 100], [120, 30, 120, 0], [210, 100, 210, 217], [248, 30, 248, 0], [0, 160, 210, 160],
-      [0, 180, 320, 180], [0, 217, 320, 217], [53, 30, 53, 0], [89, 30, 89, 0], [158, 30, 158, 0]].forEach(function (l) {
-      t.linha(l[0], l[1], l[2], l[3], c.moldura);
+  /* quebra o texto em linhas que cabem na largura, palavra por palavra (uma palavra maior que a linha é cortada);
+     sep junta as palavras: o espaço, ou o sublinhado quando o ajuste troca os espaços */
+  T.paginar = function (tam, txt, larg, sep) {
+    var f = this.f[tam], linhas = [], atual = "";
+    txt.split(" ").filter(function (p) { return p; }).forEach(function (p) {
+      var junto = atual ? atual + sep + p : p;
+      if (f.largura(junto) <= larg) { atual = junto; return; }
+      if (atual) linhas.push(atual);
+      while (f.largura(p) > larg && p.length > 1) {
+        var k = p.length - 1;
+        while (k > 1 && f.largura(p.slice(0, k)) > larg) k--;
+        linhas.push(p.slice(0, k)); p = p.slice(k);
+      }
+      atual = p;
     });
-    // os medidores: linhas, marcas e escalas
-    t.linha(16, 114, 202, 114, c.ativo);
-    t.linha(16, 143, 202, 143, e.modulacao ? c.ativo : c.apagado);
-    for (var s = 0; s < 94; s++) {
-      if (s > 54) {
-        if ((s - 53) % 10 === 0) { t.ret(16 + 2 * s, 112, 2, 2, c.barS); t.ret(16 + 2 * s, 141, 2, 2, e.modulacao ? c.barS : c.apagado); }
-      } else if ((s + 1) % 6 === 0) { t.ret(16 + 2 * s, 112, 2, 2, c.bar); t.ret(16 + 2 * s, 141, 2, 2, e.modulacao ? c.bar : c.apagado); }
-    }
-    t.texto(16, "S", 7, 101, 0, c.ativo, sv(c.ativo));
-    [["1", 24], ["3", 48], ["5", 72], ["7", 96], ["9", 120], ["+10", 134], ["+30", 174]].forEach(function (a) { t.texto(16, a[0], a[1], 115, -1, c.ativo, sv(c.ativo)); });
-    var cm = e.modulacao ? c.ativo : c.apagado;
-    t.texto(16, "M", 7, 128, 0, cm, sv(cm));
-    [["10", 27], ["30", 57], ["50", 87], ["70", 117], ["100", 164]].forEach(function (a) { t.texto(16, a[0], a[1], 144, -1, cm, sv(cm)); });
+    if (atual) linhas.push(atual);
+    return linhas.length ? linhas : [""];
+  };
+  /* texto que sobe em partes dentro da caixa (x, y, largura, altura): r = { linhas, i, t }, com t de 0 a 1 na subida
+     para a linha seguinte. No rádio, o RT corre para o lado; aqui, PTY, PS e RT sobem quando não cabem */
+  function rolando(t, tam, r, caixa, y, cor, sv) {
+    var n = r.linhas.length, d = Math.round(r.t * caixa[3]);
+    t.texto(tam, r.linhas[r.i % n], 0, y - d, -1, cor, sv, caixa);
+    if (d > 0) t.texto(tam, r.linhas[(r.i + 1) % n], 0, y - d + caixa[3], -1, cor, sv, caixa);
+  }
 
-    // barra de cima: sintonia no centro, estéreo, alto-falante, RDS, banda, Wi-Fi e bateria
-    var centro = e.offset === 0, setaE = e.offset < 0 ? c.alerta : c.apagado, setaD = e.offset > 0 ? c.alerta : c.apagado;
+  function fundo(t, c, linhas) {
+    t.ret(0, 0, W, H, c.fundo);
+    t.contorno(0, 0, 320, 240, c.moldura);
+    linhas.concat([[53, 30, 53, 0], [89, 30, 89, 0], [120, 30, 120, 0], [158, 30, 158, 0], [248, 30, 248, 0], [0, 30, 320, 30]])
+      .forEach(function (l) { t.linha(l[0], l[1], l[2], l[3], c.moldura); });
+  }
+
+  // a barra de cima, igual nas três telas: sintonia no centro, estéreo, alto-falante, RDS, banda, Wi-Fi e bateria
+  function barraDeCima(t, c, e) {
+    var sv = c.suave, centro = e.offset === 0, setaE = e.offset < 0 ? c.alerta : c.apagado, setaD = e.offset > 0 ? c.alerta : c.apagado;
     t.triangulo(2, 7, 11, 15, 2, 23, setaE); t.triangulo(12, 7, 21, 15, 12, 23, setaE);
     t.triangulo(40, 7, 31, 15, 40, 23, setaD); t.triangulo(50, 7, 41, 15, 50, 23, setaD);
     t.disco(26, 15, 3, centro ? c.ok : c.apagado);
@@ -224,6 +241,39 @@
     else if (e.bateria === "volts") t.textoAmpliado(16, (3.3 + 0.9 * e.carga / 100).toFixed(2) + "V", 318, 8, 1, c.bat, sv(c.bat), 1.18);
     else t.retR(279, 8, Math.round(e.carga / 100 * 4) * 8, 16, c.bar);
     t.contornoR(277, 6, 37, 20, c.ativo); t.retR(313, 13, 4, 6, c.ativo);
+  }
+  // as quatro barrinhas da qualidade do RDS, ao lado do PS (base: a altura da mais baixa)
+  function qualidade(t, c, e, base) {
+    for (var i = 0; i < 4; i++) t.ret(187 + 6 * i, base - 6 * i, 4, 9 + 6 * i, i < e.qualidade ? c.ok : c.apagado);
+  }
+
+  /* a tela do rádio, a partir do estado (e) e das linhas que sobem (rol: { pty, ps, rt }). e.tela escolhe a tela:
+     "principal", "rds" (a do RDS avançado) ou "af" e "eon" (as duas páginas da lista de AF e EON) */
+  T.desenhar = function (e, tema, rol) {
+    var c = cores(tema);
+    if (e.tela === "rds") telaRDS(this, c, e, rol);
+    else if (e.tela === "af" || e.tela === "eon") telaAF(this, c, e);
+    else telaPrincipal(this, c, e, rol);
+    this.mostrar();
+  };
+
+  function telaPrincipal(t, c, e, rol) {
+    var sv = c.suave, i;
+    fundo(t, c, [[0, 100, 320, 100], [210, 100, 210, 217], [0, 160, 210, 160], [0, 180, 320, 180], [0, 217, 320, 217]]);
+    // os medidores: linhas, marcas e escalas
+    t.linha(16, 114, 202, 114, c.ativo);
+    t.linha(16, 143, 202, 143, e.modulacao ? c.ativo : c.apagado);
+    for (var s = 0; s < 94; s++) {
+      if (s > 54) {
+        if ((s - 53) % 10 === 0) { t.ret(16 + 2 * s, 112, 2, 2, c.barS); t.ret(16 + 2 * s, 141, 2, 2, e.modulacao ? c.barS : c.apagado); }
+      } else if ((s + 1) % 6 === 0) { t.ret(16 + 2 * s, 112, 2, 2, c.bar); t.ret(16 + 2 * s, 141, 2, 2, e.modulacao ? c.bar : c.apagado); }
+    }
+    t.texto(16, "S", 7, 101, 0, c.ativo, sv(c.ativo));
+    [["1", 24], ["3", 48], ["5", 72], ["7", 96], ["9", 120], ["+10", 134], ["+30", 174]].forEach(function (a) { t.texto(16, a[0], a[1], 115, -1, c.ativo, sv(c.ativo)); });
+    var cm = e.modulacao ? c.ativo : c.apagado;
+    t.texto(16, "M", 7, 128, 0, cm, sv(cm));
+    [["10", 27], ["30", 57], ["50", 87], ["70", 117], ["100", 164]].forEach(function (a) { t.texto(16, a[0], a[1], 144, -1, cm, sv(cm)); });
+    barraDeCima(t, c, e);
 
     // modo de sintonia, memória, banda, passo e frequência
     [["MAN", 36, 38, "man"], ["AUTO", 58, 60, "auto"], ["MEM", 80, 82, "mem"]].forEach(function (m) {
@@ -233,28 +283,28 @@
     if (e.modo === "mem") t.texto(16, String(e.memoria), 46, 32, -1, c.prim, sv(c.prim));
     t.texto(16, e.banda, 73, 32, -1, c.prim, sv(c.prim));
     [[113, 4], [144, 3], [191, 2], [222, 1]].forEach(function (p) { t.ret(p[0], 38, 15, 4, e.passo === p[1] ? c.ok : c.apagado); });
-    var fq = Math.floor(e.freq / 100) + "." + doisDigitos(e.freq % 100) + " ";
-    t.texto(t.ff[e.fonte] || t.ff.Comic, fq, 218, -6, 1, c.freq, sv(c.freq), [46, 46, 200, 50]);
+    t.texto(t.ff[e.fonte] || t.ff.Comic, mhz(e.freq) + " ", 218, -6, 1, c.freq, sv(c.freq), [46, 46, 200, 50]);
     etiqueta(t, c, 248, 36, 69, "AUTO BW", 282, e.bwAuto);
     etiqueta(t, c, 249, 57, 30, "iMS", 265, e.ims);
     etiqueta(t, c, 287, 57, 30, "EQ", 301, e.eq);
     t.texto(28, "MHz", 258, 76, -1, c.ativo, sv(c.ativo));
 
     // nível do sinal: no Mod17, vermelho a partir de 60 dBμV, verde a partir de 40 e amarelo abaixo disso
-    var nivel = e.sinal / 10, mostra = e.unidade === "dBf" ? Math.floor(e.sinal + 108.75) : e.unidade === "dBm" ? Math.round(e.sinal - 10 * (10 * Math.log10(75) + 90)) : Math.round(e.sinal);
-    var csin = nivel >= 60 ? c.alerta : nivel >= 40 ? c.ok : c.freq, inteiro = (mostra < 0 && mostra > -10 ? "-" : "") + (mostra / 10 | 0);
+    var dbuv = e.sinal / 10, mostra = nivel(e);
+    var csin = dbuv >= 60 ? c.alerta : dbuv >= 40 ? c.ok : c.freq, inteiro = (mostra < 0 && mostra > -10 ? "-" : "") + (mostra / 10 | 0);
     t.texto(48, inteiro, 288, 105, 1, csin, sv(csin));
     t.texto(28, "." + Math.abs(mostra % 10), 310, 105, 1, csin, sv(csin));
-    t.texto(16, { dBf: "dBf", dBm: "dBm" }[e.unidade] || "dBμV", 282, 145, -1, c.ativo, sv(c.ativo));
-    var seg = Math.max(0, Math.min(93, Math.round(nivel * 100 / 70)));
-    for (var i = 0; i < seg; i++) t.ret(16 + 2 * i, 105, 2, 6, c.barra(i, 93, c.bar, c.barS));
+    t.texto(16, unidade(e), 282, 145, -1, c.ativo, sv(c.ativo));
+    var seg = Math.max(0, Math.min(93, Math.round(dbuv * 100 / 70)));
+    for (i = 0; i < seg; i++) t.ret(16 + 2 * i, 105, 2, 6, c.barra(i, 93, c.bar, c.barS));
     t.ret(16 + 2 * seg, 105, 2 * (93 - seg), 6, c.apagado);
     if (e.modulacao) {
       var ms = Math.max(0, Math.min(93, Math.round(e.mod * 93 / 120)));
       for (i = 0; i < ms; i++) t.ret(16 + 2 * i, 133, 2, 6, c.barra(i, 93, c.mod, c.modS));
       t.ret(16 + 2 * ms, 133, 2 * (93 - ms), 6, c.apagado);
-      var pk = Math.max(ms, Math.min(92, Math.round(e.pico * 93 / 120)));
-      if (pk > 0) t.ret(16 + 2 * pk, 133, 2, 6, e.mod > 80 ? c.modS : c.prim);  // a cor segue a modulação atual, como no firmware
+      // o pico segurado: some quando volta para a ponta da barra; a cor segue a modulação atual, como no firmware
+      var pk = Math.min(93, Math.round(e.pico * 93 / 120));
+      if (pk > ms) t.ret(16 + 2 * pk, 133, 2, 6, e.mod > 80 ? c.modS : c.prim);
     } else t.ret(16, 133, 186, 6, c.apagado);
     // dormir, C/N
     t.ret(213, 165, 2, 13, c.apagado); t.disco(218, 169, 2, c.apagado); t.retR(222, 167, 16, 5, c.apagado);
@@ -263,26 +313,87 @@
     t.texto(16, e.cn ? String(e.cn) : "--", 297, 163, 1, c.prim, sv(c.prim));
     t.texto(16, "dB", 300, 163, -1, c.ativo, sv(c.ativo));
 
-    // RDS: PTY, PS, sinal do RDS, relógio e RadioText
+    // RDS: PTY, PS, sinal do RDS, relógio (ou PI) e RadioText
     var crds = e.rdsOk ? c.rds : c.rdsQueda, rotulo = e.rds ? c.ativo : c.apagado;
     t.texto(16, "PTY:", 3, 163, -1, rotulo, sv(rotulo));
     t.texto(16, "PS:", 3, 193, -1, rotulo, sv(rotulo));
     t.texto(16, "RT:", 3, 221, -1, rotulo, sv(rotulo));
     if (e.rds) {
-      t.texto(16, e.pty, 36, 163, -1, crds, sv(crds));
-      t.texto(28, sublinha(e.ps, e.sublinhado, "ps"), 0, 2, -1, crds, sv(crds), [36, 185, 150, 32]);
+      rolando(t, 16, rol.pty, [36, 161, 174, 19], 2, crds, sv(crds));
+      rolando(t, 28, rol.ps, [36, 185, 150, 32], 2, crds, sv(crds));
+      rolando(t, 16, rol.rt, [36, 220, 275, 19], 2, crds, sv(crds));
     }
-    for (i = 0; i < 4; i++) t.ret(187 + 6 * i, 204 - 6 * i, 4, 9 + 6 * i, i < e.qualidade ? c.ok : c.apagado);
-    if (e.relogio && e.hora) t.texto(28, e.hora, 261, 187, 0, c.relogio, sv(c.relogio));
-    if (e.rds && rt) {
-      var txt = sublinha(rt.texto, e.sublinhado, "rt"), spr = [36, 220, 275, 19];
-      t.texto(16, txt, rt.x, 2, -1, crds, sv(crds), spr);
-      if (rt.largura) t.texto(16, txt, rt.x + rt.largura, 2, -1, crds, sv(crds), spr);
-    }
+    qualidade(t, c, e, 204);
+    // o canto do relógio: tocando nele, o Mod17 troca entre a hora, a data com a hora e o PI
+    var modo = e.relogio ? e.relogioModo : "pi";
+    if (modo === "pi") {
+      t.texto(16, "PI:", 212, 193, -1, c.ativo, sv(c.ativo));
+      if (e.rds && e.pi) t.texto(28, e.pi, 267, 187, 0, crds, sv(crds));
+    } else if (modo === "completo") {
+      if (e.data) t.texto(16, e.data, 263, 184, 0, c.relogio, sv(c.relogio));
+      if (e.hora) t.texto(16, e.hora, 264, 200, 0, c.relogio, sv(c.relogio));
+    } else if (e.hora) t.texto(28, e.hora, 261, 187, 0, c.relogio, sv(c.relogio));
     t.disco(314, 223, 2, e.rds && !e.rtAB ? c.ok : c.apagado);
     t.disco(314, 234, 2, e.rds && e.rtAB ? c.ok : c.apagado);
-    t.mostrar();
-  };
+  }
+
+  /* a tela do RDS avançado (BuildAdvancedRDS na linha oficial): no Mod17, a frequência fica alinhada em 280, o
+     nível em 278, as unidades em 314 e o rótulo do PI em 214, como na foto */
+  function telaRDS(t, c, e, rol) {
+    var sv = c.suave, at = c.ativo, rd = e.rdsOk ? c.rds : c.rdsQueda, cin = c.apagado, av = e.avisos;
+    fundo(t, c, [[0, 68, 320, 68], [0, 104, 320, 104], [0, 126, 320, 126], [210, 30, 210, 240], [0, 140, 210, 140],
+      [0, 166, 210, 166], [0, 193, 210, 193], [210, 191, 320, 191], [0, 217, 210, 217]]);
+    barraDeCima(t, c, e);
+    [["ERRORS", 3, 34], ["A:", 66, 34], ["B:", 104, 34], ["C:", 142, 34], ["D:", 180, 34], ["PS", 3, 81], ["PI", 214, 81], ["PTY", 3, 109],
+      ["RT+", 3, 147], ["EON", 3, 174], ["AF", 3, 199], ["RT", 3, 222], ["ECC", 214, 193], ["LIC", 214, 208], ["PIN", 214, 223]].forEach(function (a) {
+      t.texto(16, a[0], a[1], a[2], -1, at, sv(at));
+    });
+    t.texto(16, "MHz", 314, 35, 1, at, sv(at));
+    t.texto(16, unidade(e), 314, 51, 1, at, sv(at));
+    [["Dynamic PTY", 130], ["Artif. head", 145], ["Compressed", 160], ["Has stereo", 175]].forEach(function (a) { t.texto(16, a[0], 300, a[1], 1, at, sv(at)); });
+    // erros dos blocos A a D (verde: sem erro) e as marcas do RDS: só a de fala (S) ou música (M) acesa
+    [86, 124, 162, 200].forEach(function (x) { t.disco(x, 41, 5, c.ok); });
+    var fm = e.fala ? "S" : "M";
+    [["TP", 2], ["TA", 24], ["AF", 50], ["-B", 68], ["TMC", 88], ["RT+", 123], ["EON", 153], ["S", 185], ["M", 196]].forEach(function (a) {
+      if (a[0] === fm) t.texto(16, a[0], a[1], 51, -1, rd, sv(rd)); else t.texto(16, a[0], a[1], 51, -1, cin, c.fundo);
+    });
+    // memória, frequência e nível
+    t.texto(16, String(e.memoria), 214, 36, -1, c.sec, sv(c.sec));
+    t.texto(16, mhz(e.freq), 280, 35, 1, c.prim, sv(c.prim));
+    var n = nivel(e);
+    t.texto(16, (n < 0 && n > -10 ? "-" : "") + (n / 10 | 0) + "." + Math.abs(n % 10), 278, 51, 1, c.prim, sv(c.prim));
+    // PS, qualidade, PI, PTY e PTYN
+    rolando(t, 28, rol.ps, [36, 72, 150, 32], 2, rd, sv(rd));
+    qualidade(t, c, e, 92);
+    if (e.pi) t.texto(28, e.pi, 270, 75, 0, rd, sv(rd));
+    rolando(t, 16, rol.pty, [36, 105, 174, 21], 4, rd, sv(rd));
+    t.texto(16, "PTYN N/A", 216, 109, -1, rd, sv(rd));
+    // os blocos recebidos (como na foto: o primeiro em verde e um com erro)
+    for (var i = 0; i < 33; i++) t.disco(6 * i + 10, 133, 2, i === 0 ? c.ok : i === 4 ? c.alerta : cin);
+    // RT+, EON, AF e RT
+    t.texto(16, av.semRTmais, 0, 2, -1, rd, sv(rd), [35, 146, 165, 19]);
+    t.texto(16, av.semEON, 0, 2, -1, rd, sv(rd), [35, 172, 165, 19]);
+    t.texto(16, av.semAF, 0, 2, -1, rd, sv(rd), [35, 197, 165, 19]);
+    rolando(t, 16, rol.rt, [36, 220, 165, 19], 2, rd, sv(rd));
+    t.disco(203, 223, 2, e.rtAB ? cin : c.ok); t.disco(203, 234, 2, e.rtAB ? c.ok : cin);
+    // PTY dinâmico, cabeça artificial, comprimido (não) e estéreo; ECC, LIC e PIN
+    [137, 153, 168].forEach(function (y) { t.disco(310, y, 5, c.alerta); });
+    t.disco(310, 183, 5, e.estereo ? c.ok : c.alerta);
+    [193, 208, 223].forEach(function (y) { t.texto(16, "N/A", 242, y, -1, rd, sv(rd)); });
+  }
+
+  // a lista de AF (página 1) e de EON (página 2), com o PS e a frequência embaixo (BuildAFScreen e ShowAFEON)
+  function telaAF(t, c, e) {
+    var sv = c.suave, av = e.avisos, pag = e.tela === "af" ? 1 : 2;
+    fundo(t, c, [[0, 199, 320, 199], [0, 218, 320, 218]]);
+    barraDeCima(t, c, e);
+    t.texto(16, pag === 1 ? av.semAF : av.semEON, 6, 48, -1, c.prim, sv(c.prim));
+    t.texto(16, sublinha(e.ps, e.sublinhado, "ps"), 160, 201, 0, c.bw, sv(c.bw));
+    t.texto(16, mhz(e.freq), 290, 201, 1, c.bw, sv(c.bw));
+    t.texto(16, pag + "/2", 315, 201, 1, c.ativo, sv(c.ativo));
+    t.texto(16, av.fechar, 160, 222, 0, c.ativo, sv(c.ativo));
+  }
+
   // etiqueta acesa (fundo na cor secundária, texto na cor do fundo) ou apagada (o Mod17 só contorna)
   function etiqueta(t, c, x, y, w, txt, cx, acesa) {
     var ty = y + 2;

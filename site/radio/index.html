@@ -39,6 +39,8 @@
   button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   input[type=range] { width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
   .dica { margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); }
+  .radio .dica { margin-top: 10px; font-size: 0.86rem; }
+  button.link { min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .notas { max-width: 70ch; margin-top: 32px; font-size: 0.88rem; color: var(--muted); }
   .notas p { margin: 0 0 8px; }
   @media (max-width: 879px) { .radio { display: contents; } }
@@ -68,11 +70,13 @@
         </div>
       </div>
       <div class="som"><button type="button" id="som" aria-pressed="false">Ligar o som</button><p id="som-info" aria-live="polite">Som desligado.</p></div>
+      <p class="dica">Toque na tela, como no rádio: no <button type="button" class="link" id="toque-rds">RDS</button>, abre as telas de RDS; no <button type="button" class="link" id="toque-relogio">relógio</button>, troca entre a hora, a data e o PI.</p>
+      <p class="dica">O sinal (S), a modulação (M) e o RDS são simulados, só para ilustrar: a transmissão pela internet não traz essas informações. <button type="button" class="link" id="animacao">Pausar animação</button></p>
     </div>
     <div class="ajustes">
       <h2>Display settings</h2>
       <p class="intro">Os ajustes de tela do rádio, na ordem e com os nomes do menu.</p>
-      <div class="campo"><label for="o-idioma">Language</label><select id="o-idioma"></select><p class="dica">Na tela principal, muda o nome do tipo de programa (PTY).</p></div>
+      <div class="campo"><label for="o-idioma">Language</label><select id="o-idioma"></select><p class="dica">Muda o nome do tipo de programa (PTY) e os avisos das telas de RDS.</p></div>
       <fieldset><legend>Display brightness <span id="o-brilho-v">100%</span></legend><input type="range" id="o-brilho" min="1" max="100" value="100" aria-label="Display brightness"></fieldset>
       <fieldset><legend>Modulation meter</legend><div class="opcoes" id="o-mod"></div></fieldset>
       <fieldset><legend>Screensaver</legend><div class="opcoes" id="o-protecao"></div><p class="dica">Conta o tempo sem tocar na página. Um toque acorda a tela.</p></fieldset>
@@ -88,7 +92,7 @@
   </div>
   <div class="notas">
     <p>Posições, fontes e textos vêm do código do firmware (PE5PVB/TEF6686_ESP32, GPL-3.0); as cores do Essence foram conferidas numa foto da tela do Mod17. Os outros temas usam as cores do código e podem diferir do rádio; Chinese Red e Retro ficam de fora até termos uma foto deles. Simplified Chinese não está entre os idiomas: com ele, o firmware troca a fonte da tela inteira.</p>
-    <p>As emissoras são de São Paulo, nas frequências delas. O som é a transmissão online de cada uma, achada no diretório aberto <a href="https://www.radio-browser.info">Radio Browser</a>; quando uma transmissão não responde, o rádio tenta outra da mesma emissora. O sinal e o RDS da tela são simulados.</p>
+    <p>As emissoras são de São Paulo, nas frequências delas. O som é a transmissão online de cada uma, achada no diretório aberto <a href="https://www.radio-browser.info">Radio Browser</a>; quando uma transmissão não responde, o rádio tenta outra da mesma emissora. O PS, o PTY, o RT e o PI saem do nome e da frequência de cada emissora. No rádio, o RT corre para o lado; aqui, o texto que não cabe sobe em partes.</p>
     <p>No lugar do logo do RDS, que é marca registrada, aparece a palavra RDS.</p>
   </div>
 </main>

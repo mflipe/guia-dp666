@@ -14,8 +14,9 @@ levam só os caracteres que a tela usa (ASCII, Latin-1, o μ e as letras dos nom
 inteiras. As fontes e os textos são do firmware, sob a GPL-3.0 do projeto PE5PVB/TEF6686_ESP32, e não entram nas
 licenças CC BY e MIT do guia.
 
-Idiomas: o ajuste Language muda, na tela principal, o nome do tipo de programa (os textos 228 a 259 do
-language.h). O chinês simplificado fica de fora: com ele, o firmware troca a fonte da tela inteira.
+Idiomas: o ajuste Language muda o nome do tipo de programa (os textos 228 a 259 do language.h) e os avisos
+das telas de RDS (33, 87, 88 e 89). O chinês simplificado fica de fora: com ele, o firmware troca a fonte da
+tela inteira.
 
 Cores: as do Mod17 em site/temas.json. O Essence foi conferido numa foto da tela do Mod17, e ali o firmware usa
 um cinza-azulado claro para o que está apagado (ícones, traços do passo, parte vazia dos medidores), diferente do
@@ -61,17 +62,19 @@ def fonte(vlw, so=None):
 
 
 def idiomas(caminho):
-    """Os nomes dos 32 tipos de programa em cada idioma, na ordem do menu do firmware (sem o chinês)."""
+    """Os textos de cada idioma que as telas usam, na ordem do menu do firmware (sem o chinês): os nomes dos 32
+    tipos de programa (textos 228 a 259) e os avisos das telas de RDS (33, 87, 88 e 89)."""
     texto = pathlib.Path(caminho).read_text(encoding="utf-8")
-    out = {}
+    pty, avisos = {}, {}
     for bloco in re.split(r'\n  \{ "', texto)[1:]:
         nome = bloco.split('"', 1)[0]
         if nome == "Simplified Chinese":
             continue
         linhas = re.findall(r'^\s*"((?:[^"\\]|\\.)*)",?\s*//\s*(\d+)', bloco, re.M)
         textos = {int(n): s.replace("\\n", " ").replace('\\"', '"') for s, n in linhas}
-        out[nome] = [textos[228 + i] for i in range(32)]
-    return out
+        pty[nome] = [textos[228 + i] for i in range(32)]
+        avisos[nome] = {"fechar": textos[33], "semAF": textos[87], "semEON": textos[88], "semRTmais": textos[89]}
+    return pty, avisos
 
 
 def temas():
@@ -95,10 +98,12 @@ def temas():
 def main(pasta):
     pasta = pathlib.Path(pasta)
     out = {"origem": "Fontes e textos: PE5PVB/TEF6686_ESP32, commit ee2e338 (GPL-3.0). Cores: temas do Megatron Mod17.",
-           "texto": {}, "freq": {}, "pty": idiomas(pasta / "language.h"), "temas": temas()}
-    letras_pty = {ord(c) for nomes in out["pty"].values() for c in "".join(nomes)}
+           "texto": {}, "freq": {}, "temas": temas()}
+    out["pty"], out["avisos"] = idiomas(pasta / "language.h")
+    letras = {ord(c) for nomes in out["pty"].values() for c in "".join(nomes)}
+    letras |= {ord(c) for av in out["avisos"].values() for c in "".join(av.values())}
     for _, _, vlw in ler(pasta / "FONT16.h"):
-        out["texto"]["16"] = fonte(vlw, TEXTO | letras_pty)
+        out["texto"]["16"] = fonte(vlw, TEXTO | letras)
     for _, _, vlw in ler(pasta / "FONT28.h"):
         out["texto"]["28"] = fonte(vlw, TEXTO)
     for _, _, vlw in ler(pasta / "FONT48DEC.h"):
