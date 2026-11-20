@@ -53,6 +53,10 @@ Para criar um tema do guia:
 
 O build faz o resto: o bloco do tema na folha de estilos, o papel quadriculado na cor de `--grid`, a cor da barra do navegador (a de `--bg`), a opção na janela, com a amostra das cores, e uma coluna a mais no catálogo. Para o Automático usar outro tema no claro ou no escuro, mude `AUTOMATICO` no mesmo arquivo.
 
+## Rádio virtual (protótipo)
+
+`site/radio/` desenha a tela principal do DP-666 com o Megatron Mod17 num canvas de 320x240, pixel a pixel, como o firmware desenha, e deixa mudar os ajustes visuais (tema, fonte da frequência, sublinhado no RDS, relógio e brilho) vendo o efeito na hora. As posições vêm do código da linha oficial no commit ee2e338, que o Mod17 segue; o que o Mod17 muda foi conferido numa foto da tela. `radio.js` é o desenho, `pagina.js` é o rádio simulado (emissoras fictícias) e `dados.json`, gerado por `scripts/radio_virtual.py`, traz as fontes do firmware e as cores dos temas. No lugar do logo do RDS, que é marca registrada, vai a palavra RDS. A página é independente do build: abra `site/radio/index.html` num servidor local.
+
 ## Conferir a aparência
 
 O build gera também o `site/preview/catalogo.html`, com cada componente nos dois temas (publicado em https://mflipe.github.io/guia-dp666/catalogo.html). A regressão visual fotografa as seções do catálogo no celular e no computador e compara com as referências:
@@ -82,6 +86,7 @@ A versão em inglês usa as mesmas rotas e os mesmos ids de ajuste da versão em
 
 - **Conteúdo:** os textos do guia, onde quer que estejam no repositório (o Markdown de `site/docs/`, as explicações e os dados em Python e os textos das peças em `site/ui/`), os diagramas, as fotos do rádio (`site/img/`) e o site gerado estão sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br), no arquivo [`LICENSE`](LICENSE). Pode copiar, adaptar e usar, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças.
 - **Código:** a programação (Python, JavaScript, CSS e scripts, incluindo os visualizadores 3D) está sob a licença MIT, no arquivo [`LICENSE-CODE`](LICENSE-CODE).
+- **Fontes do firmware:** os glifos em `site/radio/dados.json` e as amostras de `site/fontes_freq.json` vêm das fontes do [PE5PVB/TEF6686_ESP32](https://github.com/PE5PVB/TEF6686_ESP32) e seguem a licença dele (GPL-3.0), fora das duas licenças acima.
 
 ## Como citar
 

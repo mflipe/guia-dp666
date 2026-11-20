@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rádio virtual · protótipo</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { color-scheme: light dark; --bg: #eef1f5; --ink: #0f141c; --muted: #4b5668; --rule: #c9d1dc; --surface: #fff; --accent: #8a5a00; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0e131d; --ink: #e6ebf3; --muted: #9aa6b8; --rule: #2b3548; --surface: #151c2a; --accent: #f2b14c; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { margin: 0 0 4px; font-size: 1.5rem; }
+  .lead { margin: 0 0 16px; color: var(--muted); }
+  .visor { padding: 10px; border-radius: 14px; background: #05070a; }
+  #tela { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; }
+  .sintonia { display: flex; gap: 8px; margin: 12px 0 4px; }
+  .sintonia button { flex: 1; }
+  fieldset { margin: 16px 0 0; padding: 0; border: 0; }
+  legend { padding: 0; font-weight: 600; }
+  legend small { font-weight: 400; color: var(--muted); }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  button { min-height: 40px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 0.92rem; cursor: pointer; }
+  button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); font-weight: 600; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  input[type=range] { width: 100%; margin-top: 8px; accent-color: var(--accent); }
+  .notas { margin-top: 24px; font-size: 0.88rem; color: var(--muted); }
+  .notas p { margin: 0 0 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Rádio virtual</h1>
+  <p class="lead">A tela do DP-666 com o Megatron Mod17, desenhada como o firmware desenha. Mude os ajustes e veja o efeito na hora, sem abrir menu.</p>
+  <div class="visor"><canvas id="tela" width="320" height="240" role="img" aria-label="Tela do rádio"></canvas></div>
+  <div class="sintonia"><button type="button" id="menos">− 0,1 MHz</button><button type="button" id="mais">+ 0,1 MHz</button></div>
+  <fieldset><legend>Theme <small>(Display settings)</small></legend><div class="opcoes" id="o-tema"></div></fieldset>
+  <fieldset><legend>Frequency font <small>(Display settings)</small></legend><div class="opcoes" id="o-fonte"></div></fieldset>
+  <fieldset><legend>RDS Show underscore <small>(RDS settings)</small></legend><div class="opcoes" id="o-sub"></div></fieldset>
+  <fieldset><legend>Show RDS clock <small>(RDS settings)</small></legend><div class="opcoes" id="o-relogio"></div></fieldset>
+  <fieldset><legend>Brightness <small>(Display settings)</small> <span id="o-brilho-v">100%</span></legend><input type="range" id="o-brilho" min="1" max="100" value="100" aria-label="Brightness"></fieldset>
+  <div class="notas">
+    <p>Posições e fontes vêm do código do firmware (PE5PVB/TEF6686_ESP32, GPL-3.0); as cores do Essence foram conferidas numa foto da tela do Mod17. Os outros temas usam as cores do código e ainda podem diferir do rádio; Chinese Red e Retro ficam de fora até termos uma foto deles.</p>
+    <p>As emissoras são fictícias. No lugar do logo do RDS, que é marca registrada, aparece a palavra RDS.</p>
+  </div>
+</main>
+<script src="radio.js"></script>
+<script src="pagina.js"></script>
+</body>
+</html>
