@@ -1,16 +1,21 @@
-"""Gera site/radio/dados.json, os dados do rádio virtual: as fontes da tela e as cores dos temas do Megatron Mod17.
+"""Gera site/radio/dados.json, os dados do rádio virtual: as fontes da tela, os nomes dos tipos de programa (PTY)
+em cada idioma do firmware e as cores dos temas do Megatron Mod17.
 
 Fontes: as smooth fonts do TFT_eSPI (formato VLW) guardadas nos .h do PE5PVB/TEF6686_ESP32 (FONT16, FONT28,
 FONT48DEC e as seis da frequência, FREQFONT). A tela do Mod17 segue o código da linha oficial no commit ee2e338
 (06/02/2025), então os arquivos de entrada devem ser desse commit:
 
-    mkdir -p /tmp/fontes && for f in FONT16 FONT28 FONT48DEC FREQFONT; do
-      git -C TEF6686_ESP32 show ee2e338:src/$f.h > /tmp/fontes/$f.h; done
+    mkdir -p /tmp/fontes && for f in FONT16.h FONT28.h FONT48DEC.h FREQFONT.h language.h; do
+      git -C TEF6686_ESP32 show ee2e338:src/$f > /tmp/fontes/$f; done
     python3 scripts/radio_virtual.py /tmp/fontes
 
 Para cada glifo vão as métricas do VLW (largura, altura, avanço, dY, dX) e o alfa em base64. As fontes de texto
-levam só os caracteres que a tela usa (ASCII, Latin-1 e o μ); as de número vão inteiras. As fontes são do
-firmware, sob a GPL-3.0 do projeto PE5PVB/TEF6686_ESP32, e não entram nas licenças CC BY e MIT do guia.
+levam só os caracteres que a tela usa (ASCII, Latin-1, o μ e as letras dos nomes de PTY); as de número vão
+inteiras. As fontes e os textos são do firmware, sob a GPL-3.0 do projeto PE5PVB/TEF6686_ESP32, e não entram nas
+licenças CC BY e MIT do guia.
+
+Idiomas: o ajuste Language muda, na tela principal, o nome do tipo de programa (os textos 228 a 259 do
+language.h). O chinês simplificado fica de fora: com ele, o firmware troca a fonte da tela inteira.
 
 Cores: as do Mod17 em site/temas.json. O Essence foi conferido numa foto da tela do Mod17, e ali o firmware usa
 um cinza-azulado claro para o que está apagado (ícones, traços do passo, parte vazia dos medidores), diferente do
@@ -55,6 +60,20 @@ def fonte(vlw, so=None):
             "espaco": (subida + descida) * 2 // 7, "glifos": glifos}
 
 
+def idiomas(caminho):
+    """Os nomes dos 32 tipos de programa em cada idioma, na ordem do menu do firmware (sem o chinês)."""
+    texto = pathlib.Path(caminho).read_text(encoding="utf-8")
+    out = {}
+    for bloco in re.split(r'\n  \{ "', texto)[1:]:
+        nome = bloco.split('"', 1)[0]
+        if nome == "Simplified Chinese":
+            continue
+        linhas = re.findall(r'^\s*"((?:[^"\\]|\\.)*)",?\s*//\s*(\d+)', bloco, re.M)
+        textos = {int(n): s.replace("\\n", " ").replace('\\"', '"') for s, n in linhas}
+        out[nome] = [textos[228 + i] for i in range(32)]
+    return out
+
+
 def temas():
     mod17 = json.loads((RAIZ / "site" / "temas.json").read_text(encoding="utf-8"))["mod17"]["temas"]
     out = {}
@@ -75,10 +94,11 @@ def temas():
 
 def main(pasta):
     pasta = pathlib.Path(pasta)
-    out = {"origem": "Fontes: PE5PVB/TEF6686_ESP32, commit ee2e338 (GPL-3.0). Cores: temas do Megatron Mod17.",
-           "texto": {}, "freq": {}, "temas": temas()}
+    out = {"origem": "Fontes e textos: PE5PVB/TEF6686_ESP32, commit ee2e338 (GPL-3.0). Cores: temas do Megatron Mod17.",
+           "texto": {}, "freq": {}, "pty": idiomas(pasta / "language.h"), "temas": temas()}
+    letras_pty = {ord(c) for nomes in out["pty"].values() for c in "".join(nomes)}
     for _, _, vlw in ler(pasta / "FONT16.h"):
-        out["texto"]["16"] = fonte(vlw, TEXTO)
+        out["texto"]["16"] = fonte(vlw, TEXTO | letras_pty)
     for _, _, vlw in ler(pasta / "FONT28.h"):
         out["texto"]["28"] = fonte(vlw, TEXTO)
     for _, _, vlw in ler(pasta / "FONT48DEC.h"):
