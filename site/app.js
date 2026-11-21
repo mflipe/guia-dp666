@@ -993,6 +993,105 @@
     home();
   }
 
+  // ---------------------------------------------------------------- mensagens e códigos da tela
+  /* A pessoa digita o que aparece na tela do rádio e vê o que quer dizer. Os itens vêm das tabelas da própria
+     seção (APP.codigos). A ordem: o texto igual ao de uma chave, igual sem a pontuação, começo, pedaço e, por
+     último, todas as palavras em algum lugar do item. */
+  function Codigos(root) {
+    var MAX = 10, itens = [];
+    ((APP.codigos || {}).grupos || []).forEach(function (g) {
+      g.itens.forEach(function (it) { it.grupo = g.titulo; it.n = itens.length; itens.push(it); });
+    });
+    function nc(s) { return norm(s).replace(/[µμ]/g, "u").replace(/\s+/g, " ").trim(); }
+    function solto(s) { return s.replace(/[^a-z0-9]+/g, ""); }
+    itens.forEach(function (it) { it.soltas = it.chaves.map(solto); });
+    var EXEMPLOS = ["TMC", "ERRORS", "Tuner: !None!", "PTYN N/A", "Low battery"];
+    root.innerHTML = '<input class="tool-search" type="search" placeholder="Digite o que aparece: TMC, Tuner, N/A…" aria-label="O que aparece na tela" autocomplete="off" spellcheck="false">' +
+      '<p class="aj-count cod-conta" aria-live="polite"></p><div class="cod-res"></div>';
+    var input = $(".tool-search", root), conta = $(".cod-conta", root), res = $(".cod-res", root);
+
+    // devolve [pontos, variante que casou]; 0 pontos: fora
+    function pontos(it, q, lq, ws) {
+      var best = 0, termo = 0;
+      for (var i = 0; i < it.chaves.length; i++) {
+        var k = it.chaves[i], lk = it.soltas[i], s = 0;
+        if (k === q) s = 100;
+        else if (lq && lk === lq) s = 90;
+        else if (k.indexOf(q) === 0) s = 70;
+        else if (lq.length > 1 && lk.indexOf(lq) === 0) s = 65;
+        else if (q.length > 1 && k.indexOf(q) > 0) s = 50;
+        else if (lq.length > 2 && lk.indexOf(lq) > 0) s = 45;
+        if (s > best) { best = s; termo = it.kt[i]; }
+      }
+      if (best) return [best, termo];
+      if (!ws.length) return [0, 0];
+      var chaves = it.chaves.join(" "), extra = 0;
+      for (var j = 0; j < ws.length; j++) {
+        var w = ws[j], sing = w.length > 3 && /s$/.test(w) ? w.replace(/e?s$/, "") : w;
+        if (it.busca.indexOf(w) < 0 && it.busca.indexOf(sing) < 0) return [0, 0];
+        if (chaves.indexOf(sing) >= 0) extra += 5;
+      }
+      return [20 + extra, 0];
+    }
+    // em cima, a variante que a pessoa digitou; embaixo, as outras, com a tradução em itálico, como na tabela
+    function cartao(h) {
+      var it = h.it, t = it.termos, prim = t[h.termo] ? h.termo : 0;
+      var outras = t.map(function (x, i) { return i === prim ? "" : it.trad.indexOf(i) >= 0 ? "<em>" + esc(x) + "</em>" : esc(x); })
+        .filter(Boolean);
+      return '<li class="cod-item"><p class="cod-cab"><span class="cod-t">' + esc(t[prim]) + "</span>" +
+        '<span class="cod-onde">' + esc(it.grupo) + "</span></p>" +
+        (outras.length ? '<p class="cod-alt">' + outras.join("<br>") + "</p>" : "") +
+        '<p class="cod-sig">' + it.html + "</p></li>";
+    }
+    function inicio() {
+      conta.textContent = "";
+      res.innerHTML = '<p class="cod-ex"><span>' + "Experimente:" + "</span>" + EXEMPLOS.map(function (x) {
+        return C.botao(esc(x), { classe: "chip-btn", attrs: { "data-ex": x } });
+      }).join("") + "</p>";
+    }
+    function buscar() {
+      var q = nc(input.value), lq = solto(q);
+      if (!q) { inicio(); return; }
+      var ws = q.length > 1 ? q.split(" ").filter(function (w) { return w.length > 1; }) : [];
+      var hits = [];
+      itens.forEach(function (it) {
+        var p = pontos(it, q, lq, ws);
+        if (p[0]) hits.push({ it: it, s: p[0], termo: p[1] });
+      });
+      hits.sort(function (a, b) { return b.s - a.s || a.it.n - b.it.n; });
+      if (!hits.length) {
+        conta.textContent = "";
+        res.innerHTML = '<p class="exp-empty">' + "Nada encontrado. Digite só uma parte do que aparece, como Tuner ou AF, ou procure nas tabelas abaixo." + "</p>";
+        return;
+      }
+      conta.textContent = hits.length === 1 ? "1 resultado" : hits.length > MAX ? "Mostrando 10 de " + hits.length + ". Digite mais para filtrar." : hits.length + " resultados";
+      res.innerHTML = '<ol class="cod-lista">' + hits.slice(0, MAX).map(cartao).join("") + "</ol>";
+    }
+    var timer = null;
+    input.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(buscar, 90); });
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-ex]");
+      if (!b) return;
+      input.value = b.dataset.ex;
+      buscar();
+    });
+    // a busca geral leva à linha da tabela: ela acende quando chega à tela, para a pessoa achar
+    document.addEventListener("app:reveal", function (e) {
+      var tr = document.getElementById(String(e.detail || ""));
+      if (!tr || tr.tagName !== "TR") return;
+      function acender() { tr.classList.remove("cod-alvo"); void tr.offsetWidth; tr.classList.add("cod-alvo"); }
+      if (!("IntersectionObserver" in window)) { acender(); return; }
+      var io = new IntersectionObserver(function (es) {
+        if (!es.some(function (x) { return x.isIntersecting; })) return;
+        io.disconnect();
+        setTimeout(acender, 250);
+      }, { threshold: 0.6 });
+      io.observe(tr);
+      setTimeout(function () { io.disconnect(); }, 8000);
+    });
+    inicio();
+  }
+
   // ---------------------------------------------------------------- placa em 3D
   function Placa(root) {
     root.innerHTML = '<div class="pl-stage"><div class="pl-load">Carregando a placa em 3D…</div></div>' +
@@ -1037,7 +1136,7 @@
   paintChip();
   paintHome();
   onProfile(paintHome);
-  var tools = { botoes: Sim, ajustes: Exp, ajuda: Help, placa: Placa };
+  var tools = { botoes: Sim, ajustes: Exp, ajuda: Help, placa: Placa, codigos: Codigos };
   Object.keys(tools).forEach(function (k) {
     var root = document.getElementById("tool-" + k);
     if (!root) return;

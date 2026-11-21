@@ -299,5 +299,13 @@
  "Apertados: ": "Held down: ",
  "Escolha os botões que ficam apertados e toque em “Ligar o rádio”.": "Choose the buttons to hold down and tap “Power on the radio”.",
  "Não foi possível abrir o rádio em 3D. As fotos estão em <a href=\"#uso--onde-fica-cada-coisa\">Onde fica cada coisa</a>.": "The radio in 3D couldn’t open. The photos are in <a href=\"#uso--where-everything-is\">Where everything is</a>.",
- "linha oficial": "official firmware"
+ "linha oficial": "official firmware",
+ "Digite o que aparece: TMC, Tuner, N/A…": "Type what shows: TMC, Tuner, N/A…",
+ "O que aparece na tela": "What shows on the screen",
+ "Experimente:": "Try:",
+ "Nada encontrado. Digite só uma parte do que aparece, como Tuner ou AF, ou procure nas tabelas abaixo.": "Nothing found. Type just part of what shows, such as Tuner or AF, or look in the tables below.",
+ "1 resultado": "1 result",
+ "Mostrando 10 de ": "Showing 10 of ",
+ ". Digite mais para filtrar.": ". Type more to narrow it down.",
+ " resultados": " results"
 }

@@ -1,6 +1,6 @@
 # Fontes
 
-Todas as fontes citadas no guia, sem repetição (122 no total). Cada página também lista as suas no fim.
+Todas as fontes citadas no guia, sem repetição (123 no total). Cada página também lista as suas no fim.
 
 ## Datasheets dos componentes
 
@@ -54,9 +54,10 @@ Todas as fontes citadas no guia, sem repetição (122 no total). Cada página ta
 - [PE5PVB — discussão #885](https://github.com/PE5PVB/TEF6686_ESP32/discussions/885)
 - [PE5PVB — gui.cpp: estrutura do menu](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/gui.cpp)
 - [PE5PVB — histórico do partitions.csv](https://github.com/PE5PVB/TEF6686_ESP32/commits/main/partitions.csv)
-- [PE5PVB — language.h: nomes do menu em português](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h)
+- [PE5PVB — language.h: textos do firmware em cada idioma](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h)
 - [PE5PVB — partitions.csv atual](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/partitions.csv)
 - [PE5PVB — protocolo de canais de memória](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf)
+- [PE5PVB — rds.cpp: tela de RDS avançado e listas de AF e EON](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/rds.cpp)
 - [PE5PVB — Releases](https://github.com/PE5PVB/TEF6686_ESP32/releases/)
 - [PE5PVB — teclado do DP-666 mais robusto (11/11/2026)](https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d)
 - [PE5PVB — TEF6686_ESP32.ino, com os pinos usados](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)

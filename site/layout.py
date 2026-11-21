@@ -30,7 +30,7 @@ CAMADAS = {
     "base": ["base"],                           # elementos do HTML, foco, seleção, utilitários
     "conteudo": ["cabecalho", "prosa", "figuras", "tabelas", "blocos", "diagramas", "inicio"],
     "componentes": ["icones", "perfil", "tema", "radio", "botoes", "busca"],
-    "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist"],
+    "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist", "codigos"],
     "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo"],
 }
 

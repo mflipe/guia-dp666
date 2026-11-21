@@ -56,6 +56,8 @@ UI = {
              "Escolha o que está acontecendo e siga os passos, do mais simples ao mais trabalhoso."),
             ("placa", "Placa em 3D", "Placa em 3D",
              "Os chips do rádio em blocos, com o caminho do som e os barramentos. É um diagrama: tamanhos e posições não são os da placa real."),
+            ("codigos", "Códigos da tela", "Mensagens e códigos da tela",
+             "Digite o que aparece na tela do rádio para ver o que quer dizer."),
         ],
         # o menu completo da linha oficial mora no explorador de Ajustes do rádio
         "menu_oficial": ("O menu completo da linha oficial, com cada opção, os valores, o padrão de fábrica, o que ela faz "
@@ -106,7 +108,8 @@ UI = {
         "step_fmt": "De {p} em {p}", "range_fmt": "{a} a {b}", "or": " ou ", "n_opts": "{n} opções",
         "off_label": {"oficial": "Desligado", "mod17": "Off"}, "off_words": ("desligado", "off"),
         "decimal": ",",
-        "search_official": "Ajustes · linha oficial", "search_mod17": "Ajustes · Mod17", "search_help": "Assistente de problemas",
+        "search_official": "Ajustes · linha oficial", "search_mod17": "Ajustes · Mod17", "search_help": "Assistente de problemas", "search_codes": "Códigos da tela",
+        "cod_h": "Mensagens e códigos da tela",
         # menu de jogo: o que cada página tem, mostrado quando o cursor está nela
         "desc": {
             "inicio": "A tela de título, com todas as páginas do guia.",
@@ -173,6 +176,8 @@ UI = {
              "Pick what is happening and follow the steps, from the simplest to the most involved."),
             ("placa", "3D board", "3D board",
              "The radio’s chips as blocks, with the audio path and the buses. It is a diagram: sizes and positions are not those of the real board."),
+            ("codigos", "Screen codes", "Screen messages and codes",
+             "Type what shows on the radio’s screen to see what it means."),
         ],
         "menu_oficial": ("The official firmware’s full menu, with each option, its values, the factory default, what it does "
                          "and the value for Brazil, is in [Radio settings](#ajustes--oficial)."),
@@ -231,7 +236,8 @@ UI = {
         "step_fmt": "In steps of {p}", "range_fmt": "{a} to {b}", "or": " or ", "n_opts": "{n} options",
         "off_label": {"oficial": "Off", "mod17": "Off"}, "off_words": ("off",),
         "decimal": ".",
-        "search_official": "Settings · official firmware", "search_mod17": "Settings · Mod17", "search_help": "Troubleshooting assistant",
+        "search_official": "Settings · official firmware", "search_mod17": "Settings · Mod17", "search_help": "Troubleshooting assistant", "search_codes": "Screen codes",
+        "cod_h": "Screen messages and codes",
         "desc": {
             "inicio": "The title screen, with every page of the guide.",
             "brasil": "Settings that make a difference for DP-666 users in Brazil, with the standards behind each one.",

@@ -27,6 +27,8 @@
       naoAchei: "Não achei a transmissão da {nome} agora.",
       dicaToque: "Toque na tela, como no rádio: no {rds}, abre as telas de RDS; no {relogio}, troca entre a hora, a data e o PI.",
       rds: "RDS", relogio: "relógio",
+      codigos: "O que cada marca e mensagem da tela quer dizer: {link}.", codigosLink: "Mensagens e códigos da tela",
+      codigosAncora: "uso--mensagens-e-códigos-da-tela",
       aviso: "O sinal (S), a modulação (M) e o RDS são simulados, só para ilustrar: a transmissão pela internet não traz essas informações.",
       pausar: "Pausar animação", retomar: "Retomar animação",
       ajustesIntro: "Os ajustes de tela do rádio, na ordem e com os nomes do menu.",
@@ -54,6 +56,8 @@
       naoAchei: "Couldn’t find the {nome} stream right now.",
       dicaToque: "Tap the screen, as on the radio: {rds} opens the RDS screens; the {relogio} switches between time, date and PI.",
       rds: "RDS", relogio: "clock",
+      codigos: "What each mark and message on the screen means: {link}.", codigosLink: "Screen messages and codes",
+      codigosAncora: "uso--screen-messages-and-codes",
       aviso: "Signal (S), modulation (M) and RDS are simulated, for illustration only: the internet stream doesn’t carry this information.",
       pausar: "Pause animation", retomar: "Resume animation",
       ajustesIntro: "The radio’s display settings, in menu order and with the menu’s names.",
@@ -139,6 +143,9 @@
       return '<fieldset class="rv-campo"><legend>' + titulo + '</legend><div class="rv-opcoes" data-ajuste="' + id + '"></div>' +
         (dica ? '<p class="rv-dica">' + esc(dica) + "</p>" : "") + "</fieldset>";
     }
+    // no guia, a seção está na mesma página; na página do rádio, no guia do idioma, uma pasta acima
+    var hrefCodigos = (ehPainel ? "" : op.lingua === "en" ? "../en/" : "../") + "#" + T.codigosAncora;
+    var dicaCodigos = preencher(esc(T.codigos), { link: '<a href="' + esc(hrefCodigos) + '" data-acao="codigos">' + esc(T.codigosLink) + "</a>" });
     var dicaToque = preencher(esc(T.dicaToque), {
       rds: '<button type="button" class="rv-link" data-toque="rds">' + esc(T.rds) + "</button>",
       relogio: '<button type="button" class="rv-link" data-toque="relogio">' + esc(T.relogio) + "</button>"
@@ -155,6 +162,7 @@
       '<div class="rv-corpo">' +
       '<div class="rv-som"><button type="button" class="rv-botao" data-acao="som" aria-pressed="false">' + esc(T.somLigar) + '</button><p class="rv-som-info" aria-live="polite">' + esc(T.somDesligado) + "</p></div>" +
       '<p class="rv-nota">' + dicaToque + "</p>" +
+      '<p class="rv-nota">' + dicaCodigos + "</p>" +
       '<p class="rv-nota">' + esc(T.aviso) + ' <button type="button" class="rv-link" data-acao="animacao">' + esc(ajustes.animar ? T.pausar : T.retomar) + "</button></p>" +
       '<section class="rv-ajustes"><h3>Display settings</h3><p class="rv-intro">' + esc(T.ajustesIntro) + "</p>" +
       '<div class="rv-campo"><label for="rv-idioma">Language</label><select id="rv-idioma"></select><p class="rv-dica">' + esc(T.dicaIdioma) + "</p></div>" +
@@ -466,6 +474,8 @@
         else if (acao === "minimizar") { mostrar("minimizado"); q(".rv-mini-abrir").focus(); }
         else if (acao === "abrir") { mostrar("aberto"); el.titulo.focus(); }
         else if (acao === "fechar") mostrar("fechado");
+        // o link segue para a tabela; no celular e em telas médias, o painel cobriria o texto, então ele minimiza
+        else if (acao === "codigos" && ehPainel && !window.matchMedia("(min-width: 1280px)").matches) mostrar("minimizado");
       });
       cv.addEventListener("click", function (ev) { var k = alvo(ev); if (k) { ev.stopPropagation(); tocar(k); } });
       cv.addEventListener("mousemove", function (ev) { cv.style.cursor = alvo(ev) ? "pointer" : ""; });

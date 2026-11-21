@@ -1,6 +1,6 @@
 # Sources
 
-Every source cited in the guide, without repeats (122 in total). Each page also lists its own at the end.
+Every source cited in the guide, without repeats (123 in total). Each page also lists its own at the end.
 
 ## Component datasheets
 
@@ -54,9 +54,10 @@ Every source cited in the guide, without repeats (122 in total). Each page also 
 - [PE5PVB — current partitions.csv](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/partitions.csv)
 - [PE5PVB — discussion #885](https://github.com/PE5PVB/TEF6686_ESP32/discussions/885)
 - [PE5PVB — gui.cpp: menu structure](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/gui.cpp)
-- [PE5PVB — language.h: menu names in every language](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h)
+- [PE5PVB — language.h: firmware texts in each language](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h)
 - [PE5PVB — memory channel protocol](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf)
 - [PE5PVB — partitions.csv history](https://github.com/PE5PVB/TEF6686_ESP32/commits/main/partitions.csv)
+- [PE5PVB — rds.cpp: advanced RDS screen and AF and EON lists](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/rds.cpp)
 - [PE5PVB — Releases](https://github.com/PE5PVB/TEF6686_ESP32/releases/)
 - [PE5PVB — sturdier DP-666 keypad (Nov 11, 2026)](https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d)
 - [PE5PVB — TEF6686_ESP32.ino, with the pins used](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino)

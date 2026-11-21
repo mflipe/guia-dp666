@@ -1,6 +1,6 @@
 # Common problems
 
-Problems acknowledged by DEEPELEC, reported by the community or anticipated in the firmware code. Pick what is happening and follow the steps, from the simplest to the most involved. Before any repair or reflash, make a [full backup](backup.md).
+Problems acknowledged by DEEPELEC, reported by the community or anticipated in the firmware code. Pick what is happening and follow the steps, from the simplest to the most involved. Before any repair or reflash, make a [full backup](backup.md). If a message or code showed up on the screen, see what it means in [Screen messages and codes](#uso--screen-messages-and-codes).
 
 ## Screen stuck on "Tuner: !None!"
 

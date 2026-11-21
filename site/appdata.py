@@ -489,6 +489,72 @@ def search_entries(menus, problems):
     return out
 
 
+# ---------------------------------------------------------------- mensagens e códigos da tela
+def _norm_cod(s):
+    """norm() para os códigos: o μ de dBμV vira u, como quem digita dBuV, em vez de sumir."""
+    return norm(s.replace("µ", "u").replace("μ", "u"))
+
+
+def _celulas(linha):
+    return [c.strip() for c in linha.strip().strip("|").split("|")]
+
+
+def build_codes(md, inline):
+    """A seção de mensagens e códigos em uso.md: cada linha das tabelas (uma por ### ) vira um item da busca de códigos.
+
+    A primeira coluna traz o que aparece na tela, com variantes separadas por <br>; a tradução da linha oficial em
+    português vem em itálico (trad guarda quais são). A segunda diz o que quer dizer. Os ids seguem os das linhas na
+    página (build.marcar_codigos põe os mesmos, na mesma ordem)."""
+    m = re.search(r"(?m)^## " + re.escape(T["cod_h"]) + r"\s*$", md)
+    if not m:
+        return {"grupos": []}
+    resto = md[m.end():]
+    fim = re.search(r"(?m)^## ", resto)
+    secao = resto[: fim.start()] if fim else resto
+    grupos, vistos = [], set()
+    for bloco in re.split(r"(?m)^### ", secao)[1:]:
+        titulo, corpo = bloco.split("\n", 1)
+        titulo = titulo.strip()
+        gid = "uso--" + _heading_id(titulo)
+        linhas = [x for x in corpo.splitlines() if x.strip().startswith("|")]
+        itens = []
+        for linha in linhas[2:]:
+            c = _celulas(linha)
+            brutos = [t.strip() for t in c[0].split("<br>") if t.strip()]
+            termos = [re.sub(r"^\*(.+)\*$", r"\1", t) for t in brutos]
+            trad = [i for i, t in enumerate(brutos) if t != termos[i]]
+            base = f"{gid}-{slug(termos[0])}"
+            iid, n = base, 2
+            while iid in vistos:
+                iid, n = f"{base}-{n}", n + 1
+            vistos.add(iid)
+            # as chaves: cada variante inteira e as partes de listas como "MAN, AUTO e MEM", para que MEM sozinho ache a linha
+            # kt diz de qual variante veio cada chave, para a busca mostrar primeiro a que a pessoa digitou
+            chaves, kt = [], []
+            for i, t in enumerate(termos):
+                for k in [t] + re.split(r",\s*|\s+(?:e|and)\s+", t):
+                    k = _norm_cod(k)
+                    if k and k not in chaves:
+                        chaves.append(k)
+                        kt.append(i)
+            html_ = inline(c[-1])
+            itens.append({"id": iid, "termos": termos, "trad": trad, "html": html_, "chaves": chaves, "kt": kt,
+                          "busca": _norm_cod(" ".join(termos) + " " + html_ + " " + titulo)})
+        if itens:
+            grupos.append({"id": gid, "titulo": titulo, "itens": itens})
+    return {"grupos": grupos}
+
+
+def code_entries(cods):
+    """Um resultado da busca geral para cada código, que leva à linha dele na tabela."""
+    out = []
+    for g in cods["grupos"]:
+        for it in g["itens"]:
+            texto = " / ".join(it["termos"][1:]) + " " + re.sub(r"<[^>]+>", "", it["html"])
+            out.append({"r": "uso", "p": T["search_codes"], "h": it["termos"][0], "id": it["id"], "t": texto.strip()})
+    return out
+
+
 # ---------------------------------------------------------------- painel em 3D: controles sem firmware
 # Os botões que o firmware lê (BAND, BW, MODE, TUNING, POWER, BOOT) vêm de BUTTONS.
 PAINEL = {

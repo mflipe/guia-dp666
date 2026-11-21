@@ -314,6 +314,36 @@ def proximo_html(i, rendered):
     return "".join(out)
 
 
+_CODIGOS = {}
+
+
+def codigos():
+    """Os itens da busca de códigos, lidos das tabelas de uso.md (uma vez por idioma)."""
+    if LANG not in _CODIGOS:
+        _CODIGOS[LANG] = appdata.build_codes(doc("uso"), inline)
+    return _CODIGOS[LANG]
+
+
+def marcar_codigos(body, cods):
+    """Dá às linhas das tabelas de mensagens e códigos os ids dos itens da busca, na mesma ordem, para a busca geral
+    levar à linha certa."""
+    ids = [it["id"] for g in cods["grupos"] for it in g["itens"]]
+    ini = body.find(f'<h2 id="uso--{appdata._heading_id(L["cod_h"])}"')
+    if not ids or ini < 0:
+        return body
+    fim = body.find("<h2 ", ini + 4)
+    fim = len(body) if fim < 0 else fim
+    fila, marca = iter(ids), "\x00"   # um caractere que não aparece no HTML marca cada linha do corpo das tabelas
+    secao = re.sub(r"<tbody>.*?</tbody>", lambda m: m.group(0).replace("<tr>", marca), body[ini:fim], flags=re.S)
+    partes = secao.split(marca)
+    if len(partes) - 1 != len(ids):
+        raise SystemExit(f"códigos: {len(partes) - 1} linhas na página e {len(ids)} itens na busca")
+    secao = partes[0] + "".join(f'<tr id="{next(fila)}">' + p for p in partes[1:])
+    # cod-tabela: no celular, cada linha vira um bloco, com o código em cima e o significado embaixo
+    secao = secao.replace('<div class="table-wrap"><table>', '<div class="table-wrap cod-tabela"><table>')
+    return body[:ini] + secao + body[fim:]
+
+
 def app_data():
     btn = {}
     for fw, d in appdata.BUTTONS.items():
@@ -329,9 +359,10 @@ def app_data():
                                       lambda name: f'<figure class="figure">{diagram(name)}</figure>')
     board = appdata.build_board(inline)
     checklist = appdata.build_checklist(menus, inline)
+    cods = codigos()
     return {"botoes": btn, "painel": appdata.build_panel(inline), "ajustes": menus, "checklist": checklist,
-            "ajuda": {"cats": problems}, "placa": board}, \
-        appdata.search_entries(menus, problems)
+            "ajuda": {"cats": problems}, "placa": board, "codigos": cods}, \
+        appdata.search_entries(menus, problems) + appdata.code_entries(cods)
 
 
 def partes(md_text):
@@ -478,6 +509,8 @@ def build():
     for f, route, nav_title, group in PAGES:
         md_text = compor(f, route)
         title, body, toc = render(md_text, route)
+        if route == "uso":
+            body = marcar_codigos(body, codigos())
         n_src = n_sources if f == "fontes" else count_sources(md_text)
         rendered.append((f, route, nav_title, group, title, body, toc, n_src))
         index += search_sections(route, title, re.sub(r'<div class="tool tool-embed".*?</div>', " ", body, flags=re.S))
