@@ -20,7 +20,9 @@ export async function rodar(url) {
     let todas = true;
     for (const rota of rotas) {
       await p.goto(url + lingua + '#' + rota, { waitUntil: 'domcontentloaded' });
-      const ok = await esperar(p, (x) => { const a = document.getElementById('page-' + x); return a && !a.hidden && a.querySelector('h1, .tt'); }, rota, 5000);
+      // sem placa de vídeo (como no GitHub Actions), o 3D da página hardware ocupa o navegador por vários segundos,
+      // e a página seguinte só abre depois; por isso a espera é longa
+      const ok = await esperar(p, (x) => { const a = document.getElementById('page-' + x); return a && !a.hidden && a.querySelector('h1, .tt'); }, rota, 20000);
       if (!ok) { todas = false; r.ok(`${nome}: a página ${rota} abre pelo endereço`, false); }
     }
     r.ok(`${nome}: cada página abre pelo endereço`, todas);

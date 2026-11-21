@@ -6,6 +6,8 @@ O guia definitivo e independente do rádio DEEPELEC DP-666, um receptor com o si
 
 O guia funciona como o menu de um jogo, no celular, no tablet e no computador, nos temas claro e escuro, sem barra de navegação: o Início é a tela de título, com todas as páginas e o Continuar, e um botão de sintonia chama o mesmo menu por cima de qualquer página, com a busca e as seções. Tem os controles do rádio em 3D, o rádio montado com as fotos de cada lado (que gira até o controle tocado e marca onde ele fica), um explorador de ajustes com busca, um assistente de problemas e a placa em 3D. Está em português e em inglês, com um seletor PT/EN, na tela de título e no menu, que mantém a mesma página.
 
+Dá para instalar o guia no celular ou no computador, como um app, e ele abre sem internet depois da primeira visita. Cada página também tem um endereço próprio de leitura (por exemplo, https://mflipe.github.io/guia-dp666/codigos/), em HTML simples, que os buscadores encontram e que mostra título e imagem quando compartilhado.
+
 ## Estrutura
 
 | Pasta | O que tem |
@@ -18,9 +20,12 @@ O guia funciona como o menu de um jogo, no celular, no tablet e no computador, n
 | `site/componentes.py` e `site/ui/componentes.js` | Os componentes da interface (botão, nota, selo, seletor, opção, amostra de cor, lista recolhível, item do menu), com os mesmos nomes e o mesmo HTML nos dois lados: o `build.py` usa o de Python; o `app.js` e o `navegacao.js`, o de JavaScript. O build confere os dois com os exemplos de `componentes.py` |
 | `site/tema.py` e `site/temas_radio.py` | Os temas do guia (Automático, Claro, Escuro e os temas do firmware): a lista dos temas e tudo o que sai dela, dos blocos de CSS ao botão e à janela de escolha |
 | `site/catalogo.py` | Gera o `catalogo.html`: cada componente no lugar onde aparece no guia, nos temas claro e escuro, e as cores dos tokens |
-| `testes/` | A regressão visual: fotografa cada seção do catálogo e compara com as referências em `testes/referencia/` |
+| `site/web.py` | O que o site entrega além das páginas: o manifesto do app, o service worker (modelo em `site/ui/sw.js`), as etiquetas de compartilhamento, as páginas de leitura e o `sitemap.xml` |
+| `site/ui/letras/` e `site/ui/icones/` | As fontes de letra (Geist, Geist Mono e Tektur, do Fontsource, licença SIL OFL 1.1), servidas pelo próprio site, e os ícones do app, feitos a partir do botão de sintonia do guia |
+| `testes/` | Os testes: navegação, ferramentas, rádio virtual, app offline e páginas de leitura, acessibilidade (axe-core) e a regressão visual do catálogo. `gerar-imagens.mjs` refaz os PNGs dos ícones e das imagens de compartilhamento |
 | `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |
-| `scripts/publicar.sh` | Gera o site e publica no GitHub Pages |
+| `scripts/` | `publicar.sh` publica à mão; `copiar-para-pages.sh` copia o site para a branch `gh-pages` sem apagar as prévias; `verificar.py` confere os links das fontes e procura firmware nova (as versões que o guia documenta ficam em `versoes.json`) |
+| `.github/workflows/` | Os testes a cada envio, a publicação a partir do `main` e a verificação mensal |
 
 ## Gerar o site
 
@@ -32,7 +37,7 @@ pip install -r requirements.txt
 python3 site/build.py
 ```
 
-O `build.py` gera as duas versões; `python3 site/build.py en` gera só a versão em inglês. O resultado fica em `site/preview/`: o `index.html`, o `en/index.html` e o 3D em `js/viewer3d.js` e `js/viewer3d.en.js`. Para ver no computador, sirva essa pasta e abra http://localhost:8000 (ou http://localhost:8000/en/):
+O `build.py` gera as duas versões; `python3 site/build.py en` gera só a versão em inglês. O resultado fica em `site/preview/`: o `index.html`, o `en/index.html`, o 3D em `js/viewer3d.js` e `js/viewer3d.en.js`, as páginas de leitura (`<rota>/index.html` e `en/<rota>/index.html`), os manifestos, o `estilo.css` das páginas de leitura, o `sitemap.xml` e o `sw.js`. Para ver no computador, sirva essa pasta e abra http://localhost:8000 (ou http://localhost:8000/en/):
 
 ```sh
 python3 -m http.server -d site/preview
@@ -61,26 +66,43 @@ Dá para passar pelas dez emissoras de São Paulo guardadas nas memórias, em c�
 
 Em `site/radio/`: `radio.js` é o desenho; `painel.js` é o rádio (emissoras, toques na tela, som, ajustes, animação e os textos nos dois idiomas, em TEXTOS); `painel.css` é o visual do painel, com os tokens do guia; `dados.json`, gerado por `scripts/radio_virtual.py`, traz as fontes do firmware, os nomes dos tipos de programa e os avisos das telas de RDS em cada idioma e as cores dos temas; `index.html` mostra o rádio sozinho (em inglês com `?lang=en`). `site/radio_guia.py` monta o botão e a doca do painel, o build copia o rádio para `site/preview/radio/`, e o `app.js` só carrega o rádio no primeiro toque no botão.
 
-## Conferir a aparência
+## App instalável e offline
 
-O build gera também o `site/preview/catalogo.html`, com cada componente nos dois temas (publicado em https://mflipe.github.io/guia-dp666/catalogo.html). A regressão visual fotografa as seções do catálogo no celular e no computador e compara com as referências:
+O guia tem um manifesto em cada idioma (`manifest.webmanifest` e `en/manifest.webmanifest`), então o navegador oferece instalar como app. O service worker (`sw.js`) guarda o guia na primeira visita: as páginas vêm da rede primeiro, para quem está online ver sempre a versão nova, e da cópia guardada quando falta rede; os outros arquivos vêm da cópia e se atualizam por trás. As prévias (`prototipo-*`) ficam de fora. Cada publicação muda a versão do service worker, que apaga as cópias antigas. Para desligar o service worker de vez, publique um `sw.js` que só chame `self.registration.unregister()`.
+
+## Testes
+
+Precisa do Chrome (ou diga onde ele está na variável `CHROME`).
 
 ```sh
 (cd testes && npm ci)
 python3 site/build.py
+node testes/todos.mjs                         # navegação, ferramentas, rádio virtual, web e acessibilidade
+node testes/todos.mjs radio web               # só as baterias nomeadas
+```
+
+Cada bateria também roda sozinha (`node testes/radio.mjs`). A de acessibilidade passa o axe-core (WCAG 2.1 A e AA e boas práticas) em todas as páginas, nos dois idiomas, no tema claro e no escuro, e nos estados abertos (menu, rádio virtual, buscas); qualquer violação conta como falha. A bateria web desliga o servidor no meio do teste para conferir o guia sem internet.
+
+O build gera também o `site/preview/catalogo.html`, com cada componente nos dois temas (publicado em https://mflipe.github.io/guia-dp666/catalogo.html). A regressão visual fotografa as seções do catálogo no celular e no computador e compara com as referências:
+
+```sh
 node testes/regressao-visual.mjs              # compara; as fotos novas e as diferenças vão para testes/saida/
 node testes/regressao-visual.mjs --atualizar  # quando a mudança é de propósito, grava as novas referências
 ```
 
-Precisa do Chrome (ou diga onde ele está na variável `CHROME`). As fontes da internet ficam bloqueadas durante as fotos, então as referências valem para a máquina onde foram gravadas: numa máquina nova, rode com `--atualizar` antes de mudar o código.
+O desenho das letras varia um pouco de um sistema para outro, então as referências valem para a máquina onde foram gravadas: numa máquina nova, rode com `--atualizar` antes de mudar o código. Por isso a regressão visual fica fora do `todos.mjs` e do GitHub Actions.
 
 ## Publicar
+
+A publicação é automática: a cada envio, o GitHub Actions gera o guia e roda os testes; no `main`, se tudo passar, copia o site para a branch `gh-pages`, que o GitHub Pages serve. A cópia não apaga o que não é do guia, como as prévias em `prototipo-*`: o arquivo `.publicado`, na raiz da `gh-pages`, lista o que a última publicação pôs lá, e só isso sai antes da cópia nova. Para publicar à mão, com os mesmos passos:
 
 ```sh
 ./scripts/publicar.sh
 ```
 
-O script gera o site e envia o resultado para a branch `gh-pages`, que o GitHub Pages serve. Essa branch é refeita a cada publicação; o histórico fica na `main`.
+## Verificação mensal
+
+No dia 3 de cada mês, o GitHub Actions roda `scripts/verificar.py`: abre cada link das fontes e procura versão nova da linha oficial (no GitHub do PE5PVB) e do Megatron (na página do DP-666 da DEEPELEC). Se achar link quebrado ou firmware nova, abre um aviso (issue) no repositório, ou comenta no que já estiver aberto. Para rodar à mão: `python3 scripts/verificar.py`. Quando o guia passar a documentar uma versão nova, atualize `scripts/versoes.json`.
 
 ## Tradução
 
@@ -90,6 +112,7 @@ A versão em inglês usa as mesmas rotas e os mesmos ids de ajuste da versão em
 
 - **Conteúdo:** os textos do guia, onde quer que estejam no repositório (o Markdown de `site/docs/`, as explicações e os dados em Python e os textos das peças em `site/ui/`), os diagramas, as fotos do rádio (`site/img/`) e o site gerado estão sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br), no arquivo [`LICENSE`](LICENSE). Pode copiar, adaptar e usar, inclusive para fins comerciais, desde que dê o crédito, ponha o link da licença e diga se fez mudanças.
 - **Código:** a programação (Python, JavaScript, CSS e scripts, incluindo os visualizadores 3D) está sob a licença MIT, no arquivo [`LICENSE-CODE`](LICENSE-CODE).
+- **Fontes de letra:** Geist, Geist Mono e Tektur, em `site/ui/letras/`, estão sob a SIL Open Font License 1.1, com as licenças na mesma pasta.
 - **Fontes e textos do firmware:** os glifos e os textos (tipos de programa e avisos) em `site/radio/dados.json` e as amostras de `site/fontes_freq.json` vêm do [PE5PVB/TEF6686_ESP32](https://github.com/PE5PVB/TEF6686_ESP32) e seguem a licença dele (GPL-3.0), fora das duas licenças acima.
 
 ## Como citar
