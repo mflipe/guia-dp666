@@ -445,23 +445,27 @@
   }
   function renderResults() {
     var q = input.value.trim();
-    if (!q) { box.hidden = true; box.innerHTML = ""; menu.classList.remove("buscando"); input.setAttribute("aria-expanded", "false"); hits = []; return; }
+    if (!q) { box.hidden = true; box.innerHTML = ""; menu.classList.remove("buscando"); input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); hits = []; return; }
     hits = find(q); sel = hits.length ? 0 : -1;
     if (!hits.length) {
-      box.innerHTML = '<p class="no-res">Nada encontrado. Tente outra palavra, como "squelch", "datasheet" ou "fuso".</p>';
+      // dentro da lista (listbox), o aviso também é uma opção, desativada
+      box.innerHTML = '<p class="no-res" role="option" aria-disabled="true" aria-selected="false">Nada encontrado. Tente outra palavra, como "squelch", "datasheet" ou "fuso".</p>';
     } else {
       box.innerHTML = hits.map(function (d, i) {
         var path = esc(d.p) + (d.h && d.h !== d.p ? " › " + esc(d.h) : "");
-        return '<a class="result" role="option" href="#' + d.r + '" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="r-path">' + path + '</span><span class="r-snip">' + snippet(d) + "</span></a>";
+        return '<a class="result" role="option" id="r-' + i + '" href="#' + d.r + '" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="r-path">' + path + '</span><span class="r-snip">' + snippet(d) + "</span></a>";
       }).join("");
     }
     box.hidden = false; menu.classList.add("buscando"); input.setAttribute("aria-expanded", "true");
+    // o leitor de tela anuncia a opção marcada, que as setas mudam, sem tirar o foco do campo
+    if (sel >= 0) input.setAttribute("aria-activedescendant", "r-" + sel); else input.removeAttribute("aria-activedescendant");
   }
   function mark() {
     Array.prototype.forEach.call(box.querySelectorAll(".result"), function (a, i) {
       a.setAttribute("aria-selected", i === sel ? "true" : "false");
       if (i === sel) a.scrollIntoView({ block: "nearest" });
     });
+    if (sel >= 0) input.setAttribute("aria-activedescendant", "r-" + sel);
   }
   function go(d) {
     fecharMenu(true);

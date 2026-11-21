@@ -6,48 +6,21 @@
 //   node testes/regressao-visual.mjs --atualizar  grava as fotos atuais como referência
 //
 // Quando algo muda, a foto nova e a diferença (em vermelho) ficam em testes/saida/. O navegador é o da variável
-// CHROME ou o Chrome instalado no lugar de costume. As fontes da internet ficam bloqueadas, para a foto não depender
-// da rede; por isso as referências valem para a máquina (sistema e fontes) onde foram feitas: numa máquina nova,
-// grave as referências com --atualizar antes de mexer no código.
+// CHROME ou o Chrome instalado no lugar de costume. As fontes vêm do próprio site, e tudo o que fica fora dele é
+// bloqueado, para a foto não depender da rede. O desenho das letras ainda varia um pouco de um sistema para outro;
+// por isso as referências valem para a máquina onde foram feitas: numa máquina nova, grave as referências com
+// --atualizar antes de mexer no código.
 import fs from 'node:fs';
-import http from 'node:http';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer-core';
+import { AQUI, SITE, chrome, servir } from './comum.mjs';
 
-const AQUI = path.dirname(fileURLToPath(import.meta.url));
-const SITE = path.resolve(process.env.SITE || path.join(AQUI, '..', 'site', 'preview'));   // SITE=pasta: outro build
 const REF = path.join(AQUI, 'referencia');
 const SAIDA = path.join(AQUI, 'saida');
 const ATUALIZAR = process.argv.includes('--atualizar');
 const TELAS = [['pc', 1100, 900], ['cel', 390, 844]];
 const TOLERANCIA = 16;     // diferença aceita em cada canal de cor (bordas suavizadas)
 const LIMITE = 0.0005;     // fração de pixels diferentes aceita numa seção
-
-function chrome() {
-  if (process.env.CHROME) return process.env.CHROME;
-  const lugares = ['/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/usr/bin/chromium-browser',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'];
-  const achado = lugares.find((l) => fs.existsSync(l));
-  if (!achado) { console.error('Não achei o Chrome. Diga onde ele está na variável CHROME.'); process.exit(2); }
-  return achado;
-}
-
-// um servidor só para a pasta do site gerado
-const TIPOS = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml' };
-function servir() {
-  return new Promise((pronto) => {
-    const s = http.createServer((req, res) => {
-      const u = decodeURIComponent(new URL(req.url, 'http://local').pathname);
-      const f = path.join(SITE, u.endsWith('/') ? u + 'index.html' : u);
-      if (!f.startsWith(SITE) || !fs.existsSync(f) || !fs.statSync(f).isFile()) { res.writeHead(404); res.end(); return; }
-      res.writeHead(200, { 'content-type': TIPOS[path.extname(f)] || 'application/octet-stream' });
-      fs.createReadStream(f).pipe(res);
-    });
-    s.listen(0, '127.0.0.1', () => pronto(s));
-  });
-}
 
 // compara duas fotos PNG dentro do navegador (canvas), sem precisar de outra biblioteca
 async function comparar(pagina, antes, depois) {
@@ -71,8 +44,8 @@ async function comparar(pagina, antes, depois) {
 }
 
 if (!fs.existsSync(path.join(SITE, 'catalogo.html'))) { console.error('Falta site/preview/catalogo.html. Gere o site antes: python3 site/build.py'); process.exit(2); }
-const servidor = await servir();
-const url = `http://127.0.0.1:${servidor.address().port}/catalogo.html`;
+const { servidor, url: raiz } = await servir();   // SITE=pasta: outro build
+const url = raiz + 'catalogo.html';
 const navegador = await puppeteer.launch({ executablePath: chrome(), headless: true, args: ['--no-sandbox', '--font-render-hinting=none'] });
 fs.mkdirSync(REF, { recursive: true });
 fs.rmSync(SAIDA, { recursive: true, force: true });

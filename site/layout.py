@@ -16,7 +16,8 @@ Os temas do guia (Claro, Escuro e os que vierem) moram em tema.py: a camada toke
 e, depois dela, os blocos de cada tema; o <head> leva a cor da barra do navegador e o script que aplica o tema
 escolhido antes de a página aparecer. O build põe o botão do tema ({{TEMA_BOTAO}}) e a janela ({{JANELA_TEMA}}).
 
-O build preenche os marcadores {{PAGES}}, {{MENU}}, {{APPDATA}}, {{APPJS}}, {{SEARCH}} e os demais.
+O build preenche os marcadores {{PAGES}}, {{MENU}}, {{APPDATA}}, {{APPJS}}, {{SEARCH}} e os demais. {{CABECA_WEB}} e
+{{REGISTRO_SW}} levam o que web.py faz: ícones, manifesto, compartilhamento e o service worker.
 """
 import pathlib
 
@@ -31,7 +32,7 @@ CAMADAS = {
     "conteudo": ["cabecalho", "prosa", "figuras", "tabelas", "blocos", "diagramas", "inicio"],
     "componentes": ["icones", "perfil", "tema", "radio", "botoes", "busca"],
     "ferramentas": ["visualizador-3d", "ferramentas", "simulador", "explorador", "assistente", "placa", "checklist", "codigos"],
-    "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo"],
+    "layout": ["menu", "app", "titulo", "sintonia", "cartao", "mapa", "proximo", "leitura"],
 }
 
 
@@ -45,7 +46,8 @@ def folha(camada, arquivo):
 
 
 def css():
-    partes = ["@layer " + ", ".join(CAMADAS) + ";"]
+    # as @font-face ficam fora das camadas, antes delas (ui/css/base/fontes.css)
+    partes = [ler("css/base/fontes.css").rstrip(), "@layer " + ", ".join(CAMADAS) + ";"]
     for camada, arquivos in CAMADAS.items():
         corpo = "\n".join(f"/* ---------- {camada}/{a}.css ---------- */\n" + folha(camada, a) for a in arquivos)
         partes.append(f"@layer {camada} {{\n{corpo}\n}}")
@@ -56,5 +58,5 @@ def montar():
     rodape = (ler("perfil.html") + "{{JANELA_TEMA}}" + "{{RADIO_DOCA}}" +
               '\n<script type="application/json" id="app-data">{{APPDATA}}</script>\n<script>\n' + ler("componentes.js") + '{{APPJS}}\n</script>\n'
               '<script type="application/json" id="search-data">{{SEARCH}}</script>\n<script>\n' +
-              ler("navegacao.js") + "</script>\n</body>\n</html>\n")
+              ler("navegacao.js") + "</script>\n{{REGISTRO_SW}}\n</body>\n</html>\n")
     return ler("cabeca.html").replace("<!--TEMA-->\n", tema.cabeca()) + "\n<style>\n" + css() + "\n</style>\n</head>\n" + ler("corpo.html") + rodape

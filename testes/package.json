@@ -2,13 +2,21 @@
   "name": "guia-dp666-testes",
   "version": "1.0.0",
   "private": true,
-  "description": "Regressão visual do catálogo de componentes do Guia do DP-666.",
+  "description": "Testes do Guia do DP-666: navegação, ferramentas, rádio virtual, app offline, páginas de leitura, acessibilidade e regressão visual.",
   "type": "module",
   "scripts": {
+    "test": "node todos.mjs",
+    "navegacao": "node navegacao.mjs",
+    "ferramentas": "node ferramentas.mjs",
+    "radio": "node radio.mjs",
+    "web": "node web.mjs",
+    "acessibilidade": "node acessibilidade.mjs",
     "visual": "node regressao-visual.mjs",
-    "visual:atualizar": "node regressao-visual.mjs --atualizar"
+    "visual:atualizar": "node regressao-visual.mjs --atualizar",
+    "imagens": "node gerar-imagens.mjs"
   },
   "devDependencies": {
+    "axe-core": "4.14.1",
     "puppeteer-core": "25.17.0"
   }
 }

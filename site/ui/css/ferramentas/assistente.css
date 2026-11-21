@@ -8,7 +8,7 @@
 .hlp-sym::after { content: "›"; font-size: 1.2rem; color: var(--muted); }
 .hlp-view [id] { scroll-margin-top: calc(var(--topbar-h, 56px) + 16px); }
 .hlp-card { scroll-margin-top: 96px; padding: 0; border: 0; border-radius: 0; background: none; }
-.hlp-card h3 { margin: 0 0 10px; font-size: 1.1rem; line-height: 1.35; }
+.hlp-card h2 { margin: 0 0 10px; font-size: 1.1rem; line-height: 1.35; }
 .hlp-card p, .hlp-card li { line-height: 1.6; }
 .hlp-ask { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
 .hlp-ask > span { font-weight: 600; margin-right: 4px; }

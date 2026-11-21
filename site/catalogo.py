@@ -88,7 +88,6 @@ def gerar(destino):
     corpo.append('<section class="cat-sec" id="tema"><h2>Tema do guia</h2><p class="cat-desc">O botão do tema, como fica no rodapé do menu, e as '
                  'opções da janela que ele abre, com a amostra de cada tema. Os temas moram em <code>site/tema.py</code>; para criar '
                  "um, acrescente a entrada lá e o arquivo com os tokens que mudam.</p>" + par(janela) + "</section>")
-    fontes = "\n".join(l for l in layout.ler("cabeca.html").splitlines() if l.startswith(('<link rel="preconnect"', '<link rel="stylesheet"')))
     corpo.append('<section class="cat-sec" id="temas-radio" data-telas="pc"><h2>Temas do rádio</h2><p class="cat-desc">Os temas do firmware viram temas do '
                  'guia em <code>site/temas_radio.py</code>, com as cores de <code>site/temas.json</code>: o fundo da tela vira o fundo da '
                  "página, a moldura faz as linhas e as superfícies, a cor principal vira o destaque. Cada cor lida como texto tem contraste "
@@ -102,10 +101,9 @@ def gerar(destino):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>DP-666: catálogo de componentes</title>
-{fontes}
 <style>
 @layer catalogo;
-{layout.css()}
+{layout.css().replace("{{RAIZ}}", "")}
 @layer catalogo {{
 {escopos}
 {layout.ler("catalogo.css").rstrip()}

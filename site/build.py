@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Gera o Guia do DP-666 nos dois idiomas, a partir de docs/*.md (português) e docs/en/*.md (inglês).
 
-Saída: preview/index.html (português) e preview/en/index.html (inglês). Cada uma é um único arquivo,
-que só busca as fontes do Google e, quando o leitor pede o 3D, o js/viewer3d.js (ou viewer3d.en.js).
+Saída: preview/index.html (português) e preview/en/index.html (inglês). Cada uma é um único arquivo, que busca
+só as fontes de letra do próprio site (letras/) e, quando o leitor pede o 3D, o js/viewer3d.js (ou viewer3d.en.js).
+Junto saem as páginas de leitura (preview/<rota>/ e preview/en/<rota>/), os manifestos do app, o estilo.css, o
+sitemap.xml e o sw.js (veja web.py).
 Uso: python3 build.py [pt|en] (sem argumento, gera os dois).
 """
 import html
@@ -25,6 +27,7 @@ import componentes  # noqa: E402
 import catalogo  # noqa: E402
 import tema  # noqa: E402
 import radio_guia  # noqa: E402
+import web  # noqa: E402
 from componentes import botao, item_menu, nota, selo  # noqa: E402
 import data as data_pt  # noqa: E402
 import diagrams  # noqa: E402
@@ -315,11 +318,86 @@ def proximo_html(i, rendered):
     return "".join(out)
 
 
+def ajustes_leitura(D):
+    """Os ajustes do explorador em texto, por firmware e por grupo, para a página de leitura de Ajustes do rádio."""
+    out = []
+    for fw in ("oficial", "mod17"):
+        out.append(f'<h2 id="ajustes--{fw}">{esc(L["le_fw"][fw])}</h2>')
+        for g in D[fw]["grupos"]:
+            out.append(f'<h3 id="{g["id"]}">{esc(g["titulo"])}</h3>')
+            out += [f"<p>{n}</p>" for n in g.get("notas", [])]
+            out.append('<dl class="le-ajustes">')
+            for it in g["itens"]:
+                nome = esc(it["nome"]) + (f' <span class="aj-muted">({esc(it["en"])})</span>' if it.get("en") and it["en"] != it["nome"] else "")
+                kv = []
+                if it.get("padrao"):
+                    kv.append(f'{esc(L["le_padrao"])}: {esc(it["padrao"])}')
+                if it.get("br"):
+                    kv.append(f'{esc(L["le_br"])}: <strong>{esc(it["br"])}</strong>' + (f'. {it["motivo"]}' if it.get("motivo") else ""))
+                if it.get("valores"):
+                    kv.append(f'{esc(L["le_valores"])}: {esc(it["valores"])}')
+                out.append(f'<dt id="{it["id"]}">{nome}</dt><dd>' + (f'<p>{it["html"]}</p>' if it.get("html") else "")
+                           + (f'<p>{"<br>".join(kv)}</p>' if kv else "") + "</dd>")
+            out.append("</dl>")
+    return "\n".join(out)
+
+
+def escrever_leitura(rendered, page, app):
+    """As páginas de leitura deste idioma (web.py): o texto de cada página com endereço próprio, os links trocados para
+    os endereços das páginas de leitura e cada ferramenta trocada por um link para ela no guia interativo."""
+    raiz = "../../" if L["dir"] else "../"
+    rotas = {r for _, r, *_ in rendered}
+    ajuda = {}   # os itens do assistente de problemas viram a seção da categoria na página de leitura de Problemas
+    for cat in app["ajuda"]["cats"]:
+        ajuda[cat["id"]] = cat["ref"]
+        ajuda.update({it["id"]: cat["ref"] for it in cat["itens"]})
+
+    def links(h):
+        def troca(m):
+            alvo = m.group(1)
+            base = alvo.split("--", 1)[0]
+            if alvo in ("", "inicio"):
+                return 'href="../"'
+            if alvo in ajuda:
+                return f'href="../problemas/#{ajuda[alvo]}"'
+            if base == "ajuda":
+                return 'href="../problemas/"'
+            if base in rotas:
+                return f'href="../{base}/"' if alvo == base else f'href="../{base}/#{alvo}"'
+            return f'href="../#{alvo}"'
+        return re.sub(r'href="#([^"]*)"', troca, h)
+
+    rodape = links(re.search(r'<footer class="site-foot">.*?</footer>', page, re.S).group(0))
+    paginas = [(r, t) for _, r, t, *_ in rendered if r != "inicio"]
+    for i, (f, route, nav_title, group, title, body, toc, n_src) in enumerate(rendered):
+        if route == "inicio":
+            continue
+        corpo = render(doc(f), route)[1] if route == "problemas" else body   # Problemas: as categorias em texto
+
+        def ferramenta(m):
+            nota_ = (f'<div class="le-ferramenta"><p>{esc(L["le_ferramenta"])} '
+                     f'<a href="../#{route}">{esc(L["le_ferramenta_link"])}</a>.</p></div>')
+            return nota_ + (f'<div class="prose">{ajustes_leitura(app["ajustes"])}</div>' if m.group(1) == "ajustes" else "")
+
+        corpo = re.sub(r'<div class="tool tool-embed" id="tool-(\w+)" data-tool="\w+"><p class="tool-fallback">.*?</p></div>',
+                       ferramenta, corpo, flags=re.S)
+        corpo = re.sub(r'<button type="button" class="v3-open" data-viewer3d-open[^>]*>(.*?)</button>',
+                       rf'<a class="v3-open" href="../#{route}">\1</a>', corpo, flags=re.S)
+        corpo = links(corpo).replace('src="img/', f'src="{raiz}img/')
+        src_txt = L["src_n"].format(n=n_src) if n_src != 1 else L["src_1"]
+        texto = web.pagina_leitura(L, LANG, route, title, group, L["desc"].get(route, ""),
+                                   L["meta"].format(d=UPDATED, s=src_txt), corpo, links(proximo_html(i, rendered)),
+                                   paginas, rodape, tema.cabeca())
+        destino = OUT.parent / route / "index.html"
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        destino.write_text(texto.replace("{{RAIZ}}", raiz), encoding="utf-8")
+
+
 _CODIGOS = {}
 
 
 def codigos():
-    """Os itens da busca de códigos, lidos das tabelas de uso.md (uma vez por idioma)."""
+    """Os itens da busca de códigos, lidos das tabelas de codigos.md (uma vez por idioma)."""
     if LANG not in _CODIGOS:
         _CODIGOS[LANG] = appdata.build_codes(doc("codigos"), inline)
     return _CODIGOS[LANG]
@@ -534,7 +612,7 @@ def build():
     # o perfil, o idioma e o tema moram no rodapé do menu; a tela de título leva uma cópia, com os ids que o app usa,
     # e o alto de cada página leva outra (a do Início some, porque lá a tela de título já tem a sua)
     conta = re.search(r"<!--CONTA-->(.*?)<!--/CONTA-->", template, re.S).group(1)
-    conta_pagina = f'<div class="topo-conta">{conta}</div>'
+    conta_pagina = f'<header class="topo-conta">{conta}</header>'   # header: a faixa do alto vira um marco (banner) para leitores de tela
     conta_titulo = (conta.replace('class="profile-chip"', 'class="profile-chip" id="profile-btn"', 1)
                     .replace('class="lang-link"', 'class="lang-link" id="lang-switch"', 1))
     pages_html = "".join(sections_html).replace("{{CONTA}}", conta_titulo)
@@ -553,10 +631,18 @@ def build():
                    .replace("{{TEMA_BOTAO}}", tema.botao(LANG, L)).replace("{{JANELA_TEMA}}", tema.janela(LANG, L)) \
                    .replace("{{RADIO_BOTAO}}", radio_guia.botao(L)).replace("{{RADIO_DOCA}}", radio_guia.doca(L))
     page = page.replace("<!--CONTA-->", "").replace("<!--/CONTA-->", "")
+    raiz = "../" if L["dir"] else ""
+    titulo_spa = html.unescape(re.search(r"<title>(.*?)</title>", page).group(1))
+    desc_spa = html.unescape(re.search(r'<meta name="description" content="([^"]*)"', page).group(1))
+    page = page.replace("{{CABECA_WEB}}", web.cabeca(L, LANG, raiz, web.endereco(LANG), titulo_spa, desc_spa)) \
+               .replace("{{REGISTRO_SW}}", web.registro(raiz))
+    page = page.replace("{{RAIZ}}", raiz)   # fontes de letra, ícones e o que mais fica na raiz do site
     if L["dir"]:
         page = page.replace('src="img/', 'src="../img/')  # as fotos ficam na raiz do site, uma pasta acima
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding="utf-8")
+    (OUT.parent / "manifest.webmanifest").write_text(web.manifesto(L, LANG), encoding="utf-8")
+    escrever_leitura(rendered, page, app)
     print(f"ok: {OUT} ({OUT.stat().st_size // 1024} KB, {len(PAGES)} páginas, {len(index)} seções, {n_sources} fontes)")
 
 
@@ -613,6 +699,7 @@ TEMPLATE = layout.montar()
 if __name__ == "__main__":
     componentes.conferir()   # os componentes dão o mesmo HTML em Python e em JavaScript
     shutil.copytree(ROOT / "img", ROOT / "preview" / "img", dirs_exist_ok=True)
+    shutil.copytree(ROOT / "ui" / "letras", ROOT / "preview" / "letras", dirs_exist_ok=True)   # as fontes de letra, servidas pelo site
     radio_guia.copiar(ROOT / "preview" / "radio")   # o rádio virtual, que o botão do alto das páginas abre
     for lang in (sys.argv[1:] or i18n.LANGS):
         use_lang(lang)
@@ -620,3 +707,12 @@ if __name__ == "__main__":
         if MISSING:
             print(f"  aviso ({lang}): sem tradução, usou o português em: {', '.join(MISSING)}")
     catalogo.gerar(ROOT / "preview" / "catalogo.html")   # os componentes nos dois temas
+    # o que vale para os dois idiomas: a folha de estilo das páginas de leitura, o mapa do site e o service worker
+    pasta = ROOT / "preview"
+    (pasta / "estilo.css").write_text(layout.css().replace("{{RAIZ}}", ""), encoding="utf-8")
+    shutil.copytree(ROOT / "ui" / "icones", pasta / "icones", dirs_exist_ok=True)
+    d, m, a = i18n.UI["pt"]["updated"].split("/")
+    (pasta / "sitemap.xml").write_text(web.sitemap([r for g, items in i18n.UI["pt"]["nav"] for (_, r, _) in items if r != "inicio"],
+                                                   f"{a}-{m}-{d}"), encoding="utf-8")
+    web.service_worker(pasta)
+    print(f"ok: páginas de leitura, manifestos, sitemap.xml e sw.js em {pasta}")

@@ -111,6 +111,16 @@ UI = {
         "off_label": {"oficial": "Desligado", "mod17": "Off"}, "off_words": ("desligado", "off"),
         "decimal": ",",
         "search_official": "Ajustes · linha oficial", "search_mod17": "Ajustes · Mod17", "search_help": "Assistente de problemas", "search_codes": "Códigos da tela",
+        # o app instalado, o compartilhamento e as páginas de leitura (web.py)
+        "html_lang": "pt-BR", "app_nome": "DP-666: o guia definitivo", "app_curto": "Guia DP-666",
+        "app_desc": "O guia definitivo e independente do rádio DEEPELEC DP-666: botões, menus, ajustes para o Brasil, códigos da tela e solução de problemas.",
+        "og_locale": "pt_BR", "og_locale_alt": "en_US",
+        "og_alt": "O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.",
+        "le_acoes": "Idioma e guia interativo", "le_abrir": "Abrir no guia interativo",
+        "le_aviso": "Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.",
+        "le_ferramenta": "Esta ferramenta funciona no guia interativo:", "le_ferramenta_link": "abrir a ferramenta",
+        "le_paginas": "Páginas do guia", "le_padrao": "Padrão", "le_br": "No Brasil", "le_valores": "Valores",
+        "le_fw": {"oficial": "Linha oficial", "mod17": "Megatron Mod17"},
         # menu de jogo: o que cada página tem, mostrado quando o cursor está nela
         "desc": {
             "inicio": "A tela de título, com todas as páginas do guia.",
@@ -241,6 +251,15 @@ UI = {
         "off_label": {"oficial": "Off", "mod17": "Off"}, "off_words": ("off",),
         "decimal": ".",
         "search_official": "Settings · official firmware", "search_mod17": "Settings · Mod17", "search_help": "Troubleshooting assistant", "search_codes": "Screen codes",
+        "html_lang": "en", "app_nome": "DP-666: the definitive guide", "app_curto": "DP-666 guide",
+        "app_desc": "The definitive, independent guide to the DEEPELEC DP-666 radio: buttons, menus, settings, screen codes and troubleshooting.",
+        "og_locale": "en_US", "og_locale_alt": "pt_BR",
+        "og_alt": "The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.",
+        "le_acoes": "Language and interactive guide", "le_abrir": "Open in the interactive guide",
+        "le_aviso": "Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.",
+        "le_ferramenta": "This tool works in the interactive guide:", "le_ferramenta_link": "open the tool",
+        "le_paginas": "Guide pages", "le_padrao": "Default", "le_br": "In Brazil", "le_valores": "Values",
+        "le_fw": {"oficial": "Official firmware", "mod17": "Megatron Mod17"},
         "desc": {
             "inicio": "The title screen, with every page of the guide.",
             "brasil": "Settings that make a difference for DP-666 users in Brazil, with the standards behind each one.",

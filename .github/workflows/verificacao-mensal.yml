@@ -1,0 +1,46 @@
+# Uma vez por mês (e quando alguém pedir): confere os links das fontes do guia e procura versão nova dos firmwares
+# (a linha oficial do PE5PVB no GitHub e o Megatron na página da DEEPELEC). Se achar algo, abre um aviso (issue) no
+# repositório, ou comenta no aviso que já está aberto.
+name: Verificação mensal
+
+on:
+  schedule:
+    - cron: "23 11 3 * *"   # dia 3, 8h23 em Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Links e firmware
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/verificar.py --relatorio relatorio.md --problemas problemas.md
+
+      - name: Resumo
+        if: always()
+        run: cat relatorio.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Abrir ou atualizar o aviso
+        if: always() && hashFiles('problemas.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          titulo="Verificação mensal: links e firmware"
+          numero="$(gh issue list --state open --search "\"$titulo\" in:title" --json number --jq '.[0].number // empty')"
+          if [ -n "$numero" ]; then
+            gh issue comment "$numero" --body-file problemas.md
+          else
+            gh issue create --title "$titulo" --body-file problemas.md
+          fi

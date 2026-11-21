@@ -58,7 +58,6 @@
  "<p class=\"exp-note\">Antes de qualquer reparo ou regravação, faça o <a href=\"#backup\">backup</a>.</p></div>": "<p class=\"exp-note\">Before any repair or reflashing, make a <a href=\"#backup\">backup</a>.</p></div>",
  "<p class=\"hp-sub\">Com isso, os botões e os menus aparecem como no seu aparelho. Na dúvida, veja ": "<p class=\"hp-sub\">With it, the buttons and menus show up as they are on your radio. If you’re not sure, see ",
  "<p class=\"meta\">Ligações: ${esc(buses.join(', '))}</p>": "<p class=\"meta\">Connections: ${esc(buses.join(', '))}</p>",
- "<p class=\"no-res\">Nada encontrado. Tente outra palavra, como \"squelch\", \"datasheet\" ou \"fuso\".</p>": "<p class=\"no-res\">Nothing found. Try another word, such as \"squelch\", \"datasheet\" or \"time zone\".</p>",
  "<p class=\"v3-err\">Este navegador não conseguiu abrir a visão 3D. A tabela abaixo tem as mesmas informações.</p>": "<p class=\"v3-err\">This browser couldn’t open the 3D view. The table below has the same information.</p>",
  "<p class=\"v3-muted\" style=\"margin:0\">Toque num bloco para ver o chip e os datasheets, ou num barramento acima para seguir o caminho. As ligações acendem em azul.</p>": "<p class=\"v3-muted\" style=\"margin:0\">Tap a block to see the chip and its datasheets, or a bus above to follow its path. The connections light up in blue.</p>",
  "<span class=\"aj-muted\">Não documentado</span>": "<span class=\"aj-muted\">Not documented</span>",
@@ -308,5 +307,6 @@
  "Mostrando 10 de ": "Showing 10 of ",
  ". Digite mais para filtrar.": ". Type more to narrow it down.",
  " resultados": " results",
- " parece um código PI: a identificação da emissora no RDS, e não um erro.": " looks like a PI code: the station’s identification over RDS, not an error."
+ " parece um código PI: a identificação da emissora no RDS, e não um erro.": " looks like a PI code: the station’s identification over RDS, not an error.",
+ "<p class=\"no-res\" role=\"option\" aria-disabled=\"true\" aria-selected=\"false\">Nada encontrado. Tente outra palavra, como \"squelch\", \"datasheet\" ou \"fuso\".</p>": "<p class=\"no-res\" role=\"option\" aria-disabled=\"true\" aria-selected=\"false\">Nothing found. Try another word, such as \"squelch\", \"datasheet\" or \"time zone\".</p>"
 }

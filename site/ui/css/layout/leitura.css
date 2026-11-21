@@ -1,0 +1,41 @@
+/* páginas de leitura (web.py): o texto de uma página com endereço próprio, sem o botão de sintonia nem as
+   ferramentas. A barra do alto leva o nome do guia, a troca de idioma e o caminho para o guia interativo */
+.le-topo { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(6px); }
+.le-topo-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; max-width: calc(var(--wrap) + 64px); margin: 0 auto; padding: 10px 32px; }
+.le-marca { font: 600 15px var(--font-display); letter-spacing: 0.02em; color: var(--ink); text-decoration: none; }
+.le-acoes { display: flex; align-items: center; gap: 8px; }
+.le-lingua, .le-abrir { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; border-radius: 8px; font: 600 14px var(--font-sans); text-decoration: none; }
+.le-lingua { min-width: 44px; border: 1px solid var(--rule); color: var(--ink); }
+.le-abrir { padding: 0 14px; background: var(--accent); color: var(--accent-ink); }
+.le-lingua:focus-visible, .le-abrir:focus-visible, .le-marca:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
+@media (hover: hover) {
+  .le-lingua:hover { border-color: var(--accent); color: var(--accent); }
+  .le-abrir:hover { filter: brightness(1.08); }
+}
+body.leitura { --topbar-h: 64px; }   /* os títulos levados por um link param abaixo da barra fixa */
+body.leitura .main { padding-bottom: 64px; }
+.le-aviso { max-width: 68ch; margin: 0 0 28px; padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-mark); color: var(--muted); }
+.le-ferramenta { max-width: 68ch; margin: 16px 0 28px; }
+.le-ferramenta p { margin: 0; }
+.le-ajustes { margin: 0 0 8px; }
+.le-ajustes dt { margin-top: 18px; font-weight: 600; }
+.le-ajustes dd { margin: 4px 0 0; }
+.le-ajustes dd p { margin: 4px 0 0; }
+.le-paginas { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.le-paginas h2 { margin: 0 0 12px; font: 600 1.05rem var(--font-display); letter-spacing: 0.02em; }
+.le-paginas ul { margin: 0; padding: 0; list-style: none; columns: 2 15rem; column-gap: 32px; }
+.le-paginas li { padding: 6px 0; break-inside: avoid; }
+.le-paginas a[aria-current] { color: var(--ink); font-weight: 600; text-decoration: none; }
+/* no celular a barra rola com a página, numa linha só: o nome encolhe para DP-666 */
+@media (max-width: 640px) {
+  body.leitura { --topbar-h: 0px; }
+  .le-topo { position: static; }
+  .le-topo-in { flex-wrap: nowrap; padding: 8px 16px; }
+  .le-marca { font-size: 14px; }
+  .le-marca-resto { display: none; }
+  .le-lingua, .le-abrir { min-height: 40px; }
+  .le-abrir { padding: 0 12px; font-size: 13.5px; }
+}
+@media print {
+  .le-topo, .le-aviso, .le-paginas { display: none; }
+}

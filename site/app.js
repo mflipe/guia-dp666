@@ -754,7 +754,8 @@
         total += items.length;
         if (!items.length) return "";
         nav.push([gi, g, items.length]);
-        return '<section class="aj-group" id="' + g.id + '" data-g="' + gi + '"><h3 class="aj-gh">' + esc(g.titulo) + "<span>" + items.length + "</span></h3>" +
+        // h2: os grupos vêm logo depois do título da página (h1)
+        return '<section class="aj-group" id="' + g.id + '" data-g="' + gi + '"><h2 class="aj-gh">' + esc(g.titulo) + "<span>" + items.length + "</span></h2>" +
           (!ws.length && g.notas.length ? '<div class="aj-notes">' + g.notas.map(function (n) { return "<p>" + n + "</p>"; }).join("") + "</div>" : "") +
           '<ul class="aj-items">' + items.map(function (it) { return row(it, ws, st.fw); }).join("") + "</ul></section>";
       }).join("");
@@ -907,7 +908,7 @@
     function catView(c, openWhy) {
       var h = back("home", "Todos os problemas");
       if (c.passos.length) {
-        h += '<div class="hlp-card" id="' + c.id + '"><h3>' + esc(c.titulo) + "</h3>" + (c.intro[0] || "") +
+        h += '<div class="hlp-card" id="' + c.id + '"><h2>' + esc(c.titulo) + "</h2>" + (c.intro[0] || "") +
           '<details class="hlp-why"' + (openWhy ? " open" : "") + "><summary>Por que acontece</summary>" + c.intro.slice(1).join("") +
           '<ul class="hlp-items">' + c.itens.map(function (it) { return '<li id="' + it.id + '"><strong>' + esc(it.titulo) + ":</strong> " + it.html + tag(it) + "</li>"; }).join("") +
           "</ul></details></div>" + '<div class="hlp-steps"></div>';
@@ -933,7 +934,7 @@
     function itemView(c, it) {
       var others = c.itens.filter(function (o) { return o !== it; });
       var body = it.html.replace(/^((?:<[^>]+>)*)([a-zà-ú])/, function (m, a, b) { return a + b.toUpperCase(); });
-      view.innerHTML = back(c.id, c.titulo) + '<div class="hlp-card" id="' + it.id + '"><h3>' + esc(it.titulo) + tag(it) + "</h3><p>" + body + "</p>" +
+      view.innerHTML = back(c.id, c.titulo) + '<div class="hlp-card" id="' + it.id + '"><h2>' + esc(it.titulo) + tag(it) + "</h2><p>" + body + "</p>" +
         '<div class="hlp-ask"><span>' + "Resolveu?" + "</span>" + C.botao("Sim", { variante: "solido", attrs: { "data-ok": true } }) +
         C.botao("Não", { variante: "fantasma", attrs: { "data-no": true } }) + "</div>" +
         '<div class="hlp-after"></div></div>';
