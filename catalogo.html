@@ -1371,6 +1371,18 @@ tbody tr:last-child td { border-bottom: 0; }
    para o teclado e para o leitor de tela */
 .opt-curta input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
 .opt-curta:has(input:focus-visible) { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
+/* ---------- componentes/radio.css ---------- */
+/* rádio virtual: o botão ao lado do tema (no rodapé do menu, na tela de título e no alto das páginas). O painel
+   tem a folha dele (radio/painel.css), que só carrega junto com o rádio. */
+.radio-btn { position: relative; display: inline-flex; flex: none; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); font: 500 0.85rem var(--font-sans); cursor: pointer; }
+.radio-btn .ico { width: 18px; height: 18px; }
+/* na tela de título e no alto das páginas, só o ícone, como o do tema */
+.tt-topo .radio-btn, .topo-conta .radio-btn { width: 44px; height: 44px; min-height: 0; justify-content: center; padding: 0; border: 0; background: none; color: var(--text); }
+.tt-topo .radio-btn-t, .topo-conta .radio-btn-t { display: none; }
+/* com o rádio aberto ou minimizado, um ponto aceso, como o do Seu rádio */
+.radio-btn[data-estado="aberto"]::after, .radio-btn[data-estado="minimizado"]::after { content: ""; position: absolute; top: 8px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-mark); box-shadow: 0 0 0 2px var(--bg), 0 0 8px var(--accent-mark); }
+.pausa-conta .radio-btn[data-estado]::after { top: 5px; right: 5px; box-shadow: 0 0 0 2px var(--surface), 0 0 8px var(--accent-mark); }
+.radio-btn:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
 /* ---------- componentes/botoes.css ---------- */
 /* botões: sólido, fantasma, seletor segmentado e chips */
 .btn-solid, .btn-ghost { display: inline-flex; align-items: center; gap: 6px; font: 600 0.86rem var(--font-sans); padding: 9px 15px; cursor: pointer; text-decoration: none; min-height: 40px; border-radius: 6px; }

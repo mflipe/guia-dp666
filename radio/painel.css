@@ -1,0 +1,99 @@
+/* Rádio virtual: o painel do guia (aberto ou minimizado) e a página inteira de radio/index.html.
+   Usa os tokens do guia (--bg, --surface, --ink, --muted, --rule, --accent…), então segue o tema escolhido; a
+   página sozinha define os mesmos tokens. Tudo fica sob .rv e .rv-doca, para não mexer no resto do guia.
+
+   No celular, o painel aberto sobe de baixo e ocupa quase a tela toda, com a tela do rádio e as setas sempre à
+   vista e os ajustes rolando por baixo. Em telas maiores, ele flutua no canto direito, acima do botão Menu. Minimizado,
+   vira uma barra escura como o botão Menu, com a tela pequena, o som, a próxima emissora e o fechar. */
+
+/* ---------------------------------------------------------------- partes comuns */
+.rv { color: var(--ink); font: 400 1rem/1.5 var(--font-sans, system-ui, sans-serif); }
+.rv button, .rv select { font: inherit; color: inherit; }
+.rv button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.rv button:focus-visible, .rv select:focus-visible, .rv input:focus-visible, .rv a:focus-visible, .rv-titulo:focus-visible {
+  outline: 2px solid var(--accent-mark); outline-offset: 2px; }
+.rv-titulo:focus:not(:focus-visible) { outline: none; }
+.rv-visor { padding: 8px; border-radius: 12px; background: #05070a; }
+.rv-tela { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 3px; touch-action: manipulation; }
+.rv-troca { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 8px; margin-top: 8px; }
+.rv-seta { display: grid; place-items: center; height: 44px; padding: 0; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+.rv-emissora { margin: 0; text-align: center; line-height: 1.25; }
+.rv-emissora strong { display: block; overflow: hidden; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+.rv-emissora span { display: block; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rv-som { display: flex; align-items: center; gap: 12px; }
+.rv-botao { flex: none; min-height: 40px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); font-weight: 600 !important; font-size: 0.88rem !important; }
+.rv-botao[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.rv-som-info { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.rv-nota { margin: 10px 0 0; font-size: 0.84rem; color: var(--muted); }
+.rv-link { display: inline; min-height: 0; padding: 0; border: 0; background: none; color: var(--accent) !important; text-decoration: underline; text-underline-offset: 2px; }
+.rv-ajustes h3 { margin: 22px 0 0; font: 600 1rem var(--font-display, inherit); letter-spacing: 0.01em; }
+.rv-intro { margin: 2px 0 0; font-size: 0.86rem; color: var(--muted); }
+.rv-campo { min-width: 0; margin: 14px 0 0; padding: 0; border: 0; }
+.rv-campo legend, .rv-campo label { padding: 0; font-weight: 600; font-size: 0.9rem; }
+.rv-brilho-v { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rv-opcoes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.rv-opcoes button { min-height: 36px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); font-size: 0.85rem !important; }
+.rv-opcoes button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); font-weight: 600 !important; }
+.rv-opcoes button:disabled { opacity: 0.4; cursor: not-allowed; }
+.rv select { display: block; min-width: 12rem; min-height: 40px; margin-top: 6px; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+.rv input[type=range] { display: block; width: 100%; margin: 8px 0 0; accent-color: var(--accent); }
+.rv-dica { margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); }
+.rv-notas { margin-top: 22px; font-size: 0.8rem; color: var(--muted); }
+.rv-notas p { margin: 0 0 8px; }
+.rv-notas a { color: var(--accent); }
+.rv-ico { display: grid; place-items: center; flex: none; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 8px; background: none; }
+.rv-ico:hover { background: var(--surface-2, rgb(0 0 0 / 0.06)); }
+
+/* ---------------------------------------------------------------- o painel do guia */
+.rv-doca { position: fixed; z-index: 65; }
+.rv-doca[hidden] { display: none; }
+.rv[data-modo="painel"] { display: flex; flex-direction: column; overflow: hidden; background: var(--surface); }
+.rv-topo { display: flex; flex: none; align-items: center; gap: 2px; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--rule); }
+.rv-titulo { flex: 1; margin: 0; font: 600 1rem var(--font-display, inherit); letter-spacing: 0.01em; }
+.rv[data-modo="painel"] .rv-fixo { flex: none; padding: 12px 16px 10px; border-bottom: 1px solid var(--rule); }
+.rv[data-modo="painel"] .rv-corpo { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 12px 16px 18px; }
+/* no celular: sobe de baixo, quase da altura da tela */
+.rv-doca[data-estado="aberto"] { left: 0; right: 0; bottom: 0; }
+.rv-doca[data-estado="aberto"] .rv { max-height: 88vh; max-height: 88dvh; border-top: 1px solid var(--rule); border-radius: 14px 14px 0 0; box-shadow: 0 -10px 36px rgb(0 0 0 / 0.22); padding-bottom: env(safe-area-inset-bottom); animation: rv-sobe 0.22s ease-out; }
+/* minimizado: a barra escura, acima do botão Menu */
+.rv-doca[data-estado="minimizado"] { left: 16px; right: 16px; bottom: 86px; }
+.rv-doca[data-estado="minimizado"] .rv { background: none; }
+.rv-doca[data-estado="minimizado"] .rv-topo, .rv-doca[data-estado="minimizado"] .rv-fixo, .rv-doca[data-estado="minimizado"] .rv-corpo { display: none; }
+.rv-mini { display: flex; align-items: center; gap: 2px; padding: 6px; border-radius: 16px; background: var(--knob, #121824); box-shadow: inset 0 0 0 1px var(--hud-edge, rgb(255 255 255 / 0.08)), var(--hud-shadow, 0 8px 24px rgb(0 0 0 / 0.4)); color: var(--hud-ink, #e6ebf3); animation: rv-sobe 0.2s ease-out; }
+.rv-mini[hidden] { display: none; }
+.rv-mini-abrir { display: flex; flex: 1; min-width: 0; align-items: center; gap: 10px; padding: 2px; border: 0; border-radius: 10px; background: none; text-align: left; }
+.rv-mini-tela { flex: none; width: 80px; padding: 3px; border-radius: 6px; background: #05070a; }
+.rv-mini-tela .rv-tela { border-radius: 2px; }
+.rv-mini-t { min-width: 0; line-height: 1.25; }
+.rv-mini-t strong { display: block; overflow: hidden; font-size: 0.9rem; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+.rv-mini-t span { display: block; overflow: hidden; font-size: 0.76rem; color: var(--hud-muted, #9aa6b8); white-space: nowrap; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.rv-mini .rv-ico:hover { background: rgb(255 255 255 / 0.08); }
+.rv-mini-som[aria-pressed="true"] { color: var(--hud-pointer, #f2b14c); }
+.rv-mini-som[aria-pressed="true"] .rv-mudo, .rv-mini-som[aria-pressed="false"] .rv-onda { display: none; }
+@keyframes rv-sobe { from { opacity: 0; transform: translateY(14px); } }
+@media (prefers-reduced-motion: reduce) { .rv-doca .rv, .rv-doca .rv-mini { animation: none; } }
+/* em telas maiores, o painel flutua no canto direito, acima do botão Menu, e para 96 px abaixo do alto da janela,
+   para não cobrir o idioma, o tema e o próprio botão do rádio */
+@media (min-width: 760px) {
+  .rv-doca[data-estado="aberto"] { left: auto; right: 16px; bottom: 86px; width: 384px; }
+  .rv-doca[data-estado="aberto"] .rv { max-height: calc(100vh - 182px); border: 1px solid var(--rule); border-radius: 14px; box-shadow: var(--shadow, 0 16px 40px rgb(15 20 28 / 0.16)); padding-bottom: 0; }
+  .rv-doca[data-estado="minimizado"] { left: auto; width: 360px; }
+}
+/* no computador largo, o botão Menu sobe para o canto de cima, e o rádio desce até o canto de baixo */
+@media (hover: hover) and (pointer: fine) and (min-width: 1280px) {
+  .rv-doca[data-estado="aberto"], .rv-doca[data-estado="minimizado"] { bottom: 16px; }
+  .rv-doca[data-estado="aberto"] .rv { max-height: calc(100vh - 112px); }
+}
+
+/* ---------------------------------------------------------------- a página inteira (radio/index.html) */
+.rv[data-modo="pagina"] { display: grid; gap: 0 40px; }
+.rv[data-modo="pagina"] .rv-fixo { position: sticky; top: 0; z-index: 1; margin: 0 -16px; padding: 6px 16px 8px; background: var(--bg); box-shadow: 0 1px 0 var(--rule); }
+.rv[data-modo="pagina"] .rv-visor { max-width: calc(36vh * 4 / 3 + 16px); margin: 0 auto; }
+.rv[data-modo="pagina"] .rv-corpo { padding-top: 12px; }
+@media (max-width: 879px) and (max-height: 560px) { .rv[data-modo="pagina"] .rv-fixo { position: static; box-shadow: none; } }
+@media (min-width: 880px) {
+  .rv[data-modo="pagina"] { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; }
+  .rv[data-modo="pagina"] .rv-fixo { top: 16px; margin: 0; padding: 0; box-shadow: none; }
+  .rv[data-modo="pagina"] .rv-visor { max-width: none; }
+  .rv[data-modo="pagina"] .rv-corpo { padding-top: 0; }
+}
