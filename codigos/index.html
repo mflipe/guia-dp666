@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Mensagens e códigos da tela | DP-666: o guia definitivo</title>
+<meta name="description" content="O que quer dizer cada marca, código e mensagem da tela, com um campo para digitar o que aparece no rádio.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/codigos/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/codigos/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/codigos/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Mensagens e códigos da tela">
+<meta property="og:description" content="O que quer dizer cada marca, código e mensagem da tela, com um campo para digitar o que aparece no rádio.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/codigos/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/codigos/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#codigos">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-codigos">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>O rádio</p><h1>Mensagens e códigos da tela</h1><p class="meta">Atualizado em 21/11/2026 · 7 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Digite o que aparece na tela do rádio, como TMC, PTYN N/A ou Tuner: !None!, para ver o que quer dizer.</p>
+</div><div class="le-ferramenta"><p>Esta ferramenta funciona no guia interativo: <a href="../#codigos">abrir a ferramenta</a>.</p></div><div class="prose">
+
+<p>As tabelas abaixo trazem tudo, separado por tela. As telas de RDS vêm do código-base e valem para o Mod17 e para a linha oficial. As mensagens estão separadas por firmware, e o texto da linha oficial em português vem embaixo do original, em itálico.</p>
+<h2 id="codigos--tela-principal">Tela principal</h2>
+<p>Como aparece no Mod17. A linha oficial tem a mesma base, mas pode mudar posições e cores.</p>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Na tela</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--tela-principal-setas-e-ponto-no-canto-de-cima-a-esquerda">
+<td>Setas e ponto, no canto de cima à esquerda</td>
+<td>Indicador de desvio. Ponto verde: a sintonia está no centro da emissora. Setas acesas: a sintonia está fora do centro, e o lado aceso mostra a direção.</td>
+</tr>
+<tr id="codigos--tela-principal-dois-circulos">
+<td>Dois círculos</td>
+<td>Estéreo. Acesos: a emissora chega em estéreo. Um círculo só indica o modo mono <span class="nw"><span class="src">manual</span>.</span></td>
+</tr>
+<tr id="codigos--tela-principal-alto-falante">
+<td>Alto-falante</td>
+<td>Aceso: o som está cortado, pelo squelch ou pelo mudo. Tocar nele liga e desliga o mudo.</td>
+</tr>
+<tr id="codigos--tela-principal-rds">
+<td>RDS</td>
+<td>Aceso: o rádio está decodificando o RDS. Apagado: sem RDS ou com sinal fraco demais. Tocar nele abre a tela de RDS avançado.</td>
+</tr>
+<tr id="codigos--tela-principal-numero-com-khz-no-alto">
+<td>Número com kHz, no alto</td>
+<td>Largura de banda do filtro. Muda de cor quando está em automático.</td>
+</tr>
+<tr id="codigos--tela-principal-wi-fi">
+<td>Wi-Fi</td>
+<td>Aceso: Wi-Fi ligado.</td>
+</tr>
+<tr id="codigos--tela-principal-bateria">
+<td>Bateria</td>
+<td>Carga em barras, porcentagem ou volts, conforme o ajuste. Moldura vermelha: chegou a 3,3 V. Com o Wi-Fi ligado, mostra "wifi" no lugar da carga, porque o rádio não mede a bateria nessa situação.</td>
+</tr>
+<tr id="codigos--tela-principal-man-auto-e-mem">
+<td>MAN, AUTO e MEM</td>
+<td>Modo de sintonia, o aceso é o atual. MAN anda de passo em passo, AUTO busca a próxima emissora e MEM percorre as memórias.</td>
+</tr>
+<tr id="codigos--tela-principal-numero-ao-lado-de-mem">
+<td>Número ao lado de MEM</td>
+<td>Posição da memória, de 1 a 99. Ao gravar, MEM fica vermelho, e o número fica vermelho se a posição está ocupada e verde se está livre.</td>
+</tr>
+<tr id="codigos--tela-principal-fm-fml-oirt-lw-mw-sw-e-air">
+<td>FM, FML, OIRT, LW, MW, SW e AIR</td>
+<td>Faixa atual. FML (Mod17) e OIRT (linha oficial) são o FM baixo do Leste Europeu, de 65,8 a 74 MHz. AIR, no Mod17, é a faixa de aviação.</td>
+</tr>
+<tr id="codigos--tela-principal-barrinhas-acima-da-frequencia">
+<td>Barrinhas acima da frequência</td>
+<td>Passo de sintonia ativo. Todas apagadas: passo padrão.</td>
+</tr>
+<tr id="codigos--tela-principal-frequencia-verde">
+<td>Frequência verde</td>
+<td>Você está digitando a frequência no teclado.</td>
+</tr>
+<tr id="codigos--tela-principal-auto-bw">
+<td>AUTO BW</td>
+<td>Aceso: largura de banda automática. Apagado: largura fixa.</td>
+</tr>
+<tr id="codigos--tela-principal-ims">
+<td>iMS</td>
+<td>Aceso: supressão de multipercurso do FM ligada.</td>
+</tr>
+<tr id="codigos--tela-principal-eq">
+<td>EQ</td>
+<td>Aceso: equalização de canal do FM ligada.</td>
+</tr>
+<tr id="codigos--tela-principal-s">
+<td>S</td>
+<td>Medidor de sinal, de S1 a S9 e acima (+10, +30).</td>
+</tr>
+<tr id="codigos--tela-principal-m">
+<td>M</td>
+<td>Medidor de modulação do FM, de 10 a 100. O tracinho solto é o pico recente.</td>
+</tr>
+<tr id="codigos--tela-principal-dbv-dbf-e-dbm">
+<td>dBμV, dBf e dBm</td>
+<td>Unidade do nível do sinal, o número grande à direita. No Mod17, ele fica vermelho a partir de 60 dBμV, verde a partir de 40 e amarelo abaixo disso.</td>
+</tr>
+<tr id="codigos--tela-principal-c-n">
+<td>C/N</td>
+<td>Relação portadora/ruído, em dB <span class="nw"><span class="src">manual</span>:</span> quanto maior, mais limpo o sinal. Mostra "--" quando não há medida no momento.</td>
+</tr>
+<tr id="codigos--tela-principal-sq">
+<td>SQ</td>
+<td>Nível do squelch; OFF quer dizer squelch desligado <span class="nw"><span class="src">manual</span>.</span> Toque em SQ (fica verde) e gire o knob para ajustar, com Rotary adjust squelch ligado.</td>
+</tr>
+<tr id="codigos--tela-principal-icone-de-cama">
+<td>Ícone de cama</td>
+<td>Modo de sono, que apaga a tela; gire o knob para sair <span class="nw"><span class="src">manual</span>.</span></td>
+</tr>
+<tr id="codigos--tela-principal-pty">
+<td>PTY</td>
+<td>Tipo de programa informado pelo RDS, como Pop Music ou News.</td>
+</tr>
+<tr id="codigos--tela-principal-ps">
+<td>PS</td>
+<td>Nome da emissora, com até 8 caracteres. Algumas emissoras fazem o nome correr ou trocar.</td>
+</tr>
+<tr id="codigos--tela-principal-barrinhas-ao-lado-do-ps">
+<td>Barrinhas ao lado do PS</td>
+<td>Qualidade do RDS: quanto mais barras acesas, menos erros na recepção.</td>
+</tr>
+<tr id="codigos--tela-principal-pi">
+<td>PI</td>
+<td>Código que identifica a emissora no RDS, com 4 caracteres de 0 a 9 e de A a F. Não é erro: cada emissora tem o seu, e ele muda quando você troca de emissora. Na especificação de RDS da Anatel, o primeiro caractere de um PI brasileiro é B, C, D ou 3, o segundo indica a área de cobertura e os dois últimos identificam a emissora, mas há emissoras que usam outro código. Fica no canto do relógio quando ele está desligado.</td>
+</tr>
+<tr id="codigos--tela-principal-pi-com-no-fim">
+<td>PI com ? no fim</td>
+<td>O PI chegou com erros e pode estar errado. Um ? indica poucos erros; dois, mais. Some quando chega um PI sem erro. Aparece com Show PI errors ligado.</td>
+</tr>
+<tr id="codigos--tela-principal-hora-ou-data-e-hora">
+<td>Hora, ou data e hora</td>
+<td>Relógio. Tocar nele troca entre data e hora, PI e só a hora, como em Show clock.</td>
+</tr>
+<tr id="codigos--tela-principal-rt">
+<td>RT</td>
+<td>RadioText, texto livre da emissora, com até 64 caracteres. Corre quando não cabe.</td>
+</tr>
+<tr id="codigos--tela-principal-dois-pontinhos-no-fim-do-rt">
+<td>Dois pontinhos no fim do RT</td>
+<td>Sinalizador A/B do RadioText. A emissora troca o sinalizador quando manda um texto novo, e o ponto aceso muda de lugar.</td>
+</tr>
+<tr id="codigos--tela-principal-ps-pty-e-rt-em-outra-cor">
+<td>PS, PTY e RT em outra cor</td>
+<td>O RDS caiu: o que aparece é o último texto recebido.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--tela-de-rds-avançado">Tela de RDS avançado</h2>
+<p>Abre ao tocar em RDS ou ao segurar BAND <span class="nw"><span class="src">manual</span>.</span> BAND fecha.</p>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Na tela</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--tela-de-rds-avançado-errors">
+<td>ERRORS<br>A:, B:, C: e D:</td>
+<td>Um ponto para cada um dos quatro blocos de cada grupo RDS. Verde: o bloco chegou sem erro. Vermelho: chegou com erro. Com sinal bom, ficam verdes quase o tempo todo.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-tp">
+<td>TP</td>
+<td>Traffic Programme: a emissora transmite informações de trânsito.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-ta">
+<td>TA</td>
+<td>Traffic Announcement: há um boletim de trânsito no ar agora.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-af">
+<td>AF</td>
+<td>A emissora envia uma lista de frequências alternativas, em que o mesmo programa também toca.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-b">
+<td>-B</td>
+<td>A lista de AF usa o método B, em pares de frequências, comum em redes grandes ou com versões regionais.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-tmc">
+<td>TMC</td>
+<td>Traffic Message Channel: a emissora envia dados de trânsito para aparelhos de navegação.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-rt">
+<td>RT+</td>
+<td>RadioText Plus: o RT vem com marcações, como artista e título da música.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-eon">
+<td>EON</td>
+<td>Enhanced Other Networks: a emissora envia dados de outras emissoras da mesma rede.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-s-e-m">
+<td>S e M</td>
+<td>Fala (S, de speech) ou música (M), conforme o que a emissora declara. Só um fica aceso.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-ptyn">
+<td>PTYN<br>PTYN N/A</td>
+<td>Nome livre do tipo de programa, com até 8 caracteres. PTYN N/A: a emissora não envia.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-fileira-de-pontinhos-no-meio">
+<td>Fileira de pontinhos no meio</td>
+<td>Os tipos de grupo RDS, de 0A a 15B, da esquerda para a direita. O verde é o último grupo que chegou; os vermelhos já chegaram antes.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-dynamic-pty">
+<td>Dynamic PTY</td>
+<td>Ponto verde: o tipo de programa pode mudar durante a transmissão. Vermelho: não muda.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-artif-head">
+<td>Artif. head</td>
+<td>Ponto verde: gravação com cabeça artificial, feita para ouvir com fone. Vermelho: não.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-compressed">
+<td>Compressed</td>
+<td>Ponto verde: o áudio é comprimido. Vermelho: não.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-has-stereo">
+<td>Has stereo</td>
+<td>Ponto verde: o programa é estéreo. Vermelho: mono.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-ecc">
+<td>ECC</td>
+<td>País da emissora, pelo código estendido de país junto com o primeiro dígito do PI.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-lic">
+<td>LIC</td>
+<td>Idioma do programa.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-pin">
+<td>PIN</td>
+<td>Programme Item Number: dia do mês e hora de início do programa, como 21 18:00.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-n-a">
+<td>N/A</td>
+<td>Não disponível: a emissora não envia esse dado.</td>
+</tr>
+<tr id="codigos--tela-de-rds-avançado-unknown">
+<td>Unknown</td>
+<td>A emissora envia um código que o firmware não conhece. Na linha oficial em português, aparece Desconhecido.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--listas-de-af-e-eon">Listas de AF e EON</h2>
+<p>Abrem a partir da tela de RDS avançado: tocar na metade de baixo troca de página.</p>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Na tela</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--listas-de-af-e-eon-frequencia-verde-na-lista">
+<td>Frequência verde na lista</td>
+<td>Frequência alternativa conferida: o rádio checou e é a mesma emissora, com o mesmo PI.</td>
+</tr>
+<tr id="codigos--listas-de-af-e-eon-frequencia-vermelha-na-lista">
+<td>Frequência vermelha na lista</td>
+<td>Conferida, mas é outra emissora, com PI diferente.</td>
+</tr>
+<tr id="codigos--listas-de-af-e-eon-frequencia-na-cor-normal">
+<td>Frequência na cor normal</td>
+<td>Ainda não conferida.</td>
+</tr>
+<tr id="codigos--listas-de-af-e-eon-s-m-e-r">
+<td>S, M e R</td>
+<td>Letras antes da frequência, só no método B. S: mesmo programa. R: versão regional, que pode ter programação local. M: a lista marcou a frequência dos dois jeitos <span class="nw"><span class="st st-maybe">provável</span>.</span></td>
+</tr>
+<tr id="codigos--listas-de-af-e-eon-pi-ta-tp-e-pty">
+<td>PI, TA, TP e PTY</td>
+<td>Colunas da lista de EON: cada linha é uma emissora da rede, com o PI, o nome e se ela tem TA, TP e qual PTY.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--mensagens-nos-dois-firmwares">Mensagens nos dois firmwares</h2>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Mensagem</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--mensagens-nos-dois-firmwares-tuner-none">
+<td>Tuner: !None!<br><em>Sintonizador: !Nenhum!</em></td>
+<td>O ESP32 não achou o chip sintonizador ao ligar. Veja <a href="../problemas/#problemas--tela-parada-em-tuner-none">Tela parada em "Tuner: !None!"</a>.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-tuner-not-detected">
+<td>Tuner not detected<br><em>Sintonizador não detectado</em></td>
+<td>O chip sintonizador não se identificou como esperado ao ligar, e o rádio para nessa tela. Siga os passos de <a href="../problemas/#problemas--tela-parada-em-tuner-none">Tela parada em "Tuner: !None!"</a>.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-function-only-available-on-tef6687-6689">
+<td>Function only available on TEF6687/6689!<br><em>Função disponível apenas no TEF6687/6689!</em></td>
+<td>O recurso escolhido precisa de outro chip. O DP-666 usa o TEF6686, então ele não funciona aqui.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-no-af-available">
+<td>No AF available<br><em>AF não disponível</em></td>
+<td>A emissora não envia lista de frequências alternativas. Não é defeito.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-no-eon-available">
+<td>No EON available<br><em>EON não disponível</em></td>
+<td>A emissora não envia dados de outras emissoras da rede.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-no-rt-available">
+<td>No RT+ available<br><em>RT+ não disponível</em></td>
+<td>O RadioText chega sem as marcações do RT+.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-press-band-to-close">
+<td>PRESS BAND TO CLOSE<br><em>PRESSIONE BAND PARA FECHAR</em></td>
+<td>Aperte BAND para fechar a tela e voltar.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-press-mode-to-exit-and-store">
+<td>PRESS MODE TO EXIT AND STORE<br><em>PRESSIONE MODE PARA SAIR E SALVAR</em></td>
+<td>No menu: MODE sai e grava as mudanças.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-press-mode-to-return">
+<td>PRESS MODE TO RETURN<br><em>PRESSIONE MODO PARA VOLTAR</em></td>
+<td>Num submenu: MODE volta ao nível anterior.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-alarm">
+<td>Alarm!!!<br>EMERGENCY!<br><em>Alarme – Alarme !</em></td>
+<td>Tipo de programa 31: a emissora sinaliza um alerta. EMERGENCY! é o mesmo tipo no padrão americano (RBDS), em que Emergency Test é o tipo 30, de teste.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-rotary-direction-changed">
+<td>Rotary direction changed<br><em>Direção rotativa alterada</em></td>
+<td>Você ligou o rádio segurando BW, e o sentido do knob inverteu. Repita para desfazer. Veja <a href="../oficial/#oficial--ao-ligar-segurando">Ao ligar segurando</a>.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-screen-flipped">
+<td>Screen flipped<br><em>Tela invertida</em></td>
+<td>Você ligou segurando MODE, e a tela girou 180°. Repita para desfazer.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-calibrate-analog-meter">
+<td>Calibrate analog meter<br>Release button when ready<br><em>Calibrar o medidor analógico</em></td>
+<td>Você ligou segurando BAND: é a calibração do medidor analógico, que o DP-666 não tem. Solte o botão.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-encoder-set-to-optical">
+<td>Encoder set to optical<br>Encoder set to standard<br><em>Codificador definido como óptico</em><br><em>Codificador definido como padrão</em></td>
+<td>Você ligou segurando o knob, e o tipo de encoder mudou. Se o knob passar a pular ou falhar, repita para voltar ao anterior.</td>
+</tr>
+<tr id="codigos--mensagens-nos-dois-firmwares-please-release-button">
+<td>Please release button<br><em>Solte o botão, por favor</em></td>
+<td>Aparece junto dos avisos acima: solte o botão que você segurou ao ligar.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--mensagens-só-do-mod17">Mensagens só do Mod17</h2>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Mensagem</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--mensagens-só-do-mod17-touch-corners-as-indicated">
+<td>Touch corners as indicated<br>Touch calibration completed!</td>
+<td>Calibração do toque, em Operation settings → Touch calibration: toque nos cantos indicados até aparecer completed.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-low-battery-please-charge-it">
+<td>Low battery, please charge it</td>
+<td>Bateria fraca: ligue o carregador.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-wi-fi-not-configured">
+<td>Wi-Fi not configured</td>
+<td>Nenhuma rede foi configurada. Configure o Wi-Fi pelo teclado na tela ou pelo navegador; veja <a href="../mod17/#mod17--conectividade-e-protocolos">Conectividade e protocolos</a>.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-wi-fi-connect-failed">
+<td>Wi-Fi connect failed!</td>
+<td>Não conectou à rede salva. Confira a senha e se a rede está ao alcance; o rádio só usa redes de 2,4 GHz.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-connecting-to-wi-fi">
+<td>Connecting to Wi-Fi<br>Wi-Fi connected!<br>Wi-Fi disconnected!<br>Wi-Fi closed!</td>
+<td>Avisos do Wi-Fi: conectando, conectou, perdeu a conexão ou foi desligado.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-please-close-wi-fi-first">
+<td>Please close Wi-Fi first</td>
+<td>Desligue o Wi-Fi antes: a função pedida, como o Bluetooth, não funciona com ele ligado.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-time-has-been-synchronized">
+<td>Time has been synchronized<br>Time synchronized</td>
+<td>A hora foi acertada, pela internet (NTP) ou pelo RDS.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-ntp-time-sync-retry">
+<td>NTP time sync retry...</td>
+<td>O acerto da hora pela internet falhou, e o rádio vai tentar de novo. Confira o Wi-Fi.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-slave-host-not-configured">
+<td>Slave host not configured<br>Slave host connect failed<br>Slave host connect success<br>Slave host connected<br>Slave host disconnected</td>
+<td>Avisos do Bluetooth "slave host", em que o rádio controla outro aparelho. Veja <a href="../mod17/#mod17--conectividade-e-protocolos">Conectividade e protocolos</a>.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-bluetooth-is-turned-on">
+<td>Bluetooth is turned on<br>Bluetooth is turned off<br>Bluetooth connected<br>Bluetooth disconnected</td>
+<td>Avisos do Bluetooth: ligado, desligado, conectado ou desconectado.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-input-cannot-be-empty">
+<td>Input cannot be empty</td>
+<td>O campo do teclado na tela ficou vazio. Digite algo antes de confirmar.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-abort-no-storage-space-available">
+<td>Abort! No storage space available!</td>
+<td>Cancelado por falta de espaço para guardar. Pelo texto, as memórias ou o armazenamento interno estão cheios <span class="nw"><span class="st st-unk">incerto</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-abort-no-stations-that-can-be-scanned">
+<td>Abort! No stations that can be scanned.</td>
+<td>Cancelado porque não há emissoras para varrer, como memórias vazias <span class="nw"><span class="st st-unk">incerto</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-load-failed">
+<td>Load failed!</td>
+<td>Não deu para carregar um arquivo ou ajuste salvo <span class="nw"><span class="st st-unk">incerto</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-failed-my-settings-have-not-been-saved">
+<td>Failed, My settings have not been saved!</td>
+<td>Save my settings não conseguiu gravar a cópia dos ajustes. Tente de novo.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-serial-number-error">
+<td>Serial number error<br>Too many attempts, please restart and try again!</td>
+<td>Número de série de apoiador recusado. Depois de várias tentativas, reinicie o rádio. Veja <a href="../mod17/#mod17--número-de-série-de-apoiador">Número de série de apoiador</a>.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-settings-has-been-saved">
+<td>Settings has been saved<br>Station has been saved<br>Station has been deleted</td>
+<td>Confirmações: os ajustes foram gravados, ou a emissora foi gravada ou apagada da memória.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-data-change-has-been-saved">
+<td>Data change has been saved<br>Data change has been discarded<br>Change pending<br>No changes</td>
+<td>Ao sair de um menu: as mudanças foram gravadas, foram descartadas, estão pendentes ou não houve mudança <span class="nw"><span class="st st-maybe">provável</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-setting-completed">
+<td>Setting completed<br>Done, Restarting</td>
+<td>O assistente de configuração terminou, e o rádio vai reiniciar.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-enter-rotary-to-adjust-squelch-mode">
+<td>Enter rotary to adjust squelch mode<br>Exit rotary to adjust squelch mode</td>
+<td>O knob passou a ajustar o squelch, ou voltou a sintonizar.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-enter-still-screen-mode">
+<td>Enter still screen mode<br>Exit still screen mode</td>
+<td>Tela estática ligada ou desligada, pelo toque no canto de cima à esquerda. Ela ajuda contra o ruído que a tela causa no rádio.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-enable-sleep-mode">
+<td>Enable sleep mode<br>Disable sleep mode</td>
+<td>Modo de sono ligado ou desligado <span class="nw"><span class="st st-maybe">provável</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-enter-power-save-mode">
+<td>Enter power save mode<br>Exit power save mode</td>
+<td>Modo de economia de energia ligado ou desligado <span class="nw"><span class="st st-maybe">provável</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-locked">
+<td>Locked<br>Unlocked</td>
+<td>Travado ou destravado, pela ação Lock&amp;Unlock, que vai num toque longo.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-switch-fm-bandwidth">
+<td>Switch FM bandwidth<br>Switch AM bandwidth</td>
+<td>A largura de banda mudou.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-waiting-for-manage-command">
+<td>Waiting for manage command...</td>
+<td>Modo Manage my data: o rádio espera comandos do computador.</td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-reset-system-files">
+<td>Reset system files<br>Format internal storage<br>System restart<br>System deep sleep</td>
+<td>Avisos de manutenção. O que aciona cada um não está documentado <span class="nw"><span class="st st-unk">incerto</span>.</span></td>
+</tr>
+<tr id="codigos--mensagens-só-do-mod17-easter-egg-has-been-opened">
+<td>Easter egg has been opened<br>Easter egg has been closed</td>
+<td>Um recurso escondido foi ligado ou desligado <span class="nw"><span class="st st-unk">incerto</span>.</span></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--mensagens-só-da-linha-oficial">Mensagens só da linha oficial</h2>
+<div class="table-wrap cod-tabela"><table>
+<thead>
+<tr>
+<th>Mensagem</th>
+<th>O que quer dizer</th>
+</tr>
+</thead>
+<tbody>
+<tr id="codigos--mensagens-só-da-linha-oficial-defaults-loaded">
+<td>Defaults loaded<br><em>Padrões carregados</em></td>
+<td>Você ligou segurando BW e o knob, e os ajustes voltaram ao padrão de fábrica.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-press-highlighted-corner">
+<td>Press highlighted corner<br>To calibrate touchscreen<br><em>Pressione o canto inscrito</em></td>
+<td>Calibração do toque, que abre ao ligar segurando BW + MODE: toque em cada canto destacado.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-error-no-rds-signal">
+<td>Error! No RDS signal<br><em>Erro! Sem sinal RDS</em></td>
+<td>Em PI bloqueado CT sync, o rádio precisa de uma emissora com RDS sintonizada para guardar o PI. Sintonize uma e tente de novo.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-hold-bw-button-to-stop-dx-scanner">
+<td>Hold BW button to stop DX scanner<br><em>Segure BW para parar</em></td>
+<td>O scanner de DX está rodando. Segure BW para parar.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-abort-the-start-channel-is-marked-as-skipped">
+<td>Abort! The start channel is marked as skipped.<br><em>Abortar! O canal inicial é ignorado.</em></td>
+<td>O scanner de DX nas memórias não começa numa memória marcada para pular. Escolha outra para começar.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-abort-out-of-memorychannels">
+<td>Abort! Out of memorychannels<br><em>Abortar! Sem canais de memória disponíveis</em></td>
+<td>A memória automática parou porque acabaram as posições livres.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-abort-user-pressed-button">
+<td>Abort! User pressed button<br><em>Abortar! Usuário pressionou o botão</em></td>
+<td>A memória automática parou porque um botão foi apertado.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-scan-finished-without-errors">
+<td>Scan finished without errors<br><em>Verificação concluída sem erros</em></td>
+<td>A memória automática terminou sem problemas.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-logbook-is-empty">
+<td>Logbook is empty<br><em>O livro de registro está vazio</em></td>
+<td>O <a href="../oficial/#oficial--logbook">logbook</a> ainda não tem nenhuma emissora.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-error-adding-entry-to-the-logbook">
+<td>Error adding entry to the logbook<br><em>Falha na atualização!</em></td>
+<td>Não deu para registrar a emissora no logbook.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-can-t-add-entry-logbook-is-full">
+<td>Can't add entry! Logbook is full!<br><em>Não é possível adicionar! O livro está cheio!</em></td>
+<td>O logbook encheu. Baixe o CSV pelo navegador e limpe o logbook.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-clear-failed">
+<td>Clear failed<br><em>Falha ao limpar</em></td>
+<td>Não deu para limpar o logbook.</td>
+</tr>
+<tr id="codigos--mensagens-só-da-linha-oficial-the-logbook-contains-over-130-entries">
+<td>The logbook contains over 130 entries<br><em>O diário de bordo contém mais de 130 entradas</em></td>
+<td>A página do logbook no navegador não mostra mais de 130 registros. Baixe o arquivo CSV.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="codigos--fontes">Fontes</h2>
+<ul>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/rds.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — rds.cpp: tela de RDS avançado e listas de AF e EON</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h" target="_blank" rel="noopener noreferrer">PE5PVB — language.h: textos do firmware em cada idioma</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Radio_Data_System" target="_blank" rel="noopener noreferrer">Wikipedia — Radio Data System</a></li>
+<li><a href="https://rds.org.uk/2010/Glossary-Of-Terms.htm" target="_blank" rel="noopener noreferrer">RDS Forum — glossário do RDS</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/TEF668X.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — TEF668X.cpp: decodificação do RDS, do PI e das AF</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Manual DP-666 Megatron Mod17</a></li>
+<li><a href="https://biblioteca.sbrt.org.br/articlefile/573.pdf" target="_blank" rel="noopener noreferrer">SBrT 2017 — Radio Data System em Rádio Definido por Software, com a especificação de RDS da Anatel</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Mensagens e códigos da tela</p><a class="prox-next" href="../firmwares/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Megatron × oficial</span><span class="prox-desc">As duas linhas de firmware que o DP-666 aceita. Trocar de uma para a outra muda menus e recursos e zera as configurações.</span></span></a><p class="prox-volta"><a href="../problemas/">Página anterior: Problemas comuns</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/" aria-current="page">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

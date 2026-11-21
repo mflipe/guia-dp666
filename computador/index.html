@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Computador e conectividade | DP-666: o guia definitivo</title>
+<meta name="description" content="Ligado ao computador, o DP-666 ganha uma tela grande: sintonia pelo mouse, RDS em detalhe, registros e atualização do firmware.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/computador/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/computador/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/computador/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Computador e conectividade">
+<meta property="og:description" content="Ligado ao computador, o DP-666 ganha uma tela grande: sintonia pelo mouse, RDS em detalhe, registros e atualização do firmware.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/computador/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/computador/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#computador">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-computador">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>O rádio</p><h1>Computador e conectividade</h1><p class="meta">Atualizado em 21/11/2026 · 21 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Ligado ao computador, o DP-666 ganha uma tela grande. Dá para sintonizar pelo mouse, ver em que frequências há sinal, ler o RDS em detalhe, guardar registros, ouvir o rádio pelo navegador de qualquer lugar e atualizar o firmware. Os comandos e os dados passam pelo cabo USB-C ou pelo Wi-Fi. O som não passa por nenhum dos dois: para ouvir no computador, é preciso um cabo de áudio.</p>
+<p>Se os nomes dos programas, ou termos como RDS, porta COM e baud, forem novos para você, comece por <a href="../computador/#computador--o-que-é-cada-coisa">O que é cada coisa</a>.</p>
+<figure class="figure figure-scroll"><div class="figure-body"><svg class="diagram d-wide" viewBox="0 0 810 196" role="img" aria-labelledby="fig-remoto fig-remoto-d"><title id="fig-remoto">Controle remoto do DP-666</title><desc id="fig-remoto-d">O rádio liga ao computador por USB ou Wi-Fi para controle e por cabo de áudio para o som; o fm-dx-webserver leva tudo ao navegador.</desc><defs><marker id="fig-remoto-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-key" x="16" y="60" width="150" height="76" rx="8"/><text class="d-title" x="91.0" y="95.0" text-anchor="middle">DP-666</text><text class="d-sub" x="91.0" y="112.0" text-anchor="middle">Mod17 ou linha oficial</text><rect class="d-box" x="368" y="20" width="200" height="156" rx="10"/><text class="d-title" x="468" y="50" text-anchor="middle">Computador</text><text class="d-mono" x="468" y="80" text-anchor="middle">XDR-GTK</text><text class="d-mono" x="468" y="102" text-anchor="middle">fm-dx-webserver</text><text class="d-mono" x="468" y="124" text-anchor="middle">RDS Spy</text><text class="d-mono" x="468" y="146" text-anchor="middle">StationList</text><rect class="d-key" x="650" y="60" width="144" height="76" rx="8"/><text class="d-title" x="722.0" y="95.0" text-anchor="middle">Navegador</text><text class="d-sub" x="722.0" y="112.0" text-anchor="middle">celular, tablet ou PC</text><line class="d-acc" x1="166" y1="76" x2="366" y2="76" marker-end="url(#fig-remoto-arrow)"/><text class="d-lbl" x="266" y="70" text-anchor="middle">USB · XDR-GTK sem senha</text><line class="d-acc" x1="166" y1="98" x2="366" y2="98" marker-end="url(#fig-remoto-arrow)"/><text class="d-lbl" x="266" y="92" text-anchor="middle">Wi-Fi · TCP 7373 com senha</text><line class="d-dash" x1="166" y1="120" x2="366" y2="120" marker-end="url(#fig-remoto-arrow)"/><text class="d-lbl" x="266" y="114" text-anchor="middle">cabo de áudio → placa de som</text><line class="d-acc" x1="568" y1="98" x2="648" y2="98" marker-end="url(#fig-remoto-arrow)"/><text class="d-lbl" x="608" y="90" text-anchor="middle">página web</text><text class="d-lbl" x="608" y="118" text-anchor="middle">com áudio</text></svg><svg class="diagram d-narrow" viewBox="0 0 340 300" role="img" aria-labelledby="fig-remoto-n fig-remoto-n-d"><title id="fig-remoto-n">Controle remoto do DP-666</title><desc id="fig-remoto-n-d">O rádio liga ao computador por USB ou Wi-Fi para controle e por cabo de áudio para o som; o fm-dx-webserver leva tudo ao navegador.</desc><defs><marker id="fig-remoto-n-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-key" x="8" y="40" width="92" height="100" rx="8"/><text class="d-title" x="54.0" y="80.0" text-anchor="middle">DP-666</text><text class="d-sub" x="54.0" y="97.0" text-anchor="middle">Mod17 ou</text><text class="d-sub" x="54.0" y="113.0" text-anchor="middle">linha oficial</text><rect class="d-box" x="214" y="20" width="118" height="140" rx="10"/><text class="d-title" x="273" y="46" text-anchor="middle">Computador</text><text class="d-mono" x="273" y="72" text-anchor="middle">XDR-GTK</text><text class="d-mono" x="273" y="92" text-anchor="middle">fm-dx-webserver</text><text class="d-mono" x="273" y="112" text-anchor="middle">RDS Spy</text><text class="d-mono" x="273" y="132" text-anchor="middle">StationList</text><line class="d-acc" x1="100" y1="62" x2="212" y2="62" marker-end="url(#fig-remoto-n-arrow)"/><text class="d-lbl" x="156" y="56" text-anchor="middle">USB · sem senha</text><line class="d-acc" x1="100" y1="90" x2="212" y2="90" marker-end="url(#fig-remoto-n-arrow)"/><text class="d-lbl" x="156" y="84" text-anchor="middle">Wi-Fi · TCP 7373</text><line class="d-dash" x1="100" y1="118" x2="212" y2="118" marker-end="url(#fig-remoto-n-arrow)"/><text class="d-lbl" x="156" y="112" text-anchor="middle">cabo de áudio</text><line class="d-acc" x1="273" y1="160" x2="273" y2="226" marker-end="url(#fig-remoto-n-arrow)"/><text class="d-lbl" x="262" y="190" text-anchor="end">página web</text><text class="d-lbl" x="262" y="206" text-anchor="end">com áudio</text><rect class="d-key" x="214" y="228" width="118" height="60" rx="8"/><text class="d-title" x="273.0" y="255.0" text-anchor="middle">Navegador</text><text class="d-sub" x="273.0" y="272.0" text-anchor="middle">celular, tablet, PC</text></svg></div><figcaption><span class="fig-n">Figura 1</span>Controle e som pelo computador. O Wi-Fi do rádio não transmite áudio: o som vai por cabo até a placa de som, e o fm-dx-webserver leva controle e áudio ao navegador.</figcaption></figure>
+
+<h2 id="computador--para-que-serve">Para que serve</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>O que você quer</th>
+<th>Programa</th>
+<th>Ligação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controlar o rádio pelo computador, com o gráfico da faixa e o RDS na tela</td>
+<td><a href="../computador/#computador--xdr-gtk">XDR-GTK</a></td>
+<td>USB ou Wi-Fi</td>
+</tr>
+<tr>
+<td>Ver tudo o que a emissora manda no RDS e guardar registros</td>
+<td><a href="../computador/#computador--rds-spy">RDS Spy</a></td>
+<td>USB, Wi-Fi ou pelo XDR-GTK</td>
+</tr>
+<tr>
+<td>Ouvir e controlar o rádio pelo navegador, em casa ou longe dela, até no iPhone</td>
+<td><a href="../computador/#computador--fm-dx-webserver">FM-DX Webserver</a></td>
+<td>USB e cabo de áudio</td>
+</tr>
+<tr>
+<td>Mandar os dados de cada emissora para uma lista no computador</td>
+<td><a href="../computador/#computador--stationlist">StationList</a></td>
+<td>Wi-Fi</td>
+</tr>
+<tr>
+<td>Ler o logbook e as memórias, acertar a hora ou dar nome ao rádio</td>
+<td><a href="../computador/#computador--logbook-memórias-e-hora">navegador ou terminal</a></td>
+<td>Wi-Fi ou USB</td>
+</tr>
+<tr>
+<td>Atualizar o firmware e fazer backup</td>
+<td><a href="../backup/">esptool ou flash.bat</a></td>
+<td>USB</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="computador--o-que-é-cada-coisa">O que é cada coisa</h2>
+<p>Cada nome aparece explicado aqui uma vez. O resto da página usa os mesmos nomes.</p>
+<h3 id="computador--os-programas">Os programas</h3>
+<ul>
+<li><strong>XDR-GTK:</strong> programa gratuito que vira o painel de controle do rádio no computador, para Windows e Linux. O nome conta a história: ele nasceu para o Sony XDR-F1HD, um sintonizador de aparelho de som que fãs de rádio modificaram para controlar pelo computador. GTK é a biblioteca usada para desenhar as janelas do programa. Hoje ele também aceita rádios com o chip TEF6686, como o DP-666. Foi criado por Konrad Kosmatka e Mateusz Walkowiak.</li>
+<li><strong>RDS Spy:</strong> programa gratuito para Windows que decodifica e analisa o RDS, os dados digitais que as emissoras mandam junto com o som (veja abaixo). O nome, "espião" em inglês, combina com o que ele faz: mostra tudo o que a emissora transmite, inclusive o que um rádio comum não exibe. É da PIRA.cz, que fabrica codificadores de RDS para emissoras.</li>
+<li><strong>FMDX e FM-DX Webserver:</strong> FMDX é a comunidade de quem pratica DX em FM (veja abaixo), reunida no site fmdx.org. O FM-DX Webserver é o programa gratuito dessa comunidade que põe o rádio numa página web: pelo navegador de qualquer aparelho, você ouve o som e controla o rádio. Foi criado por Marek Farkaš.</li>
+<li><strong>xdrd:</strong> programa auxiliar, sem janela, que põe um rádio na rede para o XDR-GTK e o FM-DX Webserver. Com o DP-666, você não precisa dele: no Wi-Fi, o próprio rádio faz esse papel, e pelo cabo os programas falam direto com ele.</li>
+<li><strong>StationList:</strong> programa de computador que recebe pelo Wi-Fi os dados da emissora sintonizada e monta uma lista de estações.</li>
+<li><strong>TEF Logger App:</strong> app de Android para acompanhar e registrar recepções de rádios com o chip TEF que rodam o firmware oficial.</li>
+<li><strong>PuTTY:</strong> programa gratuito para Windows que abre um terminal (veja abaixo) numa porta serial ou numa conexão de rede.</li>
+<li><strong>esptool:</strong> ferramenta da Espressif, fabricante do processador do rádio, para copiar e gravar o firmware. Veja <a href="../backup/">Backup e gravação</a>.</li>
+</ul>
+<h3 id="computador--termos-de-rádio">Termos de rádio</h3>
+<ul>
+<li><strong>DX:</strong> abreviação do tempo do telégrafo para "distância". Fazer DX é o passatempo de captar e identificar emissoras distantes ou fracas. No FM, muitas chegam de longe só em condições especiais da atmosfera. Quem pratica é o DXista.</li>
+<li><strong>RDS (Radio Data System):</strong> dados digitais que a emissora de FM manda junto com o som, numa parte do sinal que não se ouve. É o RDS que põe no visor o nome da rádio e a música que está tocando. As partes que aparecem nesta página:<ul>
+<li><strong>PI:</strong> código de 4 caracteres que identifica a emissora, como um documento. Como vai em todos os pacotes de RDS, costuma ser o primeiro dado a aparecer com sinal fraco, e é o que o DXista usa para descobrir qual emissora está ouvindo.</li>
+<li><strong>PS:</strong> o nome da emissora no visor, com até 8 caracteres.</li>
+<li><strong>RadioText (RT):</strong> texto livre de até 64 caracteres, como o nome da música ou um recado.</li>
+<li><strong>RT+:</strong> marca, dentro do RadioText, qual parte é o título da música e qual é o artista.</li>
+<li><strong>PTY:</strong> o tipo de programa, como notícias, esporte ou rock.</li>
+<li><strong>AF:</strong> lista de frequências alternativas da mesma emissora, para o rádio trocar sozinho quando o sinal piora.</li>
+<li><strong>CT:</strong> a hora certa, enviada pela emissora.</li>
+<li><strong>EON:</strong> dados sobre outras emissoras da mesma rede.</li>
+<li><strong>Grupo:</strong> cada pacote de dados do RDS. Cada tipo de grupo leva um tipo de informação.</li>
+</ul>
+</li>
+<li><strong>Espectro e varredura:</strong> o espectro é um gráfico da faixa inteira, com a força do sinal em cada frequência; cada pico é uma emissora. A varredura é o rádio passar frequência por frequência para desenhar esse gráfico.</li>
+<li><strong>Multipercurso:</strong> o sinal chega por dois caminhos ao mesmo tempo, direto e refletido em prédios ou morros, e se embaralha. Causa chiado e distorção.</li>
+<li><strong>Filtro (largura de banda):</strong> quanto o rádio abre em volta da frequência sintonizada. O filtro estreito separa emissoras vizinhas; o largo dá som melhor.</li>
+<li><strong>Diagrama de antena:</strong> o mapa de quanto uma antena direcional capta em cada direção.</li>
+<li><strong>Logbook:</strong> o registro das emissoras captadas, com data, hora, frequência e RDS.</li>
+<li><strong>Firmware:</strong> o programa que roda dentro do rádio. O DP-666 tem duas linhas, o Megatron Mod17 e a oficial; veja <a href="../firmwares/">Megatron × oficial</a>.</li>
+</ul>
+<p>Os outros ajustes de recepção que o XDR-GTK controla, como AGC, deênfase e softmute, estão explicados em <a href="../ajustes/">Ajustes do rádio</a>.</p>
+<h3 id="computador--termos-de-computador">Termos de computador</h3>
+<ul>
+<li><strong>Driver:</strong> programa que ensina o computador a falar com um chip. Aqui, o CH340, que fica dentro do rádio e transforma o USB numa porta serial.</li>
+<li><strong>Porta serial ou porta COM:</strong> o canal de conversa que o computador cria quando você liga o rádio pelo cabo. No Windows, cada porta ganha um número (COM3, COM5…); no Mac e no Linux, um nome como /dev/ttyUSB0. Os programas pedem esse número para saber com qual aparelho falar.</li>
+<li><strong>Baud:</strong> a velocidade da conversa pela porta serial, em bits por segundo. O programa e o rádio precisam usar a mesma; se não, chegam letras embaralhadas ou nada.</li>
+<li><strong>IP:</strong> o endereço de cada aparelho na rede, como 192.168.0.31. O roteador dá um IP ao rádio quando ele entra no Wi-Fi.</li>
+<li><strong>Porta de rede:</strong> um número que diz qual programa, dentro do aparelho, recebe a conexão. Se o IP é o endereço do prédio, a porta é o apartamento. O rádio atende o XDR-GTK e o RDS Spy na porta 7373.</li>
+<li><strong>TCP e UDP:</strong> dois jeitos de mandar dados pela rede. O TCP confirma cada entrega e mantém a conversa aberta, como no XDR-GTK. O UDP só manda, sem esperar resposta, como no StationList.</li>
+<li><strong>Firewall:</strong> o porteiro do computador, que barra conexões desconhecidas. Às vezes é preciso autorizar um programa ou uma porta.</li>
+<li><strong>Terminal:</strong> janela em que você digita comandos em vez de clicar. No Windows, o Prompt de Comando e o PowerShell são terminais; o PuTTY é um terminal para portas seriais.</li>
+<li><strong>Node.js e npm:</strong> o Node.js é o motor que roda programas escritos em JavaScript fora do navegador, como o FM-DX Webserver. O npm vem junto e baixa as peças de que o programa precisa: é o que faz o comando <code>npm install</code>.</li>
+<li><strong>Servidor e localhost:</strong> servidor é um programa que fica esperando outros aparelhos se conectarem para responder a eles. localhost é o nome que o computador usa para si mesmo: http://localhost:8080 abre a página que o próprio computador serve, na porta 8080.</li>
+<li><strong>IP público, túnel e VPN:</strong> o IP público é o endereço da sua casa na internet, dado pela operadora. Abrir uma porta no roteador, ou usar um túnel, deixa qualquer pessoa da internet chegar ao servidor. A VPN faz o contrário: põe o seu celular, de longe, dentro da rede de casa, sem expor o servidor.</li>
+<li><strong>tef.local:</strong> o nome que o rádio da linha oficial anuncia na rede, para você não precisar saber o IP. Se não abrir, use o IP.</li>
+<li><strong>CSV:</strong> arquivo de texto com os dados separados por vírgulas, que qualquer planilha abre.</li>
+</ul>
+<h2 id="computador--antes-de-começar">Antes de começar</h2>
+<ul>
+<li><strong>Cabo:</strong> use um cabo USB-C que passe dados. Muitos cabos só carregam: se o computador não reagir quando você liga o rádio, troque o cabo antes de mexer em qualquer outra coisa.</li>
+<li><strong>Driver no Windows:</strong> dentro do rádio, um chip CH340 faz a ponte entre o USB e o processador. O Windows Update costuma instalar o driver sozinho. Se não instalar, use o <a href="https://www.deepelec.com/files/dp-666/CH341SER.zip" target="_blank" rel="noopener noreferrer">driver CH340 da DEEPELEC</a>. O rádio aparece no Gerenciador de Dispositivos, em Portas (COM e LPT), como "USB-SERIAL CH340" seguido do número da porta, como COM5. Anote esse número.</li>
+<li><strong>Driver no Mac e no Linux:</strong> o Linux já traz o driver, e a porta aparece como /dev/ttyUSB0. O Mac também reconhece o chip sozinho, com a porta /dev/cu.usbserial seguida de um número. Se a conexão falhar no Mac, instale o <a href="https://github.com/WCHSoftGroup/ch34xser_macos" target="_blank" rel="noopener noreferrer">driver da WCH</a> e autorize-o em Ajustes do Sistema → Privacidade e Segurança. Com ele, a porta passa a ser /dev/cu.wchusbserial seguida de um número.</li>
+<li><strong>Som:</strong> ligue um cabo P2–P2 da saída de fone do rádio à entrada de linha do computador, ou a uma placa de som USB. Prefira entrada estéreo: muitas placas USB baratas só têm entrada de microfone mono, e o som chega mono.</li>
+<li><strong>Wi-Fi:</strong> só funcionam redes de 2,4 GHz, e o rádio e o computador precisam estar na mesma rede. Para pôr o rádio na rede, use o teclado na tela ou o navegador: conecte-se à rede <code>ESP_…</code> do rádio e abra http://192.168.4.1. O Mod17 guarda até 3 redes. O IP do rádio aparece no Mod17 em Other settings → System information e, na linha oficial, ao lado de Wi-Fi ativo, no grupo Conectividade e relógio.</li>
+<li><strong>Bateria com Wi-Fi:</strong> com o Wi-Fi ligado, o rádio não mede a bateria, e o indicador e a proteção de bateria baixa param de funcionar. Pelo cabo, com o Wi-Fi desligado, isso não acontece. Se o Wi-Fi é só para acertar a hora, use Wi-Fi auto disconnect em After time sync.</li>
+<li><strong>Um programa por vez:</strong> o rádio atende um programa de cada vez. Para usar o XDR-GTK e o RDS Spy juntos, ligue o RDS Spy pelo XDR-GTK, como explicado abaixo.</li>
+<li><strong>Menu fechado:</strong> com o menu aberto, o rádio ignora os comandos do computador.</li>
+<li><strong>Se não funcionar:</strong> as causas mais comuns, como o computador não ver o rádio ou o programa conectar sem receber nada, estão no assistente de <a href="../problemas/#problemas--conexão-com-o-computador">Problemas comuns</a>.</li>
+</ul>
+<h2 id="computador--preparar-o-rádio">Preparar o rádio</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Ajuste</th>
+<th>Megatron Mod17</th>
+<th>Linha oficial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modo da porta USB</td>
+<td>Connectivity → USB mode</td>
+<td>Conectividade e relógio → Modo USB</td>
+</tr>
+<tr>
+<td>Para XDR-GTK e FM-DX Webserver</td>
+<td>XDRGTK</td>
+<td>XDRGTK (a porta passa a 115200 baud)</td>
+</tr>
+<tr>
+<td>Para o RDS Spy pelo cabo</td>
+<td>RDS Spy</td>
+<td>RDS Spy (a porta passa a 19200 baud)</td>
+</tr>
+<tr>
+<td>Senha para conexões pelo Wi-Fi</td>
+<td>Connectivity → Set XDRGTK password, até 8 caracteres</td>
+<td>Na página que abre em Configurar Wi-Fi, campo "Definir senha XDRGTK", até 8 caracteres. Vem "password"</td>
+</tr>
+<tr>
+<td>Apagar a tela durante a sessão</td>
+<td>Connectivity → Screen off on XDRGTK</td>
+<td>Conectividade e relógio → Tela mudo na conexão XDRGTK</td>
+</tr>
+</tbody>
+</table></div>
+<p>Apagar a tela durante a sessão vale a pena: você já vê tudo no computador, e a tela apagada economiza bateria e deixa de gerar ruído no rádio. Na linha oficial, ela volta quando a conexão termina.</p>
+<h2 id="computador--o-que-dá-para-controlar-à-distância">O que dá para controlar à distância</h2>
+<p>No Mod17, o controle remoto usa o protocolo do XDR-GTK, pelo Wi-Fi (porta TCP 7373, com senha) ou pelo USB (sem senha, com USB mode em XDRGTK).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Dá para controlar</th>
+<th>Não dá</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>frequência em FM, MW, LW e SW; busca para cima e para baixo; troca entre FM e AM</td>
+<td>menus e ajustes (Wi-Fi, fuso, temas, memórias)</td>
+</tr>
+<tr>
+<td>largura de banda, AGC, deênfase, estéreo/mono, iMS/EQ e softmute</td>
+<td>ligar o rádio à distância (só por timer ou plano configurado nele)</td>
+</tr>
+<tr>
+<td>volume, mudo e squelch, inclusive o automático</td>
+<td>receber o áudio pela rede</td>
+</tr>
+<tr>
+<td>varredura de espectro e início ou parada do DX scan</td>
+<td>usar com o menu aberto (os comandos são ignorados)</td>
+</tr>
+<tr>
+<td>apagar a tela durante a sessão (Screen off on XDRGTK)</td>
+<td>mais de um programa ao mesmo tempo</td>
+</tr>
+</tbody>
+</table></div>
+<p>O rádio também envia em tempo real o sinal, o estéreo, o multipercurso, o C/N e todo o RDS.</p>
+<h2 id="computador--xdr-gtk">XDR-GTK</h2>
+<p><strong>Para que serve:</strong> é o painel de controle do rádio no computador, feito para quem pratica DX. Você sintoniza pelo mouse e pelo teclado, muda os ajustes de recepção (filtro, AGC, deênfase, estéreo e softmute) e acompanha num gráfico a força do sinal, o multipercurso e o RDS. A varredura de espectro desenha a faixa inteira e mostra de relance as frequências ocupadas. Também mede o diagrama de uma antena direcional. Roda no Windows e no Linux e é gratuito.</p>
+<p><strong>Funciona com:</strong> os dois firmwares. O que dá e o que não dá para controlar está em <a href="../computador/#computador--o-que-dá-para-controlar-à-distância">O que dá para controlar à distância</a>.</p>
+<p><strong>Pelo cabo USB:</strong></p>
+<ol>
+<li>No rádio, ponha o modo da porta USB em XDRGTK e feche o menu.</li>
+<li>Baixe o XDR-GTK na <a href="https://github.com/kkonradpl/xdr-gtk/releases" target="_blank" rel="noopener noreferrer">página de versões do projeto</a> e instale.</li>
+<li>Ligue o rádio ao computador pelo cabo e abra o XDR-GTK.</li>
+<li>Na janela de conexão, escolha a porta serial do rádio (a COM que você anotou) e conecte. Pelo cabo, não há senha.</li>
+<li>O XDR-GTK passa a mostrar o sinal e o RDS. Na linha oficial, o rádio vai para o FM ao conectar.</li>
+</ol>
+<p><strong>Pelo Wi-Fi:</strong></p>
+<ol>
+<li>Conecte o rádio à sua rede e defina a senha do XDR-GTK (veja a tabela acima).</li>
+<li>Na janela de conexão do XDR-GTK, escolha TCP/IP, digite o IP do rádio, a porta 7373 e a senha.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">XDR-GTK e RDS Spy ao mesmo tempo</p>
+<p>O XDR-GTK repassa o RDS para o RDS Spy. Ligue o botão RDS Spy no XDR-GTK. No RDS Spy, escolha Configure → Select RDS Source → ASCII G Protocol, com a conexão TCP/IP na porta 7376. O RDS Spy recebe só os grupos que chegaram sem erro.</p>
+</div>
+<h2 id="computador--rds-spy">RDS Spy</h2>
+<p><strong>Para que serve:</strong> decodifica tudo o que a emissora manda no RDS, grupo por grupo: o código PI, o nome (PS), o RadioText, o tipo de programa, as frequências alternativas, a hora, os dados de outras emissoras da rede (EON), o RT+ e as aplicações extras, além da contagem de erros. Também grava registros. É a ferramenta clássica para identificar uma emissora fraca pelo código e para conferir se o RDS de uma rádio está certo. É gratuito e só roda no Windows.</p>
+<p><strong>Funciona com:</strong> os dois firmwares. Pelo RDS Spy, também dá para trocar a frequência do FM.</p>
+<p><strong>Pelo cabo USB:</strong></p>
+<ol>
+<li>No rádio, ponha o modo da porta USB em RDS Spy e feche o menu.</li>
+<li>Instale o <a href="https://rdsspy.com/" target="_blank" rel="noopener noreferrer">RDS Spy</a>.</li>
+<li>No RDS Spy, abra Configure → Select RDS Source e escolha ASCII G Protocol.</li>
+<li>Escolha a conexão pela porta serial, com a COM do rádio e 19200 baud.</li>
+</ol>
+<p><strong>Pelo Wi-Fi:</strong> na mesma fonte (ASCII G Protocol), escolha a conexão por TCP/IP, com o IP do rádio e a porta 7373. O modo da porta USB não importa nesse caso.</p>
+<h2 id="computador--fm-dx-webserver">FM-DX Webserver</h2>
+<p><strong>Para que serve:</strong> transforma um computador ligado ao rádio num servidor. Qualquer aparelho da casa, inclusive celulares e o iPhone, abre o rádio no navegador, ouve o som e muda a frequência, o filtro e o resto. Com acesso pela internet, você ouve o seu rádio de longe, por exemplo deixando-o em casa com uma boa antena. O servidor também pode entrar no <a href="https://servers.fmdx.org/" target="_blank" rel="noopener noreferrer">mapa público</a> da comunidade FMDX, para outras pessoas ouvirem, e tem painel de administração, chat e plugins.</p>
+<p><strong>Funciona com:</strong> a linha oficial, que o projeto declara compatível. No Mod17, a compatibilidade é provável, mas não confirmada.</p>
+<p><strong>O que você precisa:</strong> um computador com Windows ou Linux, os sistemas que o projeto lista, que fique ligado enquanto o servidor estiver no ar (um mini PC serve), o cabo USB e o cabo de áudio.</p>
+<ol>
+<li>No rádio, ponha o modo da porta USB em XDRGTK e feche o menu.</li>
+<li>Ligue o cabo USB e o cabo de áudio, da saída de fone do rádio à entrada de som do computador. Comece com o volume do rádio na metade.</li>
+<li>Instale o <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js</a>.</li>
+<li>Baixe o <a href="https://github.com/NoobishSVK/fm-dx-webserver" target="_blank" rel="noopener noreferrer">FM-DX Webserver</a> e descompacte.</li>
+<li>Abra um terminal na pasta do programa e rode <code>npm install</code> e depois <code>npm run webserver</code>. Deixe essa janela aberta: fechar a janela desliga o servidor.</li>
+<li>No navegador, abra http://localhost:8080/setup. Escolha a ligação direta pela porta serial do rádio, sem o programa intermediário xdrd. Escolha a entrada de som em que o cabo está ligado e defina uma senha de administrador.</li>
+<li>Abra http://localhost:8080 para ouvir. Nos outros aparelhos da casa, use o IP do computador com a porta 8080, como http://192.168.0.20:8080.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Antes de abrir o servidor para a internet</p>
+<p>Para acesso de fora de casa, é preciso um IP público com a porta liberada no roteador, ou um túnel. Um servidor aberto deixa qualquer pessoa ouvir as emissoras pelo seu rádio, e repassar a programação pela internet pode esbarrar nos direitos das emissoras e dos autores (Lei nº 9.610/1998). Para entrar no mapa, siga as regras da comunidade FMDX. Para ouvir de longe só você, prefira uma VPN até a sua rede em vez de abrir a porta.</p>
+</div>
+<h2 id="computador--stationlist">StationList</h2>
+<p><strong>Para que serve:</strong> pelo Wi-Fi, o rádio manda para o programa StationList, num computador da mesma rede, os dados de cada emissora sintonizada: frequência, força do sinal, filtro, código PI, nome, tipo de programa, RadioText e frequências alternativas. O programa monta a lista de estações e pode pedir para o rádio mudar de frequência.</p>
+<p><strong>Funciona com:</strong> os dois firmwares.</p>
+<ol>
+<li>Ligue o Wi-Fi do rádio.</li>
+<li>Na linha oficial, em IP do cliente da lista de estações, ponha o último número do IP do computador. Se o computador é 192.168.0.25, use 25. No Mod17, o ajuste é Connectivity → Stationlist client IP.</li>
+<li>Se houver mais de um rádio, dê um número a cada um em ID da lista de estações (Stationlist ID, no Mod17).</li>
+<li>No firewall do computador, libere a entrada pela porta UDP 9030. O rádio recebe os pedidos do programa na porta 9031.</li>
+</ol>
+<p>Não encontramos uma página oficial do StationList. Os dados acima vêm do código do firmware.</p>
+<h2 id="computador--logbook-memórias-e-hora">Logbook, memórias e hora</h2>
+<p><strong>Linha oficial pelo Wi-Fi:</strong> com o rádio na rede, abra no navegador o IP do rádio, como http://192.168.0.31, ou http://tef.local. A página mostra o logbook, com as emissoras que você registrou segurando o encoder (veja <a href="../oficial/#oficial--logbook">Uso da linha oficial</a>), e tem o botão Baixar livro de registro, que salva tudo num arquivo CSV para abrir em qualquer planilha.</p>
+<p><strong>Pelo cabo, num terminal:</strong> o terminal é um programa que manda e recebe texto pela porta do rádio. No Windows, use o PuTTY: escolha Serial, a porta COM do rádio e a velocidade do modo USB (115200 em XDRGTK, 19200 em RDS Spy). No Mac e no Linux, o comando <code>screen /dev/ttyUSB0 115200</code> faz o mesmo; troque pelo nome da sua porta. Depois digite o comando:</p>
+<ul>
+<li><strong>Linha oficial:</strong> <code>L</code> (ou <code>l</code>) devolve o logbook em CSV. <code>s</code> lista as 99 memórias, e <code>S</code> grava uma memória (posição, frequência, filtro, mono/estéreo, PI e PS) e responde com um código de erro, no formato do <a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf" target="_blank" rel="noopener noreferrer">protocolo de memórias do PE5PVB</a>. Esses comandos só funcionam pelo cabo.</li>
+<li><strong>Megatron, com o modo USB em XDRGTK:</strong> <code>$time: 14:30:00</code> acerta o relógio sem Wi-Fi; <code>$name: MEU RADIO</code> dá um nome ao rádio, que aparece na abertura e no rodapé quando não há RadioText; <code>$reboot</code> reinicia. O jeito mais simples é usar os arquivos .bat que vêm no pacote do firmware, no Windows.</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Não teste comandos sem documentação</p>
+<p>O Mod17 tem comandos internos que podem apagar ajustes e memórias (veja <a href="../mod17/">Recursos ocultos do Mod17</a>). Use só os comandos acima e faça o <a href="../backup/">backup</a> antes de experimentar qualquer outra coisa.</p>
+</div>
+<h2 id="computador--pelo-celular-sem-computador">Pelo celular, sem computador</h2>
+<ul>
+<li><strong>Android:</strong> o <a href="https://highpoint.fmdx.org/manuals/TEF-Logger-App-Documentation.html" target="_blank" rel="noopener noreferrer">TEF Logger App</a> recebe os dados do rádio pelo Wi-Fi, com o firmware oficial v2.20 ou mais novo, para acompanhar e registrar recepções.</li>
+<li><strong>iPhone:</strong> não há app que fale direto com o rádio, e o iPhone não consegue usar o adaptador USB-serial (CH340) do DP-666. O caminho é o FM-DX Webserver num computador, aberto no navegador do iPhone.</li>
+</ul>
+<h2 id="computador--bluetooth">Bluetooth</h2>
+<ul>
+<li><strong>Áudio:</strong> não funciona. O firmware não tem perfis de áudio, então fones e caixas Bluetooth não se conectam. Quem quer Bluetooth de áudio precisa de outro rádio (veja <a href="../comparacao/">Comparação</a>).</li>
+<li><strong>Mod17:</strong> usa o Bluetooth só na função "slave host", em que o rádio se conecta a outro aparelho e o controla. O firmware pede para desligar o Wi-Fi antes.</li>
+<li><strong>Linha oficial:</strong> não usa Bluetooth.</li>
+</ul>
+<h2 id="computador--fontes">Fontes</h2>
+<ul>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/comms.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — código de comunicação (portas, velocidades e protocolos)</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf" target="_blank" rel="noopener noreferrer">PE5PVB — protocolo de canais de memória</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-logbook" target="_blank" rel="noopener noreferrer">Wiki do PE5PVB — como usar o logbook</a></li>
+<li><a href="https://fmdx.org/projects/xdr-gtk.php" target="_blank" rel="noopener noreferrer">FMDX.org — XDR-GTK</a></li>
+<li><a href="https://pl.fmdx.org/?p=93" target="_blank" rel="noopener noreferrer">FMDX.pl — XDR-I2C, a modificação do Sony XDR-F1HD</a></li>
+<li><a href="https://fmdx.org/projects/xdrd.php" target="_blank" rel="noopener noreferrer">FMDX.org — xdrd</a></li>
+<li><a href="https://pira.cz/" target="_blank" rel="noopener noreferrer">PIRA.cz — RDS Spy e outros programas</a></li>
+<li><a href="https://en.wikipedia.org/wiki/DXing" target="_blank" rel="noopener noreferrer">Wikipedia — DXing</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Radio_Data_System" target="_blank" rel="noopener noreferrer">Wikipedia — Radio Data System</a></li>
+<li><a href="https://rds.org.uk/2010/Glossary-Of-Terms.htm" target="_blank" rel="noopener noreferrer">RDS Forum — glossário do RDS</a></li>
+<li><a href="https://github.com/kkonradpl/xdr-gtk/releases" target="_blank" rel="noopener noreferrer">XDR-GTK — versões para baixar</a></li>
+<li><a href="https://pl.fmdx.org/?p=100" target="_blank" rel="noopener noreferrer">FMDX.pl — XDR-GTK e o RDS Spy Link</a></li>
+<li><a href="https://fmdx.org/projects/webserver.php" target="_blank" rel="noopener noreferrer">FMDX.org — FM-DX Webserver</a></li>
+<li><a href="https://github.com/NoobishSVK/fm-dx-webserver" target="_blank" rel="noopener noreferrer">FM-DX Webserver no GitHub</a></li>
+<li><a href="https://kantoaalto.blogspot.com/2024/03/new-control-system-for-fm-receivers-fm.html" target="_blank" rel="noopener noreferrer">Kanto Aalto — ligação direta pela porta COM no FM-DX Webserver</a></li>
+<li><a href="https://highpoint.fmdx.org/manuals/TEF-Logger-App-Documentation.html" target="_blank" rel="noopener noreferrer">TEF Logger App — documentação</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/CH341SER.zip" target="_blank" rel="noopener noreferrer">DEEPELEC — driver CH340 para Windows</a></li>
+<li><a href="https://github.com/WCHSoftGroup/ch34xser_macos" target="_blank" rel="noopener noreferrer">WCH — driver CH34x para macOS</a></li>
+<li><a href="https://docs.soldered.com/ch340-drivers/" target="_blank" rel="noopener noreferrer">Soldered — portas do CH340 no Mac e no Linux</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9610.htm" target="_blank" rel="noopener noreferrer">Planalto — Lei nº 9.610/1998, direitos autorais</a></li>
+<li><a href="https://origin-devforums.apple.com/forums/thread/834899" target="_blank" rel="noopener noreferrer">Fórum da Apple — USB-serial no iPhone</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Computador e conectividade</p><a class="prox-next" href="../problemas/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Problemas comuns</span><span class="prox-desc">Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código, com os passos para resolver.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../backup/"><span class="mi-nome">Backup e gravação<span class="mi-sub">Gravar e restaurar pelo computador</span></span></a></li><li class="mi-item"><a class="mi" href="../hardware/#hardware--pinos-e-endereços"><span class="mi-nome">Hardware<span class="mi-sub">A ponte USB-serial e o botão BOOT</span></span></a></li></ul><p class="prox-volta"><a href="../ajustes/">Página anterior: Ajustes do rádio</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/" aria-current="page">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

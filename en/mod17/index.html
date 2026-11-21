@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Hidden features of Mod17 | DP-666: the definitive guide</title>
+<meta name="description" content="What exists in the Megatron Mod17 that the manual leaves out.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/mod17/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/mod17/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/mod17/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Hidden features of Mod17">
+<meta property="og:description" content="What exists in the Megatron Mod17 that the manual leaves out.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/mod17/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../mod17/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#mod17">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-mod17">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Firmware</p><h1>Hidden features of Mod17</h1><p class="meta">Updated Nov 21, 2026 · 4 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>A survey of what exists in the Megatron Mod17 firmware but doesn’t appear in the manual. It is based on about 500 interface strings rebuilt from the firmware (English and Chinese, matched one to one), 56 messages and the list of models, cross-checked with the English and Chinese manuals and the author’s changelog (mod11 to mod17).</p>
+<p>The firmware doesn’t say which submenu each item lives in. The items are grouped by subject and can be found by their English name, with advanced mode on.</p>
+<h2 id="mod17--hidden-options-in-items-the-manual-already-mentions">Hidden options in items the manual already mentions</h2>
+<ul>
+<li><strong>Search &amp; save mode:</strong> besides Overwrite and Append, there is Continuously append <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Wi-Fi auto disconnect:</strong> besides 1 to 1440 min, there is After time sync, which turns Wi-Fi off after setting the clock <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>RDS Show underscore:</strong> Off, PS only and On. The English manual only mentions Off and On <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Keep BAND key 3 sec.:</strong> Power off, Mute screen (turns the screen off) or Disable. The English manual only mentions Power off <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Long press Band key:</strong> it exists; the English manual repeats "Long press Rotary key" in its place <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Long presses (knob, BW, MODE and BAND):</strong> besides the manual’s options, there are Frequency list and Band keypad. Name <span class="nw"><span class="st st-ok">confirmed</span>,</span> function <span class="nw"><span class="st st-maybe">likely</span>.</span></li>
+<li><strong>Set first page:</strong> a Main page + Keypad option <span class="nw"><span class="st st-maybe">likely</span>.</span> With Open menu, Select menu group appears, to pick the group that opens <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Set UI round:</strong> chooses what gets rounded corners: Menu, Button, Icon or Border <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Region USA (DB):</strong> depends on a database of US stations that isn’t in Mod17’s storage. It doesn’t matter in Brazil <span class="nw"><span class="st st-maybe">likely</span>.</span></li>
+</ul>
+<h2 id="mod17--menu-items-missing-from-the-manual">Menu items missing from the manual</h2>
+<h3 id="mod17--screen-and-appearance">Screen and appearance</h3>
+<ul>
+<li><strong>Meter display style</strong> (Classic or New) <span class="nw"><span class="st st-ok">confirmed</span>.</span> It is the item the manual calls "Color bar display mode", a name that doesn’t exist in the firmware.</li>
+<li><strong>Show radio name</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> shows the name set by the <code>$name</code> command on the startup screen and at the bottom, when there is no RadioText.</li>
+<li><strong>Clock color, Debug info color and Debug refresh interval</strong> <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Notifications:</strong> Show notification, Notification mode (Auto, Message bar or Message box), Notification hold and Notification color <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Names per frequency:</strong> My frequency name, Show frequency name, Reset frequency name and Frequency name color <span class="nw"><span class="st st-ok">confirmed</span>.</span> They live in separate internal files for FM and AM; how to edit the names isn’t clear yet <span class="nw"><span class="st st-unk">uncertain</span>.</span></li>
+<li><strong>Show frequency tips</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> a signal strength label, from RDX (remote) and WEK (weak) to MED (medium), STR (strong) and SPR (super).</li>
+<li><strong>Startup logo:</strong> My logo image uses an image from the internal logos folder <span class="nw"><span class="st st-ok">confirmed</span>,</span> and My logo border applies frames such as rectangle, ellipse, circle, hexagon or heart <span class="nw"><span class="st st-ok">confirmed</span>.</span> How to upload the image isn’t documented.</li>
+<li><strong>Automatic theme switching:</strong> Auto switch Interval, Theme switch range and Theme switch method (Sequential or Random) <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Show communication</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> shows on the screen the commands received during a remote session.</li>
+<li><strong>Power saving mode:</strong> name <span class="nw"><span class="st st-ok">confirmed</span>,</span> unknown effect <span class="nw"><span class="st st-unk">uncertain</span>.</span></li>
+<li><strong>Developer mode</strong> <span class="nw"><span class="st st-unk">uncertain</span>:</span> better not to touch it.</li>
+</ul>
+<h3 id="mod17--operation">Operation</h3>
+<ul>
+<li><strong>Beep at operation</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> a beep on every operation.</li>
+<li><strong>Auto save change and handle data change</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> with auto save off, when you leave the menu the radio shows "Change pending" and asks Save or Discard.</li>
+<li><strong>Off screen tuning</strong> <span class="nw"><span class="st st-unk">uncertain</span>:</span> the Chinese label means "blind operation"; it seems related to operating with the screen off.</li>
+</ul>
+<h3 id="mod17--search-scan-and-memory-channels">Search, scan and memory channels</h3>
+<ul>
+<li><strong>Band save mode</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> Mixed Save, Save by band or Save by time segment.</li>
+<li><strong>TTM</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> sets of memory channels by time of day, with automatic or manual switching.</li>
+<li><strong>SW seek by range</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> limits the manual SW search to the SW search start/stop range.</li>
+<li><strong>Wait on signal only</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> in the DX scan, it only waits on frequencies with a signal.</li>
+<li><strong>Hold time</strong> <span class="nw"><span class="st st-unk">uncertain</span>:</span> probably the stop time in Stay mode.</li>
+<li><strong>Resets:</strong> Reset ATS Scheme, Reset Scan Scheme, Reset Receive Plan and Reset All bands <span class="nw"><span class="st st-ok">confirmed</span>.</span></li>
+<li><strong>Delete my settings</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> erases the saved "My settings".</li>
+</ul>
+<h3 id="mod17--power-and-clock">Power and clock</h3>
+<ul>
+<li><strong>Power on timer</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> turns the radio on at a set time.</li>
+<li><strong>Sleep clock correction</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> corrects the clock, in seconds per 24 h, while the radio is off. Useful on units without an RTC.</li>
+<li><strong>Low battery protect and Low battery threshold</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> they probably turn the radio off below a voltage limit <span class="nw"><span class="st st-maybe">likely</span>.</span></li>
+<li><strong>Set NTP server</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> changes the time server. The default is cn.pool.ntp.org.</li>
+</ul>
+<h2 id="mod17--undocumented-pages-and-screens">Undocumented pages and screens</h2>
+<ul>
+<li><strong>Frequency list</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> a list of frequencies, probably the memory channels.</li>
+<li><strong>Band keypad</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> a keypad to pick the band directly.</li>
+<li><strong>Select FM/AM bandwidth filter</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> a list-style bandwidth selector.</li>
+<li><strong>Select SW meter band</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> SW meter band selector.</li>
+<li><strong>Setup wizard</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> runs after a factory reset. Steps: language, radio model, rotating the screen, whether the screen has touch, touch type, encoder direction, inverting colors, calibration and usage mode. Models listed: Unknown, Original DIY, Hong6686 V1, V2 Basic, V2 Touch, V3 Mini, TabbyCat6686 Basic and Touch, and DEEP DP-666.</li>
+<li><strong>Advanced RDS</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> PI, PS and Long PS, PTY, RT and eRT, RT+, AF, EON, ECC, LIC, PIN, DI flags, TP, TMC, DAB reference, ODA applications and errors per block.</li>
+<li><strong>Credits</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> "Main code: PE5PVB" and a list of contributors.</li>
+</ul>
+<h2 id="mod17--internal-data-files">Internal data files</h2>
+<p>Mod17 keeps part of its data in files in the internal storage (SPIFFS), not in the settings area:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Likely contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/datas/scan.sch</td>
+<td>scan and search schemes</td>
+</tr>
+<tr>
+<td>/datas/plan.dat</td>
+<td>reception plans</td>
+</tr>
+<tr>
+<td>/datas/fmname.idx and .dat</td>
+<td>names per frequency on FM</td>
+</tr>
+<tr>
+<td>/datas/amname.idx and .dat</td>
+<td>names per frequency on AM</td>
+</tr>
+<tr>
+<td>/datas/settings.dat</td>
+<td>copy of the settings made by Save my settings</td>
+</tr>
+</tbody>
+</table></div>
+<p>Reflashing the firmware rewrites this whole area, so this data is lost in an update without a backup.</p>
+<h2 id="mod17--connectivity-and-protocols">Connectivity and protocols</h2>
+<ul>
+<li><strong>Wi-Fi</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> stores up to 3 networks. Configure Wi-Fi accepts the on-screen keypad or a browser, through the portal at http://192.168.4.1 after joining the radio’s network. The manual describes Wi-Fi as "under development".</li>
+<li><strong>XDR-GTK over Wi-Fi</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> TCP port 7373, with a password of up to 8 characters. It includes commands that reached the official firmware after v2.00, such as automatic squelch, stereo/mono and starting or stopping the DX scan <span class="nw"><span class="st st-maybe">likely</span>.</span></li>
+<li><strong>RDS Spy over TCP and Stationlist (UDP 9030/9031)</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> inherited from the base code.</li>
+<li><strong>Reading memory channels over USB</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> the firmware contains the answers to the <code>s</code> command of the official memory protocol. There is no sign of the <code>S</code> save command.</li>
+<li><strong>Manage my data</strong> <span class="nw"><span class="st st-ok">confirmed</span>:</span> a mode in which the radio waits for commands from a PC ("Waiting for manage command..."). In mod16, it was used to transfer schemes, names, plans and scan schemes. There is no public tool.</li>
+<li><strong>Bluetooth "slave host"</strong> <span class="nw"><span class="st st-maybe">likely</span>:</span> Config slave host, a host list, Connect, Online control mode (Action or Result) and Pause/Recovery control. It seems to be for the radio to control another device, not for audio. The warning "Please close Wi-Fi first" indicates that Wi-Fi and Bluetooth don’t work together.</li>
+</ul>
+<h2 id="mod17--serial-commands">Serial commands</h2>
+<ul>
+<li><strong>Documented in the package:</strong> <code>$time: HH:MM:SS</code>, <code>$name: NAME</code> and <code>$reboot</code> <span class="nw"><span class="st st-ok">confirmed</span>,</span> at 115200 baud.</li>
+<li><strong>Internal, undocumented:</strong> <code>manager</code>, <code>test_rds</code>, <code>set_sn</code>, <code>clear_nvs</code>, <code>still_auto</code>, <code>unstill</code> and <code>touch_main</code> <span class="nw"><span class="st st-ok">confirmed</span>.</span> Judging by the names: data management, RDS test, serial number, erasing the settings memory, turning the still screen on and off, and something related to touch.</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Don’t test the internal commands</p>
+<p>Judging by its name, <code>clear_nvs</code> should erase all settings and memory channels. The other internal commands aren’t documented either. If you are going to experiment, make a <a href="../backup/">full backup</a> first.</p>
+</div>
+<h2 id="mod17--supporter-serial-number">Supporter serial number <span class="st st-unk">uncertain</span></h2>
+<p>The firmware checks a serial number (the <code>set_sn</code> command), with the messages "Serial number passed — Thank you support!", "Serial number error" and "Too many attempts", and has the labels "Enhanced version" and "Customized version". It looks like a scheme for supporters, since the package includes a donation QR code. Nothing in the manual depends on it.</p>
+<h2 id="mod17--behaviors-only-the-changelog-explains">Behaviors only the changelog explains</h2>
+<ul>
+<li><strong>On-screen keypad:</strong> a long press on FM goes to OIRT and on SW goes to AIR; AIR frequencies accept 3 digits; there is a "loose" entry mode.</li>
+<li><strong>Shortcuts page:</strong> volume and brightness adjust by dragging your finger; a long MODE switches to the no-touch mode; turning off requires a long press.</li>
+<li><strong>Multi-page dialogs:</strong> a long press on OK ends them early.</li>
+<li><strong>Maintenance:</strong> the warnings "Reset system files", "Format internal storage" and "System deep sleep" exist; what triggers them isn’t documented.</li>
+</ul>
+<h2 id="mod17--sources">Sources</h2>
+<ul>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">DP-666 Megatron Mod17 manual</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_CN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Mod17 manual in Chinese</a></li>
+<li><a href="https://www.deepelec.com/en/2025/03/09/dp-666-megatron-2-0-15mod16/" target="_blank" rel="noopener noreferrer">DEEPELEC — Mod16 announcement</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf" target="_blank" rel="noopener noreferrer">PE5PVB — memory channel protocol</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Hidden features of Mod17</p><a class="prox-next" href="../backup/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Backup and flashing</span><span class="prox-desc">A full flash backup saves the firmware, settings, memory channels and internal files. With it, any experiment can be undone.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../ajustes/"><span class="mi-nome">Radio settings<span class="mi-sub">Every menu option</span></span></a></li><li class="mi-item"><a class="mi" href="../firmwares/"><span class="mi-nome">Megatron vs. official<span class="mi-sub">Megatron and the official firmware side by side</span></span></a></li></ul><p class="prox-volta"><a href="../oficial/">Previous page: Using the official firmware</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/" aria-current="page">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

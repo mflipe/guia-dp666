@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Ajustes do rádio | DP-666: o guia definitivo</title>
+<meta name="description" content="Cada opção do menu dos dois firmwares, com os valores possíveis, o padrão de fábrica e o recomendado para o Brasil.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/ajustes/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/ajustes/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/ajustes/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Ajustes do rádio">
+<meta property="og:description" content="Cada opção do menu dos dois firmwares, com os valores possíveis, o padrão de fábrica e o recomendado para o Brasil.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/ajustes/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/ajustes/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#ajustes">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-ajustes">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>O rádio</p><h1>Ajustes do rádio</h1><p class="meta">Atualizado em 21/11/2026 · 4 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Cada opção do menu dos dois firmwares, com os valores possíveis, o padrão de fábrica, o que ela faz e o valor recomendado para o Brasil. No Megatron, muitas opções só aparecem no modo avançado: veja como ligá-lo em <a href="../brasil/">Configuração para o Brasil</a>.</p>
+</div><div class="le-ferramenta"><p>Esta ferramenta funciona no guia interativo: <a href="../#ajustes">abrir a ferramenta</a>.</p></div><div class="prose"><h2 id="ajustes--oficial">Linha oficial</h2>
+<h3 id="ajustes--oficial-configuracoes-principais">Configurações principais</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-seletor-de-modelo">Seletor de modelo <span class="aj-muted">(Model selector)</span></dt><dd><p>Diz ao firmware em que tipo de rádio ele está rodando: de mesa (Básico), portátil com bateria (Portátil) ou portátil com tela de toque (Toque portátil).</p><p>Padrão: Toque portátil<br>Valores: Básico, Portátil, Toque portátil</p></dd>
+<dt id="ajustes--oficial-inverter-rotacao">Inverter rotação <span class="aj-muted">(Reverse encoder)</span></dt><dd><p>Inverte o sentido do encoder: girar para a direita passa a descer a frequência, e vice-versa.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-codificador-optico">Codificador óptico <span class="aj-muted">(Optical encoder)</span></dt><dd><p>Muda a contagem de pulsos do encoder para o padrão dos encoders ópticos.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-inverter-cores">Inverter cores <span class="aj-muted">(Invert colors)</span></dt><dd><p>Inverte as cores da tela, como um negativo de foto.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-ars-display">ARS display</dt><dd><p>Muda o tamanho, a orientação e a ordem das cores da tela para o painel de outra montagem (ARS).</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-medidor-analogico">Medidor analógico <span class="aj-muted">(Analog meter)</span></dt><dd><p>Põe o ponteiro de um medidor de sinal analógico no fim da escala, para você ajustá-lo.</p><p>Valores: Põe o ponteiro em escala completa, para ajustar.</p></dd>
+<dt id="ajustes--oficial-reposicao-de-fabrica">Reposição de fábrica <span class="aj-muted">(Factory reset)</span></dt><dd><p>Volta todos os ajustes ao padrão de fábrica e apaga as 99 memórias. O rádio pede confirmação.</p><p>Valores: Pede confirmação: “Apagar definições e estações guardadas?”</p></dd>
+<dt id="ajustes--oficial-parar-tela-de-despertar-ao-sintonizar">Parar tela de despertar ao sintonizar <span class="aj-muted">(Stop screen wake on tune)</span></dt><dd><p>Com a proteção de tela ativa, girar o knob passa a sintonizar sem acender a tela. Desligado, o primeiro giro só acorda a tela.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-desligamento-automatico">Desligamento automático <span class="aj-muted">(Auto Power off)</span></dt><dd><p>Põe o rádio em espera depois de 15, 30, 60 ou 90 minutos sem você tocar em nada.</p><p>Padrão: Desligado<br>Valores: Desligado, 15 min, 30 min, 60 min, 90 min</p></dd>
+<dt id="ajustes--oficial-usar-squelch">Usar squelch <span class="aj-muted">(Use squelch)</span></dt><dd><p>O squelch cala o áudio quando não há sinal útil, para você não ouvir chiado entre as emissoras. Ligado usa o botão SQL do rádio. Auto decide sozinho pela qualidade do sinal.</p><p>Padrão: Ligado<br>No Brasil: <strong>Desligado</strong>. Para caçar emissoras fracas. Em Auto, o rádio pode esconder sinais distantes.<br>Valores: Ligado, Desligado, Auto</p></dd>
+<dt id="ajustes--oficial-fm-agc">FM AGC</dt><dd><p>Define a partir de que força de sinal o rádio começa a reduzir a própria amplificação no FM.</p><p>Padrão: 92 dBµV<br>No Brasil: <strong>92 dBµV</strong>. É o mais sensível. Se aparecerem estações fantasmas perto de emissoras fortes, teste 87 ou 84.<br>Valores: 84 a 92 dBµV</p></dd>
+<dt id="ajustes--oficial-am-agc">AM AGC</dt><dd><p>O mesmo que o FM AGC, no AM e nas ondas curtas: a força de sinal a partir da qual o rádio reduz a própria amplificação.</p><p>Padrão: 100 dBµV<br>Valores: 94 a 102 dBµV</p></dd>
+<dt id="ajustes--oficial-selecionar-faixa-fm">Selecionar faixa FM <span class="aj-muted">(Select FM Band)</span></dt><dd><p>Escolhe quais faixas de FM o botão BAND percorre: FM, OIRT ou as duas.</p><p>Padrão: FM, OIRT<br>Valores: FM, OIRT, OIRT, FM, Nenhum</p></dd>
+<dt id="ajustes--oficial-selecionar-faixa-am">Selecionar faixa AM <span class="aj-muted">(Select AM Band)</span></dt><dd><p>Escolhe quais faixas de AM o botão BAND percorre: LW (ondas longas), AM (ondas médias) e SW (ondas curtas).</p><p>Padrão: LW, AM, SW<br>Valores: LW, AM, SW, LW, AM, LW, SW, AM, SW, LW, AM, SW, Nenhum</p></dd>
+<dt id="ajustes--oficial-pressione-o-botao-banda-por-5-seg">Pressione o botão banda por 5 seg. <span class="aj-muted">(5 sec. bandbutton press)</span></dt><dd><p>Define o que acontece ao segurar o BAND: pôr o rádio em espera (Desligar), apagar só a tela (Tela desligada) ou nada (Inativo).</p><p>Padrão: Desligar<br>Valores: Desligar, Tela desligada, Inativo</p></dd>
+<dt id="ajustes--oficial-velocidade-dinamica-de-spi">Velocidade dinâmica de SPI <span class="aj-muted">(Dynamic SPI speed)</span></dt><dd><p>Muda a velocidade da comunicação entre o processador e a tela (10 a 60 MHz). Em Auto, o rádio escolhe a velocidade conforme a frequência sintonizada.</p><p>Padrão: Auto<br>Valores: Predefinição, 10 MHz, 20 MHz, 30 MHz, 40 MHz, 50 MHz, 60 MHz, Auto</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-de-audio">Configurações de áudio</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-definir-volume">Definir volume <span class="aj-muted">(Set volume)</span></dt><dd><p>Ganho interno de áudio do sintonizador (de −10 a +10 dB), aplicado antes do botão de volume.</p><p>Padrão: 0 dB<br>Valores: −10 a 10 dB</p></dd>
+<dt id="ajustes--oficial-sinais-sonoros">Sinais sonoros <span class="aj-muted">(Audio feedback)</span></dt><dd><p>Liga sons de navegação: bipes no menu, no fim da faixa e ao gravar no logbook. Em Ligado + morse, números e letras também tocam em código Morse.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado, Ligado + morse</p></dd>
+<dt id="ajustes--oficial-saida-de-audio">Saída de áudio <span class="aj-muted">(Audio output)</span></dt><dd><p>No modo MPX, o canal esquerdo sai mono e o direito leva o sinal completo da emissora, com o piloto estéreo e o RDS.</p><p>Padrão: Stereo<br>Valores: Stereo, MPX</p></dd>
+<dt id="ajustes--oficial-limiar-de-separacao-estereo">Limiar de separação estéreo <span class="aj-muted">(Stereo separation threshold)</span></dt><dd><p>Abaixo desta força de sinal, o rádio reduz a separação estéreo e caminha para o mono.</p><p>Padrão: Desligado<br>No Brasil: <strong>≈ 40 dBµV</strong>. Com sinal fraco, força o mono e reduz o chiado.<br>Valores: Desligado ou 30 a 60 dBµV</p></dd>
+<dt id="ajustes--oficial-frequencia-do-canto-de-corte-alto">Frequência do canto de corte alto <span class="aj-muted">(High cut corner frequency)</span></dt><dd><p>Quando o corte de agudos entra, ele atenua o som acima desta frequência.</p><p>Padrão: 7000 Hz<br>Valores: 1500 a 7000 Hz</p></dd>
+<dt id="ajustes--oficial-definir-limiar-de-corte-alto">Definir limiar de corte alto <span class="aj-muted">(High cut threshold)</span></dt><dd><p>Abaixo desta força de sinal, o corte de agudos entra.</p><p>Padrão: Desligado<br>Valores: Desligado ou 20 a 60 dBµV</p></dd>
+<dt id="ajustes--oficial-desenfase-fm">Desênfase FM <span class="aj-muted">(FM deemphasis)</span></dt><dd><p>A emissora reforça os agudos ao transmitir (pré-ênfase), e o rádio os corta na mesma medida ao receber. O som volta ao natural e o chiado cai.</p><p>Padrão: 50 µs<br>No Brasil: <strong>50 µs</strong>. O Brasil usa 50 µs, como manda o Ato Anatel nº 8.104/2022, ao contrário do resto das Américas.<br>Valores: Desligado, 50 µs, 75 µs</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-de-exibicao">Configurações de exibição</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-idioma">Idioma <span class="aj-muted">(Language)</span></dt><dd><p>Idioma do menu. Há português.</p><p>Padrão: English<br>Valores: English, Nederlands, Polski, Hrvatski, Ελληνικά, Română, Deutsch, Čeština, Magyar, Français, Български, Русский, Українська, Italiano, Simplified Chinese, Norsk, Español, Português, Srpski, Suomi, Dansk, Svenska, Gaeilge</p></dd>
+<dt id="ajustes--oficial-definir-brilho-da-tela">Definir brilho da tela <span class="aj-muted">(Display brightness)</span></dt><dd><p>Brilho da tela, de 1 a 100%.</p><p>Padrão: 50%<br>Valores: 1 a 100 %</p></dd>
+<dt id="ajustes--oficial-medidor-de-modulacao">Medidor de modulação <span class="aj-muted">(Audio level meter)</span></dt><dd><p>Liga a barra que mostra a modulação da emissora, ou seja, o volume do som transmitido.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-protecao-de-tela">Proteção de tela <span class="aj-muted">(Screensaver)</span></dt><dd><p>Depois de 3, 10, 30 ou 60 segundos sem uso, a tela apaga ou escurece.</p><p>Padrão: Desligado<br>Valores: Desligado, 3 s, 10 s, 30 s, 60 s</p></dd>
+<dt id="ajustes--oficial-opcoes-de-protecao-de-tela">Opções de proteção de tela <span class="aj-muted">(Screensaver options)</span></dt><dd><p>Define o que a proteção de tela faz: apagar a tela ou deixá-la com 1%, 25% ou 50% de brilho.</p><p>Padrão: 1% de brilho<br>Valores: Desligar a tela, 1% de brilho, 25% de brilho, 50% de brilho</p></dd>
+<dt id="ajustes--oficial-opcoes-de-bateria">Opções de bateria <span class="aj-muted">(Battery options)</span></dt><dd><p>Mostra a bateria em volts, em porcentagem ou não mostra.</p><p>Padrão: Mostrar voltagem<br>Valores: Desligado, Mostrar voltagem, Mostrar porcentagem</p></dd>
+<dt id="ajustes--oficial-unidade-de-medidor-de-sinal">Unidade de medidor de sinal <span class="aj-muted">(Signalmeter unit)</span></dt><dd><p>Unidade em que o rádio mostra a força do sinal.</p><p>Padrão: dBµV<br>Valores: dBµV, dBf, dBm</p></dd>
+<dt id="ajustes--oficial-mostrar-relogio">Mostrar relógio <span class="aj-muted">(Show clock)</span></dt><dd><p>Mostra a hora na tela quando o rádio tem a hora certa, recebida pelo RDS ou pela internet.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-tema">Tema <span class="aj-muted">(Theme)</span></dt><dd><p>Esquema de cores da interface. São 17 temas.</p><p>Padrão: Essence<br>Valores: Essence, Cyan, Crimson, Monochrome, Volcano, Dendro, Sakura, Whiteout, Tangerine, Ocean, Indigo, Queer, GoldBrite, Bubblegum, Aurora, Ember, Glacier</p></dd>
+<dt id="ajustes--oficial-fonte-de-frequencia">Fonte de frequência <span class="aj-muted">(Frequency font)</span></dt><dd><p>Fonte dos números grandes da frequência.</p><p>Padrão: Aura2<br>Valores: Classic, Roubenstil, Motoya, Aura2, Modern</p></dd>
+<dt id="ajustes--oficial-rodar-ecra-180">Rodar ecrã 180° <span class="aj-muted">(Flip screen 180°)</span></dt><dd><p>Gira a imagem da tela de cabeça para baixo.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-teclado-frequencia">Teclado frequência <span class="aj-muted">(Frequency keypad)</span></dt><dd><p>Liga o teclado numérico na tela, para digitar a frequência.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-calibracao-da-tela-de-toque">Calibração da tela de toque <span class="aj-muted">(Touch calibration)</span></dt><dd><p>Abre a calibração do toque: você toca nos pontos indicados na tela.</p><p>Valores: Pede confirmação: “Iniciar calibração?”</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-rds">Configurações RDS</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-mostrar-erros-rds">Mostrar erros RDS <span class="aj-muted">(Show RDS errors)</span></dt><dd><p>Define quantos erros o rádio aceita nos dados de RDS: Desligado aceita só blocos perfeitos, Pequeno aceita erros pequenos corrigidos e Grande aceita até erros grandes corrigidos.</p><p>Padrão: Pequeno<br>Valores: Desligado, Pequeno, Grande</p></dd>
+<dt id="ajustes--oficial-regiao">Região <span class="aj-muted">(Region)</span></dt><dd><p>Ajusta o RDS à região: a tabela de tipos de programa (PTY) e, nos Estados Unidos e no Canadá, a conversão do código da emissora em prefixo, como KXYZ.</p><p>Padrão: Europa<br>No Brasil: <strong>Europa</strong>. O RDS brasileiro segue o modelo europeu, com PI distribuído pela Anatel.<br>Valores: Europa, Estados Unidos DB, Estados Unidos, Canadá</p></dd>
+<dt id="ajustes--oficial-mostrar-sublinhado-no-rds">Mostrar sublinhado no RDS <span class="aj-muted">(Show underscore in RDS)</span></dt><dd><p>Troca os espaços por sublinhado: só no nome da emissora (PS apenas) ou também no texto (Ligado).</p><p>Padrão: Desligado<br>Valores: Desligado, PS apenas, Ligado</p></dd>
+<dt id="ajustes--oficial-filtro-rds">Filtro RDS <span class="aj-muted">(RDS filter)</span></dt><dd><p>Passa os dados de RDS por um filtro com memória antes de mostrar.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-mostrar-erros-pi">Mostrar erros PI <span class="aj-muted">(Show PI errors)</span></dt><dd><p>Mostra o código PI da emissora mesmo antes de ele chegar sem erros.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-usar-af">Usar AF <span class="aj-muted">(Use AF)</span></dt><dd><p>Com o AF ligado, o rádio troca sozinho para outra frequência da mesma emissora quando o sinal piora. Com REG ligado, só aceita frequências com a mesma programação regional.</p><p>Padrão: Desligado<br>No Brasil: <strong>Desligado</strong>. Em DX e buscas, evita que o rádio pule sozinho para outra frequência.<br>Valores: Desligado, Ligado / REG ligado, Ligado / REG desligado</p></dd>
+<dt id="ajustes--oficial-buffering-rt">Buffering RT <span class="aj-muted">(RT buffering)</span></dt><dd><p>Só mostra o RadioText, o texto que corre na tela, quando ele chega completo, em vez de ir trocando letra por letra.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-classificar-af-automaticamente">Classificar AF automaticamente <span class="aj-muted">(Auto sort AF)</span></dt><dd><p>Ordena a lista de frequências alternativas (AF) da menor para a maior.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-ps-rapido">PS rápido <span class="aj-muted">(Fast PS)</span></dt><dd><p>Mostra as letras do nome da emissora (PS) assim que chegam, sem esperar a confirmação. Inicial faz isso só até o nome completar; Sempre, o tempo todo.</p><p>Padrão: Inicial<br>Valores: Desligado, Inicial, Sempre</p></dd>
+<dt id="ajustes--oficial-mostrar-ps-longo">Mostrar PS longo <span class="aj-muted">(Show long PS)</span></dt><dd><p>Mostra o nome longo da emissora (Long PS), com até 32 caracteres, quando ela transmite.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-fm">Configurações FM</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-definir-deslocamento-do-conversor">Definir deslocamento do conversor <span class="aj-muted">(Converter offset)</span></dt><dd><p>Soma um valor à frequência mostrada, para quem usa um conversor de RF externo.</p><p>Padrão: 0 MHz<br>Valores: 0 a 2400 MHz</p></dd>
+<dt id="ajustes--oficial-definir-borda-da-faixa-baixa">Definir borda da faixa baixa <span class="aj-muted">(Low band edge)</span></dt><dd><p>Frequência mais baixa da faixa de FM. Ao passar dela, o knob volta para o fim da faixa.</p><p>Padrão: 87,5 MHz<br>No Brasil: <strong>76,1 MHz</strong>. A faixa passa a cobrir o FM estendido, de 76,1 a 87,3 MHz.<br>Valores: 65 a 107,9 MHz</p></dd>
+<dt id="ajustes--oficial-definir-borda-da-faixa-alta">Definir borda da faixa alta <span class="aj-muted">(High band edge)</span></dt><dd><p>Frequência mais alta da faixa de FM. Ao passar dela, o knob volta para a borda baixa.</p><p>Padrão: 108,0 MHz<br>No Brasil: <strong>108,0 MHz</strong>. A faixa passa a cobrir o FM estendido, de 76,1 a 87,3 MHz.<br>Valores: 66 a 108 MHz</p></dd>
+<dt id="ajustes--oficial-definir-deslocamento-de-nivel">Definir deslocamento de nível <span class="aj-muted">(Level offset)</span></dt><dd><p>Soma ou subtrai decibéis da leitura de sinal.</p><p>Padrão: 0 dB<br>Valores: −25 a 15 dB</p></dd>
+<dt id="ajustes--oficial-definir-limiar-de-nivel-baixo">Definir limiar de nível baixo <span class="aj-muted">(Low level threshold)</span></dt><dd><p>Abaixo desta força de sinal, o rádio acinzenta o medidor de modulação e os rótulos do RDS.</p><p>Padrão: −15 dBµV<br>Valores: −15 a 30 dBµV</p></dd>
+<dt id="ajustes--oficial-silenciamento-suave-fm">Silenciamento suave FM <span class="aj-muted">(Softmute FM)</span></dt><dd><p>Abaixa o volume aos poucos quando o sinal enfraquece e o chiado sobe.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-supressor-de-ruido-fm">Supressor de ruído FM <span class="aj-muted">(FM Noise blanker)</span></dt><dd><p>Corta ruídos de impulso: os estalos curtos de motores, cercas elétricas e aparelhos elétricos. A porcentagem é a força do corte.</p><p>Padrão: Desligado<br>Valores: Desligado ou 50 a 150 %</p></dd>
+<dt id="ajustes--oficial-passo-padrao-fm">Passo padrão FM <span class="aj-muted">(FM default stepsize)</span></dt><dd><p>Quanto a frequência anda a cada clique do knob no FM.</p><p>Padrão: 100 kHz<br>No Brasil: <strong>200 kHz</strong>. Com a borda em 76,1 MHz, a sintonia anda pelos canais brasileiros, que terminam em decimal ímpar. Em DX, use 100 kHz para parar também nos decimais pares.<br>Valores: 50 kHz, 100 kHz, 200 kHz</p></dd>
+<dt id="ajustes--oficial-fmsi-melhoria-do-som-estereo">FMSI melhoria do som estéreo <span class="aj-muted">(FMSI stereo improvement)</span></dt><dd><p>Liga um processamento que melhora o estéreo em sinais fracos. Só existe nos sintonizadores TEF6687 e TEF6689.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura">Sensibilidade da varredura <span class="aj-muted">(Scan sensitivity)</span></dt><dd><p>Quão exigente a busca é para parar numa emissora de FM, de 1 a 30.</p><p>Padrão: 4<br>Valores: 1 a 30</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-am">Configurações AM</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-silenciamento-suave-am">Silenciamento suave AM <span class="aj-muted">(Softmute AM)</span></dt><dd><p>Abaixa o volume aos poucos quando o sinal de AM enfraquece e o ruído sobe.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-supressor-de-ruido-am">Supressor de ruído AM <span class="aj-muted">(AM Noise blanker)</span></dt><dd><p>Corta ruídos de impulso: os estalos curtos de motores, cercas elétricas e aparelhos elétricos. A porcentagem é a força do corte.</p><p>Padrão: Desligado<br>Valores: Desligado ou 50 a 150 %</p></dd>
+<dt id="ajustes--oficial-deslocamento-de-nivel-de-rf-am">Deslocamento de nível de RF AM <span class="aj-muted">(AM RF Level offset)</span></dt><dd><p>Soma ou subtrai decibéis da leitura de sinal no AM.</p><p>Padrão: 0 dB<br>Valores: −50 a 15 dB</p></dd>
+<dt id="ajustes--oficial-mostrar-comprimento-de-onda-sw">Mostrar comprimento de onda SW <span class="aj-muted">(Show SW wavelength)</span></dt><dd><p>Mostra em que faixa de ondas curtas você está, em metros, como 49 m ou 31 m, junto da frequência.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-detector-cochannel">Detector CoChannel <span class="aj-muted">(CoChannel Detector)</span></dt><dd><p>Liga o detector de co-canal: o rádio mostra CO na tela quando percebe duas emissoras na mesma frequência. O número é a sensibilidade.</p><p>Padrão: 100%<br>Valores: Desligado ou 50 a 150 %</p></dd>
+<dt id="ajustes--oficial-limiar-do-cochannel-det">Limiar do CoChannel Det <span class="aj-muted">(CoChannel Detector threshold)</span></dt><dd><p>Quantas detecções seguidas o detector de co-canal precisa para mostrar CO.</p><p>Padrão: 3<br>Valores: 1 a 15</p></dd>
+<dt id="ajustes--oficial-am-ganho-da-antena">AM Ganho da antena <span class="aj-muted">(AM Antenna gain)</span></dt><dd><p>Atenua a entrada de AM em 6 a 36 dB. O nome fala em ganho porque a ideia é você informar o ganho da sua antena ativa, e o rádio atenua o mesmo tanto.</p><p>Padrão: Desligado<br>Valores: Desligado ou 6 a 36 dB</p></dd>
+<dt id="ajustes--oficial-tamanho-padrao-da-etapa-am">Tamanho padrão da etapa AM <span class="aj-muted">(MW default stepsize)</span></dt><dd><p>Quanto a frequência anda a cada clique nas ondas médias: 9 ou 10 kHz.</p><p>Padrão: 9 kHz<br>No Brasil: <strong>10 kHz</strong>. É a grade de ondas médias das Américas, de 520 a 1720 kHz.<br>Valores: 9 kHz, 10 kHz</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura-2">Sensibilidade da varredura <span class="aj-muted">(Scan sensitivity)</span></dt><dd><p>Quão exigente a busca é para parar numa emissora de AM, de 1 a 30.</p><p>Padrão: 4<br>Valores: 1 a 30</p></dd>
+</dl>
+<h3 id="ajustes--oficial-conectividade-e-relogio">Conectividade e relógio</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-modo-usb">Modo USB <span class="aj-muted">(USB mode)</span></dt><dd><p>Escolhe com qual programa de computador a porta USB conversa: XDR-GTK ou RDS Spy.</p><p>Padrão: XDRGTK<br>Valores: XDRGTK, RDS Spy</p></dd>
+<dt id="ajustes--oficial-wi-fi">Wi-Fi</dt><dd><p>Liga o Wi-Fi do rádio.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-configurar-wi-fi">Configurar Wi-Fi <span class="aj-muted">(Configure Wi-Fi)</span></dt><dd><p>Abre o assistente que conecta o rádio a uma rede.</p><p>Valores: Abre o assistente de conexão.</p></dd>
+<dt id="ajustes--oficial-ip-do-cliente-da-lista-de-estacoes">IP do cliente da lista de estações <span class="aj-muted">(Stationlist client IP)</span></dt><dd><p>Último número do IP do computador que roda o StationList, na mesma rede do rádio.</p><p>Padrão: 1<br>Valores: 1 a 254</p></dd>
+<dt id="ajustes--oficial-id-da-lista-de-estacoes">ID da lista de estações <span class="aj-muted">(Stationlist ID)</span></dt><dd><p>Número deste rádio no StationList.</p><p>Padrão: 1<br>Valores: 1 a 10</p></dd>
+<dt id="ajustes--oficial-tela-mudo-na-conexao-xdrgtk">Tela mudo na conexão XDRGTK <span class="aj-muted">(Mute screen on XDRGTK connection)</span></dt><dd><p>Apaga a tela do rádio enquanto o XDR-GTK está conectado.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-definir-deslocamento-de-tempo-ntp">Definir deslocamento de tempo NTP <span class="aj-muted">(Set NTP time offset)</span></dt><dd><p>Fuso horário aplicado à hora que vem da internet, que chega no horário universal (UTC).</p><p>Padrão: GMT +1<br>No Brasil: <strong>GMT −3</strong>. Horário de Brasília.<br>Valores: GMT −12, GMT −11, GMT −10, GMT −9:30, GMT −9, GMT −8, GMT −7, GMT −6, GMT −5, GMT −4, GMT −3:30, GMT −3, GMT −2, GMT −1, GMT +0, GMT +1, GMT +2, GMT +3, GMT +3:30, GMT +4, GMT +4:30, GMT +5, GMT +5:30, GMT +5:45, GMT +6, GMT +6:30, GMT +7, GMT +8, GMT +8:45, GMT +9, GMT +9:30, GMT +10, GMT +10:30, GMT +11, GMT +12, GMT +12:45, GMT +13, GMT +14</p></dd>
+<dt id="ajustes--oficial-dst-automatico-no-horario-ntp">DST automático no horário NTP <span class="aj-muted">(Auto DST on NTP time)</span></dt><dd><p>Adianta o relógio em 1 hora no horário de verão, pela regra europeia: do último domingo de março ao último domingo de outubro.</p><p>Padrão: Ligado<br>No Brasil: <strong>Desligado</strong>. O Brasil não tem horário de verão desde o Decreto nº 9.772, de 2019.<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-modo-de-relogio">Modo de relógio <span class="aj-muted">(Clock mode)</span></dt><dd><p>Mostra o relógio em 24 h ou 12 h.</p><p>Padrão: 24 h<br>Valores: 24 h, 12 h</p></dd>
+<dt id="ajustes--oficial-pi-bloqueado-ct-sync">PI bloqueado CT sync <span class="aj-muted">(PI locked CT sync)</span></dt><dd><p>Ao ligar, o rádio passa a aceitar a hora do RDS só da emissora sintonizada naquele momento, identificada pelo código PI.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+</dl>
+<h3 id="ajustes--oficial-opcoes-fm-dx">Opções FM DX</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-comece-a-pesquisar-dx">Comece a pesquisar DX <span class="aj-muted">(Start DX scanning)</span></dt><dd><p>Começa a varredura de DX: o rádio passa pelas memórias escolhidas, ou pela faixa, procurando emissoras distantes.</p><p>Valores: Inicia a varredura.</p></dd>
+<dt id="ajustes--oficial-comece-a-pesquisar-canais-de-memoria">Comece a pesquisar canais de memória <span class="aj-muted">(Begin scanning memory channels)</span></dt><dd><p>Primeira memória do intervalo da varredura.</p><p>Padrão: 1<br>Valores: 1 a 98</p></dd>
+<dt id="ajustes--oficial-pare-de-pesquisar-canais-de-memoria">Pare de pesquisar canais de memória <span class="aj-muted">(Stop scanning memory channels)</span></dt><dd><p>Última memória do intervalo da varredura.</p><p>Padrão: 10<br>Valores: 2 a 99</p></dd>
+<dt id="ajustes--oficial-tempo-de-espera">Tempo de espera <span class="aj-muted">(Wait time)</span></dt><dd><p>Quanto tempo o rádio fica em cada frequência antes de seguir: 0,5 s ou de 1 a 30 s.</p><p>Padrão: 5 s<br>Valores: 0,5 a 30 s</p></dd>
+<dt id="ajustes--oficial-canais-memorizados">Canais memorizados <span class="aj-muted">(Memory channels)</span></dt><dd><p>Em Apenas, a varredura passa só pelas memórias do intervalo. Em Excluir, varre a faixa toda e pula as frequências gravadas nesse intervalo.</p><p>Padrão: Apenas<br>Valores: Excluir, Apenas</p></dd>
+<dt id="ajustes--oficial-cancelar-automatic-a-pesquisa">Cancelar automatic. a pesquisa <span class="aj-muted">(Auto cancel scan)</span></dt><dd><p>Faz a varredura parar sozinha: ao decodificar o código de uma emissora (PI correto) ou ao achar sinal (Sinal). Desligado nunca para.</p><p>Padrão: Desligado<br>Valores: Desligado, PI correto, Sinal</p></dd>
+<dt id="ajustes--oficial-mudo-audio-enquanto-procura">Mudo áudio enquanto procura <span class="aj-muted">(Mute audio while scanning)</span></dt><dd><p>Deixa o áudio mudo durante a varredura.</p><p>Padrão: Desligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-registrador-automatico">Registrador automático <span class="aj-muted">(Autologger)</span></dt><dd><p>Grava sozinho no logbook as emissoras com PI correto achadas na varredura.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-espera-tempo-apenas-quando-sinal">Espera tempo apenas quando sinal <span class="aj-muted">(Wait time on signal only)</span></dt><dd><p>Usa o tempo de espera só nas frequências com sinal; nas vazias, a varredura segue na hora.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-limpar-livro-de-registro">Limpar livro de registro <span class="aj-muted">(Clear logbook)</span></dt><dd><p>Apaga o logbook inteiro.</p><p>Valores: Apaga o logbook inteiro.</p></dd>
+</dl>
+<h3 id="ajustes--oficial-memoria-automatica">Memória automática</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-iniciar-memoria-automatica">Iniciar memória automática <span class="aj-muted">(Start auto memory)</span></dt><dd><p>Varre a faixa de 100 em 100 kHz e grava nas memórias as emissoras que passam no critério da Sensibilidade da varredura.</p><p>Valores: Busca as estações e grava nas memórias.</p></dd>
+<dt id="ajustes--oficial-iniciar-frequencia">Iniciar frequência <span class="aj-muted">(Start frequency)</span></dt><dd><p>Início da busca da memória automática.</p><p>Padrão: 87,5 MHz<br>Valores: 65 a 107,9 MHz</p></dd>
+<dt id="ajustes--oficial-parar-frequencia">Parar frequência <span class="aj-muted">(Stop frequency)</span></dt><dd><p>Fim da busca da memória automática.</p><p>Padrão: 108,0 MHz<br>Valores: 66 a 108 MHz</p></dd>
+<dt id="ajustes--oficial-iniciar-canal-de-memoria">Iniciar canal de memória <span class="aj-muted">(Start memory channel)</span></dt><dd><p>Primeira posição que a memória automática pode gravar.</p><p>Padrão: 2<br>Valores: 1 a 98</p></dd>
+<dt id="ajustes--oficial-parar-canal-de-memoria">Parar canal de memória <span class="aj-muted">(Stop memory channel)</span></dt><dd><p>Última posição que a memória automática pode gravar.</p><p>Padrão: 11<br>Valores: 2 a 99</p></dd>
+<dt id="ajustes--oficial-somente-armazenar-com-rds">Somente armazenar com RDS <span class="aj-muted">(Only store with RDS)</span></dt><dd><p>Só grava as emissoras em que o rádio detectou RDS.</p><p>Padrão: Ligado<br>Valores: Desligado, Ligado</p></dd>
+<dt id="ajustes--oficial-prevenir-pi-duplo">Prevenir PI duplo <span class="aj-muted">(Prevent double PI)</span></dt><dd><p>Não grava uma emissora cujo código PI já está na memória: Intervalo compara com as memórias do intervalo; Completo, com as 99.</p><p>Padrão: Desligado<br>Valores: Desligado, Intervalo, Completo</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura-3">Sensibilidade da varredura <span class="aj-muted">(Scan sensitivity)</span></dt><dd><p>É o mesmo ajuste de Configurações FM → Sensibilidade da varredura: decide quão fraco pode ser o sinal para a memória automática gravar.</p><p>Padrão: 4<br>Valores: 1 a 30</p></dd>
+<dt id="ajustes--oficial-limpar-canais-de-memoria">Limpar canais de memória <span class="aj-muted">(Clear memory channels)</span></dt><dd><p>Apaga as memórias.</p><p>Valores: Apaga as memórias.</p></dd>
+</dl>
+<h3 id="ajustes--oficial-sobre-o-software">Sobre o software</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-sobre-o-software">Sobre o software <span class="aj-muted">(About)</span></dt><dd><p>Mostra os créditos de quem desenvolveu o firmware.</p><p>Valores: Créditos dos desenvolvedores e colaboradores.</p></dd>
+</dl>
+<h2 id="ajustes--mod17">Megatron Mod17</h2>
+<h3 id="ajustes--mod17-main-settings">Main settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-system-usage-mode">System usage mode</dt><dd><p>Simple mode esconde as opções avançadas do menu; Advanced mode mostra todas.</p><p>No Brasil: <strong>Advanced mode</strong>. Muitas opções desta lista só aparecem nele. Troque o idioma para 简体中文, escolha 高级模式 em 主要设置 → 系统使用模式 e volte para English.<br>Valores: Simple mode, Advanced mode</p></dd>
+<dt id="ajustes--mod17-model-selector">Model selector</dt><dd><p>Diz ao firmware em que tipo de rádio ele está rodando: de mesa (Base), portátil com bateria (Portable) ou portátil com tela de toque (Portable touch).</p><p>Valores: Portable touch, Base, Portable</p></dd>
+<dt id="ajustes--mod17-set-fm-band">Set FM band</dt><dd><p>Escolhe quais faixas de FM o botão BAND percorre: FM, FML ou as duas.</p><p>Valores: Combinações de FM e FML, ou None. O texto do manual está truncado; a ordem provável é FM + FML, FML, FM, None.</p></dd>
+<dt id="ajustes--mod17-set-am-band">Set AM band</dt><dd><p>Escolhe quais faixas de AM o botão BAND percorre: LW, MW, SW e AIR.</p><p>Valores: Combinações de LW, MW, SW e AIR, ou NONE. O texto do manual está truncado.</p></dd>
+<dt id="ajustes--mod17-screensaver">Screensaver</dt><dd><p>Depois de 3, 10, 30 ou 60 segundos sem uso, a tela apaga ou escurece.</p><p>Valores: Off, 3 s, 10 s, 30 s, 60 s</p></dd>
+<dt id="ajustes--mod17-set-first-page">Set first page</dt><dd><p>Escolhe a tela que aparece ao ligar o rádio.</p><p>Valores: Main page, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-power-off-timer">Power Off timer</dt><dd><p>Desliga o rádio sozinho depois do tempo escolhido, de 1 a 480 minutos.</p><p>Valores: Off ou 1 a 480 min</p></dd>
+<dt id="ajustes--mod17-keep-band-key-3-sec">Keep BAND key 3 sec.</dt><dd><p>Define o que acontece ao segurar o BAND por 3 s: desligar (Power off), apagar só a tela (Mute screen) ou nada (Disable).</p><p>Valores: Power off, Mute screen, Disable</p></dd>
+<dt id="ajustes--mod17-dynamic-spi-speed">Dynamic SPI speed</dt><dd><p>Muda a velocidade da comunicação entre o processador e a tela (de 5 a 70 MHz). Em Auto, o rádio escolhe a velocidade conforme a frequência sintonizada.</p><p>Valores: De 5 a 70 MHz, ou Auto</p></dd>
+<dt id="ajustes--mod17-auto-still-screen">Auto still screen</dt><dd><p>Depois do tempo de Still screen timer sem uso, a tela congela: continua acesa, mostrando a última imagem, mas para de se atualizar. Quando você mexe no rádio, ela volta ao normal.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-still-screen-timer">Still screen timer</dt><dd><p>Quantos segundos sem uso até a tela congelar, de 0 a 120.</p><p>Valores: 0 a 120 s</p></dd>
+<dt id="ajustes--mod17-power-off">Power off</dt><dd><p>Desliga o rádio pelo menu. Para ligar de novo, aperte o BW.</p><p>Valores: Desliga pelo software.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-audio-settings">Audio settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-volume">Set volume</dt><dd><p>Ganho interno de áudio do sintonizador (de −60 a +24 dB), aplicado antes do botão de volume.</p><p>Padrão: 0 dB<br>Valores: −60 a 24 dB</p></dd>
+<dt id="ajustes--mod17-audio-output">Audio output</dt><dd><p>No modo MPX, o canal esquerdo sai mono e o direito leva o sinal completo da emissora, com o piloto estéreo e o RDS.</p><p>Valores: Stereo, MPX</p></dd>
+<dt id="ajustes--mod17-stereo-threshold">Stereo threshold</dt><dd><p>Abaixo desta força de sinal, o rádio reduz a separação estéreo e caminha para o mono.</p><p>No Brasil: <strong>≈ 40 dBµV</strong>. Com sinal fraco, força o mono e reduz o chiado.<br>Valores: Off ou 30 a 60 dBµV</p></dd>
+<dt id="ajustes--mod17-high-cut-corner">High cut corner</dt><dd><p>Quando o corte de agudos entra, ele atenua o som acima desta frequência.</p><p>Valores: 1500 a 7000 Hz</p></dd>
+<dt id="ajustes--mod17-high-cut-threshold">High cut threshold</dt><dd><p>Abaixo desta força de sinal, o corte de agudos entra.</p><p>Valores: Off ou 20 a 60 dBµV</p></dd>
+<dt id="ajustes--mod17-use-squelch">Use squelch</dt><dd><p>O squelch cala o áudio quando não há sinal útil, para você não ouvir chiado entre as emissoras. On usa o botão SQL do rádio. Auto decide sozinho pela qualidade do sinal.</p><p>No Brasil: <strong>Off</strong>. Para caçar emissoras fracas. Em Auto, o rádio pode esconder sinais distantes.<br>Valores: On, Off, Auto</p></dd>
+<dt id="ajustes--mod17-fm-deemphasis">FM deemphasis</dt><dd><p>A emissora reforça os agudos ao transmitir (pré-ênfase), e o rádio os corta na mesma medida ao receber. O som volta ao natural e o chiado cai.</p><p>No Brasil: <strong>50us</strong>. O Brasil usa 50 µs, como manda o Ato Anatel nº 8.104/2022, ao contrário do resto das Américas.<br>Valores: 50us, 75us, Off</p></dd>
+<dt id="ajustes--mod17-beep-at-band-edge">Beep at band edge</dt><dd><p>Toca um bipe quando a sintonia passa do fim da faixa e volta ao começo.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-beep-at-operation">Beep at operation</dt><dd><p>Toca um bipe a cada botão ou giro do knob.</p><p>Valores: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-display-settings">Display settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-language">Language</dt><dd><p>Idioma do menu: inglês ou chinês simplificado.</p><p>Valores: English, 简体中文</p></dd>
+<dt id="ajustes--mod17-brightness">Brightness</dt><dd><p>Brilho da tela, de 1 a 100%.</p><p>Valores: 1 a 100 %</p></dd>
+<dt id="ajustes--mod17-theme">Theme</dt><dd><p>Esquema de cores da interface. São 15 temas.</p><p>Valores: Essence, Cyan, Crimson, Monochrome, Volcano, Dendro, Sakura, Whiteout, Tangerine, Ocean, Indigo, Maroon, Chinese Red, Retro, GoldBrite</p></dd>
+<dt id="ajustes--mod17-frequency-font">Frequency font</dt><dd><p>Fonte dos números grandes da frequência.</p><p>Valores: Classic, Roubenstil, Motoya, Aura2, Comic, Modern</p></dd>
+<dt id="ajustes--mod17-meter-refresh-interval">Meter refresh interval</dt><dd><p>De quanto em quanto tempo o medidor de sinal se atualiza, de 30 a 1000 ms.</p><p>Valores: 30 a 1000 ms</p></dd>
+<dt id="ajustes--mod17-meter-display-style">Meter display style</dt><dd><p>Visual do medidor de sinal: Classic ou New.</p><p>Valores: Classic, New</p></dd>
+<dt id="ajustes--mod17-set-ui-round">Set UI round</dt><dd><p>Escolhe onde a interface usa cantos arredondados: menu, botões, ícones ou bordas.</p><p>Valores: Menu, Button, Icon, Border</p></dd>
+<dt id="ajustes--mod17-menu-display-style">Menu display style</dt><dd><p>Layout do menu: o novo, na vertical ou na horizontal, ou o clássico.</p><p>Valores: New (Vertical), New (Horizontal), Classic</p></dd>
+<dt id="ajustes--mod17-show-notification">Show notification</dt><dd><p>Mostra avisos na tela, como hora sincronizada ou ajustes salvos.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-notification-mode">Notification mode</dt><dd><p>Onde os avisos aparecem: numa barra discreta (Message bar), numa caixa no meio da tela (Message box) ou onde o rádio decidir (Auto).</p><p>Valores: Auto, Message bar, Message box</p></dd>
+<dt id="ajustes--mod17-clock-debug-info-e-frequency-name-color">Clock, Debug info e Frequency name color</dt><dd><p>Cores do relógio, das informações de depuração e do nome da frequência: uma cor fixa ou Dynamic.</p><p>Valores: Uma cor fixa ou Dynamic</p></dd>
+<dt id="ajustes--mod17-show-frequency-tips">Show frequency tips</dt><dd><p>Mostra uma etiqueta junto da frequência: RDX, WEK, MED, STR ou SPR. Pelos nomes, parecem classes de força do sinal: WEK (fraco), MED (médio), STR (forte) e SPR (muito forte).</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-my-logo-image">My logo image</dt><dd><p>Troca a imagem da tela de abertura por um arquivo seu, em JPG, BMP ou PNG.</p><p>Valores: Arquivo JPG, BMP ou PNG.</p></dd>
+<dt id="ajustes--mod17-my-logo-border">My logo border</dt><dd><p>Moldura do logo da tela de abertura.</p><p>Valores: Retângulo, tambor, elipse, círculo, hexágono, paralelogramo, losango ou coração</p></dd>
+<dt id="ajustes--mod17-power-saving-mode">Power saving mode</dt><dd><p>Liga um modo de economia de energia. O rádio avisa ao entrar e ao sair dele.</p><p>Valores: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-rds-settings">RDS settings</h3>
+<p>Boa parte destas opções só aparece no modo avançado.</p>
+<p>A vista RDS avançada do código-base mostra PI, ECC, LIC, PIN, flags DI, AF, EON, RT+, aplicações ODA e erros por bloco.</p>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-show-rds-errors">Show RDS errors</dt><dd><p>Define quantos erros o rádio aceita nos dados de RDS: Small aceita erros pequenos corrigidos, Large aceita erros maiores e All aceita tudo.</p><p>Valores: Small, Large, All, Off</p></dd>
+<dt id="ajustes--mod17-region">Region</dt><dd><p>Ajusta o RDS à região: a tabela de tipos de programa (PTY) e, nos Estados Unidos e no Canadá, a conversão do código da emissora em prefixo, como KXYZ.</p><p>No Brasil: <strong>Europe</strong>. O RDS brasileiro segue o modelo europeu, com PI distribuído pela Anatel.<br>Valores: Europe, USA(DB), USA, Canada</p></dd>
+<dt id="ajustes--mod17-rds-show-underscore">RDS Show underscore</dt><dd><p>Troca os espaços por sublinhado: só no nome da emissora (PS only) ou também no texto (On).</p><p>Valores: Off, On, PS only</p></dd>
+<dt id="ajustes--mod17-rds-filter">RDS filter</dt><dd><p>Passa os dados de RDS por um filtro com memória antes de mostrar.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-show-pi-errors">Show PI errors</dt><dd><p>Mostra o código PI da emissora mesmo antes de ele chegar sem erros.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-use-af">Use AF</dt><dd><p>Com o AF ligado, o rádio troca sozinho para outra frequência da mesma emissora quando o sinal piora. Com REG On, só aceita frequências com a mesma programação regional.</p><p>No Brasil: <strong>Off</strong>. Em DX e buscas, evita que o rádio pule sozinho para outra frequência.<br>Valores: Off, On/REG On, On/REG Off</p></dd>
+<dt id="ajustes--mod17-rt-buffering">RT buffering</dt><dd><p>Só mostra o RadioText, o texto que corre na tela, quando ele chega completo, em vez de ir trocando letra por letra.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-auto-sort-af">Auto sort AF</dt><dd><p>Ordena a lista de frequências alternativas (AF) da menor para a maior.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-show-long-ps">Show long PS</dt><dd><p>Mostra o nome longo da emissora (Long PS), com até 32 caracteres, quando ela transmite.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-fast-ps">Fast PS</dt><dd><p>Mostra as letras do nome da emissora (PS) assim que chegam, sem esperar a confirmação. Initial faz isso só até o nome completar.</p><p>Valores: Inclui Initial; os outros valores não foram confirmados</p></dd>
+<dt id="ajustes--mod17-show-rds-clock">Show RDS clock</dt><dd><p>Mostra na tela a hora que a emissora manda pelo RDS.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-disable-all-rds">Disable all RDS</dt><dd><p>Desliga toda a decodificação de RDS.</p><p>Valores: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-fm-settings">FM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-converter-offset">Set converter offset</dt><dd><p>Soma um valor à frequência mostrada, para quem usa um conversor de RF externo.</p><p>Valores: 0 a 2400 MHz</p></dd>
+<dt id="ajustes--mod17-set-low-band-edge">Set low band edge</dt><dd><p>Frequência mais baixa da faixa de FM. Ao passar dela, o knob volta para o fim da faixa.</p><p>No Brasil: <strong>76,1 MHz</strong>. A faixa passa a cobrir o FM estendido, de 76,1 a 87,3 MHz.<br>Valores: 65 a 107,9 MHz</p></dd>
+<dt id="ajustes--mod17-set-high-band-edge">Set high band edge</dt><dd><p>Frequência mais alta da faixa de FM. Ao passar dela, o knob volta para a borda baixa.</p><p>No Brasil: <strong>108,0 MHz</strong>. A faixa passa a cobrir o FM estendido, de 76,1 a 87,3 MHz.<br>Valores: 66 a 108 MHz</p></dd>
+<dt id="ajustes--mod17-set-level-offset">Set level offset</dt><dd><p>Soma ou subtrai decibéis da leitura de sinal.</p><p>Valores: −25 a 15 dB</p></dd>
+<dt id="ajustes--mod17-set-low-level-threshold">Set low level threshold</dt><dd><p>Abaixo desta força de sinal, o rádio acinzenta o medidor de modulação e os rótulos do RDS.</p><p>Valores: −15 a 30 dBµV</p></dd>
+<dt id="ajustes--mod17-softmute-fm">Softmute FM</dt><dd><p>Abaixa o volume aos poucos quando o sinal enfraquece e o chiado sobe.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-fm-noise-blanker">FM Noise blanker</dt><dd><p>Corta ruídos de impulso: os estalos curtos de motores, cercas elétricas e aparelhos elétricos. A porcentagem é a força do corte.</p><p>Valores: Off ou 50 a 150 %</p></dd>
+<dt id="ajustes--mod17-fm-default-stepsize">FM default stepsize</dt><dd><p>Quanto a frequência anda a cada clique do knob no FM.</p><p>Padrão: 100 kHz<br>No Brasil: <strong>200 kHz</strong>. Com a borda em 76,1 MHz, a sintonia deve andar pelos canais brasileiros, que terminam em decimal ímpar; confira no seu aparelho. Em DX, use 100 kHz para parar também nos decimais pares.<br>Valores: 100 kHz, 200 kHz, 50 kHz</p></dd>
+<dt id="ajustes--mod17-fm-agc">FM AGC</dt><dd><p>Define a partir de que força de sinal o rádio começa a reduzir a própria amplificação no FM.</p><p>No Brasil: <strong>92 dBµV</strong>. É o mais sensível. Se aparecerem estações fantasmas perto de emissoras fortes, teste 87 ou 84.<br>Valores: 92 dBµV, 90 dBµV, 87 dBµV, 84 dBµV</p></dd>
+<dt id="ajustes--mod17-fmsi-stereo-improve">FMSI stereo improve</dt><dd><p>Liga um processamento que melhora o estéreo em sinais fracos. Só existe nos sintonizadores TEF6687 e TEF6689.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-set-fml-band">Set FML band</dt><dd><p>Define a faixa baixa de FM (FML) que o BAND oferece: 65 a 74 MHz, a OIRT do Leste Europeu, ou 76 a 87 MHz.</p><p>Valores: 65–74 MHz, 76–87 MHz</p></dd>
+</dl>
+<h3 id="ajustes--mod17-am-settings">AM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-softmute-am">Softmute AM</dt><dd><p>Abaixa o volume aos poucos quando o sinal de AM enfraquece e o ruído sobe.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-am-noise-blanker">AM Noise blanker</dt><dd><p>Corta ruídos de impulso: os estalos curtos de motores, cercas elétricas e aparelhos elétricos. A porcentagem é a força do corte.</p><p>Valores: Off ou 50 a 150 %</p></dd>
+<dt id="ajustes--mod17-am-rf-level-offset">AM RF Level offset</dt><dd><p>Soma ou subtrai decibéis da leitura de sinal no AM.</p><p>Valores: −50 a 15 dB</p></dd>
+<dt id="ajustes--mod17-show-sw-wavelength">Show SW wavelength</dt><dd><p>Mostra em que faixa de ondas curtas você está, em metros, como 49 m ou 31 m, junto da frequência.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-cochannel-detector-sensitivity">CoChannel Detector sensitivity</dt><dd><p>Liga o detector de co-canal: o rádio mostra CO na tela quando percebe duas emissoras na mesma frequência. O número é a sensibilidade.</p><p>Valores: Off ou 50 a 150 %</p></dd>
+<dt id="ajustes--mod17-cochannel-detector-threshold">CoChannel Detector threshold</dt><dd><p>Quantas detecções seguidas o detector de co-canal precisa para mostrar CO.</p><p>Valores: 1 a 15</p></dd>
+<dt id="ajustes--mod17-am-att">AM ATT</dt><dd><p>Atenua a entrada de AM em 6 a 36 dB.</p><p>Valores: Off ou 6 a 36 dB</p></dd>
+<dt id="ajustes--mod17-am-agc">AM AGC</dt><dd><p>O mesmo que o FM AGC, no AM e nas ondas curtas: a força de sinal a partir da qual o rádio reduz a própria amplificação.</p><p>Valores: 94 a 102 dBµV</p></dd>
+<dt id="ajustes--mod17-mw-default-stepsize">MW default stepsize</dt><dd><p>Quanto a frequência anda a cada clique nas ondas médias: 9 ou 10 kHz.</p><p>No Brasil: <strong>10 kHz</strong>. É a grade de ondas médias das Américas, de 520 a 1720 kHz.<br>Valores: 9 kHz, 10 kHz</p></dd>
+<dt id="ajustes--mod17-air-band-conversion">AIR band Conversion</dt><dd><p>Frequência do oscilador do conversor externo de banda aérea, em MHz.</p><p>Valores: Frequência do oscilador do conversor externo, em MHz.</p></dd>
+<dt id="ajustes--mod17-air-start-frequency">AIR start frequency</dt><dd><p>Onde começa a faixa AIR, em MHz.</p><p>Valores: Início da faixa AIR, em MHz.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-connectivity">Connectivity</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-usb-mode">USB mode</dt><dd><p>Escolhe com qual programa de computador a porta USB conversa: XDR-GTK ou RDS Spy.</p><p>Valores: XDRGTK, RDS Spy</p></dd>
+<dt id="ajustes--mod17-wi-fi-active">Wi-Fi active</dt><dd><p>Liga o Wi-Fi do rádio.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-configure-wi-fi">Configure Wi-Fi</dt><dd><p>Abre o assistente que conecta o rádio a uma rede.</p><p>Valores: Até 3 redes, só de 2,4 GHz: pelo teclado na tela (SSID e senha), pelo navegador (portal em 192.168.4.1) ou Delete Wi-Fi.</p></dd>
+<dt id="ajustes--mod17-set-xdrgtk-password">Set XDRGTK password</dt><dd><p>Senha que o XDR-GTK precisa para controlar o rádio pela rede.</p><p>Valores: Até 8 caracteres.</p></dd>
+<dt id="ajustes--mod17-stationlist-client-ip">Stationlist client IP</dt><dd><p>Endereço IP do computador que roda o StationList.</p><p>Valores: Endereço IP.</p></dd>
+<dt id="ajustes--mod17-stationlist-id">Stationlist ID</dt><dd><p>Número deste rádio no StationList.</p><p>Valores: 1 a 10</p></dd>
+<dt id="ajustes--mod17-screen-off-on-xdrgtk">Screen off on XDRGTK</dt><dd><p>Apaga a tela do rádio enquanto o XDR-GTK está conectado.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-wi-fi-auto-disconnect">Wi-Fi auto disconnect</dt><dd><p>Desliga o Wi-Fi depois do tempo escolhido, ou logo depois de acertar a hora (After time sync).</p><p>No Brasil: <strong>After time sync</strong>. O Wi-Fi desliga depois de acertar a hora, o que economiza bateria e mantém a leitura dela.<br>Valores: De 1 a 1440 min, ou After time sync</p></dd>
+<dt id="ajustes--mod17-set-ntp-server">Set NTP server</dt><dd><p>Servidor de hora pela internet. Vem com o cn.pool.ntp.org, da China.</p><p>Padrão: cn.pool.ntp.org<br>No Brasil: <strong>a.st1.ntp.br</strong>. É o servidor do NTP.br, que usa os relógios atômicos do Observatório Nacional.<br>Valores: Endereço do servidor.</p></dd>
+<dt id="ajustes--mod17-bluetooth">Bluetooth</dt><dd><p>Liga o Bluetooth para o rádio controlar outro aparelho (Config slave host).</p><p>Valores: Config slave host: controle de outro aparelho, sem áudio.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-operation-settings">Operation settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-touch-type">Touch type</dt><dd><p>Como o firmware lê a tela de toque: por interrupção (Int33 ou Int27) ou por consulta periódica (Polling). Off desliga o toque.</p><p>Valores: Int33, Int27, Off, Polling</p></dd>
+<dt id="ajustes--mod17-touch-calibration">Touch calibration</dt><dd><p>Abre a calibração do toque: você toca nos pontos indicados na tela.</p><p>Valores: Abre a calibração.</p></dd>
+<dt id="ajustes--mod17-rotary-adjust-squelch">Rotary adjust squelch</dt><dd><p>Permite ajustar o limiar do squelch girando o knob de sintonia, num modo que você liga e desliga.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-knob-mode">Knob mode</dt><dd><p>Modo de funcionamento do knob: Classic ou New.</p><p>Valores: Classic, New</p></dd>
+<dt id="ajustes--mod17-knob-reverse">Knob reverse</dt><dd><p>Inverte o sentido do knob: girar para a direita passa a descer a frequência, e vice-versa.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-knob-acceleration">Knob acceleration</dt><dd><p>Acelera a sintonia quando você gira o knob rápido: Medium ou Fast.</p><p>Valores: Off, Medium, Fast</p></dd>
+<dt id="ajustes--mod17-quickly-switch-menu">Quickly switch menu</dt><dd><p>Atalho para trocar de grupo no menu com menos passos.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-long-press-rotary-key">Long press Rotary key</dt><dd><p>Escolhe o que o toque longo nesta tecla faz: travar as teclas, a função original, abrir o menu, o teclado, a página de atalhos, o RDS avançado ou a tela de AF.</p><p>Valores: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-bw-key">Long press BW key</dt><dd><p>Escolhe o que o toque longo nesta tecla faz: travar as teclas, a função original, abrir o menu, o teclado, a página de atalhos, o RDS avançado ou a tela de AF.</p><p>Valores: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-mode-key">Long press MODE key</dt><dd><p>Escolhe o que o toque longo nesta tecla faz: travar as teclas, a função original, abrir o menu, o teclado, a página de atalhos, o RDS avançado ou a tela de AF.</p><p>Valores: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-band-key">Long press BAND key</dt><dd><p>Escolhe o que o toque longo nesta tecla faz: travar as teclas, a função original, abrir o menu, o teclado, a página de atalhos, o RDS avançado ou a tela de AF.</p><p>Valores: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-auto-save-change">Auto save change</dt><dd><p>Grava sozinho as mudanças do menu. Em Off, o rádio pergunta Save ou Discard ao sair.</p><p>Valores: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-other-settings">Other settings</h3>
+<p>Boa parte destas opções só aparece no modo avançado.</p>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-date-and-time">Set date and time</dt><dd><p>Acerta a data e a hora à mão.</p><p>Valores: Data, hora e modo data + hora.</p></dd>
+<dt id="ajustes--mod17-12-24-h">12/24 h</dt><dd><p>Mostra o relógio em 12 h ou 24 h.</p><p>Valores: 12 h, 24 h</p></dd>
+<dt id="ajustes--mod17-set-local-time-zone">Set local time zone</dt><dd><p>Fuso aplicado à hora que vem da internet, em GMT±hh:mm.</p><p>No Brasil: <strong>GMT−03:00</strong>. Horário de Brasília. Escolha o fuso do seu estado.<br>Valores: Fuso em GMT±hh:mm.</p></dd>
+<dt id="ajustes--mod17-ntp-time-sync">NTP time sync</dt><dd><p>Acerta o relógio pela internet quando o Wi-Fi está ligado; desde o Mod16, a cada 30 minutos.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-rds-time-sync">RDS time sync</dt><dd><p>Acerta o relógio pela hora que a emissora manda no RDS.</p><p>No Brasil: <strong>Off</strong>. Com o NTP funcionando, porque algumas emissoras mandam a hora errada.<br>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-sleep-clock-correction">Sleep clock correction</dt><dd><p>Corrige o relógio em alguns segundos a cada 24 horas.</p><p>Valores: Segundos por 24 h.</p></dd>
+<dt id="ajustes--mod17-power-on-timer">Power on timer</dt><dd><p>Liga o rádio sozinho num horário.</p><p>Valores: Horário.</p></dd>
+<dt id="ajustes--mod17-low-battery-protect">Low battery protect</dt><dd><p>Desliga o rádio quando a bateria chega ao limite escolhido.</p><p>Valores: Limite da bateria.</p></dd>
+<dt id="ajustes--mod17-delete-rds-dictionary">Delete RDS dictionary</dt><dd><p>Apaga o dicionário de RDS guardado pelo rádio.</p><p>Valores: Mostra Deleted ou Not deleted.</p></dd>
+<dt id="ajustes--mod17-system-information">System information</dt><dd><p>Mostra a versão do firmware, a data de compilação, a memória, o armazenamento, o sintonizador, o servidor de hora, o IP e o MAC.</p><p>Valores: Versão, data de compilação, RAM, armazenamento, sintonizador, NTP, IP e MAC.</p></dd>
+<dt id="ajustes--mod17-developer-mode-e-manage-my-data">Developer mode e Manage my data</dt><dd><p>Funções de desenvolvimento e de gestão de dados.</p><p>Valores: Não documentado.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-my-settings">My settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-ats-scan-schemes">ATS / Scan schemes</dt><dd><p>Guarda esquemas de busca automática (ATS) e de varredura, com faixa e critérios.</p><p>Valores: Esquemas salvos.</p></dd>
+<dt id="ajustes--mod17-my-theme">My theme</dt><dd><p>Troca o tema sozinho entre até 4 favoritos, em sequência ou ao acaso.</p><p>Valores: Sequential, Random</p></dd>
+<dt id="ajustes--mod17-receive-plan">Receive plan</dt><dd><p>Liga e desliga o rádio por agenda, numa faixa e frequência definidas.</p><p>Valores: Faixa, frequência e horário.</p></dd>
+<dt id="ajustes--mod17-my-shortcut-icon">My Shortcut icon</dt><dd><p>Escolhe os 7 atalhos da página de atalhos.</p><p>Valores: 7 atalhos.</p></dd>
+<dt id="ajustes--mod17-save-delete-my-settings">Save / Delete my settings</dt><dd><p>Grava os seus ajustes como um padrão de fábrica pessoal, ou apaga essa gravação.</p><p>Valores: Grava ou apaga o conjunto pessoal.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-auto-search">Auto search</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-search-save-mode">Search &amp; save mode</dt><dd><p>Como a busca automática grava: Overwrite apaga as memórias da faixa e grava de novo; Append acrescenta depois das que já existem.</p><p>Valores: Overwrite, Append, Continuously append</p></dd>
+<dt id="ajustes--mod17-search-band">Search band</dt><dd><p>Faixa da busca automática.</p><p>Valores: FM, LW, MW, SW, AIR e outras; a lista do manual continua</p></dd>
+<dt id="ajustes--mod17-fm-scan-sensitivity">FM scan sensitivity</dt><dd><p>Quão exigente a busca é para parar numa emissora de FM, de 1 a 15.</p><p>Valores: 1 a 15</p></dd>
+<dt id="ajustes--mod17-am-scan-sensitivity">AM scan sensitivity</dt><dd><p>Quão exigente a busca é para parar numa emissora de AM, de 1 a 20.</p><p>Valores: 1 a 20</p></dd>
+<dt id="ajustes--mod17-judgment-mode">Judgment mode</dt><dd><p>Critério da busca automática: Quality priority grava só sinais bons; Quantity priority grava o máximo de estações.</p><p>Valores: Quality priority, Quantity priority</p></dd>
+<dt id="ajustes--mod17-start-channel">Start channel</dt><dd><p>Primeira memória que a busca automática usa.</p><p>Valores: 1 a 99</p></dd>
+<dt id="ajustes--mod17-sw-search-start-stop">SW search start / stop</dt><dd><p>Limites da busca em ondas curtas, de 1800 a 27000 kHz.</p><p>Valores: 1800 a 27000 kHz</p></dd>
+<dt id="ajustes--mod17-arrange-stations">Arrange stations</dt><dd><p>Reorganiza as memórias: só tira os buracos (Only defrag) ou tira e ordena por frequência (Defrag and sort).</p><p>Valores: Only defrag, Defrag and sort</p></dd>
+<dt id="ajustes--mod17-delete-stations">Delete stations</dt><dd><p>Apaga todas as memórias da faixa escolhida, não só uma.</p><p>Valores: Esvazia a faixa inteira escolhida.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-frequency-scanning">Frequency scanning</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-scanning-band">Scanning band</dt><dd><p>Faixa da varredura de DX.</p><p>Valores: FM, LW, MW, SW, AIR, Default, FML</p></dd>
+<dt id="ajustes--mod17-begin-end-channel">Begin / End channel</dt><dd><p>Primeira e última memória da varredura.</p><p>Valores: Valores não documentados.</p></dd>
+<dt id="ajustes--mod17-wait-time">Wait time</dt><dd><p>Tempo em cada frequência durante a varredura.</p><p>Valores: Valores não documentados.</p></dd>
+<dt id="ajustes--mod17-exclude-only">Exclude / Only</dt><dd><p>Em Only, a varredura passa só pelas memórias do intervalo. Em Exclude, varre a faixa toda e pula as frequências gravadas nesse intervalo.</p><p>Valores: Exclude, Only</p></dd>
+<dt id="ajustes--mod17-cancel">Cancel</dt><dd><p>Faz a varredura parar sozinha: ao decodificar o código de uma emissora (Correct PI) ou ao achar sinal (Signal). Off nunca para.</p><p>Valores: Signal, Off, Correct PI</p></dd>
+<dt id="ajustes--mod17-stay-break">Stay / Break</dt><dd><p>O que a varredura faz quando para numa emissora: fica nela (Stay) ou encerra (Break).</p><p>Valores: Stay, Break</p></dd>
+<dt id="ajustes--mod17-wait-on-signal-only">Wait on signal only</dt><dd><p>Usa o tempo de espera só nas frequências com sinal; nas vazias, a varredura segue na hora.</p><p>Valores: Off, On</p></dd>
+<dt id="ajustes--mod17-hold-time">Hold time</dt><dd><p>Tempo de espera da varredura.</p><p>Valores: Valores não documentados.</p></dd>
+</dl></div><div class="prose">
+
+<h2 id="ajustes--fontes">Fontes</h2>
+<ul>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Manual DP-666 Megatron Mod17</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_CN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Manual em chinês do Mod17</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">PE5PVB/TEF6686_ESP32</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained" target="_blank" rel="noopener noreferrer">Wiki — Menu options explained</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Ajustes do rádio</p><a class="prox-next" href="../computador/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Computador e conectividade</span><span class="prox-desc">Ligado ao computador, o DP-666 ganha uma tela grande: sintonia pelo mouse, RDS em detalhe, registros e atualização do firmware.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../brasil/"><span class="mi-nome">Configuração para o Brasil<span class="mi-sub">Por que cada ajuste, com as normas</span></span></a></li><li class="mi-item"><a class="mi" href="../mod17/"><span class="mi-nome">Recursos ocultos do Mod17<span class="mi-sub">Opções que não aparecem no manual</span></span></a></li></ul><p class="prox-volta"><a href="../uso/">Página anterior: Uso do rádio</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/" aria-current="page">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

@@ -24,11 +24,77 @@
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
 <link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/">
 <link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="DP-666: o guia definitivo do rádio DEEPELEC">
+<meta property="og:description" content="O guia definitivo e independente do rádio DEEPELEC DP-666, com chip NXP TEF6686: botões, menus, ajustes para o Brasil e solução de problemas.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","name":"DP-666: o guia definitivo","about":"Rádio DEEPELEC DP-666 (NXP TEF6686 + ESP32)","url":"https://mflipe.github.io/guia-dp666/","inLanguage":"pt-BR","isAccessibleForFree":true,"author":{"@type":"Person","name":"mflipe","url":"https://github.com/mflipe"},"license":"https://creativecommons.org/licenses/by/4.0/","creditText":"DP-666: o guia definitivo, por mflipe. Disponível em https://mflipe.github.io/guia-dp666/. Licença CC BY 4.0."}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Tektur:wght@500;600;700&display=swap">
+<link rel="preload" href="letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* As fontes vêm do próprio site, e não do Google: o guia funciona offline e quem lê não manda o IP a terceiros.
+   Arquivos do Fontsource (npm @fontsource/geist-sans, geist-mono e tektur 5.3.0), licença SIL OFL 1.1; as licenças
+   estão em ui/letras/ (a pasta não se chama fontes porque /fontes/ é o endereço da página de fontes do guia).
+    é a pasta da raiz do site: vazio no português e ../ no inglês. */
+@font-face { font-family: "Geist"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("letras/geist-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Geist"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/geist-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Geist"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("letras/geist-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Geist"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("letras/geist-sans-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("letras/geist-mono-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("letras/geist-mono-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/geist-mono-latin-ext-500-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/geist-mono-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/tektur-greek-500-normal.woff2") format("woff2");
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/tektur-latin-ext-500-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("letras/tektur-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("letras/tektur-greek-600-normal.woff2") format("woff2");
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("letras/tektur-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("letras/tektur-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("letras/tektur-greek-700-normal.woff2") format("woff2");
+  unicode-range: U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("letras/tektur-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Tektur"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("letras/tektur-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
 @layer tokens, base, conteudo, componentes, ferramentas, layout;
 @layer tokens {
 /* ---------- tokens/tokens.css ---------- */
@@ -1758,7 +1824,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .hlp-sym::after { content: "›"; font-size: 1.2rem; color: var(--muted); }
 .hlp-view [id] { scroll-margin-top: calc(var(--topbar-h, 56px) + 16px); }
 .hlp-card { scroll-margin-top: 96px; padding: 0; border: 0; border-radius: 0; background: none; }
-.hlp-card h3 { margin: 0 0 10px; font-size: 1.1rem; line-height: 1.35; }
+.hlp-card h2 { margin: 0 0 10px; font-size: 1.1rem; line-height: 1.35; }
 .hlp-card p, .hlp-card li { line-height: 1.6; }
 .hlp-ask { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
 .hlp-ask > span { font-weight: 600; margin-right: 4px; }
@@ -2046,6 +2112,48 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
 .prox-volta { display: flex; flex-wrap: wrap; gap: 0 24px; margin: 8px 0 0; padding-left: 32px; }
 .prox-volta a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font: 500 0.95rem var(--font-display); letter-spacing: 0.02em; text-decoration: none; }
 .prox-volta a:hover { color: var(--accent); text-decoration: underline; }
+/* ---------- layout/leitura.css ---------- */
+/* páginas de leitura (web.py): o texto de uma página com endereço próprio, sem o botão de sintonia nem as
+   ferramentas. A barra do alto leva o nome do guia, a troca de idioma e o caminho para o guia interativo */
+.le-topo { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(6px); }
+.le-topo-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; max-width: calc(var(--wrap) + 64px); margin: 0 auto; padding: 10px 32px; }
+.le-marca { font: 600 15px var(--font-display); letter-spacing: 0.02em; color: var(--ink); text-decoration: none; }
+.le-acoes { display: flex; align-items: center; gap: 8px; }
+.le-lingua, .le-abrir { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; border-radius: 8px; font: 600 14px var(--font-sans); text-decoration: none; }
+.le-lingua { min-width: 44px; border: 1px solid var(--rule); color: var(--ink); }
+.le-abrir { padding: 0 14px; background: var(--accent); color: var(--accent-ink); }
+.le-lingua:focus-visible, .le-abrir:focus-visible, .le-marca:focus-visible { outline: 2px solid var(--accent-mark); outline-offset: 2px; }
+@media (hover: hover) {
+  .le-lingua:hover { border-color: var(--accent); color: var(--accent); }
+  .le-abrir:hover { filter: brightness(1.08); }
+}
+body.leitura { --topbar-h: 64px; }   /* os títulos levados por um link param abaixo da barra fixa */
+body.leitura .main { padding-bottom: 64px; }
+.le-aviso { max-width: 68ch; margin: 0 0 28px; padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-mark); color: var(--muted); }
+.le-ferramenta { max-width: 68ch; margin: 16px 0 28px; }
+.le-ferramenta p { margin: 0; }
+.le-ajustes { margin: 0 0 8px; }
+.le-ajustes dt { margin-top: 18px; font-weight: 600; }
+.le-ajustes dd { margin: 4px 0 0; }
+.le-ajustes dd p { margin: 4px 0 0; }
+.le-paginas { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.le-paginas h2 { margin: 0 0 12px; font: 600 1.05rem var(--font-display); letter-spacing: 0.02em; }
+.le-paginas ul { margin: 0; padding: 0; list-style: none; columns: 2 15rem; column-gap: 32px; }
+.le-paginas li { padding: 6px 0; break-inside: avoid; }
+.le-paginas a[aria-current] { color: var(--ink); font-weight: 600; text-decoration: none; }
+/* no celular a barra rola com a página, numa linha só: o nome encolhe para DP-666 */
+@media (max-width: 640px) {
+  body.leitura { --topbar-h: 0px; }
+  .le-topo { position: static; }
+  .le-topo-in { flex-wrap: nowrap; padding: 8px 16px; }
+  .le-marca { font-size: 14px; }
+  .le-marca-resto { display: none; }
+  .le-lingua, .le-abrir { min-height: 40px; }
+  .le-abrir { padding: 0 12px; font-size: 13.5px; }
+}
+@media print {
+  .le-topo, .le-aviso, .le-paginas { display: none; }
+}
 }
 </style>
 </head>
@@ -2053,7 +2161,7 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
 <div class="fundo" aria-hidden="true"><svg class="f-esq" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="tr" d="M8 30 V970"></path><path class="pu" pathLength="1000" d="M8 30 V970"></path></svg><svg class="f-dir" viewBox="0 0 16 1000" preserveAspectRatio="none"><path class="tr" d="M8 30 V970"></path><path class="pu" pathLength="1000" d="M8 970 V30"></path></svg></div>
 <div class="app" id="app">
   <div class="main">
-    <div class="topo-conta"><button class="profile-chip" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button><div class="lang" role="group" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></div><button type="button" class="tema-btn" aria-haspopup="dialog" data-rotulo="Tema do guia" aria-label="Tema do guia: Automático"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path class="tema-meia" d="M12 4a8 8 0 0 1 0 16z"></path></svg><span class="tema-btn-t">Automático</span></button><button type="button" class="radio-btn" aria-label="Rádio virtual" aria-expanded="false" aria-controls="radio-doca" data-estado="fechado" data-fechar><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M8 8l9-5"></path><circle cx="15.5" cy="14" r="2.75"></circle><path d="M6.5 12.5h3M6.5 15.5h3"></path></svg><span class="radio-btn-t">Rádio virtual</span></button></div>
+    <header class="topo-conta"><button class="profile-chip" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button><div class="lang" role="group" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></div><button type="button" class="tema-btn" aria-haspopup="dialog" data-rotulo="Tema do guia" aria-label="Tema do guia: Automático"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path class="tema-meia" d="M12 4a8 8 0 0 1 0 16z"></path></svg><span class="tema-btn-t">Automático</span></button><button type="button" class="radio-btn" aria-label="Rádio virtual" aria-expanded="false" aria-controls="radio-doca" data-estado="fechado" data-fechar><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M8 8l9-5"></path><circle cx="15.5" cy="14" r="2.75"></circle><path d="M6.5 12.5h3M6.5 15.5h3"></path></svg><span class="radio-btn-t">Rádio virtual</span></button></header>
     <main id="main"><article class="page" id="page-inicio" data-route="inicio" data-toc="[[&quot;inicio--qual-firmware-está-no-meu-rádio&quot;, &quot;Qual firmware está no meu rádio?&quot;], [&quot;inicio--versões-cobertas&quot;, &quot;Versões cobertas&quot;], [&quot;inicio--como-ler-este-guia&quot;, &quot;Como ler este guia&quot;], [&quot;inicio--fontes&quot;, &quot;Fontes&quot;]]" data-sources="3 fontes"><header class="page-head tela-titulo"><div class="tt-topo"><button class="profile-chip" id="profile-btn" type="button" aria-haspopup="dialog" data-set="no"><i aria-hidden="true"></i><span>Seu rádio</span></button><div class="lang" role="group" aria-label="Idioma"><span class="lang-on" aria-current="true" lang="pt-BR">PT</span><a class="lang-link" id="lang-switch" href="en/" data-base="en/" hreflang="en" lang="en" title="Read this guide in English">EN</a></div><button type="button" class="tema-btn" aria-haspopup="dialog" data-rotulo="Tema do guia" aria-label="Tema do guia: Automático"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path class="tema-meia" d="M12 4a8 8 0 0 1 0 16z"></path></svg><span class="tema-btn-t">Automático</span></button><button type="button" class="radio-btn" aria-label="Rádio virtual" aria-expanded="false" aria-controls="radio-doca" data-estado="fechado" data-fechar><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M8 8l9-5"></path><circle cx="15.5" cy="14" r="2.75"></circle><path d="M6.5 12.5h3M6.5 15.5h3"></path></svg><span class="radio-btn-t">Rádio virtual</span></button><button class="tt-busca" type="button" data-buscar aria-label="Buscar no guia"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button></div><div class="tt-grade"><div class="tt-render"><div class="home-radio viewer3d"><div class="v3-stage f3-stage f3-home"><img class="f3-capa" src="img/dp666-3d-capa.webp" width="900" height="560" alt="O rádio DP-666 visto de frente e um pouco de lado, montado com as fotos de cada lado."><button type="button" class="v3-open f3-girar" data-viewer3d-open="fotos-home">Girar em 3D</button></div></div></div><div class="tt-nome"><h1 tabindex="-1" class="tt-h1"><span class="tt-dp"><span class="nw">DP-666</span></span><span class="sr-only">: </span><span class="tt-sub">o guia definitivo</span></h1><p class="lead">Botões, menus, ajustes para o Brasil e solução de problemas do rádio com chip NXP TEF6686.</p></div><nav class="tt-menu" aria-label="Menu do guia"><ul class="mi-lista"><li class="mi-item mi-continuar" hidden><a class="mi" href="#inicio"><span class="mi-nome">Continuar</span><span class="mi-sub"></span></a><p class="mi-desc"></p></li></ul><h2 class="mi-grupo">Começar</h2><ul class="mi-lista"><li class="mi-item" data-route="brasil"><a class="mi" href="#brasil"><span class="mi-nome">Configuração para o Brasil</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Ajustes que fazem diferença para quem usa o DP-666 no Brasil, com as normas que justificam cada um.</p></li></ul><h2 class="mi-grupo">O rádio</h2><ul class="mi-lista"><li class="mi-item" data-route="hardware"><a class="mi" href="#hardware"><span class="mi-nome">Hardware</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Como as peças se ligam, por onde passam a energia e o som, e o datasheet de cada uma.</p></li><li class="mi-item" data-route="uso"><a class="mi" href="#uso"><span class="mi-nome">Uso do rádio</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Controles, sintonia, memórias e buscas no Megatron Mod17.</p></li><li class="mi-item" data-route="ajustes"><a class="mi" href="#ajustes"><span class="mi-nome">Ajustes do rádio</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Cada opção do menu dos dois firmwares, com os valores possíveis, o padrão de fábrica e o recomendado para o Brasil.</p></li><li class="mi-item" data-route="computador"><a class="mi" href="#computador"><span class="mi-nome">Computador e conectividade</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Ligado ao computador, o DP-666 ganha uma tela grande: sintonia pelo mouse, RDS em detalhe, registros e atualização do firmware.</p></li><li class="mi-item" data-route="problemas"><a class="mi" href="#problemas"><span class="mi-nome">Problemas comuns</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código, com os passos para resolver.</p></li><li class="mi-item" data-route="codigos"><a class="mi" href="#codigos"><span class="mi-nome">Mensagens e códigos da tela</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">O que quer dizer cada marca, código e mensagem da tela, com um campo para digitar o que aparece no rádio.</p></li></ul><h2 class="mi-grupo">Firmware</h2><ul class="mi-lista"><li class="mi-item" data-route="firmwares"><a class="mi" href="#firmwares"><span class="mi-nome">Megatron × oficial</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">As duas linhas de firmware que o DP-666 aceita. Trocar de uma para a outra muda menus e recursos e zera as configurações.</p></li><li class="mi-item" data-route="oficial"><a class="mi" href="#oficial"><span class="mi-nome">Uso da linha oficial</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB.</p></li><li class="mi-item" data-route="mod17"><a class="mi" href="#mod17"><span class="mi-nome">Recursos ocultos do Mod17</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">O que existe no Megatron Mod17 e não aparece no manual.</p></li><li class="mi-item" data-route="backup"><a class="mi" href="#backup"><span class="mi-nome">Backup e gravação</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Um backup completo do flash guarda firmware, configurações, memórias e arquivos internos. Com ele, qualquer experimento pode ser desfeito.</p></li></ul><h2 class="mi-grupo">Mais</h2><ul class="mi-lista"><li class="mi-item" data-route="comparacao"><a class="mi" href="#comparacao"><span class="mi-nome">Comparação com outros rádios</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Onde o DP-666 se sai melhor e pior que outros portáteis com TEF6686.</p></li><li class="mi-item" data-route="laboratorio"><a class="mi" href="#laboratorio"><span class="mi-nome">Laboratório</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Ideias de projeto em torno do DP-666, com o que já se sabe sobre cada uma.</p></li><li class="mi-item" data-route="fontes"><a class="mi" href="#fontes"><span class="mi-nome">Fontes</span><span class="mi-aqui">Você está aqui</span></a><p class="mi-desc">Todas as fontes citadas no guia, sem repetição.</p></li></ul></nav><aside class="tt-foco" id="tt-foco" aria-label="Sobre o item em foco"><p class="tf-titulo"></p><p class="tf-desc"></p><ol class="tf-secoes"></ol></aside></div></header><div class="prose"><div class="home-app"><section class="home-profile" id="home-profile" aria-live="polite"></section><h2 class="home-q">O que você quer fazer?</h2><nav class="tool-grid" aria-label="Ferramentas"><a class="tool-card" href="#botoes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="6"/><path d="M12 13.5l3.2-3.2"/><circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="5" cy="7" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Explorar os controles</strong><span>Painel em 3D: toque e segure cada botão e knob.</span></a><a class="tool-card" href="#ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="15" cy="7" r="2.2" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="2.2" fill="currentColor" stroke="none"/><circle cx="13" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg><strong>Achar um ajuste</strong><span>Busca nos menus, com o recomendado para o Brasil.</span></a><a class="tool-card" href="#problemas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9.2a3 3 0 1 1 4.4 2.6c-.9.5-1.4 1.2-1.4 2.2v.6"/><circle cx="12" cy="18.6" r="1.6" fill="currentColor" stroke="none"/></svg><strong>Resolver um problema</strong><span>Escolha o sintoma e siga os passos.</span></a><a class="tool-card" href="#codigos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="13" rx="1"/><circle cx="8.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><path d="M8 14.5h8"/></svg><strong>Entender a tela</strong><span>Digite o que aparece e veja o que significa.</span></a><a class="tool-card" href="#ajustes--brasil"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7.5l1.8 1.8 3-3M4.5 15.5l1.8 1.8 3-3"/><path d="M12.5 8h5M12.5 16h5"/><circle cx="19.5" cy="8" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="16" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Configurar para o Brasil</strong><span>Uma lista para marcar enquanto ajusta o rádio.</span></a><a class="tool-card" href="#computador"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="5" width="15" height="10.5" rx="1"/><path d="M12 15.5v3.5M7.5 19h9"/><circle cx="6" cy="19" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Usar com o computador</strong><span>XDR-GTK, RDS Spy, o rádio no navegador e o logbook.</span></a><a class="tool-card" href="#firmwares"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19.5v-6.5M12 13 6.5 7.5M12 13l5.5-5.5"/><circle cx="5.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="19.5" r="1.7" fill="currentColor" stroke="none"/></svg><strong>Escolher o firmware</strong><span>Megatron ou linha oficial: diferenças e como testar.</span></a><a class="tool-card" href="#backup"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v9M8.5 10.5 12 14l3.5-3.5"/><path d="M6 18.5h12"/><circle cx="4.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="19.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg><strong>Atualizar o firmware</strong><span>Backup, gravação e como voltar atrás.</span></a><a class="tool-card" href="#placa"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="8" height="10" rx="1"/><path d="M8 10H5.5M8 14H5.5M16 10h2.5M16 14h2.5"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="14" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg><strong>Ver a placa em 3D</strong><span>Os chips e o caminho do som.</span></a></nav></div>
 
 <p>Guia independente, em português. Ele junta o que está espalhado entre os manuais do fabricante, o código dos firmwares, fóruns e testes práticos, e cobre as duas linhas de firmware: o <strong>Megatron</strong> (o de toque, com código fechado) e a <strong>linha oficial do PE5PVB</strong> (código aberto).</p>
@@ -4253,7 +4361,7 @@ body.no-titulo.titulo-visivel .sintonia, body.pausado .sintonia { opacity: 0; tr
       <div class="search" role="search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
         <label for="q" class="sr-only">Buscar no guia</label>
-        <input id="q" type="search" placeholder="Buscar no guia" autocomplete="off" spellcheck="false" aria-controls="results" aria-expanded="false">
+        <input id="q" type="search" placeholder="Buscar no guia" autocomplete="off" spellcheck="false" aria-controls="results" aria-expanded="false" role="combobox" aria-autocomplete="list">
       </div>
       <button class="pausa-x" type="button" data-fechar aria-label="Fechar o menu"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4 L14 14 M14 4 L4 14"></path></svg></button>
     </div>
@@ -5137,7 +5245,8 @@ var Componentes = (function () {
         total += items.length;
         if (!items.length) return "";
         nav.push([gi, g, items.length]);
-        return '<section class="aj-group" id="' + g.id + '" data-g="' + gi + '"><h3 class="aj-gh">' + esc(g.titulo) + "<span>" + items.length + "</span></h3>" +
+        // h2: os grupos vêm logo depois do título da página (h1)
+        return '<section class="aj-group" id="' + g.id + '" data-g="' + gi + '"><h2 class="aj-gh">' + esc(g.titulo) + "<span>" + items.length + "</span></h2>" +
           (!ws.length && g.notas.length ? '<div class="aj-notes">' + g.notas.map(function (n) { return "<p>" + n + "</p>"; }).join("") + "</div>" : "") +
           '<ul class="aj-items">' + items.map(function (it) { return row(it, ws, st.fw); }).join("") + "</ul></section>";
       }).join("");
@@ -5290,7 +5399,7 @@ var Componentes = (function () {
     function catView(c, openWhy) {
       var h = back("home", "Todos os problemas");
       if (c.passos.length) {
-        h += '<div class="hlp-card" id="' + c.id + '"><h3>' + esc(c.titulo) + "</h3>" + (c.intro[0] || "") +
+        h += '<div class="hlp-card" id="' + c.id + '"><h2>' + esc(c.titulo) + "</h2>" + (c.intro[0] || "") +
           '<details class="hlp-why"' + (openWhy ? " open" : "") + "><summary>Por que acontece</summary>" + c.intro.slice(1).join("") +
           '<ul class="hlp-items">' + c.itens.map(function (it) { return '<li id="' + it.id + '"><strong>' + esc(it.titulo) + ":</strong> " + it.html + tag(it) + "</li>"; }).join("") +
           "</ul></details></div>" + '<div class="hlp-steps"></div>';
@@ -5316,7 +5425,7 @@ var Componentes = (function () {
     function itemView(c, it) {
       var others = c.itens.filter(function (o) { return o !== it; });
       var body = it.html.replace(/^((?:<[^>]+>)*)([a-zà-ú])/, function (m, a, b) { return a + b.toUpperCase(); });
-      view.innerHTML = back(c.id, c.titulo) + '<div class="hlp-card" id="' + it.id + '"><h3>' + esc(it.titulo) + tag(it) + "</h3><p>" + body + "</p>" +
+      view.innerHTML = back(c.id, c.titulo) + '<div class="hlp-card" id="' + it.id + '"><h2>' + esc(it.titulo) + tag(it) + "</h2><p>" + body + "</p>" +
         '<div class="hlp-ask"><span>' + "Resolveu?" + "</span>" + C.botao("Sim", { variante: "solido", attrs: { "data-ok": true } }) +
         C.botao("Não", { variante: "fantasma", attrs: { "data-no": true } }) + "</div>" +
         '<div class="hlp-after"></div></div>';
@@ -5992,23 +6101,27 @@ var Componentes = (function () {
   }
   function renderResults() {
     var q = input.value.trim();
-    if (!q) { box.hidden = true; box.innerHTML = ""; menu.classList.remove("buscando"); input.setAttribute("aria-expanded", "false"); hits = []; return; }
+    if (!q) { box.hidden = true; box.innerHTML = ""; menu.classList.remove("buscando"); input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); hits = []; return; }
     hits = find(q); sel = hits.length ? 0 : -1;
     if (!hits.length) {
-      box.innerHTML = '<p class="no-res">Nada encontrado. Tente outra palavra, como "squelch", "datasheet" ou "fuso".</p>';
+      // dentro da lista (listbox), o aviso também é uma opção, desativada
+      box.innerHTML = '<p class="no-res" role="option" aria-disabled="true" aria-selected="false">Nada encontrado. Tente outra palavra, como "squelch", "datasheet" ou "fuso".</p>';
     } else {
       box.innerHTML = hits.map(function (d, i) {
         var path = esc(d.p) + (d.h && d.h !== d.p ? " › " + esc(d.h) : "");
-        return '<a class="result" role="option" href="#' + d.r + '" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="r-path">' + path + '</span><span class="r-snip">' + snippet(d) + "</span></a>";
+        return '<a class="result" role="option" id="r-' + i + '" href="#' + d.r + '" data-i="' + i + '" aria-selected="' + (i === sel) + '"><span class="r-path">' + path + '</span><span class="r-snip">' + snippet(d) + "</span></a>";
       }).join("");
     }
     box.hidden = false; menu.classList.add("buscando"); input.setAttribute("aria-expanded", "true");
+    // o leitor de tela anuncia a opção marcada, que as setas mudam, sem tirar o foco do campo
+    if (sel >= 0) input.setAttribute("aria-activedescendant", "r-" + sel); else input.removeAttribute("aria-activedescendant");
   }
   function mark() {
     Array.prototype.forEach.call(box.querySelectorAll(".result"), function (a, i) {
       a.setAttribute("aria-selected", i === sel ? "true" : "false");
       if (i === sel) a.scrollIntoView({ block: "nearest" });
     });
+    if (sel >= 0) input.setAttribute("aria-activedescendant", "r-" + sel);
   }
   function go(d) {
     fecharMenu(true);
@@ -6042,5 +6155,6 @@ var Componentes = (function () {
   show(location.hash.slice(1) || "inicio");
 })();
 </script>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });</script>
 </body>
 </html>

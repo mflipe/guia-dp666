@@ -174,7 +174,9 @@
       '<div class="rv-notas">' + T.notas.map(function (n) {
         return "<p>" + preencher(esc(n), { radiobrowser: '<a href="https://www.radio-browser.info">Radio Browser</a>' }) + "</p>";
       }).join("") + "</div></div>" +
-      (ehPainel ? '<div class="rv-mini" hidden><button type="button" class="rv-mini-abrir" data-acao="abrir" aria-label="' + esc(T.abrir) + '"><span class="rv-mini-tela"></span>' +
+      // o nome do botão começa por "Abrir o rádio virtual" e continua com o que se lê nele (a emissora), sem aria-label
+      // que esconda o texto visível
+      (ehPainel ? '<div class="rv-mini" hidden><button type="button" class="rv-mini-abrir" data-acao="abrir"><span class="sr-only">' + esc(T.abrir) + ': </span><span class="rv-mini-tela"></span>' +
         '<span class="rv-mini-t"><strong></strong><span></span></span></button>' +
         '<button type="button" class="rv-ico rv-mini-som" data-acao="som" aria-pressed="false" aria-label="' + esc(T.somLigar) + '">' + ICONES.som + "</button>" +
         '<button type="button" class="rv-ico" data-acao="proxima" aria-label="' + esc(T.proxima) + '">' + SETA_D + "</button>" +

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Firmwares: Megatron × oficial | DP-666: o guia definitivo</title>
+<meta name="description" content="As duas linhas de firmware que o DP-666 aceita. Trocar de uma para a outra muda menus e recursos e zera as configurações.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/firmwares/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/firmwares/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/firmwares/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Firmwares: Megatron × oficial">
+<meta property="og:description" content="As duas linhas de firmware que o DP-666 aceita. Trocar de uma para a outra muda menus e recursos e zera as configurações.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/firmwares/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/firmwares/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#firmwares">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-firmwares">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Firmware</p><h1>Firmwares: Megatron × oficial</h1><p class="meta">Atualizado em 21/11/2026 · 7 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>O DP-666 aceita duas linhas de firmware. Trocar de uma para a outra não é uma atualização: muda menus e recursos e zera as configurações.</p>
+<h2 id="firmwares--as-duas-linhas">As duas linhas</h2>
+<ul>
+<li><strong>Megatron:</strong> firmware de terceiros, com código fechado, focado no toque. Segundo a DEEPELEC, suporta o teclado físico, reduz a interferência da tela, melhora MW e SW e só tem chinês e inglês. Versões publicadas: mod15 (22/10 e 03/11/2024), mod16 (18/02/2025) e mod17 (05/04/2025, com suporte a RTC). Pelos textos internos, foi construído sobre o código do PE5PVB da época da v2.00, de dezembro de 2023.</li>
+<li><strong>Linha oficial (PE5PVB):</strong> código aberto (GPLv3), com 23 idiomas, entre eles o português. Os pacotes da DEEPELEC vão da v2.11.3 (agosto de 2024) até a v2.20.8 (fevereiro de 2026, com RTC). No GitHub, o código está na v2.20.12, de 13/11/2026.</li>
+</ul>
+<h2 id="firmwares--megatron-mod17">Megatron Mod17</h2>
+<h3 id="firmwares--prós">Prós</h3>
+<ul>
+<li><strong>Pontos destacados pela DEEPELEC:</strong> suporte ao teclado físico, menos interferência da tela e melhor escuta em MW e SW.</li>
+<li><strong>Recursos que a linha oficial não tem:</strong> esquemas de busca automática, planos de recepção com hora para ligar e desligar, memórias por horário (TTM), nomes por frequência, notificações, troca automática de tema e tela estática. Veja <a href="../mod17/">Recursos ocultos do Mod17</a>.</li>
+</ul>
+<h3 id="firmwares--contras">Contras</h3>
+<ul>
+<li><strong>Código fechado e sem atualizações:</strong> a versão mais nova publicada é a mod17, de 05/04/2025. Em 09/10/2026, um dono de DP-666 perguntou no GitHub onde achar um Megatron mais novo e ficou sem resposta.</li>
+<li><strong>Idiomas:</strong> só chinês e inglês.</li>
+<li><strong>Sem recuperação do sintonizador travado:</strong> a linha oficial ganhou essa correção em 13/11/2026 (veja "Tuner: !None!" em <a href="../problemas/">Problemas comuns</a>).</li>
+<li><strong>Integrações incertas:</strong> a compatibilidade com o fm-dx-webserver entrou na linha oficial na v2.10, depois da base do Megatron. O Mod17 tem parte desses comandos, mas o uso com XDR-GTK e fm-dx-webserver não foi confirmado.</li>
+</ul>
+<h2 id="firmwares--linha-oficial-v220x">Linha oficial (v2.20.x)</h2>
+<h3 id="firmwares--prós_1">Prós</h3>
+<ul>
+<li><strong>Código aberto e desenvolvimento ativo,</strong> com menu em português.</li>
+<li><strong>Suporte ao DP-666:</strong> o firmware detecta o teclado sozinho ao ligar, o pacote v2.20.8 trouxe o RTC e em novembro de 2026 entraram várias correções para o teclado.</li>
+<li><strong>Recursos que o Megatron não tem:</strong> registro de estações (logbook), gravação das memórias pelo PC e suporte declarado a XDR-GTK e fm-dx-webserver.</li>
+<li><strong>Recuperação do sintonizador travado:</strong> está no código desde 13/11/2026.</li>
+</ul>
+<h3 id="firmwares--contras_1">Contras</h3>
+<ul>
+<li><strong>Perde os recursos exclusivos do Megatron.</strong></li>
+<li><strong>Outra interface:</strong> telas, menus e áreas de toque mudam, e o toque precisa ser calibrado de novo.</li>
+<li><strong>Nada migra:</strong> configurações e memórias não passam de um firmware para o outro. Se o Mod17 responder ao comando <code>s</code> pelo USB, dá para exportar a lista de memórias antes.</li>
+<li><strong>Pacote pronto só até a v2.20.8,</strong> de 21/02/2026. As correções posteriores só chegam compilando o código (Arduino IDE ou PlatformIO) ou com um novo pacote.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Compilando para o DP-666</p>
+<p>No código oficial, os padrões do DP-666 (modelo Portable touch, tela girada, sentido do encoder e cores) só vêm se a compilação definir a opção <code>DEEPELEC_DP_66X</code>. Sem ela, esses itens precisam ser ajustados à mão depois da gravação. O passo a passo está em <a href="../backup/">Backup e gravação</a>, e o uso no dia a dia em <a href="../oficial/">Uso da linha oficial</a>.</p>
+</div>
+<h2 id="firmwares--como-testar-sem-risco">Como testar sem risco</h2>
+<ol>
+<li>Carregue a bateria e faça o <a href="../backup/">backup completo do flash</a>.</li>
+<li>Exporte as memórias com o comando <code>s</code> pelo USB ou fotografe a lista.</li>
+<li>Grave o pacote da linha oficial do site da DEEPELEC: chave geral em ON, segure BOOT, aperte POWER e rode o <code>flash.bat</code>.</li>
+<li>Confira se o modelo está em Portable touch (Definições do aparelho), calibre o toque (ligue segurando BW + MODE) e reconfigure o Wi-Fi.</li>
+<li>Para voltar, grave o backup. O rádio volta exatamente como estava, com o firmware, os ajustes e as memórias de antes.</li>
+</ol>
+<h2 id="firmwares--telas-dos-firmwares">Telas dos firmwares</h2>
+<p>As capturas publicadas pela DEEPELEC têm direitos reservados, e a licença das imagens da wiki do PE5PVB não é explícita. Por isso o guia não as copia: cada item abaixo abre a imagem no site de origem. Não há capturas publicadas da v2.20.12.</p>
+<ul class="refs"><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_wzt_1.JPG" target="_blank" rel="noopener noreferrer">Megatron, tela principal</a><span class="ref-shows">Interface do Mod17</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_wzt_2.JPG" target="_blank" rel="noopener noreferrer">Megatron, outras telas</a><span class="ref-shows">Interface do Mod17</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_wzt_menu_en.jpg" target="_blank" rel="noopener noreferrer">Megatron, menu em inglês</a><span class="ref-shows">Menu principal do Mod17</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_wzt_4.JPG" target="_blank" rel="noopener noreferrer">Megatron, tela adicional</a><span class="ref-shows">Interface do Mod17</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_touch_area2.jpg" target="_blank" rel="noopener noreferrer">Megatron, áreas de toque</a><span class="ref-shows">Mapa das áreas sensíveis ao toque</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_sjef_1_en.jpg" target="_blank" rel="noopener noreferrer">Oficial v2.20.x, tela 1</a><span class="ref-shows">Tela principal da linha oficial</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_sjef_2_en.jpg" target="_blank" rel="noopener noreferrer">Oficial v2.20.x, tela 2</a><span class="ref-shows">Tela de RDS ou de menu</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_sjef_3_en.jpg" target="_blank" rel="noopener noreferrer">Oficial v2.20.x, tela 3</a><span class="ref-shows">Tela de RDS ou de menu</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/img/dp666_sjef_4.JPG" target="_blank" rel="noopener noreferrer">Oficial v2.20.x, foto da tela</a><span class="ref-shows">Foto do rádio com a linha oficial</span><span class="ref-meta">Imagem · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Manual do Mod17</a><span class="ref-shows">Telas anotadas, teclado na tela e atalhos (PDF)</span><span class="ref-meta">PDF · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://www.deepelec.com/files/dp-666/DP-666_Product_Manual_EN.pdf" target="_blank" rel="noopener noreferrer">Manual da linha oficial v2.11</a><span class="ref-shows">Telas e menus da v2.11 (PDF)</span><span class="ref-meta">PDF · DEEPELEC · direitos reservados, abre no site de origem</span></li><li><a class="ref-title" href="https://github.com/PE5PVB/TEF6686_ESP32/wiki" target="_blank" rel="noopener noreferrer">Wiki do PE5PVB</a><span class="ref-shows">Tela principal e RDS avançada da v2.x</span><span class="ref-meta">Página · PE5PVB/TEF6686_ESP32 · direitos reservados, abre no site de origem</span></li></ul>
+
+<h2 id="firmwares--fontes">Fontes</h2>
+<ul>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666 — firmwares e capturas</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">PE5PVB/TEF6686_ESP32</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki" target="_blank" rel="noopener noreferrer">Wiki do TEF6686_ESP32</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/discussions/885" target="_blank" rel="noopener noreferrer">PE5PVB — discussão #885</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d" target="_blank" rel="noopener noreferrer">PE5PVB — teclado do DP-666 mais robusto (11/11/2026)</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d" target="_blank" rel="noopener noreferrer">PE5PVB — correção de detecção do sintonizador (13/11/2026)</a></li>
+<li><a href="https://newreleases.io/project/github/PE5PVB/TEF6686_ESP32/release/v2.10" target="_blank" rel="noopener noreferrer">PE5PVB v2.10 — compatibilidade com o fm-dx-webserver</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Megatron × oficial</p><a class="prox-next" href="../oficial/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Uso da linha oficial</span><span class="prox-desc">Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../mod17/"><span class="mi-nome">Recursos ocultos do Mod17<span class="mi-sub">O que o Megatron esconde</span></span></a></li><li class="mi-item"><a class="mi" href="../backup/"><span class="mi-nome">Backup e gravação<span class="mi-sub">Como trocar de linha sem perder nada</span></span></a></li></ul><p class="prox-volta"><a href="../codigos/">Página anterior: Mensagens e códigos da tela</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/" aria-current="page">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

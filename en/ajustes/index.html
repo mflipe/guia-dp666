@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Radio settings | DP-666: the definitive guide</title>
+<meta name="description" content="Every menu option on both firmwares, with its possible values, the factory default and the value recommended for Brazil.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/ajustes/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/ajustes/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/ajustes/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Radio settings">
+<meta property="og:description" content="Every menu option on both firmwares, with its possible values, the factory default and the value recommended for Brazil.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/ajustes/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../ajustes/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#ajustes">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-ajustes">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>The radio</p><h1>Radio settings</h1><p class="meta">Updated Nov 21, 2026 · 4 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Every menu option on both firmwares, with its possible values, the factory default, what it does and the recommended value for Brazil. On Megatron, many options only show up in advanced mode: see how to turn it on in <a href="../brasil/">Setup for Brazil</a>.</p>
+</div><div class="le-ferramenta"><p>This tool works in the interactive guide: <a href="../#ajustes">open the tool</a>.</p></div><div class="prose"><h2 id="ajustes--oficial">Official firmware</h2>
+<h3 id="ajustes--oficial-configuracoes-principais">Main settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-seletor-de-modelo">Model selector</dt><dd><p>Tells the firmware what type of radio it is running on: desktop (Base), portable with battery (Portable) or portable with a touchscreen (Portable touch).</p><p>Default: Portable touch<br>Values: Base, Portable, Portable touch</p></dd>
+<dt id="ajustes--oficial-inverter-rotacao">Reverse encoder</dt><dd><p>Reverses the encoder direction: turning right now lowers the frequency, and vice versa.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-codificador-optico">Optical encoder</dt><dd><p>Changes how the encoder pulses are counted to the pattern of optical encoders.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-inverter-cores">Invert colors</dt><dd><p>Inverts the screen colors, like a photo negative.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-ars-display">ARS display</dt><dd><p>Changes the size, orientation and color order of the screen to suit the panel of another build (ARS).</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-medidor-analogico">Analog meter</dt><dd><p>Puts the needle of an analog signal meter at the end of the scale, so you can adjust it.</p><p>Values: Puts the needle at full scale, for adjustment.</p></dd>
+<dt id="ajustes--oficial-reposicao-de-fabrica">Factory reset</dt><dd><p>Returns every setting to the factory default and erases the 99 memory channels. The radio asks for confirmation.</p><p>Values: Asks for confirmation: “Erase settings and presets?”</p></dd>
+<dt id="ajustes--oficial-parar-tela-de-despertar-ao-sintonizar">Stop screen wake on tune</dt><dd><p>With the screensaver on, turning the knob now tunes without waking the screen. When off, the first turn only wakes the screen.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-desligamento-automatico">Auto Power off</dt><dd><p>Puts the radio on standby after 15, 30, 60 or 90 minutes without you touching anything.</p><p>Default: Off<br>Values: Off, 15 min, 30 min, 60 min, 90 min</p></dd>
+<dt id="ajustes--oficial-usar-squelch">Use squelch</dt><dd><p>The squelch mutes the audio when there is no useful signal, so you don’t hear hiss between stations. On uses the radio’s SQL knob. Auto decides on its own from the signal quality.</p><p>Default: On<br>In Brazil: <strong>Off</strong>. To hunt for weak stations. On Auto, the radio may hide distant signals.<br>Values: On, Off, Auto</p></dd>
+<dt id="ajustes--oficial-fm-agc">FM AGC</dt><dd><p>Sets the signal strength at which the radio starts lowering its own amplification on FM.</p><p>Default: 92 dBµV<br>In Brazil: <strong>92 dBµV</strong>. It is the most sensitive. If ghost stations show up near strong stations, try 87 or 84.<br>Values: 84 to 92 dBµV</p></dd>
+<dt id="ajustes--oficial-am-agc">AM AGC</dt><dd><p>The same as FM AGC, on AM and shortwave: the signal strength at which the radio lowers its own amplification.</p><p>Default: 100 dBµV<br>Values: 94 to 102 dBµV</p></dd>
+<dt id="ajustes--oficial-selecionar-faixa-fm">Select FM Band</dt><dd><p>Chooses which FM bands the BAND button cycles through: FM, OIRT or both.</p><p>Default: FM, OIRT<br>Values: FM, OIRT, OIRT, FM, None</p></dd>
+<dt id="ajustes--oficial-selecionar-faixa-am">Select AM Band</dt><dd><p>Chooses which AM bands the BAND button cycles through: LW (long wave), MW (medium wave) and SW (shortwave).</p><p>Default: LW, MW, SW<br>Values: LW, MW, SW, LW, MW, LW, SW, MW, SW, LW, MW, SW, None</p></dd>
+<dt id="ajustes--oficial-pressione-o-botao-banda-por-5-seg">5 sec. bandbutton press</dt><dd><p>Sets what happens when you hold BAND: put the radio on standby (Power off), turn off only the screen (Screen off) or nothing (Disabled).</p><p>Default: Power off<br>Values: Power off, Screen off, Disabled</p></dd>
+<dt id="ajustes--oficial-velocidade-dinamica-de-spi">Dynamic SPI speed</dt><dd><p>Changes the speed of the link between the processor and the screen (10 to 60 MHz). On Auto, the radio picks the speed according to the tuned frequency.</p><p>Default: Auto<br>Values: Default, 10 MHz, 20 MHz, 30 MHz, 40 MHz, 50 MHz, 60 MHz, Auto</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-de-audio">Audio settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-definir-volume">Set volume</dt><dd><p>Internal audio gain of the tuner (from −10 to +10 dB), applied before the volume knob.</p><p>Default: 0 dB<br>Values: −10 to 10 dB</p></dd>
+<dt id="ajustes--oficial-sinais-sonoros">Audio feedback</dt><dd><p>Turns on navigation sounds: beeps in the menu, at the end of the band and when saving to the logbook. With On + morse, numbers and letters also play in Morse code.</p><p>Default: Off<br>Values: Off, On, On + morse</p></dd>
+<dt id="ajustes--oficial-saida-de-audio">Audio output</dt><dd><p>In MPX mode, the left channel is mono and the right one carries the station’s full signal, with the stereo pilot and RDS.</p><p>Default: Stereo<br>Values: Stereo, MPX</p></dd>
+<dt id="ajustes--oficial-limiar-de-separacao-estereo">Stereo separation threshold</dt><dd><p>Below this signal strength, the radio reduces stereo separation and moves toward mono.</p><p>Default: Off<br>In Brazil: <strong>≈ 40 dBµV</strong>. With a weak signal, it forces mono and reduces hiss.<br>Values: Off or 30 to 60 dBµV</p></dd>
+<dt id="ajustes--oficial-frequencia-do-canto-de-corte-alto">High cut corner frequency</dt><dd><p>When the treble cut kicks in, it attenuates the sound above this frequency.</p><p>Default: 7000 Hz<br>Values: 1500 to 7000 Hz</p></dd>
+<dt id="ajustes--oficial-definir-limiar-de-corte-alto">High cut threshold</dt><dd><p>Below this signal strength, the treble cut kicks in.</p><p>Default: Off<br>Values: Off or 20 to 60 dBµV</p></dd>
+<dt id="ajustes--oficial-desenfase-fm">FM deemphasis</dt><dd><p>The station boosts the treble when transmitting (pre-emphasis), and the radio cuts it by the same amount when receiving. The sound returns to natural and the hiss drops.</p><p>Default: 50 µs<br>In Brazil: <strong>50 µs</strong>. Brazil uses 50 µs, as required by Anatel Act No. 8,104/2022, unlike the rest of the Americas.<br>Values: Off, 50 µs, 75 µs</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-de-exibicao">Display settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-idioma">Language</dt><dd><p>Language of the menus, among 23.</p><p>Default: English<br>Values: English, Nederlands, Polski, Hrvatski, Ελληνικά, Română, Deutsch, Čeština, Magyar, Français, Български, Русский, Українська, Italiano, Simplified Chinese, Norsk, Español, English, Srpski, Suomi, Dansk, Svenska, Gaeilge</p></dd>
+<dt id="ajustes--oficial-definir-brilho-da-tela">Display brightness</dt><dd><p>Screen brightness, from 1 to 100%.</p><p>Default: 50%<br>Values: 1 to 100 %</p></dd>
+<dt id="ajustes--oficial-medidor-de-modulacao">Audio level meter</dt><dd><p>Turns on the bar that shows the station’s modulation, that is, the loudness of the transmitted sound.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-protecao-de-tela">Screensaver</dt><dd><p>After 3, 10, 30 or 60 seconds without use, the screen turns off or dims.</p><p>Default: Off<br>Values: Off, 3 s, 10 s, 30 s, 60 s</p></dd>
+<dt id="ajustes--oficial-opcoes-de-protecao-de-tela">Screensaver options</dt><dd><p>Sets what the screensaver does: turn off the screen or leave it at 1%, 25% or 50% brightness.</p><p>Default: 1% brightness<br>Values: Screen off, 1% brightness, 25% brightness, 50% brightness</p></dd>
+<dt id="ajustes--oficial-opcoes-de-bateria">Battery options</dt><dd><p>Shows the battery in volts, as a percentage, or not at all.</p><p>Default: Show voltage<br>Values: Off, Show voltage, Show percentage</p></dd>
+<dt id="ajustes--oficial-unidade-de-medidor-de-sinal">Signalmeter unit</dt><dd><p>Unit in which the radio shows the signal strength.</p><p>Default: dBµV<br>Values: dBµV, dBf, dBm</p></dd>
+<dt id="ajustes--oficial-mostrar-relogio">Show clock</dt><dd><p>Shows the time on the screen when the radio has the right time, received through RDS or the internet.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-tema">Theme</dt><dd><p>Color scheme of the interface. There are 17 themes.</p><p>Default: Essence<br>Values: Essence, Cyan, Crimson, Monochrome, Volcano, Dendro, Sakura, Whiteout, Tangerine, Ocean, Indigo, Queer, GoldBrite, Bubblegum, Aurora, Ember, Glacier</p></dd>
+<dt id="ajustes--oficial-fonte-de-frequencia">Frequency font</dt><dd><p>Font of the large frequency digits.</p><p>Default: Aura2<br>Values: Classic, Roubenstil, Motoya, Aura2, Modern</p></dd>
+<dt id="ajustes--oficial-rodar-ecra-180">Flip screen 180°</dt><dd><p>Turns the screen image upside down.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-teclado-frequencia">Frequency keypad</dt><dd><p>Turns on the on-screen numeric keypad, to enter the frequency.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-calibracao-da-tela-de-toque">Touch calibration</dt><dd><p>Opens the touch calibration: you tap the points shown on the screen.</p><p>Values: Asks for confirmation: “Start calibration?”</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-rds">RDS settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-mostrar-erros-rds">Show RDS errors</dt><dd><p>Sets how many errors the radio accepts in the RDS data: Off accepts only perfect blocks, Small accepts small corrected errors and Large accepts even large corrected errors.</p><p>Default: Small<br>Values: Off, Small, Large</p></dd>
+<dt id="ajustes--oficial-regiao">Region</dt><dd><p>Adapts RDS to the region: the program type (PTY) table and, in the United States and Canada, the conversion of the station code into a call sign, such as KXYZ.</p><p>Default: Europe<br>In Brazil: <strong>Europe</strong>. Brazilian RDS follows the European model, with PI codes assigned by Anatel.<br>Values: Europe, USA DB, USA, Canada</p></dd>
+<dt id="ajustes--oficial-mostrar-sublinhado-no-rds">Show underscore in RDS</dt><dd><p>Replaces spaces with underscores: only in the station name (PS only) or also in the text (On).</p><p>Default: Off<br>Values: Off, PS only, On</p></dd>
+<dt id="ajustes--oficial-filtro-rds">RDS filter</dt><dd><p>Runs the RDS data through a filter with memory before showing it.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-mostrar-erros-pi">Show PI errors</dt><dd><p>Shows the station’s PI code even before it arrives without errors.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-usar-af">Use AF</dt><dd><p>With AF on, the radio switches on its own to another frequency of the same station when the signal gets worse. With REG on, it only accepts frequencies with the same regional programming.</p><p>Default: Off<br>In Brazil: <strong>Off</strong>. For DX and scanning, it keeps the radio from jumping to another frequency on its own.<br>Values: Off, On / REG on, On / REG off</p></dd>
+<dt id="ajustes--oficial-buffering-rt">RT buffering</dt><dd><p>Only shows the RadioText, the text that scrolls on the screen, once it arrives complete, instead of changing it letter by letter.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-classificar-af-automaticamente">Auto sort AF</dt><dd><p>Sorts the list of alternative frequencies (AF) from lowest to highest.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-ps-rapido">Fast PS</dt><dd><p>Shows the letters of the station name (PS) as soon as they arrive, without waiting for confirmation. Initial does this only until the name is complete; Always, all the time.</p><p>Default: Initial<br>Values: Off, Initial, Always</p></dd>
+<dt id="ajustes--oficial-mostrar-ps-longo">Show long PS</dt><dd><p>Shows the station’s long name (Long PS), up to 32 characters, when it broadcasts one.</p><p>Default: On<br>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-fm">FM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-definir-deslocamento-do-conversor">Converter offset</dt><dd><p>Adds a value to the displayed frequency, for those using an external RF converter.</p><p>Default: 0 MHz<br>Values: 0 to 2400 MHz</p></dd>
+<dt id="ajustes--oficial-definir-borda-da-faixa-baixa">Low band edge</dt><dd><p>Lowest frequency of the FM band. Past it, the knob wraps around to the end of the band.</p><p>Default: 87.5 MHz<br>In Brazil: <strong>76.1 MHz</strong>. The band now covers extended FM, from 76.1 to 87.3 MHz.<br>Values: 65 to 107.9 MHz</p></dd>
+<dt id="ajustes--oficial-definir-borda-da-faixa-alta">High band edge</dt><dd><p>Highest frequency of the FM band. Past it, the knob wraps around to the low edge.</p><p>Default: 108.0 MHz<br>In Brazil: <strong>108.0 MHz</strong>. The band now covers extended FM, from 76.1 to 87.3 MHz.<br>Values: 66 to 108 MHz</p></dd>
+<dt id="ajustes--oficial-definir-deslocamento-de-nivel">Level offset</dt><dd><p>Adds or subtracts decibels from the signal reading.</p><p>Default: 0 dB<br>Values: −25 to 15 dB</p></dd>
+<dt id="ajustes--oficial-definir-limiar-de-nivel-baixo">Low level threshold</dt><dd><p>Below this signal strength, the radio grays out the modulation meter and the RDS labels.</p><p>Default: −15 dBµV<br>Values: −15 to 30 dBµV</p></dd>
+<dt id="ajustes--oficial-silenciamento-suave-fm">Softmute FM</dt><dd><p>Gradually lowers the volume as the signal weakens and the hiss rises.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-supressor-de-ruido-fm">FM Noise blanker</dt><dd><p>Cuts impulse noise: the short clicks from motors, electric fences and electrical appliances. The percentage is the strength of the cut.</p><p>Default: Off<br>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--oficial-passo-padrao-fm">FM default stepsize</dt><dd><p>How far the frequency moves with each click of the knob on FM.</p><p>Default: 100 kHz<br>In Brazil: <strong>200 kHz</strong>. With the edge at 76.1 MHz, tuning steps through the Brazilian channels, which end in an odd decimal. For DX, use 100 kHz to also stop on the even decimals.<br>Values: 50 kHz, 100 kHz, 200 kHz</p></dd>
+<dt id="ajustes--oficial-fmsi-melhoria-do-som-estereo">FMSI stereo improvement</dt><dd><p>Turns on processing that improves stereo on weak signals. It only exists on the TEF6687 and TEF6689 tuners.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura">Scan sensitivity</dt><dd><p>How demanding the search is before stopping on a FM station, from 1 to 30.</p><p>Default: 4<br>Values: 1 to 30</p></dd>
+</dl>
+<h3 id="ajustes--oficial-configuracoes-am">AM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-silenciamento-suave-am">Softmute AM</dt><dd><p>Gradually lowers the volume as the AM signal weakens and the noise rises.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-supressor-de-ruido-am">AM Noise blanker</dt><dd><p>Cuts impulse noise: the short clicks from motors, electric fences and electrical appliances. The percentage is the strength of the cut.</p><p>Default: Off<br>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--oficial-deslocamento-de-nivel-de-rf-am">AM RF Level offset</dt><dd><p>Adds or subtracts decibels from the signal reading on AM.</p><p>Default: 0 dB<br>Values: −50 to 15 dB</p></dd>
+<dt id="ajustes--oficial-mostrar-comprimento-de-onda-sw">Show SW wavelength</dt><dd><p>Shows which shortwave band you are in, in meters, such as 49 m or 31 m, next to the frequency.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-detector-cochannel">CoChannel Detector</dt><dd><p>Turns on the co-channel detector: the radio shows CO on the screen when it notices two stations on the same frequency. The number is the sensitivity.</p><p>Default: 100%<br>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--oficial-limiar-do-cochannel-det">CoChannel Detector threshold</dt><dd><p>How many detections in a row the co-channel detector needs before showing CO.</p><p>Default: 3<br>Values: 1 to 15</p></dd>
+<dt id="ajustes--oficial-am-ganho-da-antena">AM Antenna gain</dt><dd><p>Attenuates the AM input by 6 to 36 dB. The name talks about gain because the idea is that you enter the gain of your active antenna, and the radio attenuates by the same amount.</p><p>Default: Off<br>Values: Off or 6 to 36 dB</p></dd>
+<dt id="ajustes--oficial-tamanho-padrao-da-etapa-am">MW default stepsize</dt><dd><p>How far the frequency moves with each click on medium wave: 9 or 10 kHz.</p><p>Default: 9 kHz<br>In Brazil: <strong>10 kHz</strong>. It is the medium wave grid of the Americas, from 520 to 1720 kHz.<br>Values: 9 kHz, 10 kHz</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura-2">Scan sensitivity</dt><dd><p>How demanding the search is before stopping on a AM station, from 1 to 30.</p><p>Default: 4<br>Values: 1 to 30</p></dd>
+</dl>
+<h3 id="ajustes--oficial-conectividade-e-relogio">Connectivity &amp; clock</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-modo-usb">USB mode</dt><dd><p>Chooses which computer program the USB port talks to: XDR-GTK or RDS Spy.</p><p>Default: XDRGTK<br>Values: XDRGTK, RDS Spy</p></dd>
+<dt id="ajustes--oficial-wi-fi">Wi-Fi</dt><dd><p>Turns on the radio’s Wi-Fi.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-configurar-wi-fi">Configure Wi-Fi</dt><dd><p>Opens the wizard that connects the radio to a network.</p><p>Values: Opens the connection wizard.</p></dd>
+<dt id="ajustes--oficial-ip-do-cliente-da-lista-de-estacoes">Stationlist client IP</dt><dd><p>Last number of the IP address of the computer running StationList, on the same network as the radio.</p><p>Default: 1<br>Values: 1 to 254</p></dd>
+<dt id="ajustes--oficial-id-da-lista-de-estacoes">Stationlist ID</dt><dd><p>This radio’s number in StationList.</p><p>Default: 1<br>Values: 1 to 10</p></dd>
+<dt id="ajustes--oficial-tela-mudo-na-conexao-xdrgtk">Mute screen on XDRGTK connection</dt><dd><p>Turns the radio’s screen off while XDR-GTK is connected.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-definir-deslocamento-de-tempo-ntp">Set NTP time offset</dt><dd><p>Time zone applied to the time coming from the internet, which arrives in universal time (UTC).</p><p>Default: GMT +1<br>In Brazil: <strong>GMT −3</strong>. Brasília time.<br>Values: GMT −12, GMT −11, GMT −10, GMT −9:30, GMT −9, GMT −8, GMT −7, GMT −6, GMT −5, GMT −4, GMT −3:30, GMT −3, GMT −2, GMT −1, GMT +0, GMT +1, GMT +2, GMT +3, GMT +3:30, GMT +4, GMT +4:30, GMT +5, GMT +5:30, GMT +5:45, GMT +6, GMT +6:30, GMT +7, GMT +8, GMT +8:45, GMT +9, GMT +9:30, GMT +10, GMT +10:30, GMT +11, GMT +12, GMT +12:45, GMT +13, GMT +14</p></dd>
+<dt id="ajustes--oficial-dst-automatico-no-horario-ntp">Auto DST on NTP time</dt><dd><p>Moves the clock 1 hour forward during daylight saving time, by the European rule: from the last Sunday of March to the last Sunday of October.</p><p>Default: On<br>In Brazil: <strong>Off</strong>. Brazil has had no daylight saving time since Decree No. 9,772 of 2019.<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-modo-de-relogio">Clock mode</dt><dd><p>Shows the clock in 24 h or 12 h format.</p><p>Default: 24 h<br>Values: 24 h, 12 h</p></dd>
+<dt id="ajustes--oficial-pi-bloqueado-ct-sync">PI locked CT sync</dt><dd><p>When turned on, the radio only accepts the RDS time from the station tuned at that moment, identified by its PI code.</p><p>Default: Off<br>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--oficial-opcoes-fm-dx">FM DX Options</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-comece-a-pesquisar-dx">Start DX scanning</dt><dd><p>Starts the DX scan: the radio goes through the chosen memory channels, or through the band, looking for distant stations.</p><p>Values: Starts the scan.</p></dd>
+<dt id="ajustes--oficial-comece-a-pesquisar-canais-de-memoria">Begin scanning memory channels</dt><dd><p>First memory channel of the scan range.</p><p>Default: 1<br>Values: 1 to 98</p></dd>
+<dt id="ajustes--oficial-pare-de-pesquisar-canais-de-memoria">Stop scanning memory channels</dt><dd><p>Last memory channel of the scan range.</p><p>Default: 10<br>Values: 2 to 99</p></dd>
+<dt id="ajustes--oficial-tempo-de-espera">Wait time</dt><dd><p>How long the radio stays on each frequency before moving on: 0.5 s or from 1 to 30 s.</p><p>Default: 5 s<br>Values: 0.5 to 30 s</p></dd>
+<dt id="ajustes--oficial-canais-memorizados">Memory channels</dt><dd><p>With Only, the scan goes only through the memory channels of the range. With Exclude, it scans the whole band and skips the frequencies saved in that range.</p><p>Default: Only<br>Values: Exclude, Only</p></dd>
+<dt id="ajustes--oficial-cancelar-automatic-a-pesquisa">Auto cancel scan</dt><dd><p>Makes the scan stop on its own: when it decodes a station’s code (Correct PI) or when it finds a signal (Signal). Off never stops.</p><p>Default: Off<br>Values: Off, Correct PI, Signal</p></dd>
+<dt id="ajustes--oficial-mudo-audio-enquanto-procura">Mute audio while scanning</dt><dd><p>Mutes the audio while scanning.</p><p>Default: Off<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-registrador-automatico">Autologger</dt><dd><p>Automatically saves to the logbook the stations with a correct PI found during the scan.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-espera-tempo-apenas-quando-sinal">Wait time on signal only</dt><dd><p>Uses the wait time only on frequencies with a signal; on empty ones, the scan moves on right away.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-limpar-livro-de-registro">Clear logbook</dt><dd><p>Erases the whole logbook.</p><p>Values: Erases the whole logbook.</p></dd>
+</dl>
+<h3 id="ajustes--oficial-memoria-automatica">Auto memory</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-iniciar-memoria-automatica">Start auto memory</dt><dd><p>Scans the band in 100 kHz steps and saves to the memory channels the stations that pass the Scan sensitivity criterion.</p><p>Values: Searches for stations and saves them to the memory channels.</p></dd>
+<dt id="ajustes--oficial-iniciar-frequencia">Start frequency</dt><dd><p>Start of the auto memory search.</p><p>Default: 87.5 MHz<br>Values: 65 to 107.9 MHz</p></dd>
+<dt id="ajustes--oficial-parar-frequencia">Stop frequency</dt><dd><p>End of the auto memory search.</p><p>Default: 108.0 MHz<br>Values: 66 to 108 MHz</p></dd>
+<dt id="ajustes--oficial-iniciar-canal-de-memoria">Start memory channel</dt><dd><p>First position auto memory may save to.</p><p>Default: 2<br>Values: 1 to 98</p></dd>
+<dt id="ajustes--oficial-parar-canal-de-memoria">Stop memory channel</dt><dd><p>Last position auto memory may save to.</p><p>Default: 11<br>Values: 2 to 99</p></dd>
+<dt id="ajustes--oficial-somente-armazenar-com-rds">Only store with RDS</dt><dd><p>Only saves the stations where the radio detected RDS.</p><p>Default: On<br>Values: Off, On</p></dd>
+<dt id="ajustes--oficial-prevenir-pi-duplo">Prevent double PI</dt><dd><p>Doesn’t save a station whose PI code is already in memory: Range compares with the channels of the range; Full, with all 99.</p><p>Default: Off<br>Values: Off, Range, Full</p></dd>
+<dt id="ajustes--oficial-sensibilidade-da-varredura-3">Scan sensitivity</dt><dd><p>It is the same setting as FM settings → Scan sensitivity: it decides how weak the signal can be for auto memory to save it.</p><p>Default: 4<br>Values: 1 to 30</p></dd>
+<dt id="ajustes--oficial-limpar-canais-de-memoria">Clear memory channels</dt><dd><p>Erases the memory channels.</p><p>Values: Erases the memory channels.</p></dd>
+</dl>
+<h3 id="ajustes--oficial-sobre-o-software">About software</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--oficial-sobre-o-software">About</dt><dd><p>Shows the credits of who developed the firmware.</p><p>Values: Credits for the developers and contributors.</p></dd>
+</dl>
+<h2 id="ajustes--mod17">Megatron Mod17</h2>
+<h3 id="ajustes--mod17-main-settings">Main settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-system-usage-mode">System usage mode</dt><dd><p>Simple mode hides the advanced menu options; Advanced mode shows all of them.</p><p>In Brazil: <strong>Advanced mode</strong>. Many options on this list only appear in it. Switch the language to 简体中文, choose 高级模式 in 主要设置 → 系统使用模式 and switch back to English.<br>Values: Simple mode, Advanced mode</p></dd>
+<dt id="ajustes--mod17-model-selector">Model selector</dt><dd><p>Tells the firmware what type of radio it is running on: desktop (Base), portable with battery (Portable) or portable with a touchscreen (Portable touch).</p><p>Values: Portable touch, Base, Portable</p></dd>
+<dt id="ajustes--mod17-set-fm-band">Set FM band</dt><dd><p>Chooses which FM bands the BAND button cycles through: FM, FML or both.</p><p>Values: Combinations of FM and FML, or None. The manual’s text is cut off; the likely order is FM + FML, FML, FM, None.</p></dd>
+<dt id="ajustes--mod17-set-am-band">Set AM band</dt><dd><p>Chooses which AM bands the BAND button cycles through: LW, MW, SW and AIR.</p><p>Values: Combinations of LW, MW, SW and AIR, or NONE. The manual’s text is cut off.</p></dd>
+<dt id="ajustes--mod17-screensaver">Screensaver</dt><dd><p>After 3, 10, 30 or 60 seconds without use, the screen turns off or dims.</p><p>Values: Off, 3 s, 10 s, 30 s, 60 s</p></dd>
+<dt id="ajustes--mod17-set-first-page">Set first page</dt><dd><p>Chooses the screen that appears when the radio turns on.</p><p>Values: Main page, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-power-off-timer">Power Off timer</dt><dd><p>Turns the radio off on its own after the chosen time, from 1 to 480 minutes.</p><p>Values: Off or 1 to 480 min</p></dd>
+<dt id="ajustes--mod17-keep-band-key-3-sec">Keep BAND key 3 sec.</dt><dd><p>Sets what happens when you hold BAND for 3 s: turn off (Power off), turn off only the screen (Mute screen) or nothing (Disable).</p><p>Values: Power off, Mute screen, Disable</p></dd>
+<dt id="ajustes--mod17-dynamic-spi-speed">Dynamic SPI speed</dt><dd><p>Changes the speed of the link between the processor and the screen (from 5 to 70 MHz). On Auto, the radio picks the speed according to the tuned frequency.</p><p>Values: From 5 to 70 MHz, or Auto</p></dd>
+<dt id="ajustes--mod17-auto-still-screen">Auto still screen</dt><dd><p>After the Still screen timer time without use, the screen freezes: it stays lit, showing the last image, but stops refreshing. When you touch the radio, it goes back to normal.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-still-screen-timer">Still screen timer</dt><dd><p>How many seconds without use until the screen freezes, from 0 to 120.</p><p>Values: 0 to 120 s</p></dd>
+<dt id="ajustes--mod17-power-off">Power off</dt><dd><p>Turns the radio off from the menu. To turn it back on, press BW.</p><p>Values: Turns the radio off in software.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-audio-settings">Audio settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-volume">Set volume</dt><dd><p>Internal audio gain of the tuner (from −60 to +24 dB), applied before the volume knob.</p><p>Default: 0 dB<br>Values: −60 to 24 dB</p></dd>
+<dt id="ajustes--mod17-audio-output">Audio output</dt><dd><p>In MPX mode, the left channel is mono and the right one carries the station’s full signal, with the stereo pilot and RDS.</p><p>Values: Stereo, MPX</p></dd>
+<dt id="ajustes--mod17-stereo-threshold">Stereo threshold</dt><dd><p>Below this signal strength, the radio reduces stereo separation and moves toward mono.</p><p>In Brazil: <strong>≈ 40 dBµV</strong>. With a weak signal, it forces mono and reduces hiss.<br>Values: Off or 30 to 60 dBµV</p></dd>
+<dt id="ajustes--mod17-high-cut-corner">High cut corner</dt><dd><p>When the treble cut kicks in, it attenuates the sound above this frequency.</p><p>Values: 1500 to 7000 Hz</p></dd>
+<dt id="ajustes--mod17-high-cut-threshold">High cut threshold</dt><dd><p>Below this signal strength, the treble cut kicks in.</p><p>Values: Off or 20 to 60 dBµV</p></dd>
+<dt id="ajustes--mod17-use-squelch">Use squelch</dt><dd><p>The squelch mutes the audio when there is no useful signal, so you don’t hear hiss between stations. On uses the radio’s SQL knob. Auto decides on its own from the signal quality.</p><p>In Brazil: <strong>Off</strong>. To hunt for weak stations. On Auto, the radio may hide distant signals.<br>Values: On, Off, Auto</p></dd>
+<dt id="ajustes--mod17-fm-deemphasis">FM deemphasis</dt><dd><p>The station boosts the treble when transmitting (pre-emphasis), and the radio cuts it by the same amount when receiving. The sound returns to natural and the hiss drops.</p><p>In Brazil: <strong>50us</strong>. Brazil uses 50 µs, as required by Anatel Act No. 8,104/2022, unlike the rest of the Americas.<br>Values: 50us, 75us, Off</p></dd>
+<dt id="ajustes--mod17-beep-at-band-edge">Beep at band edge</dt><dd><p>Plays a beep when tuning goes past the end of the band and wraps around to the start.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-beep-at-operation">Beep at operation</dt><dd><p>Plays a beep for every button press or knob turn.</p><p>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-display-settings">Display settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-language">Language</dt><dd><p>Menu language: English or Simplified Chinese.</p><p>Values: English, 简体中文</p></dd>
+<dt id="ajustes--mod17-brightness">Brightness</dt><dd><p>Screen brightness, from 1 to 100%.</p><p>Values: 1 to 100 %</p></dd>
+<dt id="ajustes--mod17-theme">Theme</dt><dd><p>Color scheme of the interface. There are 15 themes.</p><p>Values: Essence, Cyan, Crimson, Monochrome, Volcano, Dendro, Sakura, Whiteout, Tangerine, Ocean, Indigo, Maroon, Chinese Red, Retro, GoldBrite</p></dd>
+<dt id="ajustes--mod17-frequency-font">Frequency font</dt><dd><p>Font of the large frequency digits.</p><p>Values: Classic, Roubenstil, Motoya, Aura2, Comic, Modern</p></dd>
+<dt id="ajustes--mod17-meter-refresh-interval">Meter refresh interval</dt><dd><p>How often the signal meter refreshes, from 30 to 1000 ms.</p><p>Values: 30 to 1000 ms</p></dd>
+<dt id="ajustes--mod17-meter-display-style">Meter display style</dt><dd><p>Look of the signal meter: Classic or New.</p><p>Values: Classic, New</p></dd>
+<dt id="ajustes--mod17-set-ui-round">Set UI round</dt><dd><p>Chooses where the interface uses rounded corners: menu, buttons, icons or borders.</p><p>Values: Menu, Button, Icon, Border</p></dd>
+<dt id="ajustes--mod17-menu-display-style">Menu display style</dt><dd><p>Menu layout: the new one, vertical or horizontal, or the classic one.</p><p>Values: New (Vertical), New (Horizontal), Classic</p></dd>
+<dt id="ajustes--mod17-show-notification">Show notification</dt><dd><p>Shows notifications on the screen, such as time synced or settings saved.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-notification-mode">Notification mode</dt><dd><p>Where notifications appear: in a discreet bar (Message bar), in a box in the middle of the screen (Message box) or wherever the radio decides (Auto).</p><p>Values: Auto, Message bar, Message box</p></dd>
+<dt id="ajustes--mod17-clock-debug-info-e-frequency-name-color">Clock, Debug info e Frequency name color</dt><dd><p>Colors of the clock, of the debug info and of the frequency name: a fixed color or Dynamic.</p><p>Values: A fixed color or Dynamic</p></dd>
+<dt id="ajustes--mod17-show-frequency-tips">Show frequency tips</dt><dd><p>Shows a label next to the frequency: RDX, WEK, MED, STR or SPR. Judging by the names, they look like signal strength classes: WEK (weak), MED (medium), STR (strong) and SPR (very strong).</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-my-logo-image">My logo image</dt><dd><p>Replaces the startup screen image with a file of your own, in JPG, BMP or PNG.</p><p>Values: JPG, BMP or PNG file.</p></dd>
+<dt id="ajustes--mod17-my-logo-border">My logo border</dt><dd><p>Frame around the startup screen logo.</p><p>Values: Rectangle, drum, ellipse, circle, hexagon, parallelogram, rhombus or heart</p></dd>
+<dt id="ajustes--mod17-power-saving-mode">Power saving mode</dt><dd><p>Turns on a power saving mode. The radio tells you when it enters and leaves it.</p><p>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-rds-settings">RDS settings</h3>
+<p>Many of these options only appear in advanced mode.</p>
+<p>The base code’s advanced RDS view shows PI, ECC, LIC, PIN, DI flags, AF, EON, RT+, ODA applications and errors per block.</p>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-show-rds-errors">Show RDS errors</dt><dd><p>Sets how many errors the radio accepts in the RDS data: Small accepts small corrected errors, Large accepts bigger errors and All accepts everything.</p><p>Values: Small, Large, All, Off</p></dd>
+<dt id="ajustes--mod17-region">Region</dt><dd><p>Adapts RDS to the region: the program type (PTY) table and, in the United States and Canada, the conversion of the station code into a call sign, such as KXYZ.</p><p>In Brazil: <strong>Europe</strong>. Brazilian RDS follows the European model, with PI codes assigned by Anatel.<br>Values: Europe, USA(DB), USA, Canada</p></dd>
+<dt id="ajustes--mod17-rds-show-underscore">RDS Show underscore</dt><dd><p>Replaces spaces with underscores: only in the station name (PS only) or also in the text (On).</p><p>Values: Off, On, PS only</p></dd>
+<dt id="ajustes--mod17-rds-filter">RDS filter</dt><dd><p>Runs the RDS data through a filter with memory before showing it.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-show-pi-errors">Show PI errors</dt><dd><p>Shows the station’s PI code even before it arrives without errors.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-use-af">Use AF</dt><dd><p>With AF on, the radio switches on its own to another frequency of the same station when the signal gets worse. With REG On, it only accepts frequencies with the same regional programming.</p><p>In Brazil: <strong>Off</strong>. For DX and scanning, it keeps the radio from jumping to another frequency on its own.<br>Values: Off, On/REG On, On/REG Off</p></dd>
+<dt id="ajustes--mod17-rt-buffering">RT buffering</dt><dd><p>Only shows the RadioText, the text that scrolls on the screen, once it arrives complete, instead of changing it letter by letter.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-auto-sort-af">Auto sort AF</dt><dd><p>Sorts the list of alternative frequencies (AF) from lowest to highest.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-show-long-ps">Show long PS</dt><dd><p>Shows the station’s long name (Long PS), up to 32 characters, when it broadcasts one.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-fast-ps">Fast PS</dt><dd><p>Shows the letters of the station name (PS) as soon as they arrive, without waiting for confirmation. Initial does this only until the name is complete.</p><p>Values: Includes Initial; the other values have not been confirmed</p></dd>
+<dt id="ajustes--mod17-show-rds-clock">Show RDS clock</dt><dd><p>Shows on the screen the time the station sends through RDS.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-disable-all-rds">Disable all RDS</dt><dd><p>Turns off all RDS decoding.</p><p>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-fm-settings">FM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-converter-offset">Set converter offset</dt><dd><p>Adds a value to the displayed frequency, for those using an external RF converter.</p><p>Values: 0 to 2400 MHz</p></dd>
+<dt id="ajustes--mod17-set-low-band-edge">Set low band edge</dt><dd><p>Lowest frequency of the FM band. Past it, the knob wraps around to the end of the band.</p><p>In Brazil: <strong>76.1 MHz</strong>. The band now covers extended FM, from 76.1 to 87.3 MHz.<br>Values: 65 to 107.9 MHz</p></dd>
+<dt id="ajustes--mod17-set-high-band-edge">Set high band edge</dt><dd><p>Highest frequency of the FM band. Past it, the knob wraps around to the low edge.</p><p>In Brazil: <strong>108.0 MHz</strong>. The band now covers extended FM, from 76.1 to 87.3 MHz.<br>Values: 66 to 108 MHz</p></dd>
+<dt id="ajustes--mod17-set-level-offset">Set level offset</dt><dd><p>Adds or subtracts decibels from the signal reading.</p><p>Values: −25 to 15 dB</p></dd>
+<dt id="ajustes--mod17-set-low-level-threshold">Set low level threshold</dt><dd><p>Below this signal strength, the radio grays out the modulation meter and the RDS labels.</p><p>Values: −15 to 30 dBµV</p></dd>
+<dt id="ajustes--mod17-softmute-fm">Softmute FM</dt><dd><p>Gradually lowers the volume as the signal weakens and the hiss rises.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-fm-noise-blanker">FM Noise blanker</dt><dd><p>Cuts impulse noise: the short clicks from motors, electric fences and electrical appliances. The percentage is the strength of the cut.</p><p>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--mod17-fm-default-stepsize">FM default stepsize</dt><dd><p>How far the frequency moves with each click of the knob on FM.</p><p>Default: 100 kHz<br>In Brazil: <strong>200 kHz</strong>. With the edge at 76.1 MHz, tuning should step through the Brazilian channels, which end in an odd decimal; check it on your radio. For DX, use 100 kHz to also stop on the even decimals.<br>Values: 100 kHz, 200 kHz, 50 kHz</p></dd>
+<dt id="ajustes--mod17-fm-agc">FM AGC</dt><dd><p>Sets the signal strength at which the radio starts lowering its own amplification on FM.</p><p>In Brazil: <strong>92 dBµV</strong>. It is the most sensitive. If ghost stations show up near strong stations, try 87 or 84.<br>Values: 92 dBµV, 90 dBµV, 87 dBµV, 84 dBµV</p></dd>
+<dt id="ajustes--mod17-fmsi-stereo-improve">FMSI stereo improve</dt><dd><p>Turns on processing that improves stereo on weak signals. It only exists on the TEF6687 and TEF6689 tuners.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-set-fml-band">Set FML band</dt><dd><p>Sets the low FM band (FML) that BAND offers: 65 to 74 MHz, the Eastern European OIRT, or 76 to 87 MHz.</p><p>Values: 65–74 MHz, 76–87 MHz</p></dd>
+</dl>
+<h3 id="ajustes--mod17-am-settings">AM settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-softmute-am">Softmute AM</dt><dd><p>Gradually lowers the volume as the AM signal weakens and the noise rises.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-am-noise-blanker">AM Noise blanker</dt><dd><p>Cuts impulse noise: the short clicks from motors, electric fences and electrical appliances. The percentage is the strength of the cut.</p><p>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--mod17-am-rf-level-offset">AM RF Level offset</dt><dd><p>Adds or subtracts decibels from the signal reading on AM.</p><p>Values: −50 to 15 dB</p></dd>
+<dt id="ajustes--mod17-show-sw-wavelength">Show SW wavelength</dt><dd><p>Shows which shortwave band you are in, in meters, such as 49 m or 31 m, next to the frequency.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-cochannel-detector-sensitivity">CoChannel Detector sensitivity</dt><dd><p>Turns on the co-channel detector: the radio shows CO on the screen when it notices two stations on the same frequency. The number is the sensitivity.</p><p>Values: Off or 50 to 150 %</p></dd>
+<dt id="ajustes--mod17-cochannel-detector-threshold">CoChannel Detector threshold</dt><dd><p>How many detections in a row the co-channel detector needs before showing CO.</p><p>Values: 1 to 15</p></dd>
+<dt id="ajustes--mod17-am-att">AM ATT</dt><dd><p>Attenuates the AM input by 6 to 36 dB.</p><p>Values: Off or 6 to 36 dB</p></dd>
+<dt id="ajustes--mod17-am-agc">AM AGC</dt><dd><p>The same as FM AGC, on AM and shortwave: the signal strength at which the radio lowers its own amplification.</p><p>Values: 94 to 102 dBµV</p></dd>
+<dt id="ajustes--mod17-mw-default-stepsize">MW default stepsize</dt><dd><p>How far the frequency moves with each click on medium wave: 9 or 10 kHz.</p><p>In Brazil: <strong>10 kHz</strong>. It is the medium wave grid of the Americas, from 520 to 1720 kHz.<br>Values: 9 kHz, 10 kHz</p></dd>
+<dt id="ajustes--mod17-air-band-conversion">AIR band Conversion</dt><dd><p>Frequency of the external air band converter’s oscillator, in MHz.</p><p>Values: Frequency of the external converter’s oscillator, in MHz.</p></dd>
+<dt id="ajustes--mod17-air-start-frequency">AIR start frequency</dt><dd><p>Where the AIR band starts, in MHz.</p><p>Values: Start of the AIR band, in MHz.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-connectivity">Connectivity</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-usb-mode">USB mode</dt><dd><p>Chooses which computer program the USB port talks to: XDR-GTK or RDS Spy.</p><p>Values: XDRGTK, RDS Spy</p></dd>
+<dt id="ajustes--mod17-wi-fi-active">Wi-Fi active</dt><dd><p>Turns on the radio’s Wi-Fi.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-configure-wi-fi">Configure Wi-Fi</dt><dd><p>Opens the wizard that connects the radio to a network.</p><p>Values: Up to 3 networks, 2.4 GHz only: with the on-screen keypad (SSID and password), with a browser (portal at 192.168.4.1) or Delete Wi-Fi.</p></dd>
+<dt id="ajustes--mod17-set-xdrgtk-password">Set XDRGTK password</dt><dd><p>Password XDR-GTK needs to control the radio over the network.</p><p>Values: Up to 8 characters.</p></dd>
+<dt id="ajustes--mod17-stationlist-client-ip">Stationlist client IP</dt><dd><p>IP address of the computer running StationList.</p><p>Values: IP address.</p></dd>
+<dt id="ajustes--mod17-stationlist-id">Stationlist ID</dt><dd><p>This radio’s number in StationList.</p><p>Values: 1 to 10</p></dd>
+<dt id="ajustes--mod17-screen-off-on-xdrgtk">Screen off on XDRGTK</dt><dd><p>Turns the radio’s screen off while XDR-GTK is connected.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-wi-fi-auto-disconnect">Wi-Fi auto disconnect</dt><dd><p>Turns Wi-Fi off after the chosen time, or right after setting the clock (After time sync).</p><p>In Brazil: <strong>After time sync</strong>. Wi-Fi turns off after setting the clock, which saves battery and keeps the battery reading working.<br>Values: From 1 to 1440 min, or After time sync</p></dd>
+<dt id="ajustes--mod17-set-ntp-server">Set NTP server</dt><dd><p>Internet time server. It comes set to cn.pool.ntp.org, in China.</p><p>Default: cn.pool.ntp.org<br>In Brazil: <strong>a.st1.ntp.br</strong>. It is the NTP.br server, which uses the atomic clocks of Brazil’s National Observatory.<br>Values: Server address.</p></dd>
+<dt id="ajustes--mod17-bluetooth">Bluetooth</dt><dd><p>Turns on Bluetooth so the radio can control another device (Config slave host).</p><p>Values: Config slave host: control of another device, without audio.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-operation-settings">Operation settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-touch-type">Touch type</dt><dd><p>How the firmware reads the touchscreen: by interrupt (Int33 or Int27) or by periodic polling (Polling). Off disables touch.</p><p>Values: Int33, Int27, Off, Polling</p></dd>
+<dt id="ajustes--mod17-touch-calibration">Touch calibration</dt><dd><p>Opens the touch calibration: you tap the points shown on the screen.</p><p>Values: Opens the calibration.</p></dd>
+<dt id="ajustes--mod17-rotary-adjust-squelch">Rotary adjust squelch</dt><dd><p>Lets you adjust the squelch threshold by turning the tuning knob, in a mode you turn on and off.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-knob-mode">Knob mode</dt><dd><p>Knob operating mode: Classic or New.</p><p>Values: Classic, New</p></dd>
+<dt id="ajustes--mod17-knob-reverse">Knob reverse</dt><dd><p>Reverses the knob direction: turning right now lowers the frequency, and vice versa.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-knob-acceleration">Knob acceleration</dt><dd><p>Speeds up tuning when you turn the knob fast: Medium or Fast.</p><p>Values: Off, Medium, Fast</p></dd>
+<dt id="ajustes--mod17-quickly-switch-menu">Quickly switch menu</dt><dd><p>Shortcut to switch menu groups in fewer steps.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-long-press-rotary-key">Long press Rotary key</dt><dd><p>Chooses what a long press on this key does: lock the keys, the original function, open the menu, the keypad, the shortcuts page, advanced RDS or the AF screen.</p><p>Values: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-bw-key">Long press BW key</dt><dd><p>Chooses what a long press on this key does: lock the keys, the original function, open the menu, the keypad, the shortcuts page, advanced RDS or the AF screen.</p><p>Values: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-mode-key">Long press MODE key</dt><dd><p>Chooses what a long press on this key does: lock the keys, the original function, open the menu, the keypad, the shortcuts page, advanced RDS or the AF screen.</p><p>Values: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-long-press-band-key">Long press BAND key</dt><dd><p>Chooses what a long press on this key does: lock the keys, the original function, open the menu, the keypad, the shortcuts page, advanced RDS or the AF screen.</p><p>Values: Lock&amp;Unlock, Original operation, Open menu, Digital keypad, Shortcut page, Advanced RDS, AF Screen</p></dd>
+<dt id="ajustes--mod17-auto-save-change">Auto save change</dt><dd><p>Saves menu changes on its own. With Off, the radio asks Save or Discard when you exit.</p><p>Values: Off, On</p></dd>
+</dl>
+<h3 id="ajustes--mod17-other-settings">Other settings</h3>
+<p>Many of these options only appear in advanced mode.</p>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-set-date-and-time">Set date and time</dt><dd><p>Sets the date and time by hand.</p><p>Values: Date, time and date + time mode.</p></dd>
+<dt id="ajustes--mod17-12-24-h">12/24 h</dt><dd><p>Shows the clock in 12 h or 24 h format.</p><p>Values: 12 h, 24 h</p></dd>
+<dt id="ajustes--mod17-set-local-time-zone">Set local time zone</dt><dd><p>Time zone applied to the time coming from the internet, as GMT±hh:mm.</p><p>In Brazil: <strong>GMT−03:00</strong>. Brasília time. Pick the time zone of your state.<br>Values: Time zone as GMT±hh:mm.</p></dd>
+<dt id="ajustes--mod17-ntp-time-sync">NTP time sync</dt><dd><p>Sets the clock over the internet when Wi-Fi is on; since Mod16, every 30 minutes.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-rds-time-sync">RDS time sync</dt><dd><p>Sets the clock from the time the station sends through RDS.</p><p>In Brazil: <strong>Off</strong>. With NTP working, because some stations send the wrong time.<br>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-sleep-clock-correction">Sleep clock correction</dt><dd><p>Corrects the clock by a few seconds every 24 hours.</p><p>Values: Seconds per 24 h.</p></dd>
+<dt id="ajustes--mod17-power-on-timer">Power on timer</dt><dd><p>Turns the radio on by itself at a set time.</p><p>Values: Time.</p></dd>
+<dt id="ajustes--mod17-low-battery-protect">Low battery protect</dt><dd><p>Turns the radio off when the battery reaches the chosen limit.</p><p>Values: Battery limit.</p></dd>
+<dt id="ajustes--mod17-delete-rds-dictionary">Delete RDS dictionary</dt><dd><p>Erases the RDS dictionary stored by the radio.</p><p>Values: Shows Deleted or Not deleted.</p></dd>
+<dt id="ajustes--mod17-system-information">System information</dt><dd><p>Shows the firmware version, the build date, memory, storage, the tuner, the time server, the IP address and the MAC address.</p><p>Values: Version, build date, RAM, storage, tuner, NTP, IP and MAC.</p></dd>
+<dt id="ajustes--mod17-developer-mode-e-manage-my-data">Developer mode e Manage my data</dt><dd><p>Development and data management functions.</p><p>Values: Not documented.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-my-settings">My settings</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-ats-scan-schemes">ATS / Scan schemes</dt><dd><p>Stores auto search (ATS) and scan schemes, with band and criteria.</p><p>Values: Saved schemes.</p></dd>
+<dt id="ajustes--mod17-my-theme">My theme</dt><dd><p>Switches the theme on its own among up to 4 favorites, in sequence or at random.</p><p>Values: Sequential, Random</p></dd>
+<dt id="ajustes--mod17-receive-plan">Receive plan</dt><dd><p>Turns the radio on and off on a schedule, on a set band and frequency.</p><p>Values: Band, frequency and time.</p></dd>
+<dt id="ajustes--mod17-my-shortcut-icon">My Shortcut icon</dt><dd><p>Chooses the 7 shortcuts on the shortcuts page.</p><p>Values: 7 shortcuts.</p></dd>
+<dt id="ajustes--mod17-save-delete-my-settings">Save / Delete my settings</dt><dd><p>Saves your settings as a personal factory default, or deletes that saved set.</p><p>Values: Saves or erases the personal set.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-auto-search">Auto search</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-search-save-mode">Search &amp; save mode</dt><dd><p>How auto search saves: Overwrite erases the band’s memory channels and saves again; Append adds after the existing ones.</p><p>Values: Overwrite, Append, Continuously append</p></dd>
+<dt id="ajustes--mod17-search-band">Search band</dt><dd><p>Band for the auto search.</p><p>Values: FM, LW, MW, SW, AIR and others; the manual’s list goes on</p></dd>
+<dt id="ajustes--mod17-fm-scan-sensitivity">FM scan sensitivity</dt><dd><p>How demanding the search is before stopping on a FM station, from 1 to 15.</p><p>Values: 1 to 15</p></dd>
+<dt id="ajustes--mod17-am-scan-sensitivity">AM scan sensitivity</dt><dd><p>How demanding the search is before stopping on a AM station, from 1 to 20.</p><p>Values: 1 to 20</p></dd>
+<dt id="ajustes--mod17-judgment-mode">Judgment mode</dt><dd><p>Auto search criterion: Quality priority only saves good signals; Quantity priority saves as many stations as possible.</p><p>Values: Quality priority, Quantity priority</p></dd>
+<dt id="ajustes--mod17-start-channel">Start channel</dt><dd><p>First memory channel the auto search uses.</p><p>Values: 1 to 99</p></dd>
+<dt id="ajustes--mod17-sw-search-start-stop">SW search start / stop</dt><dd><p>Shortwave search limits, from 1800 to 27000 kHz.</p><p>Values: 1800 to 27000 kHz</p></dd>
+<dt id="ajustes--mod17-arrange-stations">Arrange stations</dt><dd><p>Reorganizes the memory channels: only removes the gaps (Only defrag) or removes them and sorts by frequency (Defrag and sort).</p><p>Values: Only defrag, Defrag and sort</p></dd>
+<dt id="ajustes--mod17-delete-stations">Delete stations</dt><dd><p>Erases all memory channels of the chosen band, not just one.</p><p>Values: Empties the whole chosen band.</p></dd>
+</dl>
+<h3 id="ajustes--mod17-frequency-scanning">Frequency scanning</h3>
+<dl class="le-ajustes">
+<dt id="ajustes--mod17-scanning-band">Scanning band</dt><dd><p>DX scan band.</p><p>Values: FM, LW, MW, SW, AIR, Default, FML</p></dd>
+<dt id="ajustes--mod17-begin-end-channel">Begin / End channel</dt><dd><p>First and last memory channel of the scan.</p><p>Values: Values not documented.</p></dd>
+<dt id="ajustes--mod17-wait-time">Wait time</dt><dd><p>Time on each frequency during the scan.</p><p>Values: Values not documented.</p></dd>
+<dt id="ajustes--mod17-exclude-only">Exclude / Only</dt><dd><p>With Only, the scan goes only through the memory channels of the range. With Exclude, it scans the whole band and skips the frequencies saved in that range.</p><p>Values: Exclude, Only</p></dd>
+<dt id="ajustes--mod17-cancel">Cancel</dt><dd><p>Makes the scan stop on its own: when it decodes a station’s code (Correct PI) or when it finds a signal (Signal). Off never stops.</p><p>Values: Signal, Off, Correct PI</p></dd>
+<dt id="ajustes--mod17-stay-break">Stay / Break</dt><dd><p>What the scan does when it stops on a station: stays on it (Stay) or ends (Break).</p><p>Values: Stay, Break</p></dd>
+<dt id="ajustes--mod17-wait-on-signal-only">Wait on signal only</dt><dd><p>Uses the wait time only on frequencies with a signal; on empty ones, the scan moves on right away.</p><p>Values: Off, On</p></dd>
+<dt id="ajustes--mod17-hold-time">Hold time</dt><dd><p>Scan hold time.</p><p>Values: Values not documented.</p></dd>
+</dl></div><div class="prose">
+
+<h2 id="ajustes--sources">Sources</h2>
+<ul>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">DP-666 Megatron Mod17 manual</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_CN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Mod17 manual in Chinese</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">PE5PVB/TEF6686_ESP32</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained" target="_blank" rel="noopener noreferrer">Wiki — Menu options explained</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Radio settings</p><a class="prox-next" href="../computador/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Computer and connectivity</span><span class="prox-desc">Connected to a computer, the DP-666 gets a big screen: tuning with the mouse, detailed RDS, logs and firmware updates.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../brasil/"><span class="mi-nome">Setup for Brazil<span class="mi-sub">Why each setting, with the standards</span></span></a></li><li class="mi-item"><a class="mi" href="../mod17/"><span class="mi-nome">Hidden features of Mod17<span class="mi-sub">Options the manual leaves out</span></span></a></li></ul><p class="prox-volta"><a href="../uso/">Previous page: Using the radio</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/" aria-current="page">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

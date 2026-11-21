@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Backup, gravação e restauração | DP-666: o guia definitivo</title>
+<meta name="description" content="Um backup completo do flash guarda firmware, configurações, memórias e arquivos internos. Com ele, qualquer experimento pode ser desfeito.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/backup/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/backup/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/backup/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Backup, gravação e restauração">
+<meta property="og:description" content="Um backup completo do flash guarda firmware, configurações, memórias e arquivos internos. Com ele, qualquer experimento pode ser desfeito.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/backup/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/backup/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#backup">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-backup">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Firmware</p><h1>Backup, gravação e restauração</h1><p class="meta">Atualizado em 21/11/2026 · 10 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Um backup completo do flash guarda tudo: firmware, configurações, memórias e arquivos internos. Com ele, qualquer experimento pode ser desfeito.</p>
+<h2 id="backup--mapa-do-flash-4-mb">Mapa do flash (4 MB)</h2>
+<figure class="figure figure-scroll"><div class="figure-body"><svg class="diagram" viewBox="0 0 960 214" role="img" aria-labelledby="fig-flash fig-flash-d"><title id="fig-flash">Mapa do flash</title><desc id="fig-flash-d">Flash de 4 MB: bootloader, tabela de partições, nvs, otadata, firmware de 3072 KB, área de arquivos de 896 KB e coredump.</desc><defs><marker id="fig-flash-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><text class="d-cap" x="40" y="34" text-anchor="start">FLASH DE 4 MB</text><rect class="d-box" x="40.0" y="56" width="13.8" height="38"/><rect class="d-key" x="53.8" y="56" width="660.0" height="38"/><rect class="d-box2" x="713.8" y="56" width="192.5" height="38"/><rect class="d-box" x="906.2" y="56" width="13.8" height="38"/><text class="d-title" x="383.75" y="80" text-anchor="middle">app0 · firmware · 3072 KB</text><text class="d-title" x="810.0" y="80" text-anchor="middle">spiffs · 896 KB</text><line class="d-line" x1="40.0" y1="94" x2="40.0" y2="100"/><text class="d-mono" x="40.0" y="114" text-anchor="start">0x000000</text><line class="d-line" x1="53.75" y1="94" x2="53.75" y2="100"/><text class="d-mono" x="53.75" y="114" text-anchor="middle">0x010000</text><line class="d-line" x1="713.75" y1="94" x2="713.75" y2="100"/><text class="d-mono" x="713.75" y="114" text-anchor="middle">0x310000</text><line class="d-line" x1="920.0" y1="94" x2="920.0" y2="100"/><text class="d-mono" x="920.0" y="114" text-anchor="end">0x400000</text><line class="d-line" x1="913.125" y1="56" x2="913.125" y2="42"/><text class="d-lbl" x="920.0" y="38" text-anchor="end">coredump · 64 KB</text><path class="d-guide" d="M40.0,94 L40,150 M53.8,94 L520,150" fill="none"/><rect class="d-box" x="40.0" y="150" width="30.0" height="32"/><rect class="d-box2" x="70.0" y="150" width="210.0" height="32"/><text class="d-sub" x="175.0" y="171" text-anchor="middle">bootloader</text><rect class="d-acc-fill" x="280.0" y="150" width="30.0" height="32"/><rect class="d-key" x="310.0" y="150" width="150.0" height="32"/><text class="d-sub" x="385.0" y="171" text-anchor="middle">nvs · 20 KB</text><rect class="d-box2" x="460.0" y="150" width="60.0" height="32"/><text class="d-lbl" x="295.0" y="200" text-anchor="middle">tabela de partições</text><text class="d-lbl" x="490.0" y="142" text-anchor="middle">otadata</text><text class="d-sub" x="536" y="164" text-anchor="start">primeiros 64 KB ampliados:</text><text class="d-sub" x="536" y="182" text-anchor="start">a nvs guarda configurações e memórias</text></svg></div><figcaption><span class="fig-n">Figura 1</span>Mapa do flash de 4 MB, igual nos pacotes analisados do Mod17 e da v2.20. A nvs guarda configurações e memórias; a spiffs, logos, esquemas, planos, nomes e My settings.</figcaption></figure>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Partição</th>
+<th>Endereço</th>
+<th>Tamanho</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nvs</td>
+<td>0x9000</td>
+<td>20 KB</td>
+<td>configurações e memórias</td>
+</tr>
+<tr>
+<td>otadata</td>
+<td>0xE000</td>
+<td>8 KB</td>
+<td>controle de inicialização</td>
+</tr>
+<tr>
+<td>app0</td>
+<td>0x10000</td>
+<td>3072 KB</td>
+<td>o firmware</td>
+</tr>
+<tr>
+<td>spiffs</td>
+<td>0x310000</td>
+<td>896 KB</td>
+<td>logos, esquemas, planos, nomes e My settings</td>
+</tr>
+<tr>
+<td>coredump</td>
+<td>0x3F0000</td>
+<td>64 KB</td>
+<td>registro de falhas</td>
+</tr>
+</tbody>
+</table></div>
+<p>Os pacotes analisados do Mod17 e da v2.20 usam o mesmo mapa.</p>
+<h2 id="backup--modo-de-gravação">Modo de gravação</h2>
+<p>Com a chave geral em ON, segure o BOOT e aperte POWER. No Windows, instale antes o <a href="https://www.deepelec.com/files/dp-666/CH341SER.zip" target="_blank" rel="noopener noreferrer">driver CH340 que a DEEPELEC disponibiliza</a>. O rádio aparece como uma porta COM no Windows, /dev/ttyUSB0 no Linux ou /dev/cu.wchusbserial… no macOS.</p>
+<p>O esptool é a ferramenta de linha de comando da Espressif. Ela instala com <code>pip install esptool</code>.</p>
+<h2 id="backup--fazer-o-backup-completo">Fazer o backup completo</h2>
+<pre><code>esptool --chip esp32 --port COM3 --baud 921600 read_flash 0 0x400000 dp666_backup.bin
+</code></pre>
+<p>Troque COM3 pela sua porta. Se der erro, repita com <code>--baud 460800</code>. Guarde o arquivo de 4 MB em mais de um lugar.</p>
+<h2 id="backup--restaurar-o-backup">Restaurar o backup</h2>
+<pre><code>esptool --chip esp32 --port COM3 --baud 921600 write_flash 0 dp666_backup.bin
+</code></pre>
+<p>O rádio volta exatamente ao estado do backup, com firmware, ajustes e memórias.</p>
+<h2 id="backup--como-o-flashbat-grava-o-mod17">Como o flash.bat grava o Mod17</h2>
+<p>O script do pacote usa o esptool a 921600 baud, modo DIO, 80 MHz e 4 MB. Ele grava o bootloader em 0x1000, a tabela de partições em 0x8000, o boot_app0 em 0xE000, o firmware em 0x10000 e a área de arquivos em 0x310000.</p>
+<div class="admonition warning">
+<p class="admonition-title">Gravar firmware apaga dados</p>
+<p>O flash.bat reescreve a área de arquivos inteira (896 KB), onde ficam esquemas, planos, nomes e My settings. O changelog do Megatron também avisa que as atualizações zeram as configurações. Faça o backup antes.</p>
+</div>
+<h2 id="backup--instalar-a-linha-oficial">Instalar a linha oficial</h2>
+<h3 id="backup--pacote-pronto">Pacote pronto</h3>
+<p>O GitHub do PE5PVB tem uma página de Releases, com as versões mais estáveis, que nem sempre são as mais novas. Os pacotes com ARS no nome são dos kits da AmateurRadioShop. Para o DP-666, prefira o pacote da DEEPELEC, já preparado para ele.</p>
+<ol>
+<li>Coloque o rádio no modo de gravação (veja acima). A wiki descreve o jeito genérico: segurar BOOT ao ligar o cabo USB, com o rádio ligado e a tela apagada.</li>
+<li>Descompacte o pacote e rode o <code>flash.bat</code>.</li>
+<li>Informe a porta COM. Se o script não listar as portas, abra o Gerenciador de Dispositivos (Win+R e <code>devmgmt.msc</code>) e veja em Portas.</li>
+<li>Espere a mensagem "Leaving... Hard resetting via RTS pin...". Desligue o rádio, tire o cabo e ligue de novo.</li>
+</ol>
+<h3 id="backup--compilar-o-código">Compilar o código</h3>
+<p>É o caminho para ter as correções que saíram depois do último pacote, como as do teclado e do sintonizador de novembro de 2026.</p>
+<ol>
+<li>Baixe o código com <code>git clone https://github.com/PE5PVB/TEF6686_ESP32</code> ou pelo ZIP do repositório.</li>
+<li>No Arduino IDE, em Preferences, acrescente o endereço de placas <code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code>. Depois instale o pacote esp32 da Espressif, na versão 3.x, pelo Boards Manager e escolha a placa ESP32 Dev Module.</li>
+<li>Instale as bibliotecas TFT_eSPI, ESP32Time e Hash em Sketch → Include Library → Add .ZIP Library, sem descompactar os ZIPs. Os links estão no começo do arquivo TEF6686_ESP32.ino.</li>
+<li>Em Partition scheme, escolha Custom.</li>
+</ol>
+<p>No arquivo <code>User_Setup.h</code> da biblioteca TFT_eSPI (em Documents/Arduino/libraries/TFT_eSPI), deixe ativas só as linhas abaixo e comente todo o resto. A primeira linha ativa os padrões do DP-666.</p>
+<pre><code>#define DEEPELEC_DP_66X
+#define ILI9341_DRIVER
+#define TFT_DMA_SUPPORT
+#define TFT_CS   5
+#define TFT_DC   17
+#define TFT_RST  16
+#define TOUCH_CS 32
+#define SPI_FREQUENCY        7500000
+#define SPI_READ_FREQUENCY  20000000
+#define SPI_TOUCH_FREQUENCY  2500000
+#define SMOOTH_FONT
+</code></pre>
+<p>Se aparecer ruído perto de 90 MHz, diminua o <code>SPI_FREQUENCY</code>. Para gravar, clique em Verify, escolha a porta em Tools → Port, coloque o rádio no modo de gravação e clique em Upload. No fim aparece "Done uploading".</p>
+<div class="admonition warning">
+<p class="admonition-title">O código atual usa outro mapa de partições</p>
+<p>Desde 16/02/2026, o <code>partitions.csv</code> do repositório dá mais espaço ao firmware e menos aos arquivos. Na v2.20.12, são nvs de 16 KB, firmware de 3.776 KB, coredump de 64 KB e área de arquivos de 192 KB, sem OTA. O mapa dos pacotes analisados acima tem firmware de 3.072 KB e área de arquivos de 896 KB. Ao trocar de mapa, a área de arquivos é recriada e o logbook começa vazio; as configurações também podem voltar ao padrão. Faça o backup completo antes e, para voltar, restaure o backup inteiro.</p>
+</div>
+<h2 id="backup--depois-de-gravar">Depois de gravar</h2>
+<ul>
+<li>Calibre o toque e reconfigure o Wi-Fi.</li>
+<li>Confira o fuso, o servidor NTP e os ajustes da <a href="../brasil/">Configuração para o Brasil</a>.</li>
+<li>Baixe firmwares só do site da DEEPELEC, que alerta para a existência de clones. Pacotes de repositórios de clones podem ser de outra placa.</li>
+</ul>
+<h2 id="backup--fontes">Fontes</h2>
+<ul>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666 — downloads</a></li>
+<li><a href="https://docs.espressif.com/projects/esptool/en/latest/esp32/" target="_blank" rel="noopener noreferrer">esptool — documentação</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/CH341SER.zip" target="_blank" rel="noopener noreferrer">DEEPELEC — driver CH341SER para Windows (zip)</a></li>
+<li><a href="https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers" target="_blank" rel="noopener noreferrer">SparkFun — como instalar o driver CH340, com os links da WCH</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software" target="_blank" rel="noopener noreferrer">Wiki do TEF6686_ESP32 — Installing the software</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/releases/" target="_blank" rel="noopener noreferrer">PE5PVB — Releases</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/partitions.csv" target="_blank" rel="noopener noreferrer">PE5PVB — partitions.csv atual</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commits/main/partitions.csv" target="_blank" rel="noopener noreferrer">PE5PVB — histórico do partitions.csv</a></li>
+<li><a href="https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/" target="_blank" rel="noopener noreferrer">Random Nerd Tutorials — ESP32 no Arduino IDE</a></li>
+<li><a href="https://www.youtube.com/watch?v=cXZ5rHwfRz4" target="_blank" rel="noopener noreferrer">Vídeo indicado pela wiki: instalar e atualizar o firmware</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Backup e gravação</p><a class="prox-next" href="../comparacao/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Comparação com outros rádios</span><span class="prox-desc">Onde o DP-666 se sai melhor e pior que outros portáteis com TEF6686.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../firmwares/"><span class="mi-nome">Megatron × oficial<span class="mi-sub">Qual firmware gravar</span></span></a></li><li class="mi-item"><a class="mi" href="../problemas/"><span class="mi-nome">Problemas comuns<span class="mi-sub">Quando a gravação falha</span></span></a></li></ul><p class="prox-volta"><a href="../mod17/">Página anterior: Recursos ocultos do Mod17</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/" aria-current="page">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

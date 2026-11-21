@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Comparação com outros rádios TEF | DP-666: o guia definitivo</title>
+<meta name="description" content="Onde o DP-666 se sai melhor e pior que outros portáteis com TEF6686.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/comparacao/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/comparacao/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/comparacao/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Comparação com outros rádios TEF">
+<meta property="og:description" content="Onde o DP-666 se sai melhor e pior que outros portáteis com TEF6686.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/comparacao/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/comparacao/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#comparacao">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-comparacao">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Mais</p><h1>Comparação com outros rádios TEF</h1><p class="meta">Atualizado em 21/11/2026 · 9 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>O DP-666 não é o melhor em tudo. Para FM e RDS, está entre os melhores portáteis com TEF6686 e tem o melhor suporte de firmware: a linha oficial suporta as teclas do DP-666, e há o Megatron, teclado, toque, Wi-Fi e RTC. O ponto fraco é o AM. Sem antena interna para LW e MW, ele vai bem com fio externo, mas fica bem atrás com a antena telescópica.</p>
+<h2 id="comparacao--alternativas">Alternativas</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Rádio</th>
+<th>Ponto forte</th>
+<th>Atenção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qodosen DX-286</td>
+<td>referência para AM e MW portátil, com antena de ferrite interna, chave de LNA, atenuador e chave de antena</td>
+<td>sem SSB; muito sensível a interferência dentro de casa</td>
+</tr>
+<tr>
+<td>ATS125</td>
+<td>TEF6686 com ESP32 em caixa de alumínio, teclado e Bluetooth nos dois sentidos (caixa do celular e envio do áudio para fones)</td>
+<td>bateria de 2500 mAh</td>
+</tr>
+<tr>
+<td>HamGeek NXP-NANO</td>
+<td>TEF6686 com ESP32 em formato de bolso, com tela de toque IPS</td>
+<td>pouca informação independente disponível</td>
+</tr>
+<tr>
+<td>TEF6686 em caixa metálica (vários vendedores)</td>
+<td>robusto</td>
+<td>usuários relatam que a versão "com LNA" não compensa o preço extra</td>
+</tr>
+<tr>
+<td>Headless TEF Lite (FMDX.org)</td>
+<td>STM32 com TEF6687 numa placa de 55×25 mm, para DX de FM pelo computador ou pelo fm-dx-webserver; o TEF6687 tem FMSI e decodificador de RDS melhor</td>
+<td>não é portátil, precisa de computador</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="comparacao--resumo-por-uso">Resumo por uso</h2>
+<ul>
+<li><strong>FM e RDS no dia a dia e em DX:</strong> DP-666.</li>
+<li><strong>AM portátil sem antena externa:</strong> DX-286.</li>
+<li><strong>Bluetooth de áudio:</strong> ATS125.</li>
+<li><strong>FM-DX fixo, pelo computador ou pela internet:</strong> Headless TEF Lite com fm-dx-webserver.</li>
+<li><strong>SSB (radioamador e utilitárias):</strong> nenhum rádio TEF faz. Só rádios de outro tipo, como o Tecsun PL-330.</li>
+<li><strong>Evite clones</strong> como o "Sparkelec DP-666" (veja <a href="../problemas/#problemas--clones">Clones</a>, em Problemas comuns).</li>
+</ul>
+<h2 id="comparacao--fontes">Fontes</h2>
+<ul>
+<li><a href="https://www.blogordie.com/?p=7848" target="_blank" rel="noopener noreferrer">Blog or Die — DX-286 × DP-666</a></li>
+<li><a href="https://www.blogordie.com/?p=7748" target="_blank" rel="noopener noreferrer">Blog or Die — comparação de dois rádios com TEF6686</a></li>
+<li><a href="https://thewearify.com/?p=166272" target="_blank" rel="noopener noreferrer">Qodosen DX-286</a></li>
+<li><a href="https://www.fruugo.ie/upgrade-ats125-esp32-65-108mhz-portable-radio-receiver-fmswmwlw-with-nxp-tef6686-chip-dual-mode/p-417769892-881101664" target="_blank" rel="noopener noreferrer">ATS125</a></li>
+<li><a href="https://www.passion-radio.com/emergency-radio/97430-3115.html" target="_blank" rel="noopener noreferrer">HamGeek NXP-NANO</a></li>
+<li><a href="https://forums.mediaspy.org/t/the-tef-gang/24674?page=13" target="_blank" rel="noopener noreferrer">MediaSpy — The TEF Gang</a></li>
+<li><a href="https://fmdx.org/articles/headless-tef-lite-release.php" target="_blank" rel="noopener noreferrer">FMDX.org — Headless TEF Lite</a></li>
+<li><a href="https://pl.fmdx.org/?p=13425" target="_blank" rel="noopener noreferrer">FMDX — TEF6687</a></li>
+<li><a href="https://swling.com/blog/2026/03/the-deepelec-dp-666-a-very-interesting-radio/" target="_blank" rel="noopener noreferrer">SWLing Post — The Deepelec DP-666</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Comparação com outros rádios</p><a class="prox-next" href="../laboratorio/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Laboratório</span><span class="prox-desc">Ideias de projeto em torno do DP-666, com o que já se sabe sobre cada uma.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../hardware/#hardware--por-dentro-do-rádio"><span class="mi-nome">Hardware<span class="mi-sub">As peças por dentro</span></span></a></li><li class="mi-item"><a class="mi" href="../firmwares/"><span class="mi-nome">Megatron × oficial<span class="mi-sub">O suporte de firmware</span></span></a></li></ul><p class="prox-volta"><a href="../backup/">Página anterior: Backup e gravação</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/" aria-current="page">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

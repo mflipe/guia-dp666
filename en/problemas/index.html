@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Common problems | DP-666: the definitive guide</title>
+<meta name="description" content="Problems acknowledged by DEEPELEC, reported by the community or anticipated in the code, with the steps to fix them.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/problemas/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/problemas/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/problemas/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Common problems">
+<meta property="og:description" content="Problems acknowledged by DEEPELEC, reported by the community or anticipated in the code, with the steps to fix them.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/problemas/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../problemas/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#problemas">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-problemas">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>The radio</p><h1>Common problems</h1><p class="meta">Updated Nov 21, 2026 · 10 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Problems acknowledged by DEEPELEC, reported by the community or anticipated in the firmware code. Pick what is happening and follow the steps, from the simplest to the most involved. Before any repair or reflash, make a <a href="../backup/">full backup</a>. If a message or code showed up on the screen, see what it means in <a href="../codigos/">Screen messages and codes</a>.</p>
+<h2 id="problemas--screen-stuck-on-tuner-none">Screen stuck on "Tuner: !None!"</h2>
+<p>The startup screen shows the logo and the firmware version and, in red, "Tuner: !None!". Sometimes the radio restarts on its own, in the middle of use, and stops on this screen.</p>
+<figure class="figure"><div class="figure-body"><svg class="diagram diagram-boot" viewBox="0 0 700 280" role="img" aria-labelledby="fig-boot fig-boot-d"><title id="fig-boot">Startup screen with Tuner: !None!</title><desc id="fig-boot-d">Diagram of the startup screen: title, logo, firmware version, the message Tuner: !None! in red and three markers at the bottom.</desc><defs><marker id="fig-boot-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-screen" x="20" y="20" width="320" height="240" rx="6"/><text class="d-scr-title" x="180" y="70" text-anchor="middle">FM/AM Receiver</text><rect class="d-scr-logo" x="125" y="88" width="110" height="40" rx="4"/><text class="d-scr-dim" x="180" y="113" text-anchor="middle">logo</text><text class="d-scr-text" x="180" y="158" text-anchor="middle">Software Ver2.00.15-Mod17 by Megatron</text><text class="d-scr-err" x="180" y="192" text-anchor="middle">Tuner: !None!</text><rect class="d-mk1" x="140" y="250" width="16" height="6"/><rect class="d-mk2" x="172" y="250" width="16" height="6"/><rect class="d-mk3" x="204" y="250" width="16" height="6"/><path class="d-guide" d="M262,188 L262,188 L364,65" fill="none"/><circle class="d-dot" cx="262" cy="188" r="2.5"/><text class="d-title" x="372" y="64" text-anchor="start">Tuner: !None!</text><text class="d-sub" x="372" y="82" text-anchor="start">the firmware stops here on purpose</text><path class="d-guide" d="M148,250 L148,244 L364,129" fill="none"/><circle class="d-dot" cx="148" cy="250" r="2.5"/><text class="d-title" x="372" y="128" text-anchor="start">Marker 1, yellow</text><text class="d-sub" x="372" y="146" text-anchor="start">tried to start the tuner</text><path class="d-guide" d="M180,250 L180,244 L364,183" fill="none"/><circle class="d-dot" cx="180" cy="250" r="2.5"/><text class="d-title" x="372" y="182" text-anchor="start">Marker 2, red</text><text class="d-sub" x="372" y="200" text-anchor="start">the tuner did not respond</text><path class="d-guide" d="M212,250 L212,244 L364,237" fill="none"/><circle class="d-dot" cx="212" cy="250" r="2.5"/><text class="d-title" x="372" y="236" text-anchor="start">Marker 3</text><text class="d-sub" x="372" y="254" text-anchor="start">Wi-Fi step, not reached</text></svg></div><figcaption><span class="fig-n">Figure 1</span>Diagram of the startup screen with the error, according to the base code (PE5PVB v2.00) and the Mod17 screen. The logo is left out.</figcaption></figure>
+
+<ul>
+<li><strong>What it means:</strong> the processor loaded the firmware, but couldn’t talk to the TEF6686 tuner. Without it, the radio receives nothing, and the firmware stops on this screen on purpose.</li>
+<li><strong>Startup markers <span class="nw"><span class="src">base code</span>:</span></strong> the first one (yellow) shows that the tuner startup was attempted; the second (red), that it didn’t respond; the third would be Wi-Fi.</li>
+<li><strong>Likely cause:</strong> a power drop or fluctuation while the firmware loads the chip leaves the tuner stuck. A low battery without warning, with Wi-Fi on for hours, is a typical scenario, because Wi-Fi prevents the battery reading and causes current spikes.</li>
+<li><strong>The official firmware’s fix:</strong> since Nov 13, 2026, the official code forces the chip to restart in this case. Mod17 doesn’t have this fix.</li>
+<li><strong>Don’t do a factory reset (BW + TUNING):</strong> the problem isn’t in the settings, and the settings would be lost.</li>
+</ul>
+<p>Steps, in order:</p>
+<ol>
+<li>Turn it off with POWER, unplug the USB cable, set the main switch to OFF and wait 1 to 2 minutes. Set the switch back to ON and turn it on without pressing anything during startup. POWER already cuts the board’s power; unplugging the cable also turns off the USB-serial bridge, which the cable powers, and the switch at OFF keeps the radio from turning back on too early.</li>
+<li>If it happens again, charge the radio while off for about 1 hour and repeat step 1.</li>
+<li>If it continues after 2 or 3 tries, the fault is probably in the hardware (soldering, power or the tuner’s crystal). Contact the seller or DEEPELEC and don’t open the radio while under warranty.</li>
+</ol>
+<p>To prevent it, set Wi-Fi auto disconnect to After time sync or leave Wi-Fi off when you are not using it.</p>
+<h2 id="problemas--startup-and-firmware">Startup and firmware</h2>
+<ul>
+<li><strong>The update won’t flash over USB:</strong> enter flashing mode by holding BOOT while powering on and install the CH340 driver on Windows. There is an unconfirmed report that the USB port of early units can’t be used for updates.</li>
+<li><strong>Settings disappeared after an update:</strong> that is expected. Updates reset the settings, require a new touch calibration and, in some versions, a new Wi-Fi setup.</li>
+<li><strong>Radio in Chinese or without the advanced options:</strong> change the language in 显示设置 → 语言 → English. For advanced mode, with the language set to Chinese, turn on 高级模式 in 主要设置 → 系统使用模式 and switch back to English.</li>
+<li><strong>Occasional encoder error at startup:</strong> in one reported case, the encoder’s solder joints were touching the contacts on the back of the screen. The owner fixed it with a small piece of insulating plastic between them (<a href="https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/" target="_blank" rel="noopener noreferrer">report with photos</a>); opening the case takes a 0.7 mm hex key. Under warranty, talk to the seller or DEEPELEC first.</li>
+</ul>
+<h2 id="problemas--audio">Audio</h2>
+<ul>
+<li><strong>Speaker silent after using headphones:</strong> in some batches, the internal contact of the headphone jack (PJ-3270) that reconnects the speaker fails. DEEPELEC suggests opening the radio and cleaning contacts PIN6 and PIN2 (<a href="../hardware/#hardware--sound-path">why those two</a>). Under warranty, prefer contacting support. If the headphones work and the speaker doesn’t, this is the likely cause.</li>
+<li><strong>No sound even with a signal:</strong> check the squelch (Use squelch at Off to test), mute (the icon on the screen or key 0), VOLUME and Set volume at 0 dB.</li>
+<li><strong>High-pitched hiss instead of audio:</strong> Audio output is set to MPX, which delivers the raw multiplex signal. Switch back to Stereo.</li>
+</ul>
+<h2 id="problemas--squelch">Squelch</h2>
+<ul>
+<li><strong>Unstable or not responding on the SQL knob:</strong> the potentiometer may have a bad contact. Use the tuning knob: Audio settings → Use squelch at On; Operation settings → Rotary adjust squelch at On; tap SQ on the screen and turn until the hiss goes away.</li>
+</ul>
+<h2 id="problemas--reception">Reception</h2>
+<ul>
+<li><strong>Sudden loss of signal and audio:</strong> the internal antenna cable may have come loose from the SMA connector. The fix is to replace the IPEX1-SMA adapter or resolder the center wire.</li>
+<li><strong>Weak AM or only hiss on MW and LW:</strong> the DP-666 has no internal antenna for these bands. Use an external wire or a loop on the SMA and test at night, away from electronics and chargers.</li>
+<li><strong>Whistles or noise on some FM frequencies:</strong> interference from the screen. Use Dynamic SPI speed on Auto, still screen, screen off during searches and lower brightness. The official firmware once fixed SPI at 27 MHz to reduce this noise. On it, turning off the Audio level meter also helps with weak signals, and if you compile it yourself you can lower <code>SPI_FREQUENCY</code> if the noise shows up around 90 MHz.</li>
+<li><strong>Ghost stations near strong stations:</strong> lower FM AGC to 87 or 84 dBµV. On AM, use AM ATT.</li>
+<li><strong>The radio jumps to another frequency on its own:</strong> that is AF. Turn Use AF off for DX and scanning.</li>
+<li><strong>PS or RT with wrong characters:</strong> set Fast PS to Initial or Off and RDS filter to On.</li>
+</ul>
+<h2 id="problemas--screen-and-touch">Screen and touch</h2>
+<ul>
+<li><strong>Touch misaligned or failing:</strong> redo the calibration in Operation settings → Touch calibration, which is required after installing the touch firmware. If it continues, try another Touch Type (Int33, Int27 or Polling).</li>
+<li><strong>Screen upside down or with inverted colors:</strong> powering on while holding MODE rotates the screen; Invert screen color inverts the colors.</li>
+<li><strong>On the official firmware:</strong> calibrate touch by powering on the radio with BW + MODE or in Screen settings. Powering on with BW + BAND inverts the colors, and MODE + encoder changes the panel type when the menu becomes unreadable (see <a href="../oficial/">Using the official firmware</a>).</li>
+</ul>
+<h2 id="problemas--clock-wi-fi-and-battery">Clock, Wi-Fi and battery</h2>
+<ul>
+<li><strong>Time 8 hours ahead:</strong> it is the default Chinese time zone. Change Set local time zone to your time zone (Brasília: GMT−03:00) and, with NTP working, leave RDS time sync at Off.</li>
+<li><strong>The battery indicator disappears:</strong> a limitation of the ESP32 with Wi-Fi on. Set Wi-Fi auto disconnect to After time sync.</li>
+<li><strong>The time is lost with the main switch off:</strong> it means the unit has no RTC. Sleep clock correction partly makes up for it.</li>
+<li><strong>Charging:</strong> a 5 V charger of 1 A or more, 5 W at most, without fast charging, preferably with the radio off. Red LED while charging; at the end it changes color (blue in schematic V2.5.3). Charging takes more than 5 hours and works with the main switch at OFF.</li>
+</ul>
+<h2 id="problemas--settings-and-memory-channels">Settings and memory channels</h2>
+<ul>
+<li><strong>Settings don’t stay saved:</strong> leave the menu with MODE ("PRESS MODE TO EXIT AND STORE") and, if Save/Discard appears, choose Save.</li>
+<li><strong>Memory channels erased all at once:</strong> Delete stations empties the whole band and Auto search in Overwrite overwrites it. Only restoring a backup gets them back.</li>
+<li><strong>Factory reset on the official firmware:</strong> powering on the radio with BW + encoder restores the settings and also empties the 99 memory channels and the logbook.</li>
+<li><strong>The radio turns off on its own:</strong> check Power Off timer, Low battery protect, an active receive plan or BAND held for 3 s with the Power off action.</li>
+<li><strong>The radio turns on on its own:</strong> check Power on timer and Using receive plan. mod14 fixed an automatic power-on that happened with no plan set up.</li>
+</ul>
+<h2 id="problemas--connecting-to-a-computer">Connecting to a computer</h2>
+<ul>
+<li><strong>The computer doesn’t see the radio:</strong> it is almost always the cable, which only charges. Swap it for a cable that carries data, try another USB port and check the CH340 driver in Device Manager. The step-by-step is in <a href="../computador/">Computer and connectivity</a>.</li>
+<li><strong>The program connects, but nothing arrives:</strong> the USB port mode doesn’t match the program (XDRGTK for XDR-GTK and FM-DX Webserver; RDS Spy for RDS Spy), another program is already using the port, or the radio’s menu is open.</li>
+<li><strong>Over Wi-Fi, XDR-GTK won’t connect:</strong> check that the network is 2.4 GHz, that the computer is on the same network, the radio’s IP address, port 7373 and the XDR-GTK password. The Windows firewall may block the connection.</li>
+<li><strong>No sound in FM-DX Webserver:</strong> check that the chosen sound input is the cable’s and that the radio’s volume isn’t at minimum. Mono-only sound usually comes from the sound card.</li>
+</ul>
+<h2 id="problemas--clones">Clones</h2>
+<p>According to DEEPELEC, clones such as SPARKELEC’s use an older board (V2.5, versus V2.5.3 on the original), have touch that doesn’t work, have neither a Wi-Fi antenna nor an RTC, and get no updates or support. DEEPELEC also says SPARKELEC uses screenshots copied from the original DP-666. The logo on the startup screen doesn’t prove originality, because it is drawn by the firmware.</p>
+<p>The V2.0 manual distributed by Raddy is the same as the one in SPARKELEC’s GitHub repository, so treat that material as belonging to a clone.</p>
+<h2 id="problemas--sources">Sources</h2>
+<ul>
+<li><a href="https://www.deepelec.com/dp-666-speaker-cannot-produce-any-sound" target="_blank" rel="noopener noreferrer">DEEPELEC — speaker with no sound</a></li>
+<li><a href="https://www.deepelec.com/how-to-adjust-the-sq-value" target="_blank" rel="noopener noreferrer">DEEPELEC — adjusting SQ</a></li>
+<li><a href="https://www.deepelec.com/how-to-repair-the-antenna-connector/" target="_blank" rel="noopener noreferrer">DEEPELEC — antenna connector repair</a></li>
+<li><a href="https://www.deepelec.com/2025/10/10/stay_away_from_cloned_products" target="_blank" rel="noopener noreferrer">DEEPELEC — clones</a></li>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">DP-666 Megatron Mod17 manual</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d" target="_blank" rel="noopener noreferrer">PE5PVB — tuner detection fix</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/discussions/885" target="_blank" rel="noopener noreferrer">PE5PVB — discussion #885</a></li>
+<li><a href="https://www.blogordie.com/?p=7848" target="_blank" rel="noopener noreferrer">Blog or Die — DX-286 vs. DP-666</a></li>
+<li><a href="https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/" target="_blank" rel="noopener noreferrer">Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Common problems</p><a class="prox-next" href="../codigos/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Screen messages and codes</span><span class="prox-desc">What each mark, code and message on the screen means, with a field to type what shows on the radio.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../backup/"><span class="mi-nome">Backup and flashing<span class="mi-sub">Do it before any repair</span></span></a></li><li class="mi-item"><a class="mi" href="../hardware/"><span class="mi-nome">Hardware<span class="mi-sub">Where power and sound flow</span></span></a></li></ul><p class="prox-volta"><a href="../computador/">Previous page: Computer and connectivity</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/" aria-current="page">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

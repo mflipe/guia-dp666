@@ -1,0 +1,35 @@
+{
+ "name": "DP-666: o guia definitivo",
+ "short_name": "Guia DP-666",
+ "description": "O guia definitivo e independente do rádio DEEPELEC DP-666: botões, menus, ajustes para o Brasil, códigos da tela e solução de problemas.",
+ "lang": "pt-BR",
+ "dir": "ltr",
+ "id": "./",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#eef1f5",
+ "theme_color": "#eef1f5",
+ "categories": [
+  "education",
+  "utilities"
+ ],
+ "icons": [
+  {
+   "src": "icones/icone-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icones/icone-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icones/icone-mascara-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

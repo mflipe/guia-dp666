@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Lab | DP-666: the definitive guide</title>
+<meta name="description" content="Project ideas around the DP-666, with what is already known about each one.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/laboratorio/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/laboratorio/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/laboratorio/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Lab">
+<meta property="og:description" content="Project ideas around the DP-666, with what is already known about each one.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/laboratorio/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../laboratorio/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#laboratorio">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-laboratorio">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>More</p><h1>Lab</h1><p class="meta">Updated Nov 21, 2026 · 19 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Project ideas around the DP-666, with what is already known about each one. Nothing here is finished: these are paths that have been studied, with the limits found.</p>
+<h2 id="laboratorio--ai-controlled-radio">AI-controlled radio</h2>
+<p>An AI agent that runs commands on the computer, such as Claude Code, can talk to the radio through the XDR-GTK protocol: tune (<code>T99500</code> goes to 99.5 MHz), change the filter and AGC and read the signal and RDS back.</p>
+<ul>
+<li><strong>Straight over USB:</strong> a script talks to the serial port. It is the simplest way, but it keeps the port to itself.</li>
+<li><strong>Through fm-dx-webserver:</strong> it also accepts commands from other programs, as the fm-dx-console terminal client does. That way the radio stays reachable from the browser.</li>
+<li><strong>How to package it:</strong> a local MCP server with tools such as "tune", "read RDS" and "scan band". Claude Code accepts MCP servers that run as processes on the machine, and the non-interactive mode (<code>claude -p</code>) lets you schedule routines, such as a scan in the small hours.</li>
+</ul>
+<p><strong>Limits:</strong> the AI reads numbers and RDS, but doesn’t hear the audio. Each action takes a few seconds, so monitoring for hours requires a script that runs on its own. And Mod17’s compatibility with the protocol needs testing.</p>
+<h2 id="laboratorio--monitoring-radio-news">Monitoring radio news</h2>
+<p>AI doesn’t process audio, but you can put a transcription step in between:</p>
+<ol>
+<li><strong>Capture:</strong> a cable from the radio’s headphone output to a sound card on the computer.</li>
+<li><strong>Transcription:</strong> a speech-to-text model, such as Whisper, transcribes the speech.</li>
+<li><strong>Filter:</strong> a script picks out the passages with words such as "accident", "road closed" or "fire". This keeps the cost low.</li>
+<li><strong>Analysis:</strong> the AI summarizes and organizes each case (what, where, when, severity) and checks it on the web.</li>
+<li><strong>Delivery:</strong> an alert on the phone or a daily summary.</li>
+</ol>
+<p><strong>Limits:</strong> the DP-666 tunes one station at a time; for several at once, you need more radios or an SDR. Many stations also stream online, which is simpler for news. The DP-666 doesn’t receive police, fire or rescue radio, only FM, AM and shortwave stations.</p>
+<h2 id="laboratorio--emulating-the-interface-on-a-computer">Emulating the interface on a computer</h2>
+<ul>
+<li><strong>Official firmware:</strong> feasible on Wokwi, an ESP32 simulator that is free for personal use, with an ESP32, an ILI9341 screen, an encoder and buttons. Without the tuner, the firmware would stop at "Tuner: !None!", but the open code lets you swap the TEF6686 for a fake one or create a virtual chip with Wokwi’s I²C chips API. Touch wouldn’t work, because Wokwi’s touchscreen is capacitive (FT6206), not resistive like the DP-666’s.</li>
+<li><strong>Megatron:</strong> only in theory. You would need to run the binary as it is and create virtual versions of the tuner, the keypad and touch that give the expected answers. Espressif’s QEMU isn’t practical for this, because SPI devices, such as the screen, don’t work well in it.</li>
+<li><strong>Mirroring the radio’s screen on a PC:</strong> neither firmware sends the screen image.</li>
+</ul>
+<h2 id="laboratorio--configurator-on-a-computer-and-a-phone">Configurator on a computer and a phone</h2>
+<p>The idea: put together settings and memory channels on a computer or a phone and send them to the radio.</p>
+<p><strong>What already exists:</strong></p>
+<ul>
+<li><strong>Official firmware, over USB:</strong> <code>s</code> lists the memory channels, <code>S</code> saves one and <code>l</code> exports the station log.</li>
+<li><strong>Mod17:</strong> the data lives in internal files (see <a href="../mod17/">Hidden features of Mod17</a>), and Manage my data mode waits for commands from a PC, but the protocol isn’t public.</li>
+</ul>
+<p><strong>Three paths:</strong></p>
+<ol>
+<li><strong>Editing the backup:</strong> read the flash with esptool, edit memory channels, names and settings and write it back. On Mod17, the format can be worked out by comparing two backups, before and after changing a setting. It is safe, but only works over USB, with the radio in flashing mode.</li>
+<li><strong>A web page over USB:</strong> Web Serial lets a page talk to the radio without installing anything, in Chrome and Edge on a computer. It doesn’t work in Safari.</li>
+<li><strong>A settings page on the radio itself:</strong> the official firmware already has a web server. By modifying the firmware, you could add a configuration page that any phone opens over Wi-Fi.</li>
+</ol>
+<p><strong>On a phone:</strong> the iPhone doesn’t talk to common USB-serial adapters, so only over Wi-Fi or Bluetooth Low Energy. On Android, you can use the cable, with the usb-serial-for-android library, which supports the CH340.</p>
+<h2 id="laboratorio--bluetooth-as-a-configuration-channel">Bluetooth as a configuration channel</h2>
+<ul>
+<li><strong>Pros:</strong> Bluetooth Low Energy (BLE) is the only way for an iPhone app to talk to the radio without a router, because BLE devices don’t depend on Apple’s MFi program. It also uses less battery than Wi-Fi.</li>
+<li><strong>Cons:</strong> classic Bluetooth, in serial mode, doesn’t work with iPhone apps. From the browser, Web Bluetooth works in Chrome and Edge, but not in Safari or on iOS.</li>
+<li><strong>In the firmware:</strong> Mod17 already includes Bluetooth, but only for the "slave host" function. The official firmware doesn’t use Bluetooth, and a v2.20 package for the DP-666 takes 3,064 of the 3,072 KB reserved for the program. To make it fit, the radio’s memory would have to be reorganized.</li>
+</ul>
+<h2 id="laboratorio--swapping-the-esp32-for-a-newer-model">Swapping the ESP32 for a newer model?</h2>
+<p>The DP-666 uses the ESP32-WROOM-32U: 4 MB of flash, no PSRAM and a connector for an external antenna. Espressif classifies this module as not recommended for new designs. The current model in the same family is the WROOM-32UE, with the same footprint. On it, the six flash pins (17 to 22) are left unconnected, but the DP-666 doesn’t use those pins.</p>
+<p>Short answer: only the WROOM-32UE without PSRAM can replace the current one. The others need a new board, and none of them improves reception.</p>
+<p>The figure below shows the modules to scale. Tap a pin to see what it does on the DP-666.</p>
+<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui"><a class="v3-open" href="../#laboratorio">Open the 3D view</a><p class="v3-note">Downloads a 648 KB file only when you ask. Works on phones and computers.</p></div></div></div><figcaption><span class="fig-n">Figure 1</span>ESP32 modules to scale, with the pins colored by their function on the DP-666. Outer dimensions from Espressif’s datasheets; the position of the side pins and of the antenna connector is approximate. The grid has 5 mm squares.</figcaption></figure>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Dimensions</th>
+<th>Memory</th>
+<th>Does it fit the DP-666?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WROOM-32U (the current one)</td>
+<td>18 × 19.2 × 3.2 mm</td>
+<td>4 MB of flash</td>
+<td>It is the original</td>
+</tr>
+<tr>
+<td>WROOM-32UE, versions N4, N8 and N16</td>
+<td>18 × 19.2 × 3.2 mm</td>
+<td>4, 8 or 16 MB of flash</td>
+<td><strong>Yes:</strong> the pins the DP-666 uses are in the same places</td>
+</tr>
+<tr>
+<td>WROOM-32UE with PSRAM (N4R2, N8R2 and N16R2)</td>
+<td>18 × 19.2 × 3.2 mm</td>
+<td>Up to 16 MB of flash and 2 MB of PSRAM</td>
+<td><strong>No:</strong> GPIO 16, the screen reset, is tied to the PSRAM</td>
+</tr>
+<tr>
+<td>WROVER-IE</td>
+<td>18 × 31.4 × 3.3 mm</td>
+<td>Up to 16 MB of flash and 8 MB of PSRAM</td>
+<td><strong>No:</strong> it is 12 mm longer, and GPIO 16 and 17 (screen reset and DC) go to the PSRAM</td>
+</tr>
+<tr>
+<td>S3-WROOM-1U</td>
+<td>18 × 19.2 × 3.2 mm</td>
+<td>Up to 16 MB of flash and PSRAM</td>
+<td><strong>No:</strong> 41 pins in a different order</td>
+</tr>
+<tr>
+<td>C5-WROOM-1U</td>
+<td>18 × 21.2 × 3.3 mm</td>
+<td>Up to 32 MB of flash and 8 MB of PSRAM</td>
+<td><strong>No:</strong> a different pinout and up to 22 GPIOs</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="laboratorio--what-you-could-gain">What you could gain</h3>
+<ul>
+<li><strong>More flash (WROOM-32UE N8 or N16):</strong> the program already fills almost all of its reserved area. The v2.20 package used 3,064 of the 3,072 KB, and v2.20.12 grew that area to 3,776 KB, leaving 192 KB for files, where the station log lives. With 8 or 16 MB, a bigger log and two copies of the program would fit, which allows updating over Wi-Fi. To use the space, you have to compile with another partition table, and the official firmware has no over-the-air update.</li>
+<li><strong>PSRAM:</strong> it would give memory to build the whole screen before showing it, without flicker. Today the code draws in small pieces (the largest, the frequency, is 200 × 50 pixels), because the whole 320 × 240 screen at 16 bits takes 150 KB and would compete with Wi-Fi for internal RAM.</li>
+<li><strong>Native USB (S3):</strong> the radio would show up on the computer as a serial port without the CH340. It could even work as a sound card, if the new board routed the audio to the ESP32.</li>
+<li><strong>More analog inputs (S3):</strong> the S3’s ADC1 has 10 channels, so the battery could sit on a channel that works with Wi-Fi on. On the DP-666, it is on GPIO 13, on ADC2, which is why the reading disappears with Wi-Fi.</li>
+<li><strong>Wi-Fi 6 at 5 GHz (C5):</strong> it only helps with the connection to the router. The C5 has a single core and Bluetooth LE only.</li>
+</ul>
+<h3 id="laboratorio--what-doesnt-change">What doesn’t change</h3>
+<ul>
+<li><strong>Reception and sound:</strong> the TEF6686 does the tuning and signal processing. The ESP32 handles the screen, the buttons and communication, so a faster processor doesn’t change sensitivity, selectivity or audio.</li>
+<li><strong>Screen speed:</strong> the official firmware’s wiki says to run the screen’s SPI at 7.5 MHz, and even lower if noise shows up around 90 MHz. The limit is interference with the radio, not the processor.</li>
+<li><strong>Free pins:</strong> the official code uses 25 of the module’s 26 GPIOs. GPIO 12 is left, and it can’t be high at boot. A new function would need a pin expander.</li>
+</ul>
+<h3 id="laboratorio--in-practice">In practice</h3>
+<ul>
+<li><strong>If the module burns out:</strong> use the WROOM-32UE without PSRAM (N4, N8 or N16). It has the same chip in a newer revision (ESP32-D0WD-V3) and the same antenna connector. The swap needs a hot air station, because of the ground pad under the module.</li>
+<li><strong>To get PSRAM, native USB or 5 GHz:</strong> that is a new board design, with the firmware adapted. The official firmware is made for the classic ESP32.</li>
+</ul>
+<h2 id="laboratorio--sources">Sources</h2>
+<ul>
+<li><a href="https://documentation.espressif.com/esp32-wroom-32d_esp32-wroom-32u_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROOM-32D and WROOM-32U datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROOM-32E and WROOM-32UE datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROVER-E and WROVER-IE datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-s3-wroom-1_wroom-1u_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-S3-WROOM-1 and WROOM-1U datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-c5-wroom-1_wroom-1u_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-C5-WROOM-1 and WROOM-1U datasheet</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino" target="_blank" rel="noopener noreferrer">PE5PVB — TEF6686_ESP32.ino, with the pins used</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software" target="_blank" rel="noopener noreferrer">PE5PVB wiki — Installing the software (screen SPI)</a></li>
+<li><a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">three.js, the library used in the 3D view (MIT license)</a></li>
+<li><a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener noreferrer">Claude Code — MCP</a></li>
+<li><a href="https://code.claude.com/docs/en/headless" target="_blank" rel="noopener noreferrer">Claude Code — non-interactive mode</a></li>
+<li><a href="https://github.com/bkram/fm-dx-console" target="_blank" rel="noopener noreferrer">fm-dx-console</a></li>
+<li><a href="https://docs.wokwi.com/guides/esp32" target="_blank" rel="noopener noreferrer">Wokwi — ESP32 simulation</a></li>
+<li><a href="https://docs.wokwi.com/chips-api/getting-started" target="_blank" rel="noopener noreferrer">Wokwi — custom chips</a></li>
+<li><a href="https://esp32.com/viewtopic.php?p=151786" target="_blank" rel="noopener noreferrer">ESP32 forum — devices in QEMU</a></li>
+<li><a href="https://www.testmuai.com/web-technologies/web-serial/" target="_blank" rel="noopener noreferrer">Web Serial — compatibility</a></li>
+<li><a href="https://origin-devforums.apple.com/forums/thread/834899" target="_blank" rel="noopener noreferrer">Apple forum — USB-serial on the iPhone</a></li>
+<li><a href="https://github.com/mik3y/usb-serial-for-android" target="_blank" rel="noopener noreferrer">usb-serial-for-android</a></li>
+<li><a href="https://developer.apple.com/forums/thread/765687" target="_blank" rel="noopener noreferrer">Apple forum — BLE and MFi</a></li>
+<li><a href="https://web-platform-dx.github.io/web-features-explorer/features/web-bluetooth" target="_blank" rel="noopener noreferrer">Web Bluetooth — compatibility</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Lab</p><a class="prox-next" href="../fontes/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Sources</span><span class="prox-desc">Every source cited in the guide, without repeats.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../computador/"><span class="mi-nome">Computer and connectivity<span class="mi-sub">What already works from a computer</span></span></a></li><li class="mi-item"><a class="mi" href="../hardware/#hardware--pins-and-addresses"><span class="mi-nome">Hardware<span class="mi-sub">Pins and addresses</span></span></a></li></ul><p class="prox-volta"><a href="../comparacao/">Previous page: Comparison with other radios</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/" aria-current="page">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

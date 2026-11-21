@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Problemas comuns | DP-666: o guia definitivo</title>
+<meta name="description" content="Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código, com os passos para resolver.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/problemas/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/problemas/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/problemas/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Problemas comuns">
+<meta property="og:description" content="Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código, com os passos para resolver.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/problemas/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/problemas/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#problemas">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-problemas">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>O rádio</p><h1>Problemas comuns</h1><p class="meta">Atualizado em 21/11/2026 · 10 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código do firmware. Escolha o que está acontecendo e siga os passos, do mais simples ao mais trabalhoso. Antes de qualquer reparo ou regravação, faça o <a href="../backup/">backup completo</a>. Se apareceu uma mensagem ou um código na tela, veja o que quer dizer em <a href="../codigos/">Mensagens e códigos da tela</a>.</p>
+<h2 id="problemas--tela-parada-em-tuner-none">Tela parada em "Tuner: !None!"</h2>
+<p>Na abertura aparecem o logo e a versão do firmware e, em vermelho, "Tuner: !None!". Às vezes o rádio reinicia sozinho, no meio do uso, e para nessa tela.</p>
+<figure class="figure"><div class="figure-body"><svg class="diagram diagram-boot" viewBox="0 0 700 280" role="img" aria-labelledby="fig-boot fig-boot-d"><title id="fig-boot">Tela de abertura com Tuner: !None!</title><desc id="fig-boot-d">Esquema da tela de abertura: título, logo, versão do firmware, a mensagem Tuner: !None! em vermelho e três marcadores no rodapé.</desc><defs><marker id="fig-boot-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-screen" x="20" y="20" width="320" height="240" rx="6"/><text class="d-scr-title" x="180" y="70" text-anchor="middle">FM/AM Receiver</text><rect class="d-scr-logo" x="125" y="88" width="110" height="40" rx="4"/><text class="d-scr-dim" x="180" y="113" text-anchor="middle">logo</text><text class="d-scr-text" x="180" y="158" text-anchor="middle">Software Ver2.00.15-Mod17 by Megatron</text><text class="d-scr-err" x="180" y="192" text-anchor="middle">Tuner: !None!</text><rect class="d-mk1" x="140" y="250" width="16" height="6"/><rect class="d-mk2" x="172" y="250" width="16" height="6"/><rect class="d-mk3" x="204" y="250" width="16" height="6"/><path class="d-guide" d="M262,188 L262,188 L364,65" fill="none"/><circle class="d-dot" cx="262" cy="188" r="2.5"/><text class="d-title" x="372" y="64" text-anchor="start">Tuner: !None!</text><text class="d-sub" x="372" y="82" text-anchor="start">o firmware para aqui de propósito</text><path class="d-guide" d="M148,250 L148,244 L364,129" fill="none"/><circle class="d-dot" cx="148" cy="250" r="2.5"/><text class="d-title" x="372" y="128" text-anchor="start">Marcador 1, amarelo</text><text class="d-sub" x="372" y="146" text-anchor="start">tentou iniciar o sintonizador</text><path class="d-guide" d="M180,250 L180,244 L364,183" fill="none"/><circle class="d-dot" cx="180" cy="250" r="2.5"/><text class="d-title" x="372" y="182" text-anchor="start">Marcador 2, vermelho</text><text class="d-sub" x="372" y="200" text-anchor="start">o sintonizador não respondeu</text><path class="d-guide" d="M212,250 L212,244 L364,237" fill="none"/><circle class="d-dot" cx="212" cy="250" r="2.5"/><text class="d-title" x="372" y="236" text-anchor="start">Marcador 3</text><text class="d-sub" x="372" y="254" text-anchor="start">etapa do Wi-Fi, não alcançada</text></svg></div><figcaption><span class="fig-n">Figura 1</span>Esquema da tela de abertura com o erro, conforme o código-base (PE5PVB v2.00) e a tela do Mod17. O logo foi omitido.</figcaption></figure>
+
+<ul>
+<li><strong>O que significa:</strong> o processador carregou o firmware, mas não conseguiu falar com o sintonizador TEF6686. Sem ele, o rádio não recebe nada, e o firmware trava de propósito nessa tela.</li>
+<li><strong>Marcadores da abertura <span class="nw"><span class="src">código-base</span>:</span></strong> o primeiro (amarelo) indica que a inicialização do sintonizador foi tentada; o segundo (vermelho), que ele não respondeu; o terceiro seria o Wi-Fi.</li>
+<li><strong>Causa provável:</strong> uma queda ou oscilação de energia enquanto o firmware carrega o chip deixa o sintonizador preso. Bateria baixa sem aviso, com o Wi-Fi ligado por horas, é um cenário típico, porque o Wi-Fi impede a leitura da bateria e tem picos de consumo.</li>
+<li><strong>A correção da linha oficial:</strong> desde 13/11/2026, o código oficial força o chip a reiniciar nesse caso. O Mod17 não tem essa correção.</li>
+<li><strong>Não faça reset de fábrica (BW + TUNING):</strong> o problema não está nas configurações, e os ajustes seriam perdidos.</li>
+</ul>
+<p>Passos, em ordem:</p>
+<ol>
+<li>Desligue no POWER, tire o cabo USB, ponha a chave geral em OFF e espere 1 a 2 minutos. Volte a chave para ON e ligue sem apertar nada durante a abertura. O POWER já corta a alimentação da placa; o cabo fora desliga também a ponte USB-serial, que ele alimenta, e a chave em OFF impede que o rádio volte a ligar antes da hora.</li>
+<li>Se repetir, carregue o rádio desligado por cerca de 1 hora e repita o passo 1.</li>
+<li>Se continuar depois de 2 ou 3 tentativas, o defeito provavelmente é de hardware (solda, alimentação ou cristal do sintonizador). Procure o vendedor ou a DEEPELEC e não abra o rádio na garantia.</li>
+</ol>
+<p>Para prevenir, use Wi-Fi auto disconnect em After time sync ou deixe o Wi-Fi desligado quando não estiver usando.</p>
+<h2 id="problemas--inicialização-e-firmware">Inicialização e firmware</h2>
+<ul>
+<li><strong>Atualização não grava pelo USB:</strong> entre no modo de gravação segurando BOOT ao ligar e instale o driver CH340 no Windows. Há relato, não confirmado, de que a porta USB de unidades antigas não serve para atualizar.</li>
+<li><strong>Configurações sumiram depois de atualizar:</strong> é esperado. As atualizações zeram as configurações, pedem nova calibração do toque e, em algumas versões, nova configuração do Wi-Fi.</li>
+<li><strong>Rádio em chinês ou sem as opções avançadas:</strong> troque o idioma em 显示设置 → 语言 → English. Para o modo avançado, com o idioma em chinês, ative 高级模式 em 主要设置 → 系统使用模式 e volte para English.</li>
+<li><strong>Erro do encoder ao ligar, de vez em quando:</strong> num caso relatado, as soldas do encoder encostavam nos contatos atrás da tela. O dono resolveu pondo uma pecinha de plástico isolante entre os dois (<a href="https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/" target="_blank" rel="noopener noreferrer">relato com fotos</a>); abrir o gabinete pede uma chave Allen de 0,7 mm. Na garantia, fale antes com o vendedor ou a DEEPELEC.</li>
+</ul>
+<h2 id="problemas--áudio">Áudio</h2>
+<ul>
+<li><strong>Alto-falante mudo depois de usar fone:</strong> em alguns lotes, falha o contato interno do conector de fone (PJ-3270) que religa o alto-falante. A DEEPELEC indica abrir o rádio e limpar os contatos PIN6 e PIN2 (<a href="../hardware/#hardware--caminho-do-som">por que esses dois</a>). Na garantia, prefira acionar o suporte. Se o fone funciona e o alto-falante não, a causa provável é essa.</li>
+<li><strong>Sem som mesmo com sinal:</strong> confira o squelch (Use squelch em Off para testar), o mudo (ícone na tela ou tecla 0), o VOLUME e o Set volume em 0 dB.</li>
+<li><strong>Chiado agudo no lugar do áudio:</strong> Audio output está em MPX, que entrega o sinal multiplex bruto. Volte para Stereo.</li>
+</ul>
+<h2 id="problemas--squelch">Squelch</h2>
+<ul>
+<li><strong>Instável ou sem resposta no botão SQL:</strong> o potenciômetro pode ter mau contato. Use o knob: Audio settings → Use squelch em On; Operation settings → Rotary adjust squelch em On; toque em SQ na tela e gire até o chiado sumir.</li>
+</ul>
+<h2 id="problemas--recepção">Recepção</h2>
+<ul>
+<li><strong>Perda súbita de sinal e de áudio:</strong> pode ser o cabo interno da antena solto do conector SMA. A correção é trocar o adaptador IPEX1-SMA ou ressoldar o fio central.</li>
+<li><strong>AM fraco ou só chiado em MW e LW:</strong> o DP-666 não tem antena interna para essas faixas. Use fio externo ou loop no SMA e teste à noite, longe de eletrônicos e carregadores.</li>
+<li><strong>Apitos ou ruído em algumas frequências de FM:</strong> interferência da tela. Use Dynamic SPI speed em Auto, tela estática, tela apagada nas buscas e brilho menor. A linha oficial chegou a fixar o SPI em 27 MHz para reduzir esse ruído. Nela, desligar o Medidor de modulação também ajuda com sinal fraco, e quem compila pode diminuir o <code>SPI_FREQUENCY</code> se o ruído aparecer perto de 90 MHz.</li>
+<li><strong>Estações fantasmas perto de emissoras fortes:</strong> reduza FM AGC para 87 ou 84 dBµV. Em AM, use AM ATT.</li>
+<li><strong>Rádio pula sozinho para outra frequência:</strong> é o AF. Desligue Use AF em DX e buscas.</li>
+<li><strong>PS ou RT com caracteres errados:</strong> use Fast PS em Initial ou Off e RDS filter em On.</li>
+</ul>
+<h2 id="problemas--tela-e-toque">Tela e toque</h2>
+<ul>
+<li><strong>Toque desalinhado ou falhando:</strong> refaça a calibração em Operation settings → Touch calibration, obrigatória depois de instalar o firmware de toque. Se continuar, teste outro Touch Type (Int33, Int27 ou Polling).</li>
+<li><strong>Tela de cabeça para baixo ou com cores invertidas:</strong> ligar segurando MODE gira a tela; Invert screen color inverte as cores.</li>
+<li><strong>Na linha oficial:</strong> calibre o toque ligando o rádio com BW + MODE ou em Definições do ecrã. Ligar com BW + BAND inverte as cores, e MODE + encoder troca o tipo de painel quando o menu fica ilegível (veja <a href="../oficial/">Uso da linha oficial</a>).</li>
+</ul>
+<h2 id="problemas--relógio-wi-fi-e-bateria">Relógio, Wi-Fi e bateria</h2>
+<ul>
+<li><strong>Hora adiantada 8 horas:</strong> é o fuso padrão chinês. Ajuste Set local time zone para o seu fuso (Brasília: GMT−03:00) e, com o NTP funcionando, deixe RDS time sync em Off.</li>
+<li><strong>Indicador de bateria some:</strong> limitação do ESP32 com o Wi-Fi ligado. Use Wi-Fi auto disconnect em After time sync.</li>
+<li><strong>Hora se perde com a chave geral desligada:</strong> indica que o aparelho não tem RTC. Sleep clock correction compensa em parte.</li>
+<li><strong>Carga:</strong> carregador de 5 V e 1 A ou mais, no máximo 5 W, sem carga rápida, de preferência com o rádio desligado. LED vermelho carregando; no fim, ele muda de cor (azul no esquema V2.5.3). A carga leva mais de 5 horas e funciona com a chave geral em OFF.</li>
+</ul>
+<h2 id="problemas--configurações-e-memórias">Configurações e memórias</h2>
+<ul>
+<li><strong>Ajustes não ficam salvos:</strong> saia do menu com MODE ("PRESS MODE TO EXIT AND STORE") e, se aparecer Save/Discard, escolha Save.</li>
+<li><strong>Memórias apagadas de uma vez:</strong> Delete stations esvazia a faixa inteira e Auto search em Overwrite sobrescreve. Só a restauração de um backup recupera.</li>
+<li><strong>Padrão de fábrica na linha oficial:</strong> ligar o rádio com BW + encoder restaura os ajustes e também esvazia as 99 memórias e o logbook.</li>
+<li><strong>Rádio desliga sozinho:</strong> confira Power Off timer, Low battery protect, plano de recepção ativo ou BAND segurado por 3 s com a ação Power off.</li>
+<li><strong>Rádio liga sozinho:</strong> confira Power on timer e Using receive plan. O mod14 corrigiu um ligamento automático que acontecia sem plano configurado.</li>
+</ul>
+<h2 id="problemas--conexão-com-o-computador">Conexão com o computador</h2>
+<ul>
+<li><strong>O computador não vê o rádio:</strong> quase sempre é o cabo, que só carrega. Troque por um cabo que passe dados, teste outra porta USB e confira o driver do CH340 no Gerenciador de Dispositivos. O passo a passo está em <a href="../computador/">Computador e conectividade</a>.</li>
+<li><strong>O programa conecta, mas não chega nada:</strong> o modo da porta USB não combina com o programa (XDRGTK para XDR-GTK e FM-DX Webserver; RDS Spy para o RDS Spy), outro programa já está usando a porta, ou o menu do rádio está aberto.</li>
+<li><strong>Pelo Wi-Fi, o XDR-GTK não conecta:</strong> confira se a rede é de 2,4 GHz, se o computador está na mesma rede, o IP do rádio, a porta 7373 e a senha do XDR-GTK. O firewall do Windows pode bloquear a conexão.</li>
+<li><strong>Sem som no FM-DX Webserver:</strong> confira se a entrada de som escolhida é a do cabo e se o volume do rádio não está no mínimo. Som só mono costuma vir da placa de som.</li>
+</ul>
+<h2 id="problemas--clones">Clones</h2>
+<p>Segundo a DEEPELEC, clones como o SPARKELEC usam placa antiga (V2.5, contra V2.5.3 do original), têm toque que não funciona, não têm antena de Wi-Fi nem RTC e não recebem atualizações nem suporte. A DEEPELEC também diz que a SPARKELEC usa capturas de tela copiadas do DP-666 original. O logo na abertura não prova originalidade, porque é desenhado pelo firmware.</p>
+<p>O manual V2.0 distribuído pela Raddy é o mesmo do repositório da SPARKELEC no GitHub, então trate esse material como sendo de um clone.</p>
+<h2 id="problemas--fontes">Fontes</h2>
+<ul>
+<li><a href="https://www.deepelec.com/dp-666-speaker-cannot-produce-any-sound" target="_blank" rel="noopener noreferrer">DEEPELEC — alto-falante sem som</a></li>
+<li><a href="https://www.deepelec.com/how-to-adjust-the-sq-value" target="_blank" rel="noopener noreferrer">DEEPELEC — ajuste do SQ</a></li>
+<li><a href="https://www.deepelec.com/how-to-repair-the-antenna-connector/" target="_blank" rel="noopener noreferrer">DEEPELEC — reparo do conector de antena</a></li>
+<li><a href="https://www.deepelec.com/2025/10/10/stay_away_from_cloned_products" target="_blank" rel="noopener noreferrer">DEEPELEC — clones</a></li>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Manual DP-666 Megatron Mod17</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d" target="_blank" rel="noopener noreferrer">PE5PVB — correção de detecção do sintonizador</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/discussions/885" target="_blank" rel="noopener noreferrer">PE5PVB — discussão #885</a></li>
+<li><a href="https://www.blogordie.com/?p=7848" target="_blank" rel="noopener noreferrer">Blog or Die — DX-286 × DP-666</a></li>
+<li><a href="https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/" target="_blank" rel="noopener noreferrer">Guido Schotmans — DP-666 desmontado e o erro do encoder (wijnants.info, 04/08/2025)</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Problemas comuns</p><a class="prox-next" href="../codigos/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Mensagens e códigos da tela</span><span class="prox-desc">O que quer dizer cada marca, código e mensagem da tela, com um campo para digitar o que aparece no rádio.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../backup/"><span class="mi-nome">Backup e gravação<span class="mi-sub">Faça antes de qualquer reparo</span></span></a></li><li class="mi-item"><a class="mi" href="../hardware/"><span class="mi-nome">Hardware<span class="mi-sub">Por onde passam a energia e o som</span></span></a></li></ul><p class="prox-volta"><a href="../computador/">Página anterior: Computador e conectividade</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/" aria-current="page">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

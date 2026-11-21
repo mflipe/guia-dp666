@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Uso da linha oficial | DP-666: o guia definitivo</title>
+<meta name="description" content="Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/oficial/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/oficial/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/oficial/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Uso da linha oficial">
+<meta property="og:description" content="Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/oficial/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/oficial/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#oficial">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-oficial">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Firmware</p><h1>Uso da linha oficial</h1><p class="meta">Atualizado em 21/11/2026 · 10 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB. O menu completo está em <a href="../ajustes/#ajustes--oficial">Ajustes do rádio</a>. A base é a <a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki" target="_blank" rel="noopener noreferrer">wiki do projeto</a>, conferida no código da v2.20.12, de 13/11/2026. Onde as duas diferem, o guia segue o código e avisa. Para o Megatron, veja <a href="../uso/">Uso do rádio</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Wiki incompleta, firmware sem garantia</p>
+<p>O próprio autor avisa que a wiki ainda está em construção e pode não cobrir tudo. O firmware é distribuído sem garantia de nenhum tipo, e quem grava assume o risco.</p>
+</div>
+<h2 id="oficial--o-que-a-linha-oficial-faz">O que a linha oficial faz</h2>
+<ul>
+<li><strong>Faixas:</strong> FM de 65 a 108 MHz e AM de 144 kHz a 27 MHz.</li>
+<li><strong>Conexões:</strong> RDS Spy, XDR-GTK, fm-dx-webserver e StationList pelo Wi-Fi (veja <a href="../computador/">Computador e conectividade</a>).</li>
+<li><strong>Recursos:</strong> quase todo o RDS, com uma tela de RDS avançado; busca automática e manual; squelch; bateria, S-meter e medidor de modulação na tela; temas; vários idiomas, entre eles o português; troca automática para a frequência alternativa (AF); 99 memórias; e registro de estações (logbook).</li>
+<li><strong>Só nos chips TEF6687 e TEF6689:</strong> a busca completa de RDS (FullSearch RDS) e a melhoria de estéreo FMSI. O DP-666 usa o TEF6686, então essas duas funções não existem nele.</li>
+</ul>
+<h2 id="oficial--botões">Botões</h2>
+<p>Na v2.20.12, toque longo é segurar por 1 segundo. O encoder é o knob TUNING.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Botão</th>
+<th>Toque curto</th>
+<th>Toque longo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BAND</td>
+<td>Troca de faixa. Nas telas de AF e de estatísticas, volta ao RDS avançado; no RDS avançado, sai dele.</td>
+<td>No FM, abre o RDS avançado e, de dentro dele, a tela de AF. No AM, ativa na hora a proteção de tela.</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>Alterna entre MAN, AUTO e MEM. No menu, sai.</td>
+<td>Abre o menu.</td>
+</tr>
+<tr>
+<td>BW</td>
+<td>Abre o seletor de largura de banda.</td>
+<td>No FM, alterna entre mono forçado e estéreo automático. No AM, abre o seletor de largura.</td>
+</tr>
+<tr>
+<td>Encoder</td>
+<td>Em MAN, troca o passo. Em MEM, entra no modo de gravação.</td>
+<td>No FM, grava a estação no logbook. No SW, liga e desliga a busca por bandas métricas.</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>BAND segurado por 2,5 s:</strong> executa a ação escolhida em "Pressione o botão banda por 5 seg.": nada, desligar ou apagar a tela. Apesar do nome, o código usa 2,5 s.</li>
+<li><strong>Com a proteção de tela ativa:</strong> apertar BAND ou girar o encoder só acende a tela.</li>
+<li><strong>iMS e EQ:</strong> na versão atual, alternam com um toque na tela.</li>
+<li><strong>No menu, MODE segurado por 3 s:</strong> abre os jogos escondidos no firmware.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Onde a wiki está desatualizada</p>
+<p>A página inicial da wiki inverte os toques do BW e diz que o toque longo no encoder alterna iMS e EQ. No código atual, o toque curto do BW abre a largura de banda, o longo alterna mono e estéreo, e o toque longo no encoder grava no logbook, como a própria página do logbook descreve.</p>
+</div>
+<h2 id="oficial--ao-ligar-segurando">Ao ligar segurando</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Botões</th>
+<th>Efeito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BW</td>
+<td>inverte o sentido do encoder</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>gira a tela em 180°</td>
+</tr>
+<tr>
+<td>BAND</td>
+<td>calibra o medidor analógico, só em montagens que têm um</td>
+</tr>
+<tr>
+<td>Encoder</td>
+<td>alterna entre encoder comum e óptico</td>
+</tr>
+<tr>
+<td>BW + MODE</td>
+<td>calibra o toque</td>
+</tr>
+<tr>
+<td>BW + BAND</td>
+<td>inverte as cores da tela</td>
+</tr>
+<tr>
+<td>MODE + encoder</td>
+<td>troca o tipo de painel (ARS ou comum), para quando o menu fica ilegível</td>
+</tr>
+<tr>
+<td>BW + encoder</td>
+<td>volta ao padrão de fábrica</td>
+</tr>
+</tbody>
+</table></div>
+<div class="admonition danger">
+<p class="admonition-title">O padrão de fábrica apaga as memórias e o logbook</p>
+<p>Na v2.20.12, a restauração pelo BW + encoder também esvazia as 99 memórias e recria o logbook vazio. Faça o <a href="../backup/">backup</a> antes.</p>
+</div>
+<ul>
+<li><strong>Pelo menu:</strong> a v2.20.12 também traz esses ajustes no menu, o que a wiki ainda não mostra. Definições do aparelho reúne modelo, sentido do encoder, encoder óptico, cores, painel ARS, medidor analógico e padrão de fábrica. Definições do ecrã reúne fonte da frequência, tela girada, teclado de frequência e calibração do toque.</li>
+<li><strong>Compilado para o DP-666:</strong> com a opção <code>DEEPELEC_DP_66X</code>, o padrão de fábrica já vem com o modelo Portable touch, a tela girada, o encoder invertido e as cores sem inversão. O passo a passo está em <a href="../backup/">Backup e gravação</a>.</li>
+</ul>
+<h2 id="oficial--memórias">Memórias</h2>
+<ul>
+<li><strong>Capacidade:</strong> 99 posições, cada uma em qualquer faixa: FM, OIRT, LW, MW ou SW.</li>
+<li><strong>Gravar:</strong> sintonize a estação, aperte MODE até aparecer MEM e aperte o encoder (MEM fica vermelho). Gire até a posição: número vermelho indica posição ocupada, verde indica livre. Aperte o encoder de novo para gravar.</li>
+<li><strong>Pular uma posição:</strong> com MEM vermelho, escolha a posição e aperte BAND. O código grava nela a frequência 0, o valor que o firmware usa para posições que devem ser puladas.</li>
+<li><strong>Memória automática:</strong> preenche as memórias sozinha, numa faixa de frequências e num intervalo de posições. Dá para gravar só estações com RDS, evitar PI repetido (Off, Range ou Full), ajustar a sensibilidade e limpar as memórias. A wiki só cita a função; as opções vêm do código.</li>
+</ul>
+<h2 id="oficial--scanner-de-dx">Scanner de DX</h2>
+<p>Existe desde a v2.10 e fica em Opções FM DX. Ele procura DX em frequências vazias, varrendo a faixa ou passando pelas memórias.</p>
+<ul>
+<li><strong>Comece a pesquisar DX (Start DX scanning):</strong> inicia a varredura. Fora do menu, aperte MODE até aparecer MEM e depois BAND. Durante a varredura, MEM pisca.</li>
+<li><strong>Comece e Pare de pesquisar canais de memória:</strong> primeira e última memória do intervalo. Só entram memórias de FM e OIRT.</li>
+<li><strong>Tempo de espera (Wait time):</strong> quanto tempo o rádio fica em cada frequência antes de seguir, a partir de 0,5 s.</li>
+<li><strong>Canais memorizados (Memory channels):</strong> em Only, passa só pelas memórias do intervalo. Em Exclude, varre a faixa e pula as frequências gravadas no intervalo. A faixa varrida é a da primeira memória do intervalo: se ela for OIRT, a varredura é no OIRT.</li>
+<li><strong>Cancelar automaticamente (Auto cancel scan):</strong> Off nunca para; Correct PI para quando decodifica um PI correto; Signal para quando encontra sinal, com o limiar de Configurações FM → Sensibilidade da varredura.</li>
+<li><strong>Mudo áudio enquanto procura:</strong> deixa o áudio mudo durante a varredura.</li>
+<li><strong>Fora da wiki:</strong> Registrador automático (Autologger), que grava sozinho no logbook as estações em que o rádio decodificou um PI correto durante a varredura; Espera tempo apenas quando sinal; e Limpar livro de registro.</li>
+</ul>
+<h2 id="oficial--logbook">Logbook</h2>
+<p>Existe desde a v2.20.</p>
+<ul>
+<li><strong>Registrar:</strong> no FM, segure o encoder por mais de 1 s. Com os sinais sonoros ligados, o rádio bipa. Se faltar espaço no armazenamento, a tela avisa.</li>
+<li><strong>Ler no computador:</strong> pelo navegador, no IP do rádio ou em http://tef.local, ou pelo cabo USB, com o comando <code>L</code>, que devolve o logbook em CSV. O passo a passo está em <a href="../computador/#computador--logbook-memórias-e-hora">Computador e conectividade</a>.</li>
+<li><strong>Apagar:</strong> Opções FM DX → Limpar livro de registro.</li>
+</ul>
+<h2 id="oficial--menu-completo">Menu completo</h2>
+<p>O menu completo da linha oficial, com cada opção, os valores, o padrão de fábrica, o que ela faz e o valor para o Brasil, fica em <a href="../ajustes/#ajustes--oficial">Ajustes do rádio</a>.</p>
+<h2 id="oficial--montagens-caseiras">Montagens caseiras</h2>
+<p>Não se aplica ao DP-666, mas está na wiki para quem monta o próprio receptor:</p>
+<ul>
+<li><strong>Medidor analógico:</strong> do IO27, um resistor de 1 kΩ e um trimpot de 5 kΩ em série até o medidor. A calibração é ligar o rádio segurando BAND.</li>
+<li><strong>Cristal do TEF668x:</strong> a tensão no IO15, definida por um divisor de resistores, diz ao firmware qual cristal a placa usa: 0 V para 9,216 MHz, 1 V para 12 MHz, 2 V para 55,466 MHz e entre 2 V e 3,3 V para 4 MHz.</li>
+</ul>
+<h2 id="oficial--fontes">Fontes</h2>
+<ul>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki" target="_blank" rel="noopener noreferrer">Wiki do TEF6686_ESP32 — página inicial</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained" target="_blank" rel="noopener noreferrer">Wiki — Menu options explained</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-FM-DX-scanner" target="_blank" rel="noopener noreferrer">Wiki — How to use the FM DX scanner</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-memory-channels" target="_blank" rel="noopener noreferrer">Wiki — How to use memory channels</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-logbook" target="_blank" rel="noopener noreferrer">Wiki — How to use the logbook</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Using-the-software" target="_blank" rel="noopener noreferrer">Wiki — Using the software</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino" target="_blank" rel="noopener noreferrer">PE5PVB — TEF6686_ESP32.ino: botões, combinações e padrão de fábrica</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/gui.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — gui.cpp: estrutura do menu</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h" target="_blank" rel="noopener noreferrer">PE5PVB — language.h: nomes do menu em português</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/audiocues.h" target="_blank" rel="noopener noreferrer">PE5PVB — audiocues.h: sinais sonoros e Morse</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Uso da linha oficial</p><a class="prox-next" href="../mod17/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Recursos ocultos do Mod17</span><span class="prox-desc">O que existe no Megatron Mod17 e não aparece no manual.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../uso/"><span class="mi-nome">Uso do rádio<span class="mi-sub">Os controles no Megatron</span></span></a></li><li class="mi-item"><a class="mi" href="../ajustes/#ajustes--oficial"><span class="mi-nome">Ajustes do rádio<span class="mi-sub">O menu completo da linha oficial</span></span></a></li></ul><p class="prox-volta"><a href="../firmwares/">Página anterior: Megatron × oficial</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/" aria-current="page">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

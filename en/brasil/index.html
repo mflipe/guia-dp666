@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Setup for Brazil | DP-666: the definitive guide</title>
+<meta name="description" content="Settings that make a difference for DP-666 users in Brazil, with the standards behind each one.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/brasil/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/brasil/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/brasil/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Setup for Brazil">
+<meta property="og:description" content="Settings that make a difference for DP-666 users in Brazil, with the standards behind each one.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/brasil/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../brasil/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#brasil">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-brasil">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Get started</p><h1>Setup for Brazil</h1><p class="meta">Updated Nov 21, 2026 · 18 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Settings that make a difference when you use the DP-666 in Brazil, with the rules behind each one. Option names are in English, as they appear on Megatron Mod17. On the official firmware the names differ a little: see the summary near the end of the page. Every possible value of each option is in <a href="../ajustes/">Radio settings</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Unlock advanced mode first</p>
+<p>Many options on this page only appear in advanced mode. To turn it on, DEEPELEC recommends switching the language to Chinese, turning the mode on and switching back to English: Display settings → Language → 简体中文; then 主要设置 → 系统使用模式 → 高级模式; and finally 显示设置 → 语言 → English.</p>
+</div>
+<h2 id="brasil--fm-audio">FM audio</h2>
+<ul>
+<li><strong>FM deemphasis at 50 µs.</strong> In the Americas the standard is usually 75 µs, but Brazil is an exception. Anatel Act No. 8,104/2022, the FM rule in force, says 50 µs should be used "preferably", and the ITU lists Brazil with 50 µs. See <a href="../brasil/#brasil--standards-and-rules">Standards and rules</a>.</li>
+<li><strong>Use squelch at Off</strong> to hunt for weak stations. On Auto, the radio may hide distant signals.</li>
+<li><strong>Stereo threshold:</strong> with a weak signal, a threshold around 40 dBµV forces mono and reduces hiss.</li>
+</ul>
+<h2 id="brasil--fm-band-and-extended-fm">FM band and extended FM</h2>
+<ul>
+<li><strong>Set low band edge at 76.1 MHz</strong> and <strong>Set high band edge at 108.0 MHz.</strong> This way the band covers extended FM (eFM), from 76.1 to 87.3 MHz, which has had stations on the air since May 7, 2021.</li>
+<li><strong>Channel grid:</strong> Brazilian stations sit on 200 kHz channels with an odd decimal, from 76.1 to 87.3 MHz and from 88.1 to 107.9 MHz. Between the two ranges, from 87.4 to 88 MHz, are the community radio stations.</li>
+<li><strong>FM default stepsize at 200 kHz.</strong> On the official firmware, the code adds the step starting from the band edge: with the edge at 76.1 MHz, tuning stops only on odd decimals. On Megatron, check it on your radio. For DX, use 100 kHz to also stop on even decimals.</li>
+<li><strong>FM AGC at 92 dBµV</strong> is the most sensitive. If ghost stations show up near strong stations, try 87 or 84.</li>
+</ul>
+<figure class="figure"><div class="figure-body"><svg class="diagram" viewBox="0 0 960 110" role="img" aria-labelledby="fig-dial fig-dial-d"><title id="fig-dial">FM bands in Brazil</title><desc id="fig-dial-d">Extended FM from 76.1 to 87.3 MHz, community radio from 87.4 to 88.0 MHz and FM from 88.1 to 107.9 MHz, in 200 kHz channels with an odd decimal.</desc><defs><marker id="fig-dial-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-box" x="20" y="22" width="920" height="46" rx="8"/><rect class="d-band-efm" x="32.8" y="30" width="315.0" height="8" rx="2"/><rect class="d-band-rc" x="350.6" y="30" width="16.9" height="8" rx="2"/><rect class="d-band" x="370.3" y="30" width="556.9" height="8" rx="2"/><line class="d-tick major" x1="30.0" y1="46" x2="30.0" y2="64"/><text class="d-mono" x="30.0" y="86" text-anchor="middle">76</text><line class="d-tick" x1="58.1" y1="46" x2="58.1" y2="56"/><line class="d-tick" x1="86.2" y1="46" x2="86.2" y2="56"/><line class="d-tick" x1="114.4" y1="46" x2="114.4" y2="56"/><line class="d-tick major" x1="142.5" y1="46" x2="142.5" y2="64"/><text class="d-mono" x="142.5" y="86" text-anchor="middle">80</text><line class="d-tick" x1="170.6" y1="46" x2="170.6" y2="56"/><line class="d-tick" x1="198.8" y1="46" x2="198.8" y2="56"/><line class="d-tick" x1="226.9" y1="46" x2="226.9" y2="56"/><line class="d-tick major" x1="255.0" y1="46" x2="255.0" y2="64"/><text class="d-mono" x="255.0" y="86" text-anchor="middle">84</text><line class="d-tick" x1="283.1" y1="46" x2="283.1" y2="56"/><line class="d-tick" x1="311.2" y1="46" x2="311.2" y2="56"/><line class="d-tick" x1="339.4" y1="46" x2="339.4" y2="56"/><line class="d-tick major" x1="367.5" y1="46" x2="367.5" y2="64"/><text class="d-mono" x="367.5" y="86" text-anchor="middle">88</text><line class="d-tick" x1="395.6" y1="46" x2="395.6" y2="56"/><line class="d-tick" x1="423.8" y1="46" x2="423.8" y2="56"/><line class="d-tick" x1="451.9" y1="46" x2="451.9" y2="56"/><line class="d-tick major" x1="480.0" y1="46" x2="480.0" y2="64"/><text class="d-mono" x="480.0" y="86" text-anchor="middle">92</text><line class="d-tick" x1="508.1" y1="46" x2="508.1" y2="56"/><line class="d-tick" x1="536.2" y1="46" x2="536.2" y2="56"/><line class="d-tick" x1="564.4" y1="46" x2="564.4" y2="56"/><line class="d-tick major" x1="592.5" y1="46" x2="592.5" y2="64"/><text class="d-mono" x="592.5" y="86" text-anchor="middle">96</text><line class="d-tick" x1="620.6" y1="46" x2="620.6" y2="56"/><line class="d-tick" x1="648.8" y1="46" x2="648.8" y2="56"/><line class="d-tick" x1="676.9" y1="46" x2="676.9" y2="56"/><line class="d-tick major" x1="705.0" y1="46" x2="705.0" y2="64"/><text class="d-mono" x="705.0" y="86" text-anchor="middle">100</text><line class="d-tick" x1="733.1" y1="46" x2="733.1" y2="56"/><line class="d-tick" x1="761.2" y1="46" x2="761.2" y2="56"/><line class="d-tick" x1="789.4" y1="46" x2="789.4" y2="56"/><line class="d-tick major" x1="817.5" y1="46" x2="817.5" y2="64"/><text class="d-mono" x="817.5" y="86" text-anchor="middle">104</text><line class="d-tick" x1="845.6" y1="46" x2="845.6" y2="56"/><line class="d-tick" x1="873.8" y1="46" x2="873.8" y2="56"/><line class="d-tick" x1="901.9" y1="46" x2="901.9" y2="56"/><line class="d-tick major" x1="930.0" y1="46" x2="930.0" y2="64"/><text class="d-mono" x="930.0" y="86" text-anchor="middle">108</text><text class="d-band-lbl" x="190.3124999999999" y="16" text-anchor="middle">eFM 76.1–87.3</text><text class="d-band-lbl" x="359.0625000000001" y="16" text-anchor="middle">RadCom</text><text class="d-band-lbl" x="648.75" y="16" text-anchor="middle">FM 88,1–107,9</text><text class="d-lbl" x="930" y="104" text-anchor="end">MHz</text></svg></div><figcaption><span class="fig-n">Figure 1</span>FM bands in Brazil, according to Anatel Act No. 8,104/2022 and Resolution No. 721/2020. Channels are 200 kHz wide and end in an odd decimal (.1, .3, .5, .7, .9). RadCom is the community radio band.</figcaption></figure>
+
+<h2 id="brasil--am-and-medium-wave">AM and medium wave</h2>
+<ul>
+<li><strong>MW default stepsize at 10 kHz</strong>, the medium wave grid of Brazil and the Americas.</li>
+<li><strong>AIR band Conversion:</strong> the option exists, but the air band only works with an external converter sold separately.</li>
+</ul>
+<h2 id="brasil--rds">RDS</h2>
+<ul>
+<li><strong>Region at Europe.</strong> Brazilian RDS follows the European model, with the PI code assigned by Anatel. The USA option uses the American table (RBDS).</li>
+<li><strong>Use AF at Off</strong> for DX and scanning, so the radio doesn’t jump to another frequency on its own. Day to day, only leave it on if the stations in your region broadcast alternative frequencies.</li>
+<li><strong>RDS time sync at Off</strong> once NTP is working, because some stations send the wrong time.</li>
+</ul>
+<h2 id="brasil--clock-and-time-zone">Clock and time zone</h2>
+<ul>
+<li><strong>Set local time zone:</strong> pick your state’s time zone. For Brasília time, GMT−03:00.</li>
+<li><strong>Why the clock runs 8 hours fast:</strong> NTP delivers the time in UTC and the radio applies the time zone. Megatron is Chinese, ships with GMT+8 and has only one built-in NTP server, cn.pool.ntp.org.</li>
+<li><strong>Set NTP server (Mod17):</strong> a Brazilian server, such as a.st1.ntp.br, from NTP.br, answers faster. System information shows the server in use.</li>
+<li><strong>Wi-Fi auto disconnect at After time sync:</strong> Wi-Fi turns off after setting the clock. This saves battery and keeps the battery voltage reading, which disappears while Wi-Fi is on (see <a href="../problemas/">Common problems</a>).</li>
+</ul>
+<h2 id="brasil--on-the-official-firmware">On the official firmware</h2>
+<p>The same settings, with the official firmware’s English menu names (see <a href="../oficial/">Using the official firmware</a>):</p>
+<ul>
+<li><strong>Audio settings → FM deemphasis:</strong> 50 µs.</li>
+<li><strong>FM settings → Low band edge and High band edge:</strong> 76.1 and 108.0 MHz, to include extended FM. The low edge goes up 0.1 MHz and down 1 MHz per click: from 87.5, go down 12 times, to 75.5, and up 6.</li>
+<li><strong>FM settings → FM default stepsize:</strong> 200 kHz.</li>
+<li><strong>AM settings → MW default stepsize:</strong> 10 kHz. The factory default is 9 kHz, the European one.</li>
+<li><strong>RDS settings → Region:</strong> Europe. Leave <strong>Use AF</strong> off for DX and scanning.</li>
+<li><strong>Connectivity &amp; clock → Set NTP time offset:</strong> GMT −3 for Brasília time. The factory default is GMT +1.</li>
+<li><strong>Auto DST on NTP time:</strong> off, because Brazil has had no daylight saving time since Decree No. 9,772 of 2019. The factory default is on.</li>
+</ul>
+<h2 id="brasil--standards-and-rules">Standards and rules</h2>
+<p>The Brazilian rules that affect how you use the radio, with the official document for each one. This is a summary for radio users, not legal advice.</p>
+<h3 id="brasil--fm-band-channels-and-pre-emphasis">FM: band, channels and pre-emphasis</h3>
+<ul>
+<li><strong>Band.</strong> Anatel Resolution No. 721/2020, in force since November 3, 2020, allocates 76 to 108 MHz to FM and keeps 87.4 to 88 MHz for community broadcasting (RadCom).</li>
+<li><strong>Channels.</strong> Anatel Act No. 8,104/2022 numbers the 200 kHz channels: 76.1 MHz is channel 141, 87.3 MHz is 197 and 107.9 MHz is 300. That is why frequencies end in an odd decimal.</li>
+<li><strong>50 µs pre-emphasis.</strong> The same Act, in force since August 1, 2022, says 50 µs pre-emphasis should be used "preferably". The text of the Act writes "ms", a typo inherited from earlier versions. The rule comes from Resolution No. 67/1998, now repealed. "Preferably" leaves room for a station at 75 µs, which would sound a bit brighter on the radio.</li>
+<li><strong>The ITU confirms it.</strong> Recommendation ITU-R BS.450-3 lists Brazil with 200 kHz channels, 50 µs pre-emphasis and a maximum deviation of ±75 kHz. The 75 µs that appears in other Anatel rules applies to analog TV audio, not to FM.</li>
+<li><strong>Stereo and subcarriers.</strong> Act No. 8,104/2022 accepts modulation peaks of up to 110% (82.5 kHz deviation) and places subcarriers between 20 and 99 kHz, or between 53 and 99 kHz when the program is stereo. The pre-emphasis of the stereo signal must match that of the main signal.</li>
+<li><strong>AM migration.</strong> Decree No. 8,139/2013, amended in 2018, 2020 and 2021, governs the move of local AM stations to FM, with simulcasting for up to five years. Extended FM was opened to take in those stations.</li>
+</ul>
+<h3 id="brasil--rds_1">RDS</h3>
+<ul>
+<li>Act No. 8,104/2022 includes the RDS specification in Portuguese: the PI code has 16 bits and is assigned to each station by Anatel, or by an accredited entity; PTY identifies up to 31 program types.</li>
+<li>It is European RDS, not American RBDS, hence the Europe region on the radio. The Act’s program type table (Table A3) has not been checked item by item.</li>
+</ul>
+<h3 id="brasil--medium-wave-tropical-and-shortwave">Medium wave, tropical and shortwave</h3>
+<ul>
+<li>Resolution No. 721/2020 keeps medium wave from 525 to 1705 kHz and the 120 m tropical band from 2300 to 2495 kHz.</li>
+<li>Act No. 8,104/2022 uses 10 kHz spacing on medium wave, and Act No. 3,116/2020 defines classes A, B and C of MW stations.</li>
+<li>With the migration, many local AM stations went off the air. There is no official count of how many still broadcast.</li>
+</ul>
+<h3 id="brasil--listening">Listening</h3>
+<ul>
+<li><strong>Broadcasting is free to receive.</strong> Article 57 of the Brazilian Telecommunications Code (Law No. 4,117/1962) excludes from the prohibitions radio communications intended to be freely received, amateur radio, ships and aircraft in distress and public emergencies.</li>
+<li><strong>Air band and other communications.</strong> Routine conversation between aircraft and the tower is not on that list. Article 56 of the same Code and Article 151, § 1, II, of the Penal Code punish anyone who discloses, passes on to others or uses the content of communications addressed to third parties. In practice: listen, but don’t record to publish or retransmit.</li>
+<li><strong>Transmitting is another story.</strong> Article 183 of the General Telecommunications Law (Law No. 9,472/1997) punishes unlicensed telecommunications activity. The DP-666 only receives.</li>
+</ul>
+<h3 id="brasil--digital-radio">Digital radio</h3>
+<ul>
+<li>MC Ordinance No. 290/2010 created the Brazilian Digital Radio System without choosing a standard. In 2024, the Ministry of Communications answered an information request saying there are no plans to digitize radio in the country (the answer was published by the Rádio Livre site, not by the government).</li>
+<li>The DP-666 tuner doesn’t decode HD Radio or DRM.</li>
+</ul>
+<h3 id="brasil--time">Time</h3>
+<ul>
+<li>Decree No. 9,772/2019 ended daylight saving time across the country.</li>
+<li>Law No. 12,876/2013 places the Federal District and states such as São Paulo in the Greenwich minus three hours time zone.</li>
+<li>NTP.br uses the atomic clocks of Brazil’s National Observatory and runs servers such as a.st1.ntp.br.</li>
+</ul>
+<h3 id="brasil--type-approval">Type approval</h3>
+<ul>
+<li>Anatel Resolution No. 680/2017 requires certification of restricted radiation equipment, such as the Wi-Fi and Bluetooth of the DP-666’s ESP32. The technical requirements are in Act No. 14,448/2017, with later amendments.</li>
+<li>No Anatel type approval was found for the DP-666.</li>
+</ul>
+<h2 id="brasil--sources">Sources</h2>
+<ul>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2022/1687-ato-8104" target="_blank" rel="noopener noreferrer">Anatel — Act No. 8,104/2022, FM technical requirements</a></li>
+<li><a href="https://www.aasp.org.br/?p=35231" target="_blank" rel="noopener noreferrer">Anatel Resolution No. 721/2020 — AASP news on its entry into force</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2020/1492-ato-3116" target="_blank" rel="noopener noreferrer">Anatel — Act No. 3,116/2020, medium wave</a></li>
+<li><a href="http://arctel-cplp.org/wp-content/uploads/2022/09/Resolucao-n.o-67-de-12-de-novembro-de-1998.pdf" target="_blank" rel="noopener noreferrer">Anatel — Resolution No. 67/1998, repealed</a></li>
+<li><a href="https://itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.450-3-200111-S!!PDF-E.pdf" target="_blank" rel="noopener noreferrer">ITU — Recommendation BS.450-3</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d8139.htm" target="_blank" rel="noopener noreferrer">Decree No. 8,139/2013 — AM to FM migration</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/LEIS/L4117.htm" target="_blank" rel="noopener noreferrer">Law No. 4,117/1962 — Brazilian Telecommunications Code</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm" target="_blank" rel="noopener noreferrer">Penal Code — Decree-Law No. 2,848/1940</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9472.htm" target="_blank" rel="noopener noreferrer">Law No. 9,472/1997 — General Telecommunications Law</a></li>
+<li><a href="https://repositorio.mctic.gov.br/bitstream/mctic/1931/1/2010_port_290_03_30.pdf" target="_blank" rel="noopener noreferrer">MC Ordinance No. 290/2010 — Brazilian Digital Radio System</a></li>
+<li><a href="http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf" target="_blank" rel="noopener noreferrer">Ministry of Communications answer on digital radio, 2024</a></li>
+<li><a href="https://planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9772.htm" target="_blank" rel="noopener noreferrer">Decree No. 9,772/2019 — end of daylight saving time</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12876.htm" target="_blank" rel="noopener noreferrer">Law No. 12,876/2013 — time zones</a></li>
+<li><a href="https://ntp.br/" target="_blank" rel="noopener noreferrer">NTP.br</a></li>
+<li><a href="https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680" target="_blank" rel="noopener noreferrer">Anatel — Resolution No. 680/2017, restricted radiation</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448" target="_blank" rel="noopener noreferrer">Anatel — Act No. 14,448/2017, restricted radiation requirements</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FM_extended_band_in_Brazil" target="_blank" rel="noopener noreferrer">FM extended band in Brazil (Wikipedia)</a></li>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Setup for Brazil</p><a class="prox-next" href="../hardware/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Hardware</span><span class="prox-desc">How the parts connect, where power and sound flow, and the datasheet for each one.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../ajustes/"><span class="mi-nome">Radio settings<span class="mi-sub">Every option, with the recommended value</span></span></a></li><li class="mi-item"><a class="mi" href="../oficial/"><span class="mi-nome">Using the official firmware<span class="mi-sub">The setting names on the official firmware</span></span></a></li></ul><p class="prox-volta"><a href="../">Previous page: Home</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/" aria-current="page">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

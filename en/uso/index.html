@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Using the radio | DP-666: the definitive guide</title>
+<meta name="description" content="Controls, tuning, memory channels and scans on the Megatron Mod17.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/uso/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/uso/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/uso/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Using the radio">
+<meta property="og:description" content="Controls, tuning, memory channels and scans on the Megatron Mod17.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/uso/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../uso/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#uso">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-uso">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>The radio</p><h1>Using the radio</h1><p class="meta">Updated Nov 21, 2026 · 2 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Controls, tuning, memory channels and searches on Megatron Mod17. When a behavior comes from the code of PE5PVB v2.00, Megatron’s base, it is marked <span class="nw"><span class="src">base code</span>.</span> For the official firmware, see <a href="../oficial/">Using the official firmware</a>.</p>
+<h2 id="botoes">Radio controls</h2><p class="tool-lead">Tap or hold each button and knob to see what it does on your firmware, in 3D or in the simple view.</p></div><div class="le-ferramenta"><p>This tool works in the interactive guide: <a href="../#uso">open the tool</a>.</p></div><div class="prose">
+
+<h2 id="uso--where-everything-is">Where everything is</h2>
+<figure class="figure figure-3d"><div class="figure-body"><div class="viewer3d"><div class="v3-ui"><a class="v3-open" href="../#uso">See the radio in 3D</a><p class="v3-note">Downloads about 860 KB only when you ask. Works on phones and computers.</p></div></div></div><figcaption><span class="fig-n">Figure 1</span>The radio in 3D, built from the photos below: a box with the body’s dimensions, the photo of each side on it, and the knobs and the antenna connector in 3D. The antenna itself shows only in the photos.</figcaption></figure>
+
+<div class="fotos">
+<figure class="foto foto-larga"><img src="../../img/dp666-frente.webp" width="1200" height="928" loading="lazy" alt="Front of the radio: speaker on the left and screen on the right; below the screen, BW, MODE and BAND, the numeric keypad with DX and Enter, and the red POWER button. The antenna comes out of the top, near the left side."><figcaption>Front</figcaption></figure>
+<figure class="foto foto-larga"><img src="../../img/dp666-verso.webp" width="1200" height="916" loading="lazy" alt="Back of the radio with the label: FM 65 to 108 MHz, LW 144 to 513 kHz, MW 520 to 1720 kHz (522 to 1791 kHz), SW 1700 to 27000 kHz, 3.7 V 5000 mAh battery and 5 V USB power, up to 1.5 A."><figcaption>Back</figcaption></figure>
+<figure class="foto foto-lado"><img src="../../img/dp666-esquerda.webp" width="327" height="1000" loading="lazy" alt="Left side, top to bottom: BOOT button, marked ESP32 BOOT, headphone jack, LED and USB-C port, marked DC-IN 5V."><figcaption>Left side</figcaption></figure>
+<figure class="foto foto-lado"><img src="../../img/dp666-direita.webp" width="329" height="813" loading="lazy" alt="Right side, top to bottom: TUNING knob, SQL wheel with + at the top and − at the bottom, and VOLUME knob."><figcaption>Right side</figcaption></figure>
+<figure class="foto foto-faixa"><img src="../../img/dp666-topo.webp" width="1200" height="272" loading="lazy" alt="Top of the radio: the SMA antenna connector, marked ANT, near the left side, and a grid of twelve holes next to it."><figcaption>Top, seen from above with the front facing down</figcaption></figure>
+<figure class="foto foto-faixa"><img src="../../img/dp666-fundo.webp" width="1200" height="254" loading="lazy" alt="Bottom of the radio: the main switch, marked Main switch, with ON on the left and OFF on the right, and a grid of twelve holes near the left side."><figcaption>Bottom, seen with the front facing up</figcaption></figure>
+</div>
+
+<p class="fotos-credito">Photos: mflipe, under the CC BY 4.0 license.</p>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Side</th>
+<th>What is there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Front</td>
+<td>touchscreen, numeric keypad (0 to 9, DX and Enter), BW, MODE, BAND, POWER and speaker</td>
+</tr>
+<tr>
+<td>Right side</td>
+<td>top to bottom: TUNING, the SQL wheel (+ at the top, − at the bottom) and VOLUME</td>
+</tr>
+<tr>
+<td>Left side</td>
+<td>top to bottom: BOOT (marked ESP32 BOOT), 3.5 mm headphone jack, charging LED and USB-C (marked DC-IN 5V)</td>
+</tr>
+<tr>
+<td>Top</td>
+<td>SMA antenna connector, marked ANT, near the left side, and a grid of twelve holes next to it</td>
+</tr>
+<tr>
+<td>Back</td>
+<td>label with the bands, the battery and the power input</td>
+</tr>
+<tr>
+<td>Bottom</td>
+<td>main switch, marked Main switch: ON toward the left side, OFF toward the right; and a grid of holes below the speaker</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="uso--physical-keypad-firmware">Physical keypad <span class="src">firmware</span></h2>
+<ul>
+<li><strong>0 to 9:</strong> enter the frequency. The band and the frequency turn green while you type.</li>
+<li><strong>Enter:</strong> confirms. Outside of entry, it acts like the knob button.</li>
+<li><strong>DX while typing:</strong> deletes the last digit; a long press clears everything.</li>
+<li><strong>DX:</strong> switches between entering a frequency and saving a memory channel.</li>
+<li><strong>Long DX:</strong> starts the DX scan, only on the main screen. Any key cancels.</li>
+<li><strong>Short 0, outside of entry:</strong> toggles mute.</li>
+</ul>
+<h2 id="uso--screen-and-touch">Screen and touch</h2>
+<ul>
+<li><strong>Touch areas:</strong> the left half of the signal area opens the shortcuts and the right half opens the menu. The volume adjusts by tapping the halves of the volume area.</li>
+<li><strong>These open the on-screen keypad:</strong> the frequency, the step bar and the band label.</li>
+<li><strong>Tappable icons:</strong> MAN/AUTO/MEM, stereo, mute, RDS (opens the advanced view), bandwidth (includes AUTO BW), iMS, EQ, deviation indicator, battery and sleep.</li>
+<li><strong>Squelch by touch:</strong> tap SQ (it turns green) and turn the knob. Requires Rotary adjust squelch on.</li>
+<li><strong>Extra gestures <span class="nw"><span class="src">firmware</span>:</span></strong> tapping the top left corner turns on the still screen; a long press on the clock syncs the time; tapping AUTO on SW turns on the meter bands; on the advanced RDS and AF pages, tapping the bottom half switches between them.</li>
+<li><strong>Colors <span class="nw"><span class="src">firmware</span>:</span></strong> a signal from 60 up turns red, from 40 up green and below that yellow. The battery gets a red frame at 3.3 V. With Wi-Fi, the icon shows "wifi" in place of the battery.</li>
+<li><strong>What each mark and message means:</strong> see <a href="../codigos/">Screen messages and codes</a>, with a field to type what shows on the radio.</li>
+</ul>
+<h2 id="uso--tuning">Tuning</h2>
+<ul>
+<li><strong>Steps:</strong> FM accepts 50, 100 or 200 kHz. The bar above the frequency shows the active step; fully off means the default step. In the base code, the knob cycles through the default step, 10 kHz, 100 kHz, 1 MHz and 10 MHz.</li>
+<li><strong>AUTO:</strong> in the base code, the search stops on a signal with little noise and little multipath, an offset of up to ±8 kHz and above the squelch. Higher sensitivity makes the search more permissive.</li>
+<li><strong>Bandwidth on FM:</strong> AUTO, 56, 64, 72, 84, 97, 114, 133, 151, 168, 184, 200, 217, 236, 254, 287 and 311 kHz. On AM: 3, 4, 6 and 8 kHz.</li>
+<li><strong>iMS and EQ:</strong> FM multipath suppression and channel equalization.</li>
+<li><strong>Squelch (Use squelch):</strong> On, Off or Auto. On On <span class="nw"><span class="src">base code</span>,</span> the minimum is OFF and the maximum becomes "ST", which only opens with a stereo signal. Auto is Megatron’s own algorithm. For weak signals, use Off.</li>
+<li><strong>MPX output:</strong> Audio output set to MPX delivers the raw multiplex signal, for external decoders. It is not for listening.</li>
+</ul>
+<h2 id="uso--memory-channels">Memory channels</h2>
+<ul>
+<li><strong>Capacity:</strong> 99 positions. Each one stores band, frequency, bandwidth and stereo/mono <span class="nw"><span class="src">base code</span>.</span> There are also names per frequency (My frequency name).</li>
+<li><strong>Save:</strong> tune in, press MODE until MEM appears, press the knob (MEM turns red), pick the position and press again. A red number means the position is taken; green, free.</li>
+<li><strong>Recall:</strong> in MEM, turn the knob.</li>
+<li><strong>Delete one:</strong> on the on-screen keypad, use MEM/Delete in MEM mode, pick the position and confirm <span class="nw"><span class="src">firmware</span>.</span> Try it first on an unimportant position.</li>
+<li><strong>Arrange stations:</strong> "brokens" are gaps in the list. Only defrag closes the gaps; Defrag and sort also sorts and removes duplicates.</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Delete stations erases the whole band</p>
+<p>Delete stations doesn’t erase a single memory channel. It asks for the band and empties all of its channels. Auto search in Overwrite also overwrites everything. Only a backup gets them back.</p>
+</div>
+<ul>
+<li><strong>Band save mode <span class="nw"><span class="src">firmware</span>:</span></strong> stores the memory channels together (Mixed Save), per band (Save by band) or per time slot (Save by time segment).</li>
+</ul>
+<h2 id="uso--auto-search">Auto search</h2>
+<ul>
+<li><strong>Options:</strong> save mode, band, samples and hold time, multipath limit, sensitivity (FM from 1 to 15, AM from 1 to 20), Quality or Quantity priority, saved bandwidth, mute and screen off during the search, start channel and SW limits.</li>
+<li><strong>Save modes:</strong> Overwrite, Append and Continuously append. The third one only shows up in the firmware.</li>
+<li><strong>"99 Free":</strong> "Free" shows the available positions. In Overwrite, all 99 count as free because they will be overwritten.</li>
+</ul>
+<h3 id="uso--to-find-stations-with-less-hiss">To find stations with less hiss</h3>
+<ol>
+<li>Make a <a href="../backup/">backup</a> first.</li>
+<li>Use Append, with the start channel after the last memory channel.</li>
+<li>Use Quality priority and FM sensitivity between 3 and 5. In the base code, a lower number is more demanding.</li>
+<li>Use 5 to 10 samples and a hold time of 100 to 200 ms.</li>
+<li>Keep the screen off and AF off during the search.</li>
+</ol>
+<h2 id="uso--dx-scan-frequency-scanning">DX scan (Frequency scanning)</h2>
+<ul>
+<li><strong>Options:</strong> band, start and end channel, wait time, Exclude/Only, cancel on Signal, Off or Correct PI, Stay/Break, mute and screen off. The firmware adds Wait on signal only and Hold time.</li>
+<li><strong>Only <span class="nw"><span class="src">base code</span>:</span></strong> goes only through the occupied memory channels between the start and the end channel.</li>
+<li><strong>Exclude <span class="nw"><span class="src">base code</span>:</span></strong> scans the band step by step, without using the memory channels.</li>
+<li><strong>Correct PI</strong> stops when it decodes the PI. <strong>Signal</strong> stops when it finds a clean signal.</li>
+<li>The scan doesn’t save anything. Any key or tap cancels it.</li>
+</ul>
+<h2 id="uso--sources">Sources</h2>
+<ul>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">DP-666 Megatron Mod17 manual</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">PE5PVB/TEF6686_ESP32</a></li>
+</ul></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Using the radio</p><a class="prox-next" href="../ajustes/"><span class="prox-txt"><span class="prox-rot">Next page</span><span class="prox-nome">Radio settings</span><span class="prox-desc">Every menu option on both firmwares, with its possible values, the factory default and the value recommended for Brazil.</span></span></a><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../oficial/"><span class="mi-nome">Using the official firmware<span class="mi-sub">The same controls on the official firmware</span></span></a></li><li class="mi-item"><a class="mi" href="../problemas/"><span class="mi-nome">Common problems<span class="mi-sub">When something doesn’t respond as it should</span></span></a></li></ul><p class="prox-volta"><a href="../hardware/">Previous page: Hardware</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/" aria-current="page">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>

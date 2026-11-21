@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Configuração para o Brasil | DP-666: o guia definitivo</title>
+<meta name="description" content="Ajustes que fazem diferença para quem usa o DP-666 no Brasil, com as normas que justificam cada um.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/brasil/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/brasil/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/brasil/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: o guia definitivo">
+<meta property="og:title" content="Configuração para o Brasil">
+<meta property="og:description" content="Ajustes que fazem diferença para quem usa o DP-666 no Brasil, com as normas que justificam cada um.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/brasil/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-pt.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="O título do guia, o que ele cobre e o endereço, ao lado do botão de sintonia do menu do guia.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: o guia definitivo</span></a>
+  <nav class="le-acoes" aria-label="Idioma e guia interativo">
+    <a class="le-lingua" href="../en/brasil/" hreflang="en" lang="en">EN</a>
+    <a class="le-abrir" href="../#brasil">Abrir no guia interativo</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-brasil">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>Começar</p><h1>Configuração para o Brasil</h1><p class="meta">Atualizado em 21/11/2026 · 18 fontes</p></header>
+<p class="le-aviso">Versão para leitura desta página. A busca, as ferramentas e o rádio virtual ficam no guia interativo.</p>
+<div class="prose"><p>Ajustes que fazem diferença para quem usa o DP-666 no Brasil, com as normas que justificam cada um. Os nomes das opções estão em inglês, como aparecem no Megatron Mod17. Na linha oficial, os nomes mudam um pouco: veja o resumo no fim da página. Todos os valores possíveis de cada opção estão em <a href="../ajustes/">Ajustes do rádio</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Libere o modo avançado primeiro</p>
+<p>Muitas opções desta página só aparecem no modo avançado. Para ativá-lo, a DEEPELEC orienta trocar o idioma para chinês, ligar o modo e voltar para o inglês: Display settings → Language → 简体中文; depois 主要设置 → 系统使用模式 → 高级模式; e por fim 显示设置 → 语言 → English.</p>
+</div>
+<h2 id="brasil--áudio-de-fm">Áudio de FM</h2>
+<ul>
+<li><strong>FM deemphasis em 50 µs.</strong> Nas Américas o padrão costuma ser 75 µs, mas o Brasil é exceção. O Ato Anatel nº 8.104/2022, a norma de FM em vigor, manda usar 50 µs "preferencialmente", e a UIT lista o Brasil com 50 µs. Veja <a href="../brasil/#brasil--normas-e-padrões">Normas e padrões</a>.</li>
+<li><strong>Use squelch em Off</strong> para caçar emissoras fracas. Em Auto, o rádio pode esconder sinais distantes.</li>
+<li><strong>Stereo threshold:</strong> com sinal fraco, um limiar perto de 40 dBµV força o mono e reduz o chiado.</li>
+</ul>
+<h2 id="brasil--faixa-de-fm-e-fm-estendido">Faixa de FM e FM estendido</h2>
+<ul>
+<li><strong>Set low band edge em 76,1 MHz</strong> e <strong>Set high band edge em 108,0 MHz.</strong> Assim a faixa cobre o FM estendido (eFM), de 76,1 a 87,3 MHz, que tem emissoras no ar desde 7 de maio de 2021.</li>
+<li><strong>Grade de canais:</strong> as emissoras brasileiras ficam em canais de 200 kHz com decimal ímpar, de 76,1 a 87,3 MHz e de 88,1 a 107,9 MHz. Entre as duas faixas, de 87,4 a 88 MHz, ficam as rádios comunitárias.</li>
+<li><strong>FM default stepsize em 200 kHz.</strong> Na linha oficial, o código soma o passo a partir da borda da faixa: com a borda em 76,1 MHz, a sintonia para só nos decimais ímpares. No Megatron, confira no seu aparelho. Em DX, use 100 kHz para parar também nos decimais pares.</li>
+<li><strong>FM AGC em 92 dBµV</strong> é o mais sensível. Se aparecerem estações fantasmas perto de emissoras fortes, teste 87 ou 84.</li>
+</ul>
+<figure class="figure"><div class="figure-body"><svg class="diagram" viewBox="0 0 960 110" role="img" aria-labelledby="fig-dial fig-dial-d"><title id="fig-dial">Faixas de FM no Brasil</title><desc id="fig-dial-d">FM estendido de 76,1 a 87,3 MHz, rádios comunitárias de 87,4 a 88,0 MHz e FM de 88,1 a 107,9 MHz, em canais de 200 kHz com decimal ímpar.</desc><defs><marker id="fig-dial-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-arrowhead"/></marker></defs><rect class="d-box" x="20" y="22" width="920" height="46" rx="8"/><rect class="d-band-efm" x="32.8" y="30" width="315.0" height="8" rx="2"/><rect class="d-band-rc" x="350.6" y="30" width="16.9" height="8" rx="2"/><rect class="d-band" x="370.3" y="30" width="556.9" height="8" rx="2"/><line class="d-tick major" x1="30.0" y1="46" x2="30.0" y2="64"/><text class="d-mono" x="30.0" y="86" text-anchor="middle">76</text><line class="d-tick" x1="58.1" y1="46" x2="58.1" y2="56"/><line class="d-tick" x1="86.2" y1="46" x2="86.2" y2="56"/><line class="d-tick" x1="114.4" y1="46" x2="114.4" y2="56"/><line class="d-tick major" x1="142.5" y1="46" x2="142.5" y2="64"/><text class="d-mono" x="142.5" y="86" text-anchor="middle">80</text><line class="d-tick" x1="170.6" y1="46" x2="170.6" y2="56"/><line class="d-tick" x1="198.8" y1="46" x2="198.8" y2="56"/><line class="d-tick" x1="226.9" y1="46" x2="226.9" y2="56"/><line class="d-tick major" x1="255.0" y1="46" x2="255.0" y2="64"/><text class="d-mono" x="255.0" y="86" text-anchor="middle">84</text><line class="d-tick" x1="283.1" y1="46" x2="283.1" y2="56"/><line class="d-tick" x1="311.2" y1="46" x2="311.2" y2="56"/><line class="d-tick" x1="339.4" y1="46" x2="339.4" y2="56"/><line class="d-tick major" x1="367.5" y1="46" x2="367.5" y2="64"/><text class="d-mono" x="367.5" y="86" text-anchor="middle">88</text><line class="d-tick" x1="395.6" y1="46" x2="395.6" y2="56"/><line class="d-tick" x1="423.8" y1="46" x2="423.8" y2="56"/><line class="d-tick" x1="451.9" y1="46" x2="451.9" y2="56"/><line class="d-tick major" x1="480.0" y1="46" x2="480.0" y2="64"/><text class="d-mono" x="480.0" y="86" text-anchor="middle">92</text><line class="d-tick" x1="508.1" y1="46" x2="508.1" y2="56"/><line class="d-tick" x1="536.2" y1="46" x2="536.2" y2="56"/><line class="d-tick" x1="564.4" y1="46" x2="564.4" y2="56"/><line class="d-tick major" x1="592.5" y1="46" x2="592.5" y2="64"/><text class="d-mono" x="592.5" y="86" text-anchor="middle">96</text><line class="d-tick" x1="620.6" y1="46" x2="620.6" y2="56"/><line class="d-tick" x1="648.8" y1="46" x2="648.8" y2="56"/><line class="d-tick" x1="676.9" y1="46" x2="676.9" y2="56"/><line class="d-tick major" x1="705.0" y1="46" x2="705.0" y2="64"/><text class="d-mono" x="705.0" y="86" text-anchor="middle">100</text><line class="d-tick" x1="733.1" y1="46" x2="733.1" y2="56"/><line class="d-tick" x1="761.2" y1="46" x2="761.2" y2="56"/><line class="d-tick" x1="789.4" y1="46" x2="789.4" y2="56"/><line class="d-tick major" x1="817.5" y1="46" x2="817.5" y2="64"/><text class="d-mono" x="817.5" y="86" text-anchor="middle">104</text><line class="d-tick" x1="845.6" y1="46" x2="845.6" y2="56"/><line class="d-tick" x1="873.8" y1="46" x2="873.8" y2="56"/><line class="d-tick" x1="901.9" y1="46" x2="901.9" y2="56"/><line class="d-tick major" x1="930.0" y1="46" x2="930.0" y2="64"/><text class="d-mono" x="930.0" y="86" text-anchor="middle">108</text><text class="d-band-lbl" x="190.3124999999999" y="16" text-anchor="middle">eFM 76,1–87,3</text><text class="d-band-lbl" x="359.0625000000001" y="16" text-anchor="middle">RadCom</text><text class="d-band-lbl" x="648.75" y="16" text-anchor="middle">FM 88,1–107,9</text><text class="d-lbl" x="930" y="104" text-anchor="end">MHz</text></svg></div><figcaption><span class="fig-n">Figura 1</span>Faixas de FM no Brasil, segundo o Ato Anatel nº 8.104/2022 e a Resolução nº 721/2020. Os canais têm 200 kHz e terminam em decimal ímpar (.1, .3, .5, .7, .9). RadCom é a faixa das rádios comunitárias.</figcaption></figure>
+
+<h2 id="brasil--am-e-ondas-médias">AM e ondas médias</h2>
+<ul>
+<li><strong>MW default stepsize em 10 kHz</strong>, a grade de ondas médias do Brasil e das Américas.</li>
+<li><strong>AIR band Conversion:</strong> a opção existe, mas a faixa aérea só funciona com um conversor externo vendido à parte.</li>
+</ul>
+<h2 id="brasil--rds">RDS</h2>
+<ul>
+<li><strong>Region em Europe.</strong> O RDS brasileiro segue o modelo europeu, com o código PI distribuído pela Anatel. A opção USA usa a tabela americana (RBDS).</li>
+<li><strong>Use AF em Off</strong> em DX e buscas, para o rádio não pular sozinho para outra frequência. No dia a dia, deixe ligado só se as emissoras da sua região transmitirem frequências alternativas.</li>
+<li><strong>RDS time sync em Off</strong> quando o NTP estiver funcionando, porque algumas emissoras mandam a hora errada.</li>
+</ul>
+<h2 id="brasil--relógio-e-fuso">Relógio e fuso</h2>
+<ul>
+<li><strong>Set local time zone:</strong> escolha o fuso do seu estado. Para o horário de Brasília, GMT−03:00.</li>
+<li><strong>Por que o relógio adianta 8 horas:</strong> o NTP entrega a hora em UTC e o rádio aplica o fuso. O Megatron é chinês, vem com GMT+8 e tem só um servidor NTP embutido, o cn.pool.ntp.org.</li>
+<li><strong>Set NTP server (Mod17):</strong> um servidor brasileiro, como a.st1.ntp.br, do NTP.br, responde mais rápido. O System information mostra o servidor em uso.</li>
+<li><strong>Wi-Fi auto disconnect em After time sync:</strong> o Wi-Fi desliga depois de acertar a hora. Isso economiza bateria e mantém a leitura da tensão da bateria, que some com o Wi-Fi ligado (veja <a href="../problemas/">Problemas comuns</a>).</li>
+</ul>
+<h2 id="brasil--na-linha-oficial">Na linha oficial</h2>
+<p>Os mesmos ajustes, com os nomes do menu em português da linha oficial (veja <a href="../oficial/">Uso da linha oficial</a>):</p>
+<ul>
+<li><strong>Configurações de áudio → Desênfase FM:</strong> 50 µs.</li>
+<li><strong>Configurações FM → Definir borda da faixa baixa e alta:</strong> 76,1 e 108,0 MHz, para incluir o FM estendido. A borda baixa sobe 0,1 MHz e desce 1 MHz por clique: de 87,5, desça 12 vezes, até 75,5, e suba 6.</li>
+<li><strong>Configurações FM → Passo padrão FM:</strong> 200 kHz.</li>
+<li><strong>Configurações AM → Tamanho padrão da etapa AM:</strong> 10 kHz. O padrão de fábrica é 9 kHz, o da Europa.</li>
+<li><strong>Configurações RDS → Região:</strong> Europa. Deixe <strong>Usar AF</strong> desligado em DX e buscas.</li>
+<li><strong>Conectividade e relógio → Definir deslocamento de tempo NTP:</strong> GMT −3 para o horário de Brasília. O padrão de fábrica é GMT +1.</li>
+<li><strong>DST automático no horário NTP:</strong> desligado, porque o Brasil não tem horário de verão desde o Decreto nº 9.772, de 2019. O padrão de fábrica é ligado.</li>
+</ul>
+<h2 id="brasil--normas-e-padrões">Normas e padrões</h2>
+<p>As regras brasileiras que mexem com o uso do rádio, com o documento oficial de cada uma. Isto é um resumo para quem usa o rádio, não um parecer jurídico.</p>
+<h3 id="brasil--fm-faixa-canais-e-pré-ênfase">FM: faixa, canais e pré-ênfase</h3>
+<ul>
+<li><strong>Faixa.</strong> A Resolução Anatel nº 721/2020, em vigor desde 3 de novembro de 2020, destina 76 a 108 MHz ao FM e mantém 87,4 a 88 MHz para a radiodifusão comunitária (RadCom).</li>
+<li><strong>Canais.</strong> O Ato Anatel nº 8.104/2022 numera os canais de 200 kHz: 76,1 MHz é o canal 141, 87,3 MHz é o 197 e 107,9 MHz é o 300. Por isso as frequências terminam em decimal ímpar.</li>
+<li><strong>Pré-ênfase de 50 µs.</strong> O mesmo Ato, em vigor desde 1º de agosto de 2022, diz que a pré-ênfase de 50 µs deve ser usada "preferencialmente". O texto do Ato escreve "ms", um erro de digitação herdado das versões anteriores. A regra vem da Resolução nº 67/1998, já revogada. "Preferencialmente" deixa margem para alguma emissora em 75 µs, que soaria um pouco mais aguda no rádio.</li>
+<li><strong>A UIT confirma.</strong> A Recomendação UIT-R BS.450-3 lista o Brasil com canais de 200 kHz, pré-ênfase de 50 µs e desvio máximo de ±75 kHz. Os 75 µs que aparecem em outras normas da Anatel valem para o áudio da TV analógica, não para o FM.</li>
+<li><strong>Estéreo e subportadoras.</strong> O Ato nº 8.104/2022 aceita picos de modulação de até 110% (desvio de 82,5 kHz) e põe as subportadoras entre 20 e 99 kHz, ou entre 53 e 99 kHz quando o programa é estéreo. A pré-ênfase do sinal estéreo tem de ser igual à do sinal principal.</li>
+<li><strong>Migração do AM.</strong> O Decreto nº 8.139/2013, alterado em 2018, 2020 e 2021, regula a passagem das rádios AM locais para o FM, com transmissão simultânea por até cinco anos. O FM estendido foi aberto para receber essas emissoras.</li>
+</ul>
+<h3 id="brasil--rds_1">RDS</h3>
+<ul>
+<li>O Ato nº 8.104/2022 traz a especificação do RDS em português: o código PI tem 16 bits e é distribuído pela Anatel, ou por entidade credenciada, para cada emissora; o PTY identifica até 31 tipos de programação.</li>
+<li>É o RDS europeu, e não o RBDS americano, por isso a região Europe no rádio. A tabela de tipos de programação do Ato (Tabela A3) não foi conferida item por item.</li>
+</ul>
+<h3 id="brasil--ondas-médias-tropicais-e-curtas">Ondas médias, tropicais e curtas</h3>
+<ul>
+<li>A Resolução nº 721/2020 mantém as ondas médias de 525 a 1705 kHz e a onda tropical de 120 m de 2300 a 2495 kHz.</li>
+<li>O Ato nº 8.104/2022 usa espaçamento de 10 kHz nas ondas médias, e o Ato nº 3.116/2020 define as classes A, B e C das emissoras de OM.</li>
+<li>Com a migração, muitas rádios AM locais saíram do ar. Não há número oficial de quantas ainda transmitem.</li>
+</ul>
+<h3 id="brasil--escuta">Escuta</h3>
+<ul>
+<li><strong>Radiodifusão é livre.</strong> O art. 57 do Código Brasileiro de Telecomunicações (Lei nº 4.117/1962) exclui das proibições as radiocomunicações destinadas a ser livremente recebidas, as de radioamadores, as de navios e aeronaves em perigo e as de calamidade pública.</li>
+<li><strong>Banda aérea e outras comunicações.</strong> A conversa de rotina entre aviões e torre não está nessa lista. O art. 56 do mesmo Código e o art. 151, § 1º, II, do Código Penal punem quem divulga, transmite a outros ou usa o conteúdo de comunicação dirigida a terceiros. Na prática: ouça, mas não grave para publicar nem retransmita.</li>
+<li><strong>Transmitir é outra história.</strong> O art. 183 da Lei Geral de Telecomunicações (Lei nº 9.472/1997) pune a atividade clandestina de telecomunicação. O DP-666 só recebe rádio.</li>
+</ul>
+<h3 id="brasil--rádio-digital">Rádio digital</h3>
+<ul>
+<li>A Portaria MC nº 290/2010 criou o Sistema Brasileiro de Rádio Digital sem escolher um padrão. Em 2024, o Ministério das Comunicações respondeu a um pedido de informação que não há planejamento para digitalizar o rádio no país (a resposta foi publicada pelo site Rádio Livre, não pelo governo).</li>
+<li>O sintonizador do DP-666 não decodifica HD Radio nem DRM.</li>
+</ul>
+<h3 id="brasil--hora">Hora</h3>
+<ul>
+<li>O Decreto nº 9.772/2019 encerrou o horário de verão em todo o país.</li>
+<li>A Lei nº 12.876/2013 põe o Distrito Federal e estados como São Paulo no fuso de Greenwich menos três horas.</li>
+<li>O NTP.br usa os relógios atômicos do Observatório Nacional e mantém servidores como a.st1.ntp.br.</li>
+</ul>
+<h3 id="brasil--homologação">Homologação</h3>
+<ul>
+<li>A Resolução Anatel nº 680/2017 exige certificação dos equipamentos de radiação restrita, como o Wi-Fi e o Bluetooth do ESP32 do DP-666. Os requisitos técnicos estão no Ato nº 14.448/2017, com alterações posteriores.</li>
+<li>Não foi encontrada homologação da Anatel para o DP-666.</li>
+</ul>
+<h2 id="brasil--fontes">Fontes</h2>
+<ul>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2022/1687-ato-8104" target="_blank" rel="noopener noreferrer">Anatel — Ato nº 8.104/2022, requisitos técnicos do FM</a></li>
+<li><a href="https://www.aasp.org.br/?p=35231" target="_blank" rel="noopener noreferrer">Resolução Anatel nº 721/2020 — notícia da AASP sobre a entrada em vigor</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2020/1492-ato-3116" target="_blank" rel="noopener noreferrer">Anatel — Ato nº 3.116/2020, ondas médias</a></li>
+<li><a href="http://arctel-cplp.org/wp-content/uploads/2022/09/Resolucao-n.o-67-de-12-de-novembro-de-1998.pdf" target="_blank" rel="noopener noreferrer">Anatel — Resolução nº 67/1998, revogada</a></li>
+<li><a href="https://itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.450-3-200111-S!!PDF-E.pdf" target="_blank" rel="noopener noreferrer">UIT — Recomendação BS.450-3</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d8139.htm" target="_blank" rel="noopener noreferrer">Decreto nº 8.139/2013 — migração do AM para o FM</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/LEIS/L4117.htm" target="_blank" rel="noopener noreferrer">Lei nº 4.117/1962 — Código Brasileiro de Telecomunicações</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm" target="_blank" rel="noopener noreferrer">Código Penal — Decreto-Lei nº 2.848/1940</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9472.htm" target="_blank" rel="noopener noreferrer">Lei nº 9.472/1997 — Lei Geral de Telecomunicações</a></li>
+<li><a href="https://repositorio.mctic.gov.br/bitstream/mctic/1931/1/2010_port_290_03_30.pdf" target="_blank" rel="noopener noreferrer">Portaria MC nº 290/2010 — Sistema Brasileiro de Rádio Digital</a></li>
+<li><a href="http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf" target="_blank" rel="noopener noreferrer">Resposta do Ministério das Comunicações sobre rádio digital, 2024</a></li>
+<li><a href="https://planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9772.htm" target="_blank" rel="noopener noreferrer">Decreto nº 9.772/2019 — fim do horário de verão</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12876.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.876/2013 — fusos horários</a></li>
+<li><a href="https://ntp.br/" target="_blank" rel="noopener noreferrer">NTP.br</a></li>
+<li><a href="https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680" target="_blank" rel="noopener noreferrer">Anatel — Resolução nº 680/2017, radiação restrita</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448" target="_blank" rel="noopener noreferrer">Anatel — Ato nº 14.448/2017, requisitos de radiação restrita</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FM_extended_band_in_Brazil" target="_blank" rel="noopener noreferrer">FM extended band in Brazil (Wikipedia)</a></li>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666</a></li>
+</ul></div>
+<nav class="proximo" aria-label="Depois desta página"><p class="prox-fim">Fim de Configuração para o Brasil</p><a class="prox-next" href="../hardware/"><span class="prox-txt"><span class="prox-rot">Próxima página</span><span class="prox-nome">Hardware</span><span class="prox-desc">Como as peças se ligam, por onde passam a energia e o som, e o datasheet de cada uma.</span></span></a><h2 class="mi-grupo">Também tem a ver</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../ajustes/"><span class="mi-nome">Ajustes do rádio<span class="mi-sub">Todas as opções, com o valor recomendado</span></span></a></li><li class="mi-item"><a class="mi" href="../oficial/"><span class="mi-nome">Uso da linha oficial<span class="mi-sub">Os nomes dos ajustes na linha oficial</span></span></a></li></ul><p class="prox-volta"><a href="../">Página anterior: Início</a><a href="../">Voltar ao menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Páginas do guia</h2><ul><li><a href="../brasil/" aria-current="page">Configuração para o Brasil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Uso do rádio</a></li><li><a href="../ajustes/">Ajustes do rádio</a></li><li><a href="../computador/">Computador e conectividade</a></li><li><a href="../problemas/">Problemas comuns</a></li><li><a href="../codigos/">Mensagens e códigos da tela</a></li><li><a href="../firmwares/">Megatron × oficial</a></li><li><a href="../oficial/">Uso da linha oficial</a></li><li><a href="../mod17/">Recursos ocultos do Mod17</a></li><li><a href="../backup/">Backup e gravação</a></li><li><a href="../comparacao/">Comparação com outros rádios</a></li><li><a href="../laboratorio/">Laboratório</a></li><li><a href="../fontes/">Fontes</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Guia independente. Sem ligação com a DEEPELEC nem com o PE5PVB.</p>
+      <p class="side-foot">Conteúdo sob licença CC BY 4.0: ao reproduzir ou adaptar, inclusive com IA, <a href="../fontes/#fontes--como-citar-este-guia">cite o guia</a> com o link.</p>
+      <p>Gravar firmware e testar comandos não documentados é por sua conta e risco. Imagens de terceiros aparecem só como links.</p>
+      <p>Prévia de 21/11/2026 · 15 páginas · 124 fontes citadas.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../sw.js").catch(function () {}); });</script>
+</body>
+</html>

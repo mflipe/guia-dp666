@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eef1f5" data-auto="#eef1f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131d" data-auto="#0e131d" media="(prefers-color-scheme: dark)">
+<script>
+// tema do guia (tema.py): aplica a escolha guardada antes de a página aparecer; sem escolha, segue o aparelho
+(function () {
+  var T = {"claro": "#eef1f5", "escuro": "#0e131d", "radio-essence": "#000000", "radio-cyan": "#000000", "radio-crimson": "#000000", "radio-monochrome": "#000000", "radio-volcano": "#080031", "radio-dendro": "#000000", "radio-sakura": "#000000", "radio-whiteout": "#deffe6", "radio-tangerine": "#000000", "radio-ocean": "#000000", "radio-indigo": "#000000", "radio-queer": "#210008", "radio-goldbrite": "#000000", "radio-bubblegum": "#190429", "radio-aurora": "#000000", "radio-ember": "#000000", "radio-glacier": "#000000"};
+  window.dp666Tema = function (t) {
+    var ok = Object.prototype.hasOwnProperty.call(T, t), r = document.documentElement;
+    if (ok) r.setAttribute("data-theme", t); else r.removeAttribute("data-theme");
+    var m = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < m.length; i++) m[i].setAttribute("content", ok ? T[t] : m[i].getAttribute("data-auto"));
+  };
+  try { window.dp666Tema(JSON.parse(window.localStorage.getItem("dp666.tema"))); } catch (e) { /* sem armazenamento: segue o aparelho */ }
+})();
+</script>
+<title>Sources | DP-666: the definitive guide</title>
+<meta name="description" content="Every source cited in the guide, without repeats.">
+<meta name="author" content="mflipe">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="alternate" hreflang="pt-BR" href="https://mflipe.github.io/guia-dp666/fontes/">
+<link rel="alternate" hreflang="en" href="https://mflipe.github.io/guia-dp666/en/fontes/">
+<link rel="canonical" href="https://mflipe.github.io/guia-dp666/en/fontes/">
+<link rel="manifest" href="../../en/manifest.webmanifest">
+<link rel="icon" href="../../icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../icones/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icones/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DP-666: the definitive guide">
+<meta property="og:title" content="Sources">
+<meta property="og:description" content="Every source cited in the guide, without repeats.">
+<meta property="og:url" content="https://mflipe.github.io/guia-dp666/en/fontes/">
+<meta property="og:image" content="https://mflipe.github.io/guia-dp666/img/compartilhar-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The guide’s title, what it covers and its address, next to the tuning knob from the guide’s menu.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../letras/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body class="leitura">
+<header class="le-topo"><div class="le-topo-in">
+  <a class="le-marca" href="../">DP-666<span class="le-marca-resto">: the definitive guide</span></a>
+  <nav class="le-acoes" aria-label="Language and interactive guide">
+    <a class="le-lingua" href="../../fontes/" hreflang="pt-BR" lang="pt-BR">PT</a>
+    <a class="le-abrir" href="../#fontes">Open in the interactive guide</a>
+  </nav>
+</div></header>
+<div class="app"><div class="main">
+<main id="main">
+<article class="page" id="page-fontes">
+<header class="page-head"><p class="kicker"><a class="kicker-raiz" href="../">DP-666</a><span aria-hidden="true"> › </span>More</p><h1>Sources</h1><p class="meta">Updated Nov 21, 2026 · 124 sources</p></header>
+<p class="le-aviso">Reading version of this page. Search, the tools and the virtual radio are in the interactive guide.</p>
+<div class="prose"><p>Every source cited in the guide, without repeats (124 in total). Each page also lists its own at the end.</p>
+<h2 id="fontes--component-datasheets">Component datasheets</h2>
+<ul>
+<li><a href="https://www.lcsc.com/datasheet/lcsc_datasheet_2202231130_WCH-Jiangsu-Qin-Heng-CH340N_C2977777.pdf" target="_blank" rel="noopener noreferrer">CH340N: English CH340 datasheet (PDF, LCSC mirror)</a></li>
+<li><a href="https://documentation.espressif.com/esp32_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">ESP32-WROOM-32U: ESP32 chip datasheet (PDF)</a></li>
+<li><a href="https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32d_esp32-wroom-32u_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">ESP32-WROOM-32U: Module datasheet (PDF, v2.8)</a></li>
+<li><a href="https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf" target="_blank" rel="noopener noreferrer">ESP32-WROOM-32U: Technical reference manual (TRM, PDF)</a></li>
+<li><a href="https://documentation.espressif.com/esp32-c5-wroom-1_wroom-1u_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-C5-WROOM-1 and WROOM-1U datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-s3-wroom-1_wroom-1u_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-S3-WROOM-1 and WROOM-1U datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-wroom-32d_esp32-wroom-32u_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROOM-32D and WROOM-32U datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROOM-32E and WROOM-32UE datasheet</a></li>
+<li><a href="https://documentation.espressif.com/esp32-wrover-e_esp32-wrover-ie_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">Espressif — ESP32-WROVER-E and WROVER-IE datasheet</a></li>
+<li><a href="https://www.adafruit.com/datasheets/ILI9341.pdf" target="_blank" rel="noopener noreferrer">LCD28IPS: ILI9341 (PDF, V1.11, Adafruit mirror)</a></li>
+<li><a href="https://www.analog.com/media/en/technical-documentation/data-sheets/MAX97220A-MAX97220E.pdf" target="_blank" rel="noopener noreferrer">MAX97220: MAX97220A–E datasheet (PDF, Rev. 2, 07/2012)</a></li>
+<li><a href="https://www.analog.com/en/products/max97220.html" target="_blank" rel="noopener noreferrer">MAX97220: Product page</a></li>
+<li><a href="https://www.mouser.com/datasheet/2/137/RX8010SJ_en-1859944.pdf" target="_blank" rel="noopener noreferrer">RS4C8010: Epson RX8010SJ datasheet (PDF, Mouser mirror)</a></li>
+<li><a href="https://www.farnell.com/datasheets/1782159.pdf" target="_blank" rel="noopener noreferrer">RT9193-33 ×3: Datasheet (PDF, DS9193-16, Farnell mirror)</a></li>
+<li><a href="https://www.richtek.com/Products/Linear%20Regulator/Single%20Output%20Linear%20Regulator/RT9193?sc_lang=en" target="_blank" rel="noopener noreferrer">RT9193-33 ×3: Product page (Richtek)</a></li>
+<li><a href="https://www.nxp.com/products/radio/low-if-tuner-high-performance-one-chip:TEF668X" target="_blank" rel="noopener noreferrer">TEF6686HN/V102: Product page</a></li>
+<li><a href="https://www.farnell.com/datasheets/2615702.pdf" target="_blank" rel="noopener noreferrer">TEF6686HN/V102: Short data sheet (PDF, Rev. 1, 07/30/2013, Farnell mirror)</a></li>
+<li><a href="https://cache.nxp.com/docs/en/brochure/75017468.pdf" target="_blank" rel="noopener noreferrer">TEF6686HN/V102: TEF668x brochure (PDF, NXP)</a></li>
+<li><a href="https://www.toppwr.com/uploadfile/file/20240130/65b892bb04a3c.pdf" target="_blank" rel="noopener noreferrer">TP4056: Datasheet (PDF, REV 2.3)</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/tpa6211a1.pdf" target="_blank" rel="noopener noreferrer">TPA6211A1: Datasheet (PDF, SLOS367E)</a></li>
+<li><a href="https://www.ti.com/product/TPA6211A1" target="_blank" rel="noopener noreferrer">TPA6211A1: Product page</a></li>
+<li><a href="https://www.nxp.com/docs/en/data-sheet/PCA9555.pdf" target="_blank" rel="noopener noreferrer">XL9555: PCA9555, NXP reference (PDF, Rev. 10)</a></li>
+<li><a href="https://atta.szlcsc.com/upload/public/pdf/source/20240911/FFF826D97BDA33B4BE55BC4C2C305DC8.pdf" target="_blank" rel="noopener noreferrer">XL9555: XL9535/XL9555 datasheet (PDF, LCSC mirror)</a></li>
+<li><a href="https://www.lcsc.com/product-detail/C609791.html" target="_blank" rel="noopener noreferrer">XL9555: XL9555 page at LCSC</a></li>
+<li><a href="https://files.waveshare.com/wiki/common/XPT2046_Datasheet.pdf" target="_blank" rel="noopener noreferrer">XPT2046: English datasheet (PDF, Waveshare mirror)</a></li>
+</ul>
+<h2 id="fontes--manufacturer-and-manuals">Manufacturer and manuals</h2>
+<ul>
+<li><a href="https://www.deepelec.com/en/dp-666/" target="_blank" rel="noopener noreferrer">DEEPELEC DP-666</a></li>
+<li><a href="https://www.deepelec.com/how-to-adjust-the-sq-value" target="_blank" rel="noopener noreferrer">DEEPELEC — adjusting SQ</a></li>
+<li><a href="https://www.deepelec.com/how-to-repair-the-antenna-connector/" target="_blank" rel="noopener noreferrer">DEEPELEC — antenna connector repair</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/CH341SER.zip" target="_blank" rel="noopener noreferrer">DEEPELEC — CH340 driver for Windows</a></li>
+<li><a href="https://www.deepelec.com/2025/10/10/stay_away_from_cloned_products" target="_blank" rel="noopener noreferrer">DEEPELEC — clones</a></li>
+<li><a href="https://www.deepelec.com/en/2025/03/09/dp-666-megatron-2-0-15mod16/" target="_blank" rel="noopener noreferrer">DEEPELEC — Mod16 announcement</a></li>
+<li><a href="https://www.deepelec.com/en/2025/04/09/dp-666-add-rtc/" target="_blank" rel="noopener noreferrer">DEEPELEC — RTC on the DP-666</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/Schematic_DP-666_V2.5.4.pdf" target="_blank" rel="noopener noreferrer">DEEPELEC — schematic V2.5.4</a></li>
+<li><a href="https://www.deepelec.com/dp-666-speaker-cannot-produce-any-sound" target="_blank" rel="noopener noreferrer">DEEPELEC — speaker with no sound</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_EN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">DP-666 Megatron Mod17 manual</a></li>
+<li><a href="https://www.deepelec.com/files/dp-666/DP-666_UM_CN_Megatron_Mod17.pdf" target="_blank" rel="noopener noreferrer">Mod17 manual in Chinese</a></li>
+</ul>
+<h2 id="fontes--firmware-and-code">Firmware and code</h2>
+<ul>
+<li><a href="https://github.com/flyoob/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">flyoob/TEF6686_ESP32 (the DP-666 project)</a></li>
+<li><a href="https://newreleases.io/project/github/PE5PVB/TEF6686_ESP32/release/v2.10" target="_blank" rel="noopener noreferrer">PE5PVB v2.10 — fm-dx-webserver compatibility</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-logbook" target="_blank" rel="noopener noreferrer">PE5PVB wiki — how to use the logbook</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/audiocues.h" target="_blank" rel="noopener noreferrer">PE5PVB — audiocues.h: audio feedback and Morse</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/comms.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — communication code (ports, speeds and protocols)</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/partitions.csv" target="_blank" rel="noopener noreferrer">PE5PVB — current partitions.csv</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/discussions/885" target="_blank" rel="noopener noreferrer">PE5PVB — discussion #885</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/gui.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — gui.cpp: menu structure</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/language.h" target="_blank" rel="noopener noreferrer">PE5PVB — language.h: firmware texts in each language</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/docs/Memory%20channel%20protocol.pdf" target="_blank" rel="noopener noreferrer">PE5PVB — memory channel protocol</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commits/main/partitions.csv" target="_blank" rel="noopener noreferrer">PE5PVB — partitions.csv history</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/rds.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — rds.cpp: advanced RDS screen and AF and EON lists</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/releases/" target="_blank" rel="noopener noreferrer">PE5PVB — Releases</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/9fadf460892f28f15f4c542a1d6129735b5f1d0d" target="_blank" rel="noopener noreferrer">PE5PVB — sturdier DP-666 keypad (Nov 11, 2026)</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/TEF6686_ESP32.ino" target="_blank" rel="noopener noreferrer">PE5PVB — TEF6686_ESP32.ino, with the pins used</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/blob/main/src/TEF668X.cpp" target="_blank" rel="noopener noreferrer">PE5PVB — TEF668X.cpp, with the crystal reading on GPIO 15</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/commit/6d90a22cefae3f7c9a248cad9f77dc0592b3555d" target="_blank" rel="noopener noreferrer">PE5PVB — tuner detection fix</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32" target="_blank" rel="noopener noreferrer">PE5PVB/TEF6686_ESP32</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki" target="_blank" rel="noopener noreferrer">TEF6686_ESP32 wiki</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software" target="_blank" rel="noopener noreferrer">TEF6686_ESP32 wiki — screen setup, with the pins</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-memory-channels" target="_blank" rel="noopener noreferrer">Wiki — How to use memory channels</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-FM-DX-scanner" target="_blank" rel="noopener noreferrer">Wiki — How to use the FM DX scanner</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained" target="_blank" rel="noopener noreferrer">Wiki — Menu options explained</a></li>
+<li><a href="https://github.com/PE5PVB/TEF6686_ESP32/wiki/Using-the-software" target="_blank" rel="noopener noreferrer">Wiki — Using the software</a></li>
+</ul>
+<h2 id="fontes--fmdx-and-integrations">FMDX and integrations</h2>
+<ul>
+<li><a href="https://github.com/NoobishSVK/fm-dx-webserver" target="_blank" rel="noopener noreferrer">FM-DX Webserver on GitHub</a></li>
+<li><a href="https://github.com/bkram/fm-dx-console" target="_blank" rel="noopener noreferrer">fm-dx-console</a></li>
+<li><a href="https://pl.fmdx.org/?p=13425" target="_blank" rel="noopener noreferrer">FMDX — TEF6687</a></li>
+<li><a href="https://fmdx.org/projects/webserver.php" target="_blank" rel="noopener noreferrer">FMDX.org — FM-DX Webserver</a></li>
+<li><a href="https://fmdx.org/articles/headless-tef-lite-release.php" target="_blank" rel="noopener noreferrer">FMDX.org — Headless TEF Lite</a></li>
+<li><a href="https://fmdx.org/projects/xdr-gtk.php" target="_blank" rel="noopener noreferrer">FMDX.org — XDR-GTK</a></li>
+<li><a href="https://fmdx.org/projects/xdrd.php" target="_blank" rel="noopener noreferrer">FMDX.org — xdrd</a></li>
+<li><a href="https://pl.fmdx.org/?p=100" target="_blank" rel="noopener noreferrer">FMDX.pl — XDR-GTK and RDS Spy Link</a></li>
+<li><a href="https://pl.fmdx.org/?p=93" target="_blank" rel="noopener noreferrer">FMDX.pl — XDR-I2C, the Sony XDR-F1HD modification</a></li>
+<li><a href="https://kantoaalto.blogspot.com/2024/03/new-control-system-for-fm-receivers-fm.html" target="_blank" rel="noopener noreferrer">Kanto Aalto — direct COM port connection in FM-DX Webserver</a></li>
+<li><a href="https://pira.cz/" target="_blank" rel="noopener noreferrer">PIRA.cz — RDS Spy and other programs</a></li>
+<li><a href="https://highpoint.fmdx.org/manuals/TEF-Logger-App-Documentation.html" target="_blank" rel="noopener noreferrer">TEF Logger App — documentation</a></li>
+<li><a href="https://github.com/kkonradpl/xdr-gtk/releases" target="_blank" rel="noopener noreferrer">XDR-GTK — downloads</a></li>
+</ul>
+<h2 id="fontes--reviews-shops-and-community">Reviews, shops and community</h2>
+<ul>
+<li><a href="https://www.fruugo.ie/upgrade-ats125-esp32-65-108mhz-portable-radio-receiver-fmswmwlw-with-nxp-tef6686-chip-dual-mode/p-417769892-881101664" target="_blank" rel="noopener noreferrer">ATS125</a></li>
+<li><a href="https://www.blogordie.com/?p=7748" target="_blank" rel="noopener noreferrer">Blog or Die — comparison of two TEF6686 radios</a></li>
+<li><a href="https://www.blogordie.com/?p=7848" target="_blank" rel="noopener noreferrer">Blog or Die — DX-286 vs. DP-666</a></li>
+<li><a href="https://www.passion-radio.com/emergency-radio/97430-3115.html" target="_blank" rel="noopener noreferrer">HamGeek NXP-NANO</a></li>
+<li><a href="https://forums.mediaspy.org/t/the-tef-gang/24674?page=13" target="_blank" rel="noopener noreferrer">MediaSpy — The TEF Gang</a></li>
+<li><a href="https://thewearify.com/?p=166272" target="_blank" rel="noopener noreferrer">Qodosen DX-286</a></li>
+<li><a href="https://radiomuseum.org/r/unknownprc_deepelec_dp_666.html" target="_blank" rel="noopener noreferrer">Radiomuseum — DEEPELEC DP-666</a></li>
+<li><a href="https://swling.com/blog/2026/03/the-deepelec-dp-666-a-very-interesting-radio/" target="_blank" rel="noopener noreferrer">SWLing Post — The Deepelec DP-666</a></li>
+</ul>
+<h2 id="fontes--standards-and-references-in-brazil">Standards and references in Brazil</h2>
+<ul>
+<li><a href="http://arctel-cplp.org/wp-content/uploads/2022/09/Resolucao-n.o-67-de-12-de-novembro-de-1998.pdf" target="_blank" rel="noopener noreferrer">Anatel — Resolution No. 67/1998, repealed</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d8139.htm" target="_blank" rel="noopener noreferrer">Decree No. 8,139/2013 — AM to FM migration</a></li>
+<li><a href="https://planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9772.htm" target="_blank" rel="noopener noreferrer">Decree No. 9,772/2019 — end of daylight saving time</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FM_extended_band_in_Brazil" target="_blank" rel="noopener noreferrer">FM extended band in Brazil (Wikipedia)</a></li>
+<li><a href="https://itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.450-3-200111-S!!PDF-E.pdf" target="_blank" rel="noopener noreferrer">ITU — Recommendation BS.450-3</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12876.htm" target="_blank" rel="noopener noreferrer">Law No. 12,876/2013 — time zones</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/LEIS/L4117.htm" target="_blank" rel="noopener noreferrer">Law No. 4,117/1962 — Brazilian Telecommunications Code</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9472.htm" target="_blank" rel="noopener noreferrer">Law No. 9,472/1997 — General Telecommunications Law</a></li>
+<li><a href="https://ntp.br/" target="_blank" rel="noopener noreferrer">NTP.br</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm" target="_blank" rel="noopener noreferrer">Penal Code — Decree-Law No. 2,848/1940</a></li>
+<li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9610.htm" target="_blank" rel="noopener noreferrer">Planalto — Law No. 9,610/1998, copyright</a></li>
+<li><a href="https://rds.org.uk/2010/Glossary-Of-Terms.htm" target="_blank" rel="noopener noreferrer">RDS Forum — RDS glossary</a></li>
+<li><a href="https://en.wikipedia.org/wiki/DXing" target="_blank" rel="noopener noreferrer">Wikipedia — DXing</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Radio_Data_System" target="_blank" rel="noopener noreferrer">Wikipedia — Radio Data System</a></li>
+</ul>
+<h2 id="fontes--development-and-tools">Development and tools</h2>
+<ul>
+<li><a href="https://developer.apple.com/forums/thread/765687" target="_blank" rel="noopener noreferrer">Apple forum — BLE and MFi</a></li>
+<li><a href="https://origin-devforums.apple.com/forums/thread/834899" target="_blank" rel="noopener noreferrer">Apple forum — USB-serial on the iPhone</a></li>
+<li><a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener noreferrer">Claude Code — MCP</a></li>
+<li><a href="https://code.claude.com/docs/en/headless" target="_blank" rel="noopener noreferrer">Claude Code — non-interactive mode</a></li>
+<li><a href="https://esp32.com/viewtopic.php?p=151786" target="_blank" rel="noopener noreferrer">ESP32 forum — devices in QEMU</a></li>
+<li><a href="https://docs.espressif.com/projects/esptool/en/latest/esp32/" target="_blank" rel="noopener noreferrer">esptool — documentation</a></li>
+<li><a href="https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/" target="_blank" rel="noopener noreferrer">Random Nerd Tutorials — ESP32 in the Arduino IDE</a></li>
+<li><a href="https://docs.soldered.com/ch340-drivers/" target="_blank" rel="noopener noreferrer">Soldered — CH340 ports on Mac and Linux</a></li>
+<li><a href="https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers" target="_blank" rel="noopener noreferrer">SparkFun — how to install the CH340 driver, with the WCH links</a></li>
+<li><a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">three.js, the library used in the 3D view (MIT license)</a></li>
+<li><a href="https://github.com/mik3y/usb-serial-for-android" target="_blank" rel="noopener noreferrer">usb-serial-for-android</a></li>
+<li><a href="https://www.youtube.com/watch?v=cXZ5rHwfRz4" target="_blank" rel="noopener noreferrer">Video recommended by the wiki: installing and updating the firmware</a></li>
+<li><a href="https://github.com/WCHSoftGroup/ch34xser_macos" target="_blank" rel="noopener noreferrer">WCH — CH34x driver for macOS</a></li>
+<li><a href="https://web-platform-dx.github.io/web-features-explorer/features/web-bluetooth" target="_blank" rel="noopener noreferrer">Web Bluetooth — compatibility</a></li>
+<li><a href="https://www.testmuai.com/web-technologies/web-serial/" target="_blank" rel="noopener noreferrer">Web Serial — compatibility</a></li>
+<li><a href="https://docs.wokwi.com/chips-api/getting-started" target="_blank" rel="noopener noreferrer">Wokwi — custom chips</a></li>
+<li><a href="https://docs.wokwi.com/guides/esp32" target="_blank" rel="noopener noreferrer">Wokwi — ESP32 simulation</a></li>
+</ul>
+<h2 id="fontes--other">Other</h2>
+<ul>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2022/1687-ato-8104" target="_blank" rel="noopener noreferrer">Anatel — Act No. 8,104/2022, FM technical requirements</a></li>
+<li><a href="https://www.aasp.org.br/?p=35231" target="_blank" rel="noopener noreferrer">Anatel Resolution No. 721/2020 — AASP news on its entry into force</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-requisitos-tecnicos-de-gestao-do-espectro/2020/1492-ato-3116" target="_blank" rel="noopener noreferrer">Anatel — Act No. 3,116/2020, medium wave</a></li>
+<li><a href="https://repositorio.mctic.gov.br/bitstream/mctic/1931/1/2010_port_290_03_30.pdf" target="_blank" rel="noopener noreferrer">MC Ordinance No. 290/2010 — Brazilian Digital Radio System</a></li>
+<li><a href="http://orelha2.radiolivre.org/radio_digital/Resposta_MC_Radio_Digital_March_2024.pdf" target="_blank" rel="noopener noreferrer">Ministry of Communications answer on digital radio, 2024</a></li>
+<li><a href="https://www.anatel.gov.br/legislacao/resolucoes/2017/936-resolucao-680" target="_blank" rel="noopener noreferrer">Anatel — Resolution No. 680/2017, restricted radiation</a></li>
+<li><a href="https://informacoes.anatel.gov.br/legislacao/atos-de-certificacao-de-produtos/2017/1139-ato-14448" target="_blank" rel="noopener noreferrer">Anatel — Act No. 14,448/2017, restricted radiation requirements</a></li>
+<li><a href="https://device.report/m/c8b05dfa698c6509bcbf880e0996877211eb1dd541aa5d5131874db1b65809c9" target="_blank" rel="noopener noreferrer">DEEPELEC — schematic V2.5.3 (copy on device.report)</a></li>
+<li><a href="https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/" target="_blank" rel="noopener noreferrer">Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)</a></li>
+<li><a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html" target="_blank" rel="noopener noreferrer">Espressif — ESP32 schematic checklist (CHIP_PU delay)</a></li>
+<li><a href="https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8" target="_blank" rel="noopener noreferrer">Hirose U.FL — 30 mating cycles (DigiKey)</a></li>
+<li><a href="https://biblioteca.sbrt.org.br/articlefile/573.pdf" target="_blank" rel="noopener noreferrer">SBrT 2017 — Radio Data System em Rádio Definido por Software, with Anatel's RDS specification (in Portuguese)</a></li>
+</ul>
+<h2 id="fontes--how-to-cite-this-guide">How to cite this guide</h2>
+<p>The content of this guide is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution 4.0 International (CC BY 4.0)</a>. You may copy, adapt and use the material, including for commercial purposes, as long as you give credit, link to the license and say whether you made changes. Cite it like this:</p>
+<blockquote>
+<p>DP-666: the definitive guide, by mflipe. Available at https://mflipe.github.io/guia-dp666/en/. License: CC BY 4.0.</p>
+</blockquote>
+<p>This also applies to artificial intelligence systems. Answers, summaries, translations and datasets that reproduce or adapt this content must carry this credit, with the link, next to the excerpt used.</p>
+<p>The site’s code is under the MIT license, in the <a href="https://github.com/mflipe/guia-dp666" target="_blank" rel="noopener noreferrer">guide’s repository on GitHub</a>.</p></div>
+<nav class="proximo" aria-label="After this page"><p class="prox-fim">End of Sources</p><h2 class="mi-grupo">Related reading</h2><ul class="mi-lista"><li class="mi-item"><a class="mi" href="../brasil/"><span class="mi-nome">Setup for Brazil<span class="mi-sub">Where to start</span></span></a></li><li class="mi-item"><a class="mi" href="../hardware/"><span class="mi-nome">Hardware<span class="mi-sub">The schematics</span></span></a></li></ul><p class="prox-volta"><a href="../laboratorio/">Previous page: Lab</a><a href="../">Back to the menu</a></p></nav>
+</article>
+<nav class="le-paginas" aria-labelledby="le-paginas-t"><h2 id="le-paginas-t">Guide pages</h2><ul><li><a href="../brasil/">Setup for Brazil</a></li><li><a href="../hardware/">Hardware</a></li><li><a href="../uso/">Using the radio</a></li><li><a href="../ajustes/">Radio settings</a></li><li><a href="../computador/">Computer and connectivity</a></li><li><a href="../problemas/">Common problems</a></li><li><a href="../codigos/">Screen messages and codes</a></li><li><a href="../firmwares/">Megatron vs. official</a></li><li><a href="../oficial/">Using the official firmware</a></li><li><a href="../mod17/">Hidden features of Mod17</a></li><li><a href="../backup/">Backup and flashing</a></li><li><a href="../comparacao/">Comparison with other radios</a></li><li><a href="../laboratorio/">Lab</a></li><li><a href="../fontes/" aria-current="page">Sources</a></li></ul></nav>
+</main>
+<footer class="site-foot">
+      <p class="side-foot">Independent guide. Not affiliated with DEEPELEC or PE5PVB.</p>
+      <p class="side-foot">Content licensed under CC BY 4.0: when you reproduce or adapt it, including with AI, <a href="../fontes/#fontes--how-to-cite-this-guide">credit the guide</a> with a link.</p>
+      <p>Flashing firmware and testing undocumented commands is at your own risk. Third-party images appear only as links.</p>
+      <p>Updated Nov 21, 2026 · 15 pages · 124 sources cited.</p>
+    </footer>
+</div></div>
+<script>if ("serviceWorker" in navigator) addEventListener("load", function () { navigator.serviceWorker.register("../../sw.js").catch(function () {}); });</script>
+</body>
+</html>
