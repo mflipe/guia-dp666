@@ -36,11 +36,12 @@ The site’s code is under the MIT license, in the [guide’s repository on GitH
 UI = {
     "pt": {
         "dir": "",
-        "updated": "17/11/2026",
+        "updated": "21/11/2026",
         "nav": [
             ("Começar", [("index", "inicio", "Início"), ("brasil", "brasil", "Configuração para o Brasil")]),
             ("O rádio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Uso do rádio"), ("ajustes", "ajustes", "Ajustes do rádio"),
-                         ("computador", "computador", "Computador e conectividade"), ("problemas", "problemas", "Problemas comuns")]),
+                         ("computador", "computador", "Computador e conectividade"), ("problemas", "problemas", "Problemas comuns"),
+                         ("codigos", "codigos", "Mensagens e códigos da tela")]),
             ("Firmware", [("firmwares", "firmwares", "Megatron × oficial"), ("oficial", "oficial", "Uso da linha oficial"),
                           ("mod17", "mod17", "Recursos ocultos do Mod17"), ("backup", "backup", "Backup e gravação")]),
             ("Mais", [("comparacao", "comparacao", "Comparação com outros rádios"), ("laboratorio", "laboratorio", "Laboratório"),
@@ -69,6 +70,7 @@ UI = {
             ("botoes", "#botoes", "Explorar os controles", "Painel em 3D: toque e segure cada botão e knob."),
             ("ajustes", "#ajustes", "Achar um ajuste", "Busca nos menus, com o recomendado para o Brasil."),
             ("ajuda", "#problemas", "Resolver um problema", "Escolha o sintoma e siga os passos."),
+            ("codigos", "#codigos", "Entender a tela", "Digite o que aparece e veja o que significa."),
             ("brasil", "#ajustes--brasil", "Configurar para o Brasil", "Uma lista para marcar enquanto ajusta o rádio."),
             ("computador", "#computador", "Usar com o computador", "XDR-GTK, RDS Spy, o rádio no navegador e o logbook."),
             ("escolha", "#firmwares", "Escolher o firmware", "Megatron ou linha oficial: diferenças e como testar."),
@@ -109,7 +111,6 @@ UI = {
         "off_label": {"oficial": "Desligado", "mod17": "Off"}, "off_words": ("desligado", "off"),
         "decimal": ",",
         "search_official": "Ajustes · linha oficial", "search_mod17": "Ajustes · Mod17", "search_help": "Assistente de problemas", "search_codes": "Códigos da tela",
-        "cod_h": "Mensagens e códigos da tela",
         # menu de jogo: o que cada página tem, mostrado quando o cursor está nela
         "desc": {
             "inicio": "A tela de título, com todas as páginas do guia.",
@@ -119,6 +120,7 @@ UI = {
             "ajustes": "Cada opção do menu dos dois firmwares, com os valores possíveis, o padrão de fábrica e o recomendado para o Brasil.",
             "computador": "Ligado ao computador, o DP-666 ganha uma tela grande: sintonia pelo mouse, RDS em detalhe, registros e atualização do firmware.",
             "problemas": "Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código, com os passos para resolver.",
+            "codigos": "O que quer dizer cada marca, código e mensagem da tela, com um campo para digitar o que aparece no rádio.",
             "firmwares": "As duas linhas de firmware que o DP-666 aceita. Trocar de uma para a outra muda menus e recursos e zera as configurações.",
             "oficial": "Botões, combinações ao ligar, memórias, scanner de DX e logbook do firmware oficial do PE5PVB.",
             "mod17": "O que existe no Megatron Mod17 e não aparece no manual.",
@@ -156,11 +158,12 @@ UI = {
     },
     "en": {
         "dir": "en",
-        "updated": "Nov 17, 2026",
+        "updated": "Nov 21, 2026",
         "nav": [
             ("Get started", [("index", "inicio", "Home"), ("brasil", "brasil", "Setup for Brazil")]),
             ("The radio", [("hardware", "hardware", "Hardware"), ("uso", "uso", "Using the radio"), ("ajustes", "ajustes", "Radio settings"),
-                           ("computador", "computador", "Computer and connectivity"), ("problemas", "problemas", "Common problems")]),
+                           ("computador", "computador", "Computer and connectivity"), ("problemas", "problemas", "Common problems"),
+                           ("codigos", "codigos", "Screen messages and codes")]),
             ("Firmware", [("firmwares", "firmwares", "Megatron vs. official"), ("oficial", "oficial", "Using the official firmware"),
                           ("mod17", "mod17", "Hidden features of Mod17"), ("backup", "backup", "Backup and flashing")]),
             ("More", [("comparacao", "comparacao", "Comparison with other radios"), ("laboratorio", "laboratorio", "Lab"),
@@ -188,6 +191,7 @@ UI = {
             ("botoes", "#botoes", "Explore the controls", "3D panel: tap and hold each button and knob."),
             ("ajustes", "#ajustes", "Find a setting", "Search the menus, with the recommended values for Brazil."),
             ("ajuda", "#problemas", "Solve a problem", "Pick the symptom and follow the steps."),
+            ("codigos", "#codigos", "Read the screen", "Type what shows and see what it means."),
             ("brasil", "#ajustes--brasil", "Set up for Brazil", "A checklist to tick off while you set up the radio."),
             ("computador", "#computador", "Use it with a computer", "XDR-GTK, RDS Spy, the radio in a browser and the logbook."),
             ("escolha", "#firmwares", "Choose the firmware", "Megatron or the official firmware: differences and how to test."),
@@ -237,7 +241,6 @@ UI = {
         "off_label": {"oficial": "Off", "mod17": "Off"}, "off_words": ("off",),
         "decimal": ".",
         "search_official": "Settings · official firmware", "search_mod17": "Settings · Mod17", "search_help": "Troubleshooting assistant", "search_codes": "Screen codes",
-        "cod_h": "Screen messages and codes",
         "desc": {
             "inicio": "The title screen, with every page of the guide.",
             "brasil": "Settings that make a difference for DP-666 users in Brazil, with the standards behind each one.",
@@ -246,6 +249,7 @@ UI = {
             "ajustes": "Every menu option on both firmwares, with its possible values, the factory default and the value recommended for Brazil.",
             "computador": "Connected to a computer, the DP-666 gets a big screen: tuning with the mouse, detailed RDS, logs and firmware updates.",
             "problemas": "Problems acknowledged by DEEPELEC, reported by the community or anticipated in the code, with the steps to fix them.",
+            "codigos": "What each mark, code and message on the screen means, with a field to type what shows on the radio.",
             "firmwares": "The two firmware lines the DP-666 accepts. Switching from one to the other changes menus and features and resets the settings.",
             "oficial": "Buttons, power-on combinations, memory channels, DX scanner and logbook on PE5PVB’s official firmware.",
             "mod17": "What exists in the Megatron Mod17 that the manual leaves out.",

@@ -8,6 +8,8 @@
   .cod-ex .chip-btn:hover { border-color: var(--accent); color: var(--accent); }
 }
 .cod-lista { list-style: none; margin: 6px 0 0; padding: 0; }
+.cod-nota { margin: 12px 0 0; max-width: 68ch; }
+.cod-nota strong { font: 600 1.02rem var(--font-display); letter-spacing: 0.02em; }
 .cod-item { padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .cod-item:last-child { border-bottom: 0; }
 .cod-cab { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0; }

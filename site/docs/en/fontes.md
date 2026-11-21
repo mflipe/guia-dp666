@@ -1,6 +1,6 @@
 # Sources
 
-Every source cited in the guide, without repeats (123 in total). Each page also lists its own at the end.
+Every source cited in the guide, without repeats (124 in total). Each page also lists its own at the end.
 
 ## Component datasheets
 
@@ -148,6 +148,7 @@ Every source cited in the guide, without repeats (123 in total). Each page also 
 - [Guido Schotmans — the DP-666 taken apart and the encoder error (wijnants.info, August 4, 2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [Espressif — ESP32 schematic checklist (CHIP_PU delay)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
 - [Hirose U.FL — 30 mating cycles (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
+- [SBrT 2017 — Radio Data System em Rádio Definido por Software, with Anatel's RDS specification (in Portuguese)](https://biblioteca.sbrt.org.br/articlefile/573.pdf)
 
 ## How to cite this guide
 

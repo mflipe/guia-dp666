@@ -210,6 +210,7 @@ ICONS = {
     "inicio": '<path d="M4.5 11 12 5.5l7.5 5.5"/><path d="M6.5 10v9h11v-9"/><circle cx="4.5" cy="11" r="1.7" fill="currentColor" stroke="none"/><circle cx="19.5" cy="11" r="1.7" fill="currentColor" stroke="none"/>',
     "computador": '<rect x="4.5" y="5" width="15" height="10.5" rx="1"/><path d="M12 15.5v3.5M7.5 19h9"/><circle cx="6" cy="19" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="19" r="1.5" fill="currentColor" stroke="none"/>',
     "escolha": '<path d="M12 19.5v-6.5M12 13 6.5 7.5M12 13l5.5-5.5"/><circle cx="5.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="6.5" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="19.5" r="1.7" fill="currentColor" stroke="none"/>',
+    "codigos": '<rect x="4" y="5.5" width="16" height="13" rx="1"/><circle cx="8.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><path d="M8 14.5h8"/>',
     "mais": '<path d="M7.8 12h2.4M13.8 12h2.4"/><circle cx="6" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.8" fill="currentColor" stroke="none"/>',
 }
 
@@ -320,28 +321,22 @@ _CODIGOS = {}
 def codigos():
     """Os itens da busca de códigos, lidos das tabelas de uso.md (uma vez por idioma)."""
     if LANG not in _CODIGOS:
-        _CODIGOS[LANG] = appdata.build_codes(doc("uso"), inline)
+        _CODIGOS[LANG] = appdata.build_codes(doc("codigos"), inline)
     return _CODIGOS[LANG]
 
 
 def marcar_codigos(body, cods):
-    """Dá às linhas das tabelas de mensagens e códigos os ids dos itens da busca, na mesma ordem, para a busca geral
+    """Dá às linhas das tabelas da página de códigos os ids dos itens da busca, na mesma ordem, para a busca geral
     levar à linha certa."""
     ids = [it["id"] for g in cods["grupos"] for it in g["itens"]]
-    ini = body.find(f'<h2 id="uso--{appdata._heading_id(L["cod_h"])}"')
-    if not ids or ini < 0:
-        return body
-    fim = body.find("<h2 ", ini + 4)
-    fim = len(body) if fim < 0 else fim
     fila, marca = iter(ids), "\x00"   # um caractere que não aparece no HTML marca cada linha do corpo das tabelas
-    secao = re.sub(r"<tbody>.*?</tbody>", lambda m: m.group(0).replace("<tr>", marca), body[ini:fim], flags=re.S)
-    partes = secao.split(marca)
+    body = re.sub(r"<tbody>.*?</tbody>", lambda m: m.group(0).replace("<tr>", marca), body, flags=re.S)
+    partes = body.split(marca)
     if len(partes) - 1 != len(ids):
         raise SystemExit(f"códigos: {len(partes) - 1} linhas na página e {len(ids)} itens na busca")
-    secao = partes[0] + "".join(f'<tr id="{next(fila)}">' + p for p in partes[1:])
+    body = partes[0] + "".join(f'<tr id="{next(fila)}">' + p for p in partes[1:])
     # cod-tabela: no celular, cada linha vira um bloco, com o código em cima e o significado embaixo
-    secao = secao.replace('<div class="table-wrap"><table>', '<div class="table-wrap cod-tabela"><table>')
-    return body[:ini] + secao + body[fim:]
+    return body.replace('<div class="table-wrap"><table>', '<div class="table-wrap cod-tabela"><table>')
 
 
 def app_data():
@@ -509,7 +504,7 @@ def build():
     for f, route, nav_title, group in PAGES:
         md_text = compor(f, route)
         title, body, toc = render(md_text, route)
-        if route == "uso":
+        if route == "codigos":
             body = marcar_codigos(body, codigos())
         n_src = n_sources if f == "fontes" else count_sources(md_text)
         rendered.append((f, route, nav_title, group, title, body, toc, n_src))

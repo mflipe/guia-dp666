@@ -500,22 +500,18 @@ def _celulas(linha):
 
 
 def build_codes(md, inline):
-    """A seção de mensagens e códigos em uso.md: cada linha das tabelas (uma por ### ) vira um item da busca de códigos.
+    """A página de mensagens e códigos (codigos.md): cada linha das tabelas (uma por seção) vira um item da busca.
 
     A primeira coluna traz o que aparece na tela, com variantes separadas por <br>; a tradução da linha oficial em
     português vem em itálico (trad guarda quais são). A segunda diz o que quer dizer. Os ids seguem os das linhas na
     página (build.marcar_codigos põe os mesmos, na mesma ordem)."""
-    m = re.search(r"(?m)^## " + re.escape(T["cod_h"]) + r"\s*$", md)
-    if not m:
-        return {"grupos": []}
-    resto = md[m.end():]
-    fim = re.search(r"(?m)^## ", resto)
-    secao = resto[: fim.start()] if fim else resto
     grupos, vistos = [], set()
-    for bloco in re.split(r"(?m)^### ", secao)[1:]:
+    for bloco in re.split(r"(?m)^## ", md)[1:]:
         titulo, corpo = bloco.split("\n", 1)
         titulo = titulo.strip()
-        gid = "uso--" + _heading_id(titulo)
+        if titulo == T["sources_h"]:
+            continue
+        gid = "codigos--" + _heading_id(titulo)
         linhas = [x for x in corpo.splitlines() if x.strip().startswith("|")]
         itens = []
         for linha in linhas[2:]:
@@ -551,7 +547,7 @@ def code_entries(cods):
     for g in cods["grupos"]:
         for it in g["itens"]:
             texto = " / ".join(it["termos"][1:]) + " " + re.sub(r"<[^>]+>", "", it["html"])
-            out.append({"r": "uso", "p": T["search_codes"], "h": it["termos"][0], "id": it["id"], "t": texto.strip()})
+            out.append({"r": "codigos", "p": T["search_codes"], "h": it["termos"][0], "id": it["id"], "t": texto.strip()})
     return out
 
 

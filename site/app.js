@@ -1049,13 +1049,28 @@
         return C.botao(esc(x), { classe: "chip-btn", attrs: { "data-ex": x } });
       }).join("") + "</p>";
     }
+    // quatro caracteres de 0 a 9 e de A a F, com algum número, talvez com ? no fim: é um código PI, não um erro
+    var PI = /^(?=.*\d)[0-9a-f]{4}\?{0,2}$/;
     function buscar() {
-      var q = nc(input.value), lq = solto(q);
+      var q = nc(input.value), lq = solto(q), nota = "", duvida = false;
       if (!q) { inicio(); return; }
-      var ws = q.length > 1 ? q.split(" ").filter(function (w) { return w.length > 1; }) : [];
+      if (PI.test(q)) {
+        nota = '<p class="cod-nota"><strong>' + esc(input.value.trim().toUpperCase()) + "</strong>" +
+          " parece um código PI: a identificação da emissora no RDS, e não um erro." + "</p>";
+        duvida = /\?$/.test(q);
+        q = lq = "pi";
+      }
+      var ws = !nota && q.length > 1 ? q.split(" ").filter(function (w) { return w.length > 1; }) : [];
       var hits = [];
       itens.forEach(function (it) {
-        var p = pontos(it, q, lq, ws);
+        var p;
+        if (nota) {
+          // para um PI, só as linhas do PI, nesta ordem: a que se chama PI, a do ? no fim (primeiro, se a pessoa
+          // digitou ?) e a da lista de EON
+          var ehPI = it.chaves[0] === "pi", comQ = it.chaves.some(function (k) { return k.indexOf("pi ") === 0 && k.indexOf("?") > 0; });
+          if (!ehPI && !comQ && it.chaves.indexOf("pi") < 0) return;
+          p = [ehPI ? 100 : comQ ? (duvida ? 150 : 90) : 80, 0];
+        } else p = pontos(it, q, lq, ws);
         if (p[0]) hits.push({ it: it, s: p[0], termo: p[1] });
       });
       hits.sort(function (a, b) { return b.s - a.s || a.it.n - b.it.n; });
@@ -1065,7 +1080,7 @@
         return;
       }
       conta.textContent = hits.length === 1 ? "1 resultado" : hits.length > MAX ? "Mostrando 10 de " + hits.length + ". Digite mais para filtrar." : hits.length + " resultados";
-      res.innerHTML = '<ol class="cod-lista">' + hits.slice(0, MAX).map(cartao).join("") + "</ol>";
+      res.innerHTML = nota + '<ol class="cod-lista">' + hits.slice(0, MAX).map(cartao).join("") + "</ol>";
     }
     var timer = null;
     input.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(buscar, 90); });

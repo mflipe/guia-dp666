@@ -1,6 +1,6 @@
 # Problemas comuns
 
-Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código do firmware. Escolha o que está acontecendo e siga os passos, do mais simples ao mais trabalhoso. Antes de qualquer reparo ou regravação, faça o [backup completo](backup.md). Se apareceu uma mensagem ou um código na tela, veja o que quer dizer em [Mensagens e códigos da tela](#uso--mensagens-e-códigos-da-tela).
+Problemas reconhecidos pela DEEPELEC, relatados pela comunidade ou previstos no código do firmware. Escolha o que está acontecendo e siga os passos, do mais simples ao mais trabalhoso. Antes de qualquer reparo ou regravação, faça o [backup completo](backup.md). Se apareceu uma mensagem ou um código na tela, veja o que quer dizer em [Mensagens e códigos da tela](codigos.md).
 
 ## Tela parada em "Tuner: !None!"
 

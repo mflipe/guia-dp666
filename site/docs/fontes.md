@@ -1,6 +1,6 @@
 # Fontes
 
-Todas as fontes citadas no guia, sem repetição (123 no total). Cada página também lista as suas no fim.
+Todas as fontes citadas no guia, sem repetição (124 no total). Cada página também lista as suas no fim.
 
 ## Datasheets dos componentes
 
@@ -148,6 +148,7 @@ Todas as fontes citadas no guia, sem repetição (123 no total). Cada página ta
 - [Guido Schotmans — DP-666 desmontado e o erro do encoder (wijnants.info, 04/08/2025)](https://wijnants.info/fmdx/august-4-2025-deepelec-dp-666-novice-hurdles-part-2/)
 - [Espressif — checklist do esquema do ESP32 (atraso no CHIP_PU)](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32/schematic-checklist.html)
 - [Hirose U.FL — 30 ciclos de encaixe (DigiKey)](https://www.digikey.co.nz/en/ptm/h/hirose-electric/u_fl-and-w_fl-series-connectors/tutorial?slide=8)
+- [SBrT 2017 — Radio Data System em Rádio Definido por Software, com a especificação de RDS da Anatel](https://biblioteca.sbrt.org.br/articlefile/573.pdf)
 
 ## Como citar este guia
 

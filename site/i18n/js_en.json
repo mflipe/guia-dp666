@@ -307,5 +307,6 @@
  "1 resultado": "1 result",
  "Mostrando 10 de ": "Showing 10 of ",
  ". Digite mais para filtrar.": ". Type more to narrow it down.",
- " resultados": " results"
+ " resultados": " results",
+ " parece um código PI: a identificação da emissora no RDS, e não um erro.": " looks like a PI code: the station’s identification over RDS, not an error."
 }
