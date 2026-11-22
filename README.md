@@ -21,6 +21,7 @@ Dá para instalar o guia no celular ou no computador, como um app, e ele abre se
 | `site/tema.py` e `site/temas_radio.py` | Os temas do guia (Automático, Claro, Escuro e os temas do firmware): a lista dos temas e tudo o que sai dela, dos blocos de CSS ao botão e à janela de escolha |
 | `site/catalogo.py` | Gera o `catalogo.html`: cada componente no lugar onde aparece no guia, nos temas claro e escuro, e as cores dos tokens |
 | `site/web.py` | O que o site entrega além das páginas: o manifesto do app, o service worker (modelo em `site/ui/sw.js`), as etiquetas de compartilhamento, as páginas de leitura e o `sitemap.xml` |
+| `site/raiz/` | Arquivos que vão como estão para a raiz do site, como o arquivo de verificação do Google Search Console (precisa continuar publicado para a verificação valer) |
 | `site/ui/letras/` e `site/ui/icones/` | As fontes de letra (Geist, Geist Mono e Tektur, do Fontsource, licença SIL OFL 1.1), servidas pelo próprio site, e os ícones do app, feitos a partir do botão de sintonia do guia |
 | `testes/` | Os testes: navegação, ferramentas, rádio virtual, app offline e páginas de leitura, acessibilidade (axe-core) e a regressão visual do catálogo. `gerar-imagens.mjs` refaz os PNGs dos ícones e das imagens de compartilhamento |
 | `viewer3d/` | Os visualizadores 3D do painel, da placa, do ESP32 e do rádio montado com as fotos, feitos com three.js |

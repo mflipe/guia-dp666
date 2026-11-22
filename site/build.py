@@ -4,7 +4,7 @@
 Saída: preview/index.html (português) e preview/en/index.html (inglês). Cada uma é um único arquivo, que busca
 só as fontes de letra do próprio site (letras/) e, quando o leitor pede o 3D, o js/viewer3d.js (ou viewer3d.en.js).
 Junto saem as páginas de leitura (preview/<rota>/ e preview/en/<rota>/), os manifestos do app, o estilo.css, o
-sitemap.xml e o sw.js (veja web.py).
+sitemap.xml e o sw.js (veja web.py), além dos arquivos de raiz/, copiados como estão.
 Uso: python3 build.py [pt|en] (sem argumento, gera os dois).
 """
 import html
@@ -711,6 +711,7 @@ if __name__ == "__main__":
     pasta = ROOT / "preview"
     (pasta / "estilo.css").write_text(layout.css().replace("{{RAIZ}}", ""), encoding="utf-8")
     shutil.copytree(ROOT / "ui" / "icones", pasta / "icones", dirs_exist_ok=True)
+    shutil.copytree(ROOT / "raiz", pasta, dirs_exist_ok=True)   # vão como estão para a raiz, como a verificação do Search Console
     d, m, a = i18n.UI["pt"]["updated"].split("/")
     (pasta / "sitemap.xml").write_text(web.sitemap([r for g, items in i18n.UI["pt"]["nav"] for (_, r, _) in items if r != "inicio"],
                                                    f"{a}-{m}-{d}"), encoding="utf-8")
