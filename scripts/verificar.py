@@ -4,9 +4,11 @@
 - Links: cada link externo das páginas (site/docs/*.md e site/docs/en/*.md) é aberto. Erro 404, 410 ou falha de
   conexão conta como quebrado; 401, 403 e 429 contam como "o site recusa robôs" (o link pode estar bom para pessoas)
   e só aparecem no relatório.
-- Firmware: a última versão publicada da linha oficial (PE5PVB/TEF6686_ESP32, no GitHub) e o maior número de Mod do
-  Megatron citado na página do DP-666 da DEEPELEC são comparados com as versões que o guia documenta
-  (scripts/versoes.json). Versão nova vira aviso, com o que conferir no guia.
+- Firmware: a linha oficial (PE5PVB/TEF6686_ESP32, no GitHub) é conferida em dois lugares: a última versão
+  publicada (a tag costuma ter só dois números, como v2.20) e a versão escrita no código em desenvolvimento
+  (src/constants.h), que é a que o guia documenta. O maior número de Mod do Megatron citado na página do DP-666 da
+  DEEPELEC também é conferido. Tudo é comparado, número a número, com as versões que o guia documenta
+  (scripts/versoes.json), e só uma versão maior vira aviso, com o que conferir no guia.
 
 Só usa a biblioteca padrão do Python. Uso:
   python3 scripts/verificar.py                       relatório na tela
@@ -30,6 +32,7 @@ AGENTE = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
 RECUSA_ROBO = {401, 403, 429}
 DEEPELEC = "https://www.deepelec.com/en/dp-666/"
 OFICIAL_API = "https://api.github.com/repos/PE5PVB/TEF6686_ESP32/releases/latest"
+OFICIAL_CODIGO = "https://raw.githubusercontent.com/PE5PVB/TEF6686_ESP32/main/src/constants.h"
 
 
 def links():
@@ -72,18 +75,35 @@ def maior_mod(texto):
     return max(achados) if achados else None
 
 
+def numeros(versao):
+    """'v2.20.12' vira (2, 20, 12); o que não for versão vira None. Tuplas se comparam número a número, e uma tag
+    mais curta, como v2.20, fica abaixo de v2.20.12."""
+    m = re.fullmatch(r"v?(\d+(?:\.\d+)*)", (versao or "").strip())
+    return tuple(int(x) for x in m.group(1).split(".")) if m else None
+
+
 def firmware(versoes):
     """Lista de (o que, achado, documentado, novo?) para os dois firmwares."""
     out = []
+    doc = numeros(versoes["oficial"])
     try:
         cab = {"Accept": "application/vnd.github+json"}
         if os.environ.get("GH_TOKEN"):
             cab["Authorization"] = "Bearer " + os.environ["GH_TOKEN"]
         _, corpo = abrir(OFICIAL_API, cabecalhos=cab)
         tag = json.loads(corpo)["tag_name"]
-        out.append(("Linha oficial (PE5PVB)", tag, versoes["oficial"], tag.lstrip("v") != versoes["oficial"].lstrip("v")))
+        achado = numeros(tag)
+        out.append(("Linha oficial, versão publicada (PE5PVB)", tag, versoes["oficial"], bool(achado and doc and achado > doc)))
     except Exception as e:  # noqa: BLE001
-        out.append(("Linha oficial (PE5PVB)", "não consegui ler: " + type(e).__name__, versoes["oficial"], False))
+        out.append(("Linha oficial, versão publicada (PE5PVB)", "não consegui ler: " + type(e).__name__, versoes["oficial"], False))
+    try:
+        _, corpo = abrir(OFICIAL_CODIGO)
+        m = re.search(r'#define\s+VERSION\s+"([^"]+)"', corpo.decode("utf-8", "replace"))
+        texto = m.group(1) if m else "versão não encontrada"
+        achado = numeros(texto)
+        out.append(("Linha oficial, código em desenvolvimento (PE5PVB)", texto, versoes["oficial"], bool(achado and doc and achado > doc)))
+    except Exception as e:  # noqa: BLE001
+        out.append(("Linha oficial, código em desenvolvimento (PE5PVB)", "não consegui ler: " + type(e).__name__, versoes["oficial"], False))
     try:
         _, corpo = abrir(DEEPELEC)
         achado = maior_mod(corpo.decode("utf-8", "replace"))
@@ -119,7 +139,7 @@ def main():
 
     linhas = ["# Verificação do guia", "",
               f"- Links conferidos: {len(resultados)}; quebrados: {len(quebrados)}; recusados a robôs: {len(robos)}.", ""]
-    linhas += ["## Firmware", "", "| Firmware | Publicado | No guia |", "| --- | --- | --- |"]
+    linhas += ["## Firmware", "", "| Firmware | Encontrado | No guia |", "| --- | --- | --- |"]
     linhas += [f"| {o} | {achado}{' (novo)' if novo else ''} | {doc} |" for o, achado, doc, novo in fw] + [""]
     if quebrados:
         linhas += ["## Links quebrados", ""] + [f"- {u} ({d}), em {', '.join(sorted(todos[u]))}" for u, _, d in quebrados] + [""]
